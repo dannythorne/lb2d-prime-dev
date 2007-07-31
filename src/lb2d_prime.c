@@ -106,8 +106,8 @@ int main( int argc, char **argv)
     compute_macro_vars( lattice, /*which_f=*/ 2);
 #else /* !( POROUS_MEDIA) */
     // After collision so use f (which_f=0).
-    compute_macro_vars( lattice, /*which_f=*/ 2); // solute/buoyancy/grav
-    //compute_macro_vars( lattice, /*which_f=*/ 0);
+    //compute_macro_vars( lattice, /*which_f=*/ 2); // solute/buoyancy/grav
+    compute_macro_vars( lattice, /*which_f=*/ 0);
 #endif /* POROUS_MEDIA */
 
     output_frame( lattice);
@@ -132,7 +132,7 @@ int main( int argc, char **argv)
   report_ratio_entry(   &report,"Time in loop", t1, 1., "seconds");
   report_ratio_entry(   &report,"Time in loop", t1, 60., "minutes");
   report_ratio_entry(   &report,"Relative overhead time", 100.*t0, t1, "%");
-  report_integer_entry( &report,"Number of frame", frame, "");
+  report_integer_entry( &report,"Number of frames", frame, "");
   report_ratio_entry(   &report,"Average time per frame",
                          t1, (double)frame , "seconds");
   report_integer_entry( &report,"Number of timesteps", --time, "");

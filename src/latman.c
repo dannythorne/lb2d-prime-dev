@@ -2402,11 +2402,17 @@ int get_sizeof_lattice_structure( lattice_ptr lattice)
 int get_sizeof_lattice( lattice_ptr lattice)
 {
   return
-      sizeof(int)
-    + sizeof(int)
-    + sizeof(int)
-    + sizeof(int)*NUM_FLUID_COMPONENTS
-    + sizeof(int)*NUM_FLUID_COMPONENTS
+      sizeof(int) // NumNodes
+    + sizeof(int) // NumTimeSteps
+    + sizeof(int) // time
+    + sizeof(int) // frame
+    + sizeof(int)*NUM_FLUID_COMPONENTS // periodic_x
+    + sizeof(int)*NUM_FLUID_COMPONENTS // periodic_y
+
+#if INAMURO_SIGMA_COMPONENT
+    + sizeof(int) // SizeBTC
+    + sizeof(int) // FlowDir
+#endif
 
     + sizeof(struct param_struct)
 
@@ -2424,7 +2430,10 @@ int get_sizeof_lattice( lattice_ptr lattice)
 #if POROUS_MEDIA
       + sizeof(struct ns_struct) 
 #endif /* POROUS_MEDIA */
-      );
+      )
+    // Include lbmpi_ptr ?
+    // Include user_stuff_struct ?
+    ;
 
 } /* int get_sizeof_lattice( lattice_ptr lattice) */
 

@@ -5774,11 +5774,12 @@ void private_slice(
     fprintf( o, "i0 = %d;\n", i0);
     fprintf( o, "i1 = %d;\n", i1);
     fprintf( o, "disp(sprintf('  [ i0 i1]   = [ %%d %%d]',i0,i1));\n");
-    fprintf( o, "H = i1 - i0 + 1;\n");
+    fprintf( o, "H = i1 - i0;%% + 1;\n");
     fprintf( o, "disp(sprintf('  H          = %%d', H));\n");
     fprintf( o, "R = H/2;\n");
     fprintf( o, "disp(sprintf('  R = H/2    = %%20.17f', R));\n");
-    fprintf( o, "nu = 1/6;\n");
+    fprintf( o, "tau = %20.17f;\n",lattice->param.tau[0]);
+    fprintf( o, "nu = (1/3)*(tau-.5);\n");
     fprintf( o, "disp(sprintf('  nu         = %%20.17f', nu));\n");
     compute_ave_rho( lattice, &ave_rho, subs);
     fprintf( o, "rho_ave = %20.17f;\n", ave_rho);
@@ -5801,7 +5802,7 @@ void private_slice(
     fprintf( o, "figure;\n");
     fprintf( o, "hold on;\n");
     fprintf( o, "plot( i, ucalc, 'k');\n");
-    fprintf( o, "plot( u_y_slice%02d, 'bo');", subs);
+    fprintf( o, "plot( i, u_y_slice%02d, 'bo');", subs);
     fprintf( o, "title(sprintf('LB results overlaying analytical Poiseuille profile, norm(diff)=%%20.17f',norm(u_y_slice%02d-ucalc)));\n", subs);
     fprintf( o, "hold off;\n");
   } /* if( lattice->param.gforce[subs][0] == 0 && lattice->param.gforce... */

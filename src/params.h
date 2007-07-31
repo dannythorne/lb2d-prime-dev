@@ -1917,7 +1917,9 @@ void dump_params( struct lattice_struct *lattice)
 
   if( !( o = fopen(filename,"w+")))
   {
-    printf("%s %d >> ERROR: fopen(\"%s\",\"w+\") = NULL.  Bye, bye!\n", 
+    printf("\n%s %d >> ERROR: fopen(\"%s\",\"w+\") = NULL.\n", 
+        __FILE__, __LINE__, filename);
+    printf("\n%s %d >> NOTE: Maybe need to create directory \"out/\"\n", 
         __FILE__, __LINE__, filename);
     exit(1);
   }
