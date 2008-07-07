@@ -141,7 +141,7 @@
 // lattices.  Note that if WRITE_MACRO_VAR_DAT_FILES is off, this flag
 // has no effect.
 // Flag: WRITE_RHO_AND_U_TO_TXT
-#define WRITE_RHO_AND_U_TO_TXT 1
+#define WRITE_RHO_AND_U_TO_TXT 0
 
 // WRITE_PDF_DAT_FILES is analogous to WRITE_MACRO_VAR_DAT_FILES.
 // Flag: WRITE_PDF_DAT_FILES

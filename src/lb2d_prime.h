@@ -21,7 +21,8 @@
 
 #ifndef CLK_TCK
 // Temporary fix for compiling on macbooks...
-#define CLK_TCK __DARWIN_CLK_TCK
+//#define CLK_TCK __DARWIN_CLK_TCK
+#define CLK_TCK CLOCKS_PER_SEC
 #endif
 
 #define IJ2N(_i_,_j_) (_j_)*get_LX(lattice) + (_i_)
