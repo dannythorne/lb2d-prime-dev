@@ -2278,6 +2278,9 @@ void compute_max_rho( lattice_ptr lattice, double *max_rho, int subs)
       }
     }
   }
+
+  process_reduce_double_max( lattice, max_rho);
+
 } /* void compute_max_rho( lattice_ptr lattice, double *max_rho, int subs) */
                                                                           // }}}
 // COMPUTE_MIN_RHO {{{1
@@ -2296,6 +2299,9 @@ void compute_min_rho( lattice_ptr lattice, double *min_rho, int subs)
       }
     }
   }
+
+  process_reduce_double_min( lattice, min_rho);
+
 } /* void compute_min_rho( lattice_ptr lattice, double *min_rho, int subs) */
                                                                           // }}}
 // COMPUTE_AVE_RHO {{{1
@@ -2312,6 +2318,10 @@ void compute_ave_rho( lattice_ptr lattice, double *ave_rho, int subs)
       nn++;
     }
   }
+
+  process_reduce_double_sum( lattice, ave_rho);
+  process_reduce_int_sum( lattice, &nn);
+
   if( nn != 0) { *ave_rho = (*ave_rho) / nn;}
 
 
@@ -2337,6 +2347,10 @@ void compute_max_u( lattice_ptr lattice, double *max_u, int subs)
       }
     }
   }
+
+  process_reduce_double_max( lattice, max_u+0);
+  process_reduce_double_max( lattice, max_u+1);
+
 } /* void compute_max_u( lattice_ptr lattice, double *max_u, int subs) */
                                                                           // }}}
 // COMPUTE_MAX_U_ALL {{{1
@@ -2367,6 +2381,7 @@ void compute_max_u_all( lattice_ptr lattice, double *max_u, int subs)
       if(     ( u_y) > *(max_u+4)) { *(max_u+4) =     ( u_y); }
     }
   }
+
 } /* void compute_max_u_all( lattice_ptr lattice, double *max_u, int subs) */
                                                                           // }}}
 // COMPUTE_MIN_U {{{1
@@ -2389,6 +2404,10 @@ void compute_min_u( lattice_ptr lattice, double *min_u, int subs)
       }
     }
   }
+
+  process_reduce_double_min( lattice, min_u+0);
+  process_reduce_double_min( lattice, min_u+1);
+
 } /* void compute_min_u( lattice_ptr lattice, double *min_u) */
                                                                           // }}}
 // COMPUTE_MIN_U_ALL {{{1
@@ -2436,6 +2455,11 @@ void compute_ave_u( lattice_ptr lattice, double *ave_u, int subs)
       nn++;
     }
   }
+
+  process_reduce_double_sum( lattice, ave_u+0);
+  process_reduce_double_sum( lattice, ave_u+1);
+  process_reduce_int_sum( lattice, &nn);
+
   if( nn != 0) 
   { 
     *(ave_u+0) = (*(ave_u+0))/nn;

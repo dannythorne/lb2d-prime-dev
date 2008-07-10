@@ -288,6 +288,8 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
 
   assert(*lattice!=NULL);
 
+  process_init( *lattice, argc, argv);
+
   if( argc == 2)
   {
     printf("argv = \"%s\"\n", argv[1]);
@@ -307,6 +309,8 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
 
   // Read problem parameters
   read_params( *lattice, filename);
+
+  process_compute_local_params( *lattice);
 
 #if PARALLEL
 //LBMPI   lbmpi = (*lattice)->lbmpi;
@@ -2038,6 +2042,8 @@ void destruct_lattice( struct lattice_struct *lattice)
 #if STORE_U_COMPOSITE
   free(   lattice->upr);
 #endif /* STORE_U_COMPOSITE */
+
+  process_finalize();
 
   free(   lattice);
 

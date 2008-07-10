@@ -99,6 +99,8 @@ void stream( lattice_ptr lattice)
 
 #if 1
 
+  process_send_recv_begin( lattice, subs);
+
   n = 0;
 
   for( j=0; j<ny; j++)
@@ -128,6 +130,9 @@ void stream( lattice_ptr lattice)
 
     } /* if( i=0; i<nx; i++, n++) */
   } /* if( j=0; j<lattice->param.LY; j++) */
+
+  process_send_recv_end( lattice, subs);
+
 #endif
 
 #endif
