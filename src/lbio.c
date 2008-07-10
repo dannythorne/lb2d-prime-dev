@@ -434,21 +434,28 @@ void dump_macro_vars( struct lattice_struct *lattice, int time)
     n = j*get_LX(lattice);
     for( i=0; i<get_LX(lattice); i++, n++)
     {
-      fprintf( o_rho, "%20.17f ", lattice->macro_vars[subs][n].rho);
-      fprintf( o_ux,  "%20.17f ", lattice->macro_vars[subs][n].u[0]);
-      fprintf( o_uy,  "%20.17f ", lattice->macro_vars[subs][n].u[1]);
+      fprintf( o_rho, "%10.8f ", lattice->macro_vars[subs][n].rho);
+      fprintf( o_ux,  "%10.8f ", lattice->macro_vars[subs][n].u[0]);
+      if( is_not_solid_node(lattice, subs, n))
+      {
+        fprintf( o_uy,  "%10.8f ", lattice->macro_vars[subs][n].u[1]);
+      }
+      else
+      {
+        fprintf( o_uy,  "----------");
+      }
 #if STORE_U_COMPOSITE
-      fprintf( o_upr_x,  "%20.17f ", lattice->upr[n].u[0]);
-      fprintf( o_upr_y,  "%20.17f ", lattice->upr[n].u[1]);
+      fprintf( o_upr_x,  "%10.8f ", lattice->upr[n].u[0]);
+      fprintf( o_upr_y,  "%10.8f ", lattice->upr[n].u[1]);
 #endif /* STORE_U_COMPOSITE */
       if( n==lattice->NumNodes)
       {
-        fprintf( o_rho, "%20.17f ", 0.);
-        fprintf( o_ux, "%20.17f ", 0.);
-        fprintf( o_uy, "%20.17f ", 0.);
+        fprintf( o_rho, "%10.8f ", 0.);
+        fprintf( o_ux, "%10.8f ", 0.);
+        fprintf( o_uy, "%10.8f ", 0.);
 #if STORE_U_COMPOSITE
-        fprintf( o_upr_x, "%20.17f ", 0.);
-        fprintf( o_upr_y, "%20.17f ", 0.);
+        fprintf( o_upr_x, "%10.8f ", 0.);
+        fprintf( o_upr_y, "%10.8f ", 0.);
 #endif /* STORE_U_COMPOSITE */
       }
     }
@@ -1321,14 +1328,14 @@ bmih.biBitCount[1] = ctemp;
 //LBMPI     process_exit(1);
 //LBMPI   }
 //LBMPI #else /* !(PARALLEL) */
-  if( *width_ptr != get_LX(lattice))
+  if( *width_ptr != get_g_LX(lattice))
   {
     printf("%s %d >> ERROR: LX %d does not match the "
         "width %d of the BMP file. Exiting!\n"
         "Note that, if the width stated here seems absurd, you\n"
         "might need to recompile with the SWAP_BYTE_ORDER flag.\n"
         "This can be done by \"make swap\".\n", 
-        __FILE__, __LINE__, get_LX(lattice), *width_ptr);
+        __FILE__, __LINE__, get_g_LX(lattice), *width_ptr);
     process_exit(1);
   }
 //LBMPI #endif /* (PARALLEL) */
@@ -1344,11 +1351,11 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
 //LBMPI     process_exit(1);
 //LBMPI   }
 //LBMPI #else /* !(PARALLEL) */
-  if( *height_ptr != get_LY(lattice))
+  if( *height_ptr != get_g_LY(lattice))
   {
     printf("%s %d >> ERROR: LY %d does not match the "
         "height %d of the BMP file. Exiting!\n", 
-        __FILE__, __LINE__, get_LY(lattice), *height_ptr);
+        __FILE__, __LINE__, get_g_LY(lattice), *height_ptr);
     process_exit(1);
   }
 //LBMPI #endif /* (PARALLEL) */
@@ -1446,18 +1453,18 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
           {
             // Red ==> Inflow, Pressure boundaries.
             if(    (int)floor((double)i/3.) == 0 
-                || (int)floor((double)i/3.) == get_LX(lattice)-1 )
+                || (int)floor((double)i/3.) == get_g_LX(lattice)-1 )
             {
-              if( !( j==0 || j == get_LY(lattice)-1))
+              if( !( j==0 || j == get_g_LY(lattice)-1))
               {
                 lattice->periodic_x[subs] = 0;
               }
             }
             if(    j == 0 
-                || j == get_LY(lattice)-1 )
+                || j == get_g_LY(lattice)-1 )
             {
               if( !(   (int)floor((double)i/3.) == 0 
-                    || (int)floor((double)i/3.) == get_LX(lattice)-1))
+                    || (int)floor((double)i/3.) == get_g_LX(lattice)-1))
               {
                 lattice->periodic_y[subs] = 0;
               }
@@ -1468,18 +1475,18 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
           {
             // Green ==> Outflow, Pressure boundaries.
             if(    (int)floor((double)i/3.) == 0 
-                || (int)floor((double)i/3.) == get_LX(lattice)-1 )
+                || (int)floor((double)i/3.) == get_g_LX(lattice)-1 )
             {
-              if( !( j==0 || j == get_LY(lattice)-1))
+              if( !( j==0 || j == get_g_LY(lattice)-1))
               {
                 lattice->periodic_x[subs] = 0;
               }
             }
             if(    j == 0 
-                || j == get_LY(lattice)-1 )
+                || j == get_g_LY(lattice)-1 )
             {
               if( !(   (int)floor((double)i/3.) == 0 
-                    || (int)floor((double)i/3.) == get_LX(lattice)-1))
+                    || (int)floor((double)i/3.) == get_g_LX(lattice)-1))
               {
                 lattice->periodic_y[subs] = 0;
               }

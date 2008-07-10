@@ -153,17 +153,17 @@ void process_send_recv_begin( lattice_ptr lattice, const int subs)
       lattice->process.y_pos_pdf_to_send[n] =
         lattice->pdf[subs][ XY2N( i , j , ni)].f[ N];
       lattice->process.y_neg_pdf_to_send[n] =
-        lattice->pdf[subs][ XY2N( i , j , ni)].f[ S];   
+        lattice->pdf[subs][ XY2N( i , 0 , ni)].f[ S];   
       n++;
       lattice->process.y_pos_pdf_to_send[n] =
         lattice->pdf[subs][ XY2N( i , j , ni)].f[NW];   
       lattice->process.y_neg_pdf_to_send[n] =
-        lattice->pdf[subs][ XY2N( i , j , ni)].f[SW];   
+        lattice->pdf[subs][ XY2N( i , 0 , ni)].f[SW];   
       n++;
       lattice->process.y_pos_pdf_to_send[n] =
         lattice->pdf[subs][ XY2N( i , j , ni)].f[NE];   
       lattice->process.y_neg_pdf_to_send[n] =
-        lattice->pdf[subs][ XY2N( i , j , ni)].f[SE];   
+        lattice->pdf[subs][ XY2N( i , 0 , ni)].f[SE];   
       n++;
 //3D       lattice->process.y_pos_pdf_to_send[n] =
 //3D         lattice->pdf[subs][ XY2N( i , j , ni)].f[TN];   
@@ -243,7 +243,6 @@ void process_send_recv_begin( lattice_ptr lattice, const int subs)
          __FILE__,__LINE__,get_proc_id(lattice),
          mpierr,
          (get_proc_id(lattice)+get_num_procs(lattice)+1)%get_num_procs(lattice));
-       process_finalize();
        process_exit(1);
      }
      // R E C V   F R O M   N E G A T I V E   D I R E C T I O N 
@@ -275,7 +274,6 @@ void process_send_recv_begin( lattice_ptr lattice, const int subs)
          __FILE__,__LINE__,get_proc_id(lattice),
          mpierr,
          (get_proc_id(lattice)+get_num_procs(lattice)-1)%get_num_procs(lattice));
-       process_finalize();
        process_exit(1);
      }
      // S E N D   I N   N E G A T I V E   D I R E C T I O N 
@@ -307,7 +305,6 @@ void process_send_recv_begin( lattice_ptr lattice, const int subs)
          __FILE__,__LINE__,get_proc_id(lattice),
          mpierr,
          (get_proc_id(lattice)+get_num_procs(lattice)-1)%get_num_procs(lattice));
-       process_finalize();
        process_exit(1);
      }
      // R E C V   F R O M   P O S I T I V E   D I R E C T I O N 
@@ -339,7 +336,6 @@ void process_send_recv_begin( lattice_ptr lattice, const int subs)
          __FILE__,__LINE__,get_proc_id(lattice),
          mpierr,
          (get_proc_id(lattice)+get_num_procs(lattice)+1)%get_num_procs(lattice));
-       process_finalize();
        process_exit(1);
      }
 #endif
@@ -391,17 +387,17 @@ void process_send_recv_end( lattice_ptr lattice, const int subs)
       ip = ( i<ni-1)?( i+1):( 0   );
       in = ( i>0   )?( i-1):( ni-1);
   
-      lattice->pdf[subs][ XY2N( i , j , ni)].ftemp[ N] =
+      lattice->pdf[subs][ XY2N( i , 0 , ni)].ftemp[ N] =
         lattice->process.y_pos_pdf_to_recv[n];
       lattice->pdf[subs][ XY2N( i , j , ni)].ftemp[ S] =
         lattice->process.y_neg_pdf_to_recv[n];
       n++;
-      lattice->pdf[subs][ XY2N( in, j , ni)].ftemp[NW] =
+      lattice->pdf[subs][ XY2N( in, 0 , ni)].ftemp[NW] =
         lattice->process.y_pos_pdf_to_recv[n];
       lattice->pdf[subs][ XY2N( in, j , ni)].ftemp[SW] =
         lattice->process.y_neg_pdf_to_recv[n];
       n++;
-      lattice->pdf[subs][ XY2N( ip, j , ni)].ftemp[NE] =
+      lattice->pdf[subs][ XY2N( ip, 0 , ni)].ftemp[NE] =
         lattice->process.y_pos_pdf_to_recv[n];
       lattice->pdf[subs][ XY2N( ip, j , ni)].ftemp[SE] =
         lattice->process.y_neg_pdf_to_recv[n];
@@ -771,7 +767,6 @@ void process_reduce_double_sum( lattice_ptr lattice, double *arg_x)
       "ERROR: %d <-- MPI_Reduce( ave_rho, MPI_DOUBLE, MPI_SUM)"
       "\n",
       __FILE__,__LINE__,get_proc_id(lattice), mpierr);
-    process_finalize();
     process_exit(1);
   }
   if( is_on_root_proc( lattice))
@@ -815,7 +810,6 @@ void process_reduce_int_sum( lattice_ptr lattice, int *arg_n)
       "ERROR: %d <-- MPI_Reduce( ave_rho, MPI_DOUBLE, MPI_SUM)"
       "\n",
       __FILE__,__LINE__,get_proc_id(lattice), mpierr);
-    process_finalize();
     process_exit(1);
   }
   if( is_on_root_proc( lattice))
@@ -859,7 +853,6 @@ void process_reduce_double_max( lattice_ptr lattice, double *arg_x)
       "ERROR: %d <-- MPI_Reduce( ave_rho, MPI_DOUBLE, MPI_SUM)"
       "\n",
       __FILE__,__LINE__,get_proc_id(lattice), mpierr);
-    process_finalize();
     process_exit(1);
   }
   if( is_on_root_proc( lattice))
@@ -903,7 +896,6 @@ void process_reduce_double_min( lattice_ptr lattice, double *arg_x)
       "ERROR: %d <-- MPI_Reduce( ave_rho, MPI_DOUBLE, MPI_SUM)"
       "\n",
       __FILE__,__LINE__,get_proc_id(lattice), mpierr);
-    process_finalize();
     process_exit(1);
   }
   if( is_on_root_proc( lattice))
@@ -1024,3 +1016,4 @@ int get_g_NumNodes( lattice_ptr lattice) { return get_NumNodes( lattice);}
 int get_g_StartNode( lattice_ptr lattice) { return 0;}
 #endif
 
+// vim: foldmethod=syntax
