@@ -109,6 +109,7 @@ void process_compute_local_params( lattice_ptr lattice)
 //3D     ", g_LZ = %d"
     ", g_StartNode = %d"
     ", g_NumNodes = %d"
+    ",   NumNodes = %d"
     ".\n"
     ,get_proc_id( lattice)
     ,get_g_SX( lattice)
@@ -124,6 +125,7 @@ void process_compute_local_params( lattice_ptr lattice)
 //3D     ,get_g_LZ( lattice)
     ,get_g_StartNode( lattice)
     ,get_g_NumNodes( lattice)
+    ,get_NumNodes( lattice)
     );
 #endif
 #endif

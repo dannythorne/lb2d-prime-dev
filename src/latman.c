@@ -312,7 +312,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
 
   process_compute_local_params( *lattice);
 
-#if PARALLEL
+//LBMPI #if PARALLEL
 //LBMPI   lbmpi = (*lattice)->lbmpi;
 //LBMPI   // Allocate matrix for storing information from bmp file.
 //LBMPI   matrix = (int**)malloc( get_GLY(lbmpi)*sizeof(int*));
@@ -329,7 +329,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
 //LBMPI       matrix[j][i] = 0;
 //LBMPI     }
 //LBMPI   }
-#else /* !(PARALLEL) */
+//LBMPI #else /* !(PARALLEL) */
   // Allocate matrix for storing information from bmp file.
   matrix = (int**)malloc( get_LY(*lattice)*sizeof(int*));
   for( j=0; j<get_LY(*lattice); j++)
@@ -345,7 +345,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
       matrix[j][i] = 0;
     }
   }
-#endif /* (PARALLEL) */
+//LBMPI #endif /* (PARALLEL) */
 
  for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
  {
@@ -354,18 +354,18 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
   (*lattice)->periodic_x[subs] = 1;
   (*lattice)->periodic_y[subs] = 1;
 
-#if PARALLEL
+//LBMPI #if PARALLEL
 //LBMPI   sprintf( filename, "./in/%dx%d.bmp", 
 //LBMPI            get_GLX((*lattice)->lbmpi), 
 //LBMPI            get_GLY((*lattice)->lbmpi));
 //LBMPI   spy_bmp( filename, *lattice, matrix);
 //LBMPI   lbmpi_distribute_domain(*lattice, &matrix);
 //LBMPI   lbmpi_write_local_bmp(*lattice, matrix);
-#else /* !(PARALLEL) */
+//LBMPI #else /* !(PARALLEL) */
   // Get solids.
   sprintf( filename, "./in/%dx%d.bmp", get_LX(*lattice), get_LY(*lattice));
   spy_bmp( filename, *lattice, matrix);
-#endif /* (PARALLEL) */
+//LBMPI #endif /* (PARALLEL) */
 
   // Determine active nodes.
   process_matrix( *lattice, matrix, subs);
