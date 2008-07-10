@@ -1,5 +1,7 @@
-LX                     83
-LY                    168
+LX                     16
+LY                     16
+NPX                    1
+NPY                    2
 characteristic_length  31
 NumFrames              8
 FrameRate              10000

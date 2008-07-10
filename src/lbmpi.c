@@ -355,13 +355,14 @@ void lbmpi_construct(
 #if 1
   // Output the indices for inspection...
   sprintf( lbmpi->iobuf, " ");
-  for(j=get_sj(lattice); j<=get_ej(lattice); j++)
+  //for(j=get_sj(lattice); j<=get_ej(lattice); j++)
+  for(j=1; j<=get_LY(lattice); j++)
   {
     sprintf( lbmpi->iobuf, "%s%d %d %d ",
       lbmpi->iobuf,
-      lbmpi->IndicesEW[ 3*j+0],
-      lbmpi->IndicesEW[ 3*j+1],
-      lbmpi->IndicesEW[ 3*j+2] );
+      lbmpi->IndicesEW[ 3*(j-1)+0],
+      lbmpi->IndicesEW[ 3*(j-1)+1],
+      lbmpi->IndicesEW[ 3*(j-1)+2] );
   }
   printf("\n%d: MPI_West2East { %s }\n", lbmpi_get_ProcID(lbmpi), lbmpi->iobuf);
 #endif
@@ -650,3 +651,5 @@ void lbmpi_write_local_bmp( lattice_ptr lattice, int **sub_matrix)
   printf("lbmpi_write_local_bmp() -- bye!\n");
 
 } /* void lbmpi_write_local_bmp( lattice_ptr lattice, int **sub_matrix) */
+
+// vim: foldmethod=syntax

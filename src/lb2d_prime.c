@@ -28,9 +28,10 @@ int main( int argc, char **argv)
 
   setbuf( stdout, (char*)NULL); // Don't buffer screen output.
 
-#if OSTYPE==darwin
-  printf("%s %d >> Darwin \n",__FILE__,__LINE__);
-#endif /* (OSTYPE=="DARWIN") */
+// TODO: OSTYPE is not defined...?
+//#if OSTYPE==darwin
+//  printf("%s %d >> Darwin \n",__FILE__,__LINE__);
+//#endif /* (OSTYPE=="DARWIN") */
 
   // Allocate the lattice structure.
   lattice = ( struct lattice_struct*)malloc( sizeof(struct lattice_struct));

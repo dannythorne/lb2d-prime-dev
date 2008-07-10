@@ -14,7 +14,7 @@ ostype:
 	gcc -DOSTYPE=${OSTYPE} -o ${EXE} ./src/lb2d_prime.c -lm
 
 par:
-	gcc -DPARALLEL -DOSTYPE=${OSTYPE} -o ${EXE} ./src/lb2d_prime.c -L/sw/lib -I/sw/include/ -lmpi -llam -lm
+	mpicc -DPARALLEL -DOSTYPE=${OSTYPE} -o ${EXE} ./src/lb2d_prime.c -L/sw/lib -I/sw/include/ -lmpich -lm
 
 swap:
 	gcc -DSWAP_BYTE_ORDER -o ${EXE} ./src/lb2d_prime.c -lm
