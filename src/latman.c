@@ -363,7 +363,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
 //LBMPI   lbmpi_write_local_bmp(*lattice, matrix);
 //LBMPI #else /* !(PARALLEL) */
   // Get solids.
-  sprintf( filename, "./in/%dx%d.bmp", get_LX(*lattice), get_LY(*lattice));
+  sprintf( filename, "./in/%dx%d.bmp", get_g_LX(*lattice), get_g_LY(*lattice));
   spy_bmp( filename, *lattice, matrix);
 //LBMPI #endif /* (PARALLEL) */
 
