@@ -109,13 +109,13 @@ int get_num_active_nodes(         lattice_ptr lattice);
 inline void run_man( lattice_ptr lattice);
 inline void dump( lattice_ptr lattice, int tick_num);
 
-#ifdef PARALLEL
-struct lbmpi_struct;
-typedef struct lbmpi_struct *lbmpi_ptr;
-void lbmpi_construct( lbmpi_ptr lbmpi, lattice_ptr lattice, int argc, char **argv);
-void lbmpi_allocate_datatypes( lbmpi_ptr lbmpi, lattice_ptr lattice);
-MPI_Aint *lbmpi_get_Index0_ptr( lbmpi_ptr lbmpi);
-#endif /* (PARALLEL) */
+//LBMPI #ifdef PARALLEL
+//LBMPI struct lbmpi_struct;
+//LBMPI typedef struct lbmpi_struct *lbmpi_ptr;
+//LBMPI void lbmpi_construct( lbmpi_ptr lbmpi, lattice_ptr lattice, int argc, char **argv);
+//LBMPI void lbmpi_allocate_datatypes( lbmpi_ptr lbmpi, lattice_ptr lattice);
+//LBMPI MPI_Aint *lbmpi_get_Index0_ptr( lbmpi_ptr lbmpi);
+//LBMPI #endif /* (PARALLEL) */
 
 
 #endif /* FORWARD_DECLARATIONS_H */

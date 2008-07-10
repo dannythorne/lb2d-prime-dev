@@ -1299,13 +1299,13 @@ bmih.biBitCount[1] = ctemp;
   bitcount_ptr = (short int*)bmih.biBitCount;
 
 #if PARALLEL
-  if( *width_ptr != lattice->lbmpi->GLX)
-  {
-    printf("%s %d >> ERROR: GLX %d does not match the "
-        "width %d of the BMP file. Exiting!\n", 
-        __FILE__, __LINE__, lattice->lbmpi->GLX, *width_ptr);
-    exit(1);
-  }
+//LBMPI   if( *width_ptr != lattice->lbmpi->GLX)
+//LBMPI   {
+//LBMPI     printf("%s %d >> ERROR: GLX %d does not match the "
+//LBMPI         "width %d of the BMP file. Exiting!\n", 
+//LBMPI         __FILE__, __LINE__, lattice->lbmpi->GLX, *width_ptr);
+//LBMPI     exit(1);
+//LBMPI   }
 #else /* !(PARALLEL) */
   if( *width_ptr != get_LX(lattice))
   {
@@ -1322,13 +1322,13 @@ printf("%s %d >> biWidth = %d \n", __FILE__, __LINE__, (int)*bmih.biWidth);
 printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
 
 #if PARALLEL
-  if( *height_ptr != lattice->lbmpi->GLY)
-  {
-    printf("%s %d >> ERROR: GLY %d does not match the "
-        "height %d of the BMP file. Exiting!\n", 
-        __FILE__, __LINE__, lattice->lbmpi->GLY, *height_ptr);
-    exit(1);
-  }
+//LBMPI   if( *height_ptr != lattice->lbmpi->GLY)
+//LBMPI   {
+//LBMPI     printf("%s %d >> ERROR: GLY %d does not match the "
+//LBMPI         "height %d of the BMP file. Exiting!\n", 
+//LBMPI         __FILE__, __LINE__, lattice->lbmpi->GLY, *height_ptr);
+//LBMPI     exit(1);
+//LBMPI   }
 #else /* !(PARALLEL) */
   if( *height_ptr != get_LY(lattice))
   {

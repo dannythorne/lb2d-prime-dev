@@ -91,6 +91,8 @@
 // Flag: WD
 #define WD (1./36.)
 
+#define Q 9
+
 // Toggle manage_body_force call at beginning of time loop for
 // gradually increasing/decreasing gravity.
 // Flag: MANAGE_BODY_FORCE

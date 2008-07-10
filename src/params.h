@@ -17,10 +17,10 @@ void assign_default_param_vals( lattice_ptr lattice)
 #if 1
   lattice->param.LX = 0;
   lattice->param.LY = 0;
-#if PARALLEL
-  lattice->lbmpi->NPX = 0;
-  lattice->lbmpi->NPY = 0;
-#endif /* PARALLEL */
+//LBMPI #if PARALLEL
+//LBMPI   lattice->lbmpi->NPX = 0;
+//LBMPI   lattice->lbmpi->NPY = 0;
+//LBMPI #endif /* PARALLEL */
   lattice->param.length_scale = 0;
   lattice->param.NumFrames = 0;
   lattice->param.FrameRate = 0;
@@ -319,25 +319,25 @@ void read_params( lattice_ptr lattice, const char *infile)
     }
     else if( !strncmp(param_label,"NPX",80))
     {
-#if PARALLEL
-      fscanf( in, "%d\n", &(lattice->lbmpi->NPX));
-      printf("%s %d >> NPX = %d\n",__FILE__,__LINE__, lattice->lbmpi->NPX);
-#else /* !(PARALLEL) */
-      fscanf( in, "%d\n", &(blank));
-      printf("%s %d >> NPX = %d // unused: not PARALELL\n",
-        __FILE__,__LINE__, blank);
-#endif /* (PARALLEL) */
+//LBMPI #if PARALLEL
+//LBMPI       fscanf( in, "%d\n", &(lattice->lbmpi->NPX));
+//LBMPI       printf("%s %d >> NPX = %d\n",__FILE__,__LINE__, lattice->lbmpi->NPX);
+//LBMPI #else /* !(PARALLEL) */
+//LBMPI       fscanf( in, "%d\n", &(blank));
+//LBMPI       printf("%s %d >> NPX = %d // unused: not PARALELL\n",
+//LBMPI         __FILE__,__LINE__, blank);
+//LBMPI #endif /* (PARALLEL) */
     }
     else if( !strncmp(param_label,"NPY",80))
     {
-#if PARALLEL
-      fscanf( in, "%d\n", &(lattice->lbmpi->NPY));
-      printf("%s %d >> NPY = %d\n",__FILE__,__LINE__, lattice->lbmpi->NPY);
-#else /* !(PARALLEL) */
-      fscanf( in, "%d\n", &(blank));
-      printf("%s %d >> NPY = %d // unused: not PARALELL\n",
-        __FILE__,__LINE__, blank);
-#endif /* (PARALLEL) */
+//LBMPI #if PARALLEL
+//LBMPI       fscanf( in, "%d\n", &(lattice->lbmpi->NPY));
+//LBMPI       printf("%s %d >> NPY = %d\n",__FILE__,__LINE__, lattice->lbmpi->NPY);
+//LBMPI #else /* !(PARALLEL) */
+//LBMPI       fscanf( in, "%d\n", &(blank));
+//LBMPI       printf("%s %d >> NPY = %d // unused: not PARALELL\n",
+//LBMPI         __FILE__,__LINE__, blank);
+//LBMPI #endif /* (PARALLEL) */
     }
     else if( !strncmp(param_label,"characteristic_length",80))
     {
@@ -1720,23 +1720,23 @@ void read_params( lattice_ptr lattice, const char *infile)
   skip_label( in); fscanf( in, "%d", &( lattice->param.do_user_stuff     )   );
 #endif /* (NEW_PARAMS_INPUT_ROUTINE) */
 
-#if PARALLEL
-  // Determine local domain size.
-  compute_LX( lattice, lattice->lbmpi);
-  compute_LY( lattice, lattice->lbmpi);
-  printf("%s %d >> (GLX,GLY)=(%d,%d)\n",
-    __FILE__,__LINE__,
-    get_GLX(lattice->lbmpi),
-    get_GLY(lattice->lbmpi));
-  printf("%s %d >> (LX,LY)=(%d,%d)\n",
-    __FILE__,__LINE__,
-    get_LX(lattice),
-    get_LY(lattice));
-
-  // Determine global coordinates of local domain.
-  compute_global_coords( lattice);
-
-#endif /* (PARALLEL) */
+//LBMPI #if PARALLEL
+//LBMPI   // Determine local domain size.
+//LBMPI   compute_LX( lattice, lattice->lbmpi);
+//LBMPI   compute_LY( lattice, lattice->lbmpi);
+//LBMPI   printf("%s %d >> (GLX,GLY)=(%d,%d)\n",
+//LBMPI     __FILE__,__LINE__,
+//LBMPI     get_GLX(lattice->lbmpi),
+//LBMPI     get_GLY(lattice->lbmpi));
+//LBMPI   printf("%s %d >> (LX,LY)=(%d,%d)\n",
+//LBMPI     __FILE__,__LINE__,
+//LBMPI     get_LX(lattice),
+//LBMPI     get_LY(lattice));
+//LBMPI 
+//LBMPI   // Determine global coordinates of local domain.
+//LBMPI   compute_global_coords( lattice);
+//LBMPI 
+//LBMPI #endif /* (PARALLEL) */
 
   lattice->NumTimeSteps = 
     lattice->param.NumFrames * lattice->param.FrameRate;

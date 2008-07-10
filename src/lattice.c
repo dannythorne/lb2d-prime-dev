@@ -30,6 +30,10 @@ int get_NumNodes( lattice_ptr lattice)
     return lattice->param.LX*lattice->param.LY;
   }
 }
+void set_NumNodes( lattice_ptr lattice)
+{
+  lattice->NumNodes = get_LX( lattice)*get_LY( lattice);
+}
 
 double get_G( lattice_ptr lattice) { return lattice->param.G;}
 double get_Gads( lattice_ptr lattice, int subs)

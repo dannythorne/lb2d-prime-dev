@@ -282,9 +282,9 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
   char   r, g, b;
   struct bitmap_info_header bmih;
 #endif /* POROUS_MEDIA */
-#if PARALLEL
-  lbmpi_ptr lbmpi;
-#endif /* (PARALLEL) */
+//LBMPI #if PARALLEL
+//LBMPI   lbmpi_ptr lbmpi;
+//LBMPI #endif /* (PARALLEL) */
 
   assert(*lattice!=NULL);
 
@@ -309,22 +309,22 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
   read_params( *lattice, filename);
 
 #if PARALLEL
-  lbmpi = (*lattice)->lbmpi;
-  // Allocate matrix for storing information from bmp file.
-  matrix = (int**)malloc( get_GLY(lbmpi)*sizeof(int*));
-  for( j=0; j<get_GLY(lbmpi); j++)
-  {
-    matrix[j] = (int*)malloc( get_GLX(lbmpi)*sizeof(int));
-  }
-
-  // Initialize matrix[][].
-  for( j=0; j<get_GLY(lbmpi); j++)
-  {
-    for( i=0; i<get_GLX(lbmpi); i++)
-    {
-      matrix[j][i] = 0;
-    }
-  }
+//LBMPI   lbmpi = (*lattice)->lbmpi;
+//LBMPI   // Allocate matrix for storing information from bmp file.
+//LBMPI   matrix = (int**)malloc( get_GLY(lbmpi)*sizeof(int*));
+//LBMPI   for( j=0; j<get_GLY(lbmpi); j++)
+//LBMPI   {
+//LBMPI     matrix[j] = (int*)malloc( get_GLX(lbmpi)*sizeof(int));
+//LBMPI   }
+//LBMPI 
+//LBMPI   // Initialize matrix[][].
+//LBMPI   for( j=0; j<get_GLY(lbmpi); j++)
+//LBMPI   {
+//LBMPI     for( i=0; i<get_GLX(lbmpi); i++)
+//LBMPI     {
+//LBMPI       matrix[j][i] = 0;
+//LBMPI     }
+//LBMPI   }
 #else /* !(PARALLEL) */
   // Allocate matrix for storing information from bmp file.
   matrix = (int**)malloc( get_LY(*lattice)*sizeof(int*));
@@ -351,12 +351,12 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
   (*lattice)->periodic_y[subs] = 1;
 
 #if PARALLEL
-  sprintf( filename, "./in/%dx%d.bmp", 
-           get_GLX((*lattice)->lbmpi), 
-           get_GLY((*lattice)->lbmpi));
-  spy_bmp( filename, *lattice, matrix);
-  lbmpi_distribute_domain(*lattice, &matrix);
-  lbmpi_write_local_bmp(*lattice, matrix);
+//LBMPI   sprintf( filename, "./in/%dx%d.bmp", 
+//LBMPI            get_GLX((*lattice)->lbmpi), 
+//LBMPI            get_GLY((*lattice)->lbmpi));
+//LBMPI   spy_bmp( filename, *lattice, matrix);
+//LBMPI   lbmpi_distribute_domain(*lattice, &matrix);
+//LBMPI   lbmpi_write_local_bmp(*lattice, matrix);
 #else /* !(PARALLEL) */
   // Get solids.
   sprintf( filename, "./in/%dx%d.bmp", get_LX(*lattice), get_LY(*lattice));

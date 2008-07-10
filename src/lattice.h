@@ -11,6 +11,10 @@
 //
 //  - Structure to hold the particle distribution functions.
 //
+
+#ifndef LATTICE_H
+#define LATTICE_H
+
 struct pdf_struct
 {
   double feq[   /*NUM_DIRS*/ 9];
@@ -88,6 +92,38 @@ struct ns_struct
   double ns;
 };
 #endif /* POROUS_MEDIA */
+
+struct process_struct
+{
+  int id;
+  int num_procs;
+#if PARALLEL
+  int g_LX;
+  int g_LY;
+//3D   int g_LZ;
+  int g_NumNodes;
+
+  int g_SX, g_EX;
+  int g_SY, g_EY;
+//3D   int g_SZ, g_EZ;
+  int g_StartNode;
+
+  double *y_pos_pdf_to_send;
+  double *y_pos_pdf_to_recv;
+  double *y_neg_pdf_to_send;
+  double *y_neg_pdf_to_recv;
+
+  MPI_Request send_req_0;
+  MPI_Request recv_req_0;
+  MPI_Request send_req_1;
+  MPI_Request recv_req_1;
+  MPI_Status mpi_status;
+  int mpierr;
+
+#endif
+};
+typedef struct process_struct *process_ptr;
+
 
 // struct param_struct
 //
@@ -586,11 +622,13 @@ struct lattice_struct
   struct ns_struct         *ns;
 #endif /* POROUS_MEDIA */
 
-#if PARALLEL
-  lbmpi_ptr lbmpi;
-#endif /* (PARALLEL) */
+//LBMPI #if PARALLEL
+//LBMPI   lbmpi_ptr lbmpi;
+//LBMPI #endif /* (PARALLEL) */
 
   struct user_stuff_struct *user_stuff;
+
+  struct process_struct    process;
 
 };
 //typedef struct lattice_struct *lattice_ptr;
@@ -706,3 +744,4 @@ struct rgb_quad
 
 #include "lattice.c"
 
+#endif

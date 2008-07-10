@@ -22,9 +22,9 @@ int main( int argc, char **argv)
 
   struct report_struct report;
 
-#if PARALLEL
-  lbmpi_ptr lbmpi;
-#endif /* (PARALLEL) */
+//LBMPI #if PARALLEL
+//LBMPI   lbmpi_ptr lbmpi;
+//LBMPI #endif /* (PARALLEL) */
 
   setbuf( stdout, (char*)NULL); // Don't buffer screen output.
 
@@ -36,13 +36,13 @@ int main( int argc, char **argv)
   // Allocate the lattice structure.
   lattice = ( struct lattice_struct*)malloc( sizeof(struct lattice_struct));
 
-#if PARALLEL
-  // Allocate the lbmpi structure.
-  lbmpi = ( struct lbmpi_struct*)malloc( sizeof(struct lbmpi_struct));
-
-  // Give the lattice a pointer to the lbmpi structure.
-  lattice->lbmpi = lbmpi;
-#endif /* (PARALLEL) */
+//LBMPI #if PARALLEL
+//LBMPI   // Allocate the lbmpi structure.
+//LBMPI   lbmpi = ( struct lbmpi_struct*)malloc( sizeof(struct lbmpi_struct));
+//LBMPI 
+//LBMPI   // Give the lattice a pointer to the lbmpi structure.
+//LBMPI   lattice->lbmpi = lbmpi;
+//LBMPI #endif /* (PARALLEL) */
 
   report_flags();
 
@@ -50,9 +50,9 @@ int main( int argc, char **argv)
 
   construct_lattice( &lattice, argc, argv);
 
-#if PARALLEL
-  lbmpi_construct( lbmpi, lattice, argc, argv);
-#endif /* (PARALLEL) */
+//LBMPI #if PARALLEL
+//LBMPI   lbmpi_construct( lbmpi, lattice, argc, argv);
+//LBMPI #endif /* (PARALLEL) */
 
   lattice->time = 0;
   lattice->frame = 0;
@@ -86,9 +86,9 @@ int main( int argc, char **argv)
       lattice->time = time;                                run_man( lattice);
 
       stream( lattice); /* ftemp <- f */                   dump( lattice, 1);
-#if PARALLEL
-      lbmpi_communicate( lbmpi, lattice);
-#endif /* (PARALLEL) */
+//LBMPI #if PARALLEL
+//LBMPI       lbmpi_communicate( lbmpi, lattice);
+//LBMPI #endif /* (PARALLEL) */
       bcs( lattice);                                       dump( lattice, 2);
       compute_macro_vars( lattice, /*which_f=*/ 1); // solute/buoyancy/grav
       //compute_macro_vars( lattice, /*which_f=*/ 1);

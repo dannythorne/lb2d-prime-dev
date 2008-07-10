@@ -26,11 +26,24 @@
 #endif
 
 #define IJ2N(_i_,_j_) (_j_)*get_LX(lattice) + (_i_)
+// Following for compatibility with process mechanism imported from LB3D.
+#define XY2N(_i_,_j_,_ni_) (_j_)*(_ni_) + (_i_)
 #define N2I(_n_) (_n_)%get_LX(lattice)
 #define N2J(_n_) (_n_)/get_LX(lattice)
 
-double vx[9] = { 0., 1., 0., -1.,  0., 1., -1., -1.,  1.};
-double vy[9] = { 0., 0., 1.,  0., -1., 1.,  1., -1., -1.};
+double vx[9] = { 0., 1., 0.,-1., 0., 1.,-1.,-1., 1.};
+double vy[9] = { 0., 0., 1., 0.,-1., 1., 1.,-1.,-1.};
+//               C   E   N   W   S   NE  NW  SW  SE
+
+#define C  0
+#define E  1
+#define N  2
+#define W  3
+#define S  4
+#define NE 5
+#define NW 6
+#define SW 7
+#define SE 8
 
 #define EPS .0000000000001
 #define PI  3.1415926535
@@ -45,15 +58,16 @@ double vy[9] = { 0., 0., 1.,  0., -1., 1.,  1., -1., -1.};
 
 #include "forward_declarations.h"
 
+#include "process.h"
 #include "lattice.h"
 #include "user_stuff.h"
 
-#ifdef PARALLEL
-#include "lbmpi.h"
-#endif /* PARALLEL */
-#ifdef PARALLEL
-#include "lbmpi.c"
-#endif /* PARALLEL */
+//LBMPI #ifdef PARALLEL
+//LBMPI #include "lbmpi.h"
+//LBMPI #endif /* PARALLEL */
+//LBMPI #ifdef PARALLEL
+//LBMPI #include "lbmpi.c"
+//LBMPI #endif /* PARALLEL */
 
 #include "user_stuff.c"
 
@@ -78,6 +92,7 @@ double vy[9] = { 0., 0., 1.,  0., -1., 1.,  1., -1., -1.};
 //#include "min_nodes/lbio.c"
 //#include "min_nodes/latman.c"
 #else /* !( DO_NOT_STORE_SOLIDS) */
+#include "process.c"
 #include "compute.c"
 #include "stream.c"
 #include "collide.c"
