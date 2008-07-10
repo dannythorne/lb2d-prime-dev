@@ -1166,10 +1166,11 @@ void read_checkpoint( struct lattice_struct *lattice)
 //
 //  - Ones for non-white pixels.
 //
-void spy_bmp( char *filename, lattice_ptr lattice, int **spy)
+void spy_bmp( char *filename, lattice_ptr lattice, int **matrix)
 {
   FILE *in, *o;
   int i, j, n, m;
+  int g_i, g_j;
   int pad, bytes_per_row;
   char k;
   char b, g, r;
@@ -1183,15 +1184,31 @@ void spy_bmp( char *filename, lattice_ptr lattice, int **spy)
   short int *bitcount_ptr;
   char ctemp;
   int  itemp;
+  int **spy;
 
   printf("spy_bmp() -- Hi!\n");
 
+  spy = (int**)malloc( get_g_LY(lattice)*sizeof(int*));
+  for( j=0; j<get_g_LY(lattice); j++)
+  {
+    spy[j] = (int*)malloc( get_g_LX(lattice)*sizeof(int));
+  }
+
   // Clear the spy array.
+  for( j=0; j<get_g_LY(lattice); j++)
+  {
+    for( i=0; i<get_g_LX(lattice); i++)
+    {
+      spy[j][i] = 0;
+    }
+  }
+
+  // Clear the matrix array.
   for( j=0; j<get_LY(lattice); j++)
   {
     for( i=0; i<get_LX(lattice); i++)
     {
-      spy[j][i] = 0;
+      matrix[j][i] = 0;
     }
   }
 
@@ -1501,6 +1518,20 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
   }
 
   fclose(in);
+
+  for( j=0, g_j=get_g_SY(lattice); j<get_LY(lattice); j++, g_j++)
+  {
+    for( i=0, g_i=get_g_SX(lattice); i<get_LX(lattice); i++, g_i++)
+    {
+      matrix[j][i] = spy[g_j][g_i];
+    }
+  }
+
+  for( j=0; j<get_g_LY(lattice); j++)
+  {
+    free(spy[j]);
+  }
+  free(spy);
 
   printf("spy_bmp() -- Bye!\n");
   printf("\n");

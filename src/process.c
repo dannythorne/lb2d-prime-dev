@@ -102,6 +102,8 @@ void process_compute_local_params( lattice_ptr lattice)
     ", g_SY = %d"
     ", g_EY = %d"
     ", g_LY = %d"
+    ",   LX = %d"
+    ",   LY = %d"
 //3D     ", g_SZ = %d"
 //3D     ", g_EZ = %d"
 //3D     ", g_LZ = %d"
@@ -115,6 +117,8 @@ void process_compute_local_params( lattice_ptr lattice)
     ,get_g_SY( lattice)
     ,get_g_EY( lattice)
     ,get_g_LY( lattice)
+    ,get_LX( lattice)
+    ,get_LY( lattice)
 //3D     ,get_g_SZ( lattice)
 //3D     ,get_g_EZ( lattice)
 //3D     ,get_g_LZ( lattice)
@@ -124,7 +128,7 @@ void process_compute_local_params( lattice_ptr lattice)
 #endif
 #endif
 
-} /* void process_init( process_ptr *process, int argc, char **argv) */
+} /* void process_compute_local_params( lattice_ptr lattice) */
 
 //##############################################################################
 void process_send_recv_begin( lattice_ptr lattice, const int subs)
