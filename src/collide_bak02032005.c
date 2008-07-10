@@ -90,7 +90,7 @@ void collide( lattice_ptr lattice)
                  *f, a,
                  lattice->time             );
             printf("\n");
-            exit(1);
+            process_exit(1);
           }
 #endif /* PUKE_NEGATIVE_DENSITIES */
 
@@ -312,7 +312,7 @@ void collide( lattice_ptr lattice)
                  f[a], a,
                  lattice->time             );
             printf("\n");
-            exit(1);
+            process_exit(1);
           }
         } /* for( a=0; a<=8; a++) */
 #endif /* PUKE_NEGATIVE_DENSITIES */
@@ -435,7 +435,7 @@ void collide( lattice_ptr lattice)
                   "Encountered solid node somewhere other than side walls. "
                   "That situation is not supported. "
                   "Exiting!", __FILE__, __LINE__);
-                exit(1);
+                process_exit(1);
               }
             }
             else
@@ -444,7 +444,7 @@ void collide( lattice_ptr lattice)
                 "FlowDir is indeterminate. "
                 "Cannot apply slip BC (bc_sigma_slip). "
                 "Exiting!", __FILE__, __LINE__);
-              exit(1);
+              process_exit(1);
             }
 
           } /* if( lattice->param.bc_sigma_slip) */

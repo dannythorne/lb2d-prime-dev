@@ -101,7 +101,7 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
              n/lattice->param.LX, *rho[subs], 
              lattice->time             );
         printf("\n");
-        exit(1);
+        process_exit(1);
       }
 #endif /* PUKE_NEGATIVE_DENSITIES */
 
@@ -120,7 +120,7 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
                lattice->time        );
         printf("\n");
         printf("\n");
-        exit(1);
+        process_exit(1);
       }
 
     } /* if( !( bc++->bc_type & BC_SOLID_NODE)) */
@@ -195,7 +195,7 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
              n/lattice->param.LX, *rho[subs], 
              lattice->time             );
         printf("\n");
-        exit(1);
+        process_exit(1);
       }
 #endif /* PUKE_NEGATIVE_CONCENTRATIONS */
       //assert( *rho[subs] != 0);
@@ -239,7 +239,7 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
                lattice->time        );
         printf("\n");
         printf("\n");
-        exit(1);
+        process_exit(1);
       }
 
       if( lattice->param.incompressible)
@@ -360,7 +360,7 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
              n/lattice->param.LX, *rho[subs], 
              lattice->time             );
         printf("\n");
-        exit(1);
+        process_exit(1);
       }
 #endif
 // PUKE_NEGATIVE_DENSITIES }}}
@@ -530,7 +530,7 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
     "NUM_FLUID_COMPONENTS = %d . "
     "Exiting!\n",
     NUM_FLUID_COMPONENTS);
-  exit(1);
+  process_exit(1);
  } // }}}
 
 } /* void compute_macro_vars( struct lattice_struct *lattice) */
@@ -637,7 +637,7 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
       "compute_feq() -- "
       "Unhandled case NUM_FLUID_COMPONENTS = %d .  "
       "Exiting!\n", NUM_FLUID_COMPONENTS);
-    exit(1);
+    process_exit(1);
   }
   //dump_forces( lattice);
   //force2bmp( lattice);
@@ -1107,7 +1107,7 @@ void compute_fluid_fluid_force( lattice_ptr lattice)
       printf("%s %d >> Need to be periodic in x-direction to use "
           "NON_LOCAL_FORCES for now.  Exiting!\n",
           __FILE__, __LINE__);
-      exit(1);
+      process_exit(1);
     }
 
     for( j=sj; j<=ej; j++)
@@ -1283,7 +1283,7 @@ void compute_fluid_fluid_force( lattice_ptr lattice)
       printf("%s %d >> Need to be fully periodic to use "
           "NON_LOCAL_FORCES for now.  Exiting!\n"
           __FILE__, __LINE__);
-      exit(1);
+      process_exit(1);
     }
 
     for( j=0; j<LY; j++)
@@ -1451,7 +1451,7 @@ void compute_phase_force( lattice_ptr lattice, int subs)
     printf("%s %d >> Need to be fully periodic to use "
         "ZHANG_AND_CHEN_ENERGY_TRANSPORT for now.  Exiting!\n"
         __FILE__, __LINE__);
-    exit(1);
+    process_exit(1);
 
   } /* if( !lattice->periodic_x[0] || !lattice->periodic_y[0]) */
 

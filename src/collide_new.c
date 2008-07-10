@@ -90,7 +90,7 @@ void collide( lattice_ptr lattice)
                  *f, a,
                  lattice->time             );
             printf("\n");
-            exit(1);
+            process_exit(1);
           }
 #endif /* PUKE_NEGATIVE_DENSITIES */
 
@@ -312,7 +312,7 @@ void collide( lattice_ptr lattice)
                  f[a], a,
                  lattice->time             );
             printf("\n");
-            exit(1);
+            process_exit(1);
           }
         } /* for( a=0; a<=8; a++) */
 #endif /* PUKE_NEGATIVE_DENSITIES */

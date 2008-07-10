@@ -41,8 +41,8 @@ void process_compute_local_params( lattice_ptr lattice)
 //3D   set_g_EZ( lattice, get_LZ( lattice) - 1);
   set_g_NumNodes( lattice, get_NumNodes( lattice));
 
-  // Adjust local z-dimension according to local subdomain.
-  // NOTE: Currently only supports partitioning in z-direction.
+  // Adjust local y-dimension according to local subdomain.
+  // NOTE: Currently only supports partitioning in y-direction.
   NumLayersOnRoot = get_g_LY( lattice) % get_num_procs( lattice);
   if( NumLayersOnRoot != 0)
   {
@@ -244,7 +244,7 @@ void process_send_recv_begin( lattice_ptr lattice, const int subs)
          mpierr,
          (get_proc_id(lattice)+get_num_procs(lattice)+1)%get_num_procs(lattice));
        process_finalize();
-       exit(1);
+       process_exit(1);
      }
      // R E C V   F R O M   N E G A T I V E   D I R E C T I O N 
      //#########################################################################
@@ -276,7 +276,7 @@ void process_send_recv_begin( lattice_ptr lattice, const int subs)
          mpierr,
          (get_proc_id(lattice)+get_num_procs(lattice)-1)%get_num_procs(lattice));
        process_finalize();
-       exit(1);
+       process_exit(1);
      }
      // S E N D   I N   N E G A T I V E   D I R E C T I O N 
      //#########################################################################
@@ -308,7 +308,7 @@ void process_send_recv_begin( lattice_ptr lattice, const int subs)
          mpierr,
          (get_proc_id(lattice)+get_num_procs(lattice)-1)%get_num_procs(lattice));
        process_finalize();
-       exit(1);
+       process_exit(1);
      }
      // R E C V   F R O M   P O S I T I V E   D I R E C T I O N 
      //#########################################################################
@@ -340,7 +340,7 @@ void process_send_recv_begin( lattice_ptr lattice, const int subs)
          mpierr,
          (get_proc_id(lattice)+get_num_procs(lattice)+1)%get_num_procs(lattice));
        process_finalize();
-       exit(1);
+       process_exit(1);
      }
 #endif
 } /* void process_send_recv_begin( lattice_ptr lattice, const int subs) */
@@ -666,7 +666,7 @@ void gather_north_pointing_pdfs(
     default:
       printf("%s %d %04d >> ERROR: Unhandled case which_pdf=%d. Exiting!",
         __FILE__,__LINE__,get_proc_id(lattice), which_pdf);
-      exit(1);
+      process_exit(1);
       break;
   } /* switch(which_pdf) */
 } /* void gather_north_pointing_pdfs( lattice_ptr lattice, double *north) */
@@ -732,7 +732,7 @@ void gather_south_pointing_pdfs(
     default:
       printf("%s %d %04d >> ERROR: Unhandled case which_pdf=%d. Exiting!",
         __FILE__,__LINE__,get_proc_id(lattice), which_pdf);
-      exit(1);
+      process_exit(1);
       break;
   }
 } /* void gather_south_pointing_pdfs( lattice_ptr lattice, double *south) */
@@ -772,7 +772,7 @@ void process_reduce_double_sum( lattice_ptr lattice, double *arg_x)
       "\n",
       __FILE__,__LINE__,get_proc_id(lattice), mpierr);
     process_finalize();
-    exit(1);
+    process_exit(1);
   }
   if( is_on_root_proc( lattice))
   {
@@ -816,7 +816,7 @@ void process_reduce_int_sum( lattice_ptr lattice, int *arg_n)
       "\n",
       __FILE__,__LINE__,get_proc_id(lattice), mpierr);
     process_finalize();
-    exit(1);
+    process_exit(1);
   }
   if( is_on_root_proc( lattice))
   {
@@ -860,7 +860,7 @@ void process_reduce_double_max( lattice_ptr lattice, double *arg_x)
       "\n",
       __FILE__,__LINE__,get_proc_id(lattice), mpierr);
     process_finalize();
-    exit(1);
+    process_exit(1);
   }
   if( is_on_root_proc( lattice))
   {
@@ -904,7 +904,7 @@ void process_reduce_double_min( lattice_ptr lattice, double *arg_x)
       "\n",
       __FILE__,__LINE__,get_proc_id(lattice), mpierr);
     process_finalize();
-    exit(1);
+    process_exit(1);
   }
   if( is_on_root_proc( lattice))
   {
@@ -927,6 +927,13 @@ void process_finalize()
 #if PARALLEL
   MPI_Finalize();
 #endif
+}
+
+//##############################################################################
+void process_exit( int exit_val)
+{
+  process_finalize();
+  exit( exit_val);
 }
 
 //##############################################################################

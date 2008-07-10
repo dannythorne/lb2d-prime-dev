@@ -183,7 +183,7 @@ void process_matrix( struct lattice_struct *lattice, int **matrix, int subs)
     }
     printf("\n");
   }
-  //exit(1);
+  //process_exit(1);
 #endif
 
 
@@ -219,7 +219,7 @@ void process_matrix( struct lattice_struct *lattice, int **matrix, int subs)
               "Unhandled case matrix[%d][%d]=%d. Exiting!\n",
               __FILE__,__LINE__,
               j, i, matrix[j][i] );
-          exit(1);
+          process_exit(1);
           break;
       }
     } /* for( i=0; i<=ei; i++) */
@@ -304,7 +304,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
   else
   {
     printf("\n\nusage: ./lb2d [infile]\n\n\n");
-    exit(1);
+    process_exit(1);
   }
 
   // Read problem parameters
@@ -412,7 +412,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
       "Exiting!\n",
       (*lattice)->NumNodes
       );
-    exit(1);
+    process_exit(1);
   }
 
   // Allocate NumNodes macroscopic variables.
@@ -427,7 +427,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
       "Exiting!\n",
       (*lattice)->NumNodes
       );
-    exit(1);
+    process_exit(1);
   }
 
 #if NON_LOCAL_FORCES
@@ -443,7 +443,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
       "Exiting!\n",
       (*lattice)->NumNodes
       );
-    exit(1);
+    process_exit(1);
   }
 #endif /* NON_LOCAL_FORCES */
  } /* for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++) */
@@ -461,7 +461,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
       "Exiting!\n",
       (*lattice)->NumNodes
       );
-    exit(1);
+    process_exit(1);
   }
 #endif /* STORE_U_COMPOSITE */
 
@@ -478,7 +478,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
           "Should have 0 <= ns <=1. "
           "Exiting!\n", (*lattice)->param.ns
           );
-        exit(1);
+        process_exit(1);
       }
       break;
     }
@@ -496,7 +496,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
         "Exiting!\n",
         (*lattice)->NumNodes
         );
-      exit(1);
+      process_exit(1);
     }
 
     // Try to read ns<LX>x<LY>.bmp file.
@@ -524,7 +524,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
             "%s %d >> latman.c: construct_lattice() -- "
             "ERROR: File %s needs to be grayscale. "
             "Exiting!\n",__FILE__,__LINE__, filename);
-          exit(1);
+          process_exit(1);
         }
 
         // Assign ns value.
@@ -564,7 +564,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
         "Exiting!\n",
         (*lattice)->NumNodes
         );
-      exit(1);
+      process_exit(1);
     }
 
     // Try to read ns<LX>x<LY>.bmp file.
@@ -592,7 +592,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
             "%s %d >> latman.c: construct_lattice() -- "
             "ERROR: File %s needs to be grayscale. "
             "Exiting!\n",__FILE__,__LINE__, filename);
-          exit(1);
+          process_exit(1);
         }
 
         if( ((unsigned int)r%256) != 0 && ((unsigned int)r%256) != 255 )
@@ -601,7 +601,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
             "%s %d >> latman.c: construct_lattice() -- "
             "ERROR: File %s needs to be black and white. "
             "Exiting!\n",__FILE__,__LINE__, filename);
-          exit(1);
+          process_exit(1);
         }
 
         // Assign ns value.
@@ -638,7 +638,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
       printf("%s %d >> construct_lattice() -- Unhandled case: "
         "ns_flag = %d . (Exiting!)\n",
         __FILE__,__LINE__,(*lattice)->param.ns_flag < 0.);
-      exit(1);
+      process_exit(1);
       break;
     }
 
@@ -849,7 +849,7 @@ void init_problem( struct lattice_struct *lattice)
   if( !( o = fopen( filename,"w+")))
   {
     printf("Error creating \"%s\".  Exiting!\n", filename);
-    exit(1);
+    process_exit(1);
   }
   fclose( o);
 
@@ -857,7 +857,7 @@ void init_problem( struct lattice_struct *lattice)
   if( !( o = fopen( filename,"w+")))
   {
     printf("Error creating \"%s\".  Exiting!\n", filename);
-    exit(1);
+    process_exit(1);
   }
   fclose( o);
 
@@ -865,7 +865,7 @@ void init_problem( struct lattice_struct *lattice)
   if( !( o = fopen( filename,"w+")))
   {
     printf("Error creating \"%s\".  Exiting!\n", filename);
-    exit(1);
+    process_exit(1);
   }
   fclose( o);
  
@@ -884,7 +884,7 @@ void init_problem( struct lattice_struct *lattice)
        __FILE__,__LINE__);
      printf("\n");
      printf("\n");
-     exit(1);
+     process_exit(1);
 
    } /* if( lattice->param.uy_in != lattice->param.uy_out) */
 
@@ -916,7 +916,7 @@ void init_problem( struct lattice_struct *lattice)
       // Can't read ic file.
       printf("%s %d >> ERROR: Can't read \"%s\". "
           "Exiting!\n",__FILE__,__LINE__,ic_filename);
-      exit(1);
+      process_exit(1);
     } /* if( ic_in = fopen( ic_filename, "r+")) else */
 
   } /* if( lattice->param.initial_condition == IC_READ_FROM_FILE) */
@@ -1510,7 +1510,7 @@ void init_problem( struct lattice_struct *lattice)
               "init_lattice() -- "
               "Unhandled case NUM_FLUID_COMPONENTS = %d .  "
               "Exiting!\n",__FILE__,__LINE__, NUM_FLUID_COMPONENTS);
-            exit(1);
+            process_exit(1);
           }
           break;
         }
@@ -1609,7 +1609,7 @@ void init_problem( struct lattice_struct *lattice)
           }
 #else /* !( INAMURO_SIGMA_COMPONENT) */
           printf("%s %d >> Unhandled case. Exiting!\n", __FILE__, __LINE__);
-          exit(1);
+          process_exit(1);
 #endif /* INAMURO_SIGMA_COMPONENT */
           break;
         }
@@ -1631,7 +1631,7 @@ void init_problem( struct lattice_struct *lattice)
           }
 #else /* !( INAMURO_SIGMA_COMPONENT) */
           printf("%s %d >> Unhandled case. Exiting!\n", __FILE__, __LINE__);
-          exit(1);
+          process_exit(1);
 #endif /* INAMURO_SIGMA_COMPONENT */
           break;
         }
@@ -1715,7 +1715,7 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
             {
               printf("%s %d >> ERROR: Unhandled case! Exiting!\n",
                 __FILE__,__LINE__);
-              exit(1);
+              process_exit(1);
             }
 #endif /* INAMURO_SIGMA_COMPONENT */
           }
@@ -1723,7 +1723,7 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
           {
             printf("%s %d >> ERROR: Unhandled case! Exiting!\n",
               __FILE__,__LINE__);
-            exit(1);
+            process_exit(1);
           }
 
           break;
@@ -1735,7 +1735,7 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
             "lattice->param.initial_condition = %d.  "
             "Exiting!\n", __FILE__, __LINE__,
             lattice->param.initial_condition );
-          exit(1);
+          process_exit(1);
           break;
         }
       } /* switch( lattice->param.initial_condition) */
@@ -1994,7 +1994,7 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
       "compute_feq() -- "
       "Unhandled case NUM_FLUID_COMPONENTS = %d .  "
       "Exiting!\n",__FILE__,__LINE__, NUM_FLUID_COMPONENTS);
-    exit(1);
+    process_exit(1);
   }
 #endif /* NON_LOCAL_FORCES */
 
@@ -2603,7 +2603,7 @@ void check_point_load( lattice_ptr lattice)
         "Checkpoint LY %d does not match current domain LY %d.\n",
         __FILE__,__LINE__, LY_in, get_LY(lattice));
     }
-    exit(1);
+    process_exit(1);
   }
   if( LY_in != get_LY(lattice))
   {
@@ -2611,7 +2611,7 @@ void check_point_load( lattice_ptr lattice)
       "%s %d >> ERROR: "
       "Checkpoint LY %d does not match current domain LY %d.\n",
       __FILE__,__LINE__, LY_in, get_LY(lattice));
-    exit(1);
+    process_exit(1);
   }
   for( n=0; n<get_NumNodes(lattice); n++)
   {

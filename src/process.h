@@ -35,6 +35,7 @@ void process_reduce_double_sum( lattice_ptr lattice, double *arg_x);
 void process_reduce_int_sum( lattice_ptr lattice, int *arg_n);
 void process_barrier();
 void process_finalize();
+void process_exit( int exit_val);
 
 //##############################################################################
 //

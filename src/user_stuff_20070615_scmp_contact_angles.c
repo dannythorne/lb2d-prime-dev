@@ -33,7 +33,7 @@ double theta_of_height_width( const double height, const double width)
   {
     printf("%s %d >> Unhandled case: height=%d, width=%d\n",
       __FILE__, __LINE__, height, width);
-    theta = 999.; // Bogus value instead of exiting.
+    theta = 999.; // Bogus value instead of process_exiting.
   }
 
   return theta;

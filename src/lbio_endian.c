@@ -135,7 +135,7 @@ void dump_frame_summary( struct lattice_struct *lattice)
       if( !( o = fopen(filename,"w+")))
       {
         printf("ERROR: fopen(\"%s\",\"w+\") = NULL.  Bye, bye!\n", filename);
-        exit(1);
+        process_exit(1);
       }
       else
       {
@@ -199,7 +199,7 @@ void dump_frame_summary( struct lattice_struct *lattice)
   if( !( o = fopen(filename,"a+")))
   {
     printf("ERROR: fopen(\"%s\",\"a+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
   compute_min_u_all( lattice, min_u, subs);
   compute_max_u_all( lattice, max_u, subs);
@@ -284,14 +284,14 @@ void dump_macro_vars( struct lattice_struct *lattice, int time)
   if( !( o_rho = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   sprintf( filename, "./out/u_frame%04d_subs%02d.dat", frame, subs);
   if( !( o_u = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
 #if STORE_U_COMPOSITE
@@ -299,7 +299,7 @@ void dump_macro_vars( struct lattice_struct *lattice, int time)
   if( !( o_upr = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   upr = lattice->upr[0].u;
@@ -349,32 +349,32 @@ void dump_macro_vars( struct lattice_struct *lattice, int time)
   if( !( o_rho = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
   sprintf( filename, "./out/ux_frame%04d_subs%02d.txt", frame, subs);
   if( !( o_ux = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
   sprintf( filename, "./out/uy_frame%04d_subs%02d.txt", frame, subs);
   if( !( o_uy = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 #if STORE_U_COMPOSITE
   sprintf( filename, "./out/upr_x_frame%04d_subs%02d.txt", frame, subs);
   if( !( o_upr_x = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
   sprintf( filename, "./out/upr_y_frame%04d_subs%02d.txt", frame, subs);
   if( !( o_upr_y = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 #endif /* STORE_U_COMPOSITE */
   for( j=lattice->param.LY-1; j>=0; j--)
@@ -484,14 +484,14 @@ void read_macro_vars( struct lattice_struct *lattice, int time)
   if( !( rho_in = fopen( filename, "r+")))
   {
     printf("ERROR: fopen( \"%s\", \"r+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   sprintf( filename, "./out/u_frame%04d_subs%02d.dat", frame, subs);
   if( !( u_in = fopen( filename, "r+")))
   {
     printf("ERROR: fopen( \"%s\", \"r+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   macro_vars_ptr = &( lattice->macro_vars[subs][0].rho);
@@ -556,21 +556,21 @@ void dump_pdf( struct lattice_struct *lattice, int time)
   if( !( o_feq = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   sprintf( filename, "./out/f_frame%04d_subs%02d.dat", frame, subs);
   if( !( o_f = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   sprintf( filename, "./out/ftemp_frame%04d_subs%02d.dat", frame, subs);
   if( !( o_ftemp = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   bc      =   lattice->bc[subs];
@@ -645,21 +645,21 @@ void dump_pdf( struct lattice_struct *lattice, int time)
   if( !( o_feq = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   sprintf( filename, "./out/f_frame%04d_subs%02d.txt", frame, subs);
   if( !( o_f = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   sprintf( filename, "./out/ftemp_frame%04d_subs%02d.txt", frame, subs);
   if( !( o_ftemp = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   for( i=0; i<lattice->param.LX; i++)
@@ -798,13 +798,13 @@ void dump_forces( struct lattice_struct *lattice)
   if( !( ox = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
   sprintf( filename, "./out/force_y_frame%04d_subs%02d.dat", frame, subs);
   if( !( oy = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   force = lattice->force[subs][0].force;
@@ -834,13 +834,13 @@ void dump_forces( struct lattice_struct *lattice)
   if( !( ox = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
   sprintf( filename, "./out/force_y_frame%04d_subs%02d.txt", frame, subs);
   if( !( oy = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
   for( j=0; j<lattice->param.LY; j++)
   {
@@ -951,7 +951,7 @@ void spy_bmp( char *filename, lattice_ptr lattice, int **spy)
   {
 #if 1
     printf("spy_bmp() -- Error opening file \"%s\".\n", filename);
-    exit(1);
+    process_exit(1);
 #else
     printf(" %s::spy_bmp() %d >> File \"%s\" cannot be opened for reading.\n",
         __FILE__, __LINE__, filename);
@@ -974,7 +974,7 @@ void spy_bmp( char *filename, lattice_ptr lattice, int **spy)
   {
     printf("ERROR: Can't process this file type.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
   n = fread( &bmih, sizeof(struct bitmap_info_header), 1, in );
 
@@ -1040,7 +1040,7 @@ bmih.biBitCount[1] = ctemp;
   {
     printf("%s %d >> ERROR: Can't handle compression.  Exiting!\n",__FILE__,__LINE__);
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
 
   width_ptr = (int*)bmih.biWidth;
@@ -1052,7 +1052,7 @@ bmih.biBitCount[1] = ctemp;
     printf("%s %d >> ERROR: LX %d does not match the "
         "width %d of the BMP file. Exiting!\n", 
         __FILE__, __LINE__, lattice->param.LX, *width_ptr);
-    exit(1);
+    process_exit(1);
   }
 printf("%s %d >> biWidth = %d \n", __FILE__, __LINE__, (int)*bmih.biWidth);
 printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
@@ -1062,7 +1062,7 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
     printf("%s %d >> ERROR: LY %d does not match the "
         "height %d of the BMP file. Exiting!\n", 
         __FILE__, __LINE__, lattice->param.LY, *height_ptr);
-    exit(1);
+    process_exit(1);
   }
 
   if( (*bitcount_ptr) < 24)
@@ -1074,7 +1074,7 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
       if( k!=1)
       {
         printf("%s %d >> Error reading palette entry %d.  Exiting!\n", __FILE__, __LINE__, i);
-        exit(1);
+        process_exit(1);
       }
     }
   }
@@ -1100,7 +1100,7 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
         printf("%s %d >> spy_bmp() -- "
             "Support for Monochrome BMPs is pending.  "
             "Exiting!\n", __FILE__, __LINE__);
-        exit(1);
+        process_exit(1);
 
         if( i < *width_ptr) { (spy)[j][i] = ( (b & 0x80) == 0); }
         i++;     
@@ -1124,7 +1124,7 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
         printf("%s %d >> spy_bmp() -- "
             "Support for 16 color BMPs is pending.  "
             "Exiting!\n", __FILE__, __LINE__);
-        exit(1);
+        process_exit(1);
 
         if( i < *width_ptr) { (spy)[j][i] = ( (b&0xf0)>>4 != 15); }
         i++;
@@ -1136,7 +1136,7 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
         printf("%s %d >> spy_bmp() -- "
             "Support for 256 color BMPs is pending.  "
             "Exiting!\n", __FILE__, __LINE__);
-        exit(1);
+        process_exit(1);
 
         if( i < *width_ptr) { (spy)[j][i] = ( (b&0xff) != 255); }
         i++;
@@ -1205,7 +1205,7 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
       default: // 32-bit colors?
         printf("%s %d >> ERROR: Unhandled color depth, "
             "BitCount = %d. Exiting!\n", __FILE__, __LINE__, *bitcount_ptr);
-        exit(1);
+        process_exit(1);
         break;
 
     } /* switch(*(bmih.biBitCount)) */
@@ -1280,7 +1280,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
   if( !( in = fopen( filename, "r")))
   {
     printf("read_bcs() -- Error opening file \"%s\".\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   // Read the headers.
@@ -1289,7 +1289,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
   {
     printf("ERROR: Can't process this file type.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
   n = fread( &bmih, sizeof(struct bitmap_info_header), 1, in );
   int_ptr = (int*)bmih.biCompression;
@@ -1297,7 +1297,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
   {
     printf("ERROR: Can't handle compression.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
 
   width_ptr = (int*)bmih.biWidth;
@@ -1311,7 +1311,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
         filename,
         lattice->param.LY, ENDIAN4(*height_ptr) );
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
 
   if( ENDIAN4(*width_ptr) != lattice->param.LX)
@@ -1321,7 +1321,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
         filename,
         lattice->param.LX, ENDIAN4(*width_ptr) );
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
 
   // Read the palette, if necessary.
@@ -1334,7 +1334,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
       if( k!=1)
       {
         printf("Error reading palette entry %d.  Exiting!\n", i);
-        exit(1);
+        process_exit(1);
       }
     }
   }
@@ -1361,7 +1361,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
         printf("read_bcs() -- "
             "Support for Monochrome BMPs is pending.  "
             "Exiting!\n");
-        exit(1);
+        process_exit(1);
 
         if( i < ENDIAN4(*width_ptr)) { (bcs)[j][i] = ( (b & 0x80) == 0); }
         i++;     
@@ -1385,7 +1385,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
         printf("read_bcs() -- "
             "Support for 16 color BMPs is pending.  "
             "Exiting!\n");
-        exit(1);
+        process_exit(1);
 
         if( i < ENDIAN4(*width_ptr)) { (bcs)[j][i] = ( (b&0xf0)>>4 != 15); }
         i++;
@@ -1397,7 +1397,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
         printf("read_bcs() -- "
             "Support for 256 color BMPs is pending.  "
             "Exiting!\n");
-        exit(1);
+        process_exit(1);
 
         if( i < ENDIAN4(*width_ptr)) { (bcs)[j][i] = ( (b&0xff) != 255); }
         i++;
@@ -1424,7 +1424,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
       default: // 32-bit colors?
         printf("ERROR: Unhandled color depth, "
             "BitCount = %d. Exiting!\n", ENDIAN2(*bitcount_ptr));
-        exit(1);
+        process_exit(1);
         break;
 
     } /* switch(*(bmih.biBitCount)) */
@@ -1492,7 +1492,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
             printf("read_bcs() -- Unhandled case: "
                 "bcs[ %d][ %d] = %d .  Exiting!\n", 
                 i, j, bcs[j][i]);
-            exit(1);
+            process_exit(1);
           }
 
         }
@@ -1517,7 +1517,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
             printf("read_bcs() -- Unhandled case: "
                 "bcs[ %d][ %d] = %d .  Exiting!\n", 
                 i, j, bcs[j][i]);
-            exit(1);
+            process_exit(1);
           }
 
         }
@@ -1545,7 +1545,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
             printf("read_bcs() -- Unhandled case: "
                 "bcs[ %d][ %d] = %d .  Exiting!\n", 
                 i, j, bcs[j][i]);
-            exit(1);
+            process_exit(1);
           }
 
         }
@@ -1571,7 +1571,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
             printf("read_bcs() -- Unhandled case: "
                 "bcs[ %d][ %d] = %d .  Exiting!\n", 
                 i, j, bcs[j][i]);
-            exit(1);
+            process_exit(1);
           }
 
         }
@@ -1653,7 +1653,7 @@ void rho2bmp( lattice_ptr lattice, int time)
   if( !( in = fopen( filename, "r")))
   {
     printf("rho2bmp() -- Error opening file \"%s\".\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   // n = fread( void *BUF, size_t SIZE, size_t COUNT, FILE *FP);
@@ -1663,7 +1663,7 @@ void rho2bmp( lattice_ptr lattice, int time)
   {
     printf("ERROR: Can't process this file type.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
   n = fread( &bmih, sizeof(struct bitmap_info_header), 1, in );
   int_ptr = (int*)bmih.biCompression;
@@ -1671,7 +1671,7 @@ void rho2bmp( lattice_ptr lattice, int time)
   {
     printf("ERROR: Can't handle compression.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
 
   width_ptr = (int*)bmih.biWidth;
@@ -1688,7 +1688,7 @@ void rho2bmp( lattice_ptr lattice, int time)
       if( k!=1)
       {
         printf("Error reading palette entry %d.  Exiting!\n", i);
-        exit(1);
+        process_exit(1);
       }
     }
   }
@@ -1713,7 +1713,7 @@ void rho2bmp( lattice_ptr lattice, int time)
   if( !( o = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   fwrite( &bmfh, sizeof(struct bitmap_file_header), 1, o );
@@ -1908,11 +1908,11 @@ void rho2bmp( lattice_ptr lattice, int time)
 
 //printf("blue_val( %d, %d) = %d\n", i, j, (int)blue_val);
 
-      if( fwrite( &blue_val, 1, 1, o) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &blue_val, 1, 1, o) != 1) { printf("BOOM!\n"); process_exit(1);}
       //printf("BING %d %d\n", i, j);
-      if( fwrite( &green_val, 1, 1, o) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &green_val, 1, 1, o) != 1) { printf("BOOM!\n"); process_exit(1);}
       //printf("BING %d %d\n", i, j);
-      if( fwrite( &red_val, 1, 1, o) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &red_val, 1, 1, o) != 1) { printf("BOOM!\n"); process_exit(1);}
       //printf("BING %d %d\n", i, j);
      
     } /* for( i=0; i<lattice->param.LX; i++) */
@@ -1921,7 +1921,7 @@ void rho2bmp( lattice_ptr lattice, int time)
     val = (char)0;
     for( i=0; i<pad; i++)
     {
-      if( fwrite( &val, 1, 1, o) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &val, 1, 1, o) != 1) { printf("BOOM!\n"); process_exit(1);}
     }
 
   } /* for( j=0; j<lattice->param.LY; j++) */
@@ -1989,7 +1989,7 @@ void rho2bmp( lattice_ptr lattice, int time)
   if( !( in = fopen( filename, "r")))
   {
     printf("rho2bmp() -- Error opening file \"%s\".\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   // n = fread( void *BUF, size_t SIZE, size_t COUNT, FILE *FP);
@@ -1999,7 +1999,7 @@ void rho2bmp( lattice_ptr lattice, int time)
   {
     printf("ERROR: Can't process this file type.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
   n = fread( &bmih, sizeof(struct bitmap_info_header), 1, in );
   int_ptr = (int*)bmih.biCompression;
@@ -2007,7 +2007,7 @@ void rho2bmp( lattice_ptr lattice, int time)
   {
     printf("ERROR: Can't handle compression.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
 
   width_ptr = (int*)bmih.biWidth;
@@ -2024,7 +2024,7 @@ void rho2bmp( lattice_ptr lattice, int time)
       if( k!=1)
       {
         printf("Error reading palette entry %d.  Exiting!\n", i);
-        exit(1);
+        process_exit(1);
       }
     }
   }
@@ -2046,7 +2046,7 @@ void rho2bmp( lattice_ptr lattice, int time)
   if( !( o = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   fwrite( &bmfh, sizeof(struct bitmap_file_header), 1, o );
@@ -2105,11 +2105,11 @@ void rho2bmp( lattice_ptr lattice, int time)
 
 //printf("blue_val( %d, %d) = %d\n", i, j, (int)blue_val);
 
-      if( fwrite( &blue_val, 1, 1, o) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &blue_val, 1, 1, o) != 1) { printf("BOOM!\n"); process_exit(1);}
       //printf("BING %d %d\n", i, j);
-      if( fwrite( &green_val, 1, 1, o) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &green_val, 1, 1, o) != 1) { printf("BOOM!\n"); process_exit(1);}
       //printf("BING %d %d\n", i, j);
-      if( fwrite( &red_val, 1, 1, o) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &red_val, 1, 1, o) != 1) { printf("BOOM!\n"); process_exit(1);}
       //printf("BING %d %d\n", i, j);
      
     } /* for( i=0; i<lattice->param.LX; i++) */
@@ -2118,7 +2118,7 @@ void rho2bmp( lattice_ptr lattice, int time)
     val = (char)0;
     for( i=0; i<pad; i++)
     {
-      if( fwrite( &val, 1, 1, o) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &val, 1, 1, o) != 1) { printf("BOOM!\n"); process_exit(1);}
     }
 
   } /* for( j=0; j<lattice->param.LY; j++) */
@@ -2187,7 +2187,7 @@ void u2bmp( lattice_ptr lattice, int time)
   if( !( in = fopen( filename, "r")))
   {
     printf("u2bmp() -- Error opening file \"%s\".\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   // n = fread( void *BUF, size_t SIZE, size_t COUNT, FILE *FP);
@@ -2197,7 +2197,7 @@ void u2bmp( lattice_ptr lattice, int time)
   {
     printf("ERROR: Can't process this file type.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
   n = fread( &bmih, sizeof(struct bitmap_info_header), 1, in );
   int_ptr = (int*)bmih.biCompression;
@@ -2205,7 +2205,7 @@ void u2bmp( lattice_ptr lattice, int time)
   {
     printf("ERROR: Can't handle compression.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
 
 #if 0
@@ -2232,7 +2232,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
       if( k!=1)
       {
         printf("Error reading palette entry %d.  Exiting!\n", i);
-        exit(1);
+        process_exit(1);
       }
     }
   }
@@ -2256,7 +2256,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
   if( !( o_u = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   sprintf( filename, "./out/u_x%dx%d_frame%04d_subs%02d.bmp", 
@@ -2266,7 +2266,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
   if( !( o_ux = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   sprintf( filename, "./out/u_y%dx%d_frame%04d_subs%02d.bmp", 
@@ -2276,7 +2276,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
   if( !( o_uy = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   fwrite( &bmfh, sizeof(struct bitmap_file_header), 1, o_u );
@@ -2399,9 +2399,9 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
  }
 #endif /* MARK_ORIGIN_FOR_REFERENCE */
 
-      if( fwrite( &blue_val,  1, 1, o_u ) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &green_val, 1, 1, o_u ) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &red_val,   1, 1, o_u ) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &blue_val,  1, 1, o_u ) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &green_val, 1, 1, o_u ) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &red_val,   1, 1, o_u ) != 1) { printf("BOOM!\n"); process_exit(1);}
 
       if( lattice->bc[subs][ n].bc_type == /*FLUID_NODE*/0)
       {
@@ -2491,9 +2491,9 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
  }
 #endif /* MARK_ORIGIN_FOR_REFERENCE */
 
-      if( fwrite( &blue_val,  1, 1, o_ux) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &val,       1, 1, o_ux) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &red_val,   1, 1, o_ux) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &blue_val,  1, 1, o_ux) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &val,       1, 1, o_ux) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &red_val,   1, 1, o_ux) != 1) { printf("BOOM!\n"); process_exit(1);}
 
       if( lattice->bc[subs][ n].bc_type == /*FLUID_NODE*/0)
       {
@@ -2583,9 +2583,9 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
  }
 #endif /* MARK_ORIGIN_FOR_REFERENCE */
 
-      if( fwrite( &blue_val,  1, 1, o_uy) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &green_val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &red_val,   1, 1, o_uy) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &blue_val,  1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &green_val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &red_val,   1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
      
     } /* for( i=0; i<lattice->param.LY; i++) */
 
@@ -2593,9 +2593,9 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
     val = (char)0;
     for( i=0; i<pad; i++)
     {
-      if( fwrite( &val, 1, 1, o_u ) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &val, 1, 1, o_ux) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &val, 1, 1, o_u ) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &val, 1, 1, o_ux) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
     }
 
   } /* for( j=0; j<lattice->param.LY; j++) */
@@ -2634,7 +2634,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
   if( !( in = fopen( filename, "r")))
   {
     printf("u2bmp() -- Error opening file \"%s\".\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   // n = fread( void *BUF, size_t SIZE, size_t COUNT, FILE *FP);
@@ -2644,7 +2644,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
   {
     printf("ERROR: Can't process this file type.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
   n = fread( &bmih, sizeof(struct bitmap_info_header), 1, in );
   int_ptr = (int*)bmih.biCompression;
@@ -2652,7 +2652,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
   {
     printf("ERROR: Can't handle compression.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
 
   width_ptr = (int*)bmih.biWidth;
@@ -2669,7 +2669,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
       if( k!=1)
       {
         printf("Error reading palette entry %d.  Exiting!\n", i);
-        exit(1);
+        process_exit(1);
       }
     }
   }
@@ -2693,7 +2693,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
   if( !( o_u = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   sprintf( filename, "./out/upr_x%dx%d_frame%04d.bmp", 
@@ -2703,7 +2703,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
   if( !( o_ux = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   sprintf( filename, "./out/upr_y%dx%d_frame%04d.bmp", 
@@ -2713,7 +2713,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
   if( !( o_uy = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   fwrite( &bmfh, sizeof(struct bitmap_file_header), 1, o_u );
@@ -2830,9 +2830,9 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
  }
 #endif /* MARK_ORIGIN_FOR_REFERENCE */
 
-      if( fwrite( &blue_val,  1, 1, o_u ) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &green_val, 1, 1, o_u ) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &red_val,   1, 1, o_u ) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &blue_val,  1, 1, o_u ) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &green_val, 1, 1, o_u ) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &red_val,   1, 1, o_u ) != 1) { printf("BOOM!\n"); process_exit(1);}
 
       if( lattice->bc[0][ n].bc_type == /*FLUID_NODE*/0)
       {
@@ -2922,9 +2922,9 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
  }
 #endif /* MARK_ORIGIN_FOR_REFERENCE */
 
-      if( fwrite( &blue_val,  1, 1, o_ux) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &val,       1, 1, o_ux) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &red_val,   1, 1, o_ux) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &blue_val,  1, 1, o_ux) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &val,       1, 1, o_ux) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &red_val,   1, 1, o_ux) != 1) { printf("BOOM!\n"); process_exit(1);}
 
       if( lattice->bc[0][ n].bc_type == /*FLUID_NODE*/0)
       {
@@ -3014,9 +3014,9 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
  }
 #endif /* MARK_ORIGIN_FOR_REFERENCE */
 
-      if( fwrite( &blue_val,  1, 1, o_uy) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &green_val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &red_val,   1, 1, o_uy) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &blue_val,  1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &green_val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &red_val,   1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
      
     } /* for( i=0; i<lattice->param.LY; i++) */
 
@@ -3024,9 +3024,9 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
     val = (char)0;
     for( i=0; i<pad; i++)
     {
-      if( fwrite( &val, 1, 1, o_u ) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &val, 1, 1, o_ux) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &val, 1, 1, o_u ) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &val, 1, 1, o_ux) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
     }
 
   } /* for( j=0; j<lattice->param.LY; j++) */
@@ -3111,7 +3111,7 @@ void vor2bmp( lattice_ptr lattice, int time)
   if( !( in = fopen( filename, "r")))
   {
     printf("vor2bmp() -- Error opening file \"%s\".\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   // n = fread( void *BUF, size_t SIZE, size_t COUNT, FILE *FP);
@@ -3121,7 +3121,7 @@ void vor2bmp( lattice_ptr lattice, int time)
   {
     printf("ERROR: Can't process this file type.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
   n = fread( &bmih, sizeof(struct bitmap_info_header), 1, in );
   int_ptr = (int*)bmih.biCompression;
@@ -3129,7 +3129,7 @@ void vor2bmp( lattice_ptr lattice, int time)
   {
     printf("ERROR: Can't handle compression.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
 
   width_ptr = (int*)bmih.biWidth;
@@ -3146,7 +3146,7 @@ void vor2bmp( lattice_ptr lattice, int time)
       if( k!=1)
       {
         printf("Error reading palette entry %d.  Exiting!\n", i);
-        exit(1);
+        process_exit(1);
       }
     }
   }
@@ -3179,7 +3179,7 @@ void vor2bmp( lattice_ptr lattice, int time)
   if( !( o_vor = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   fwrite( &bmfh, sizeof(struct bitmap_file_header), 1, o_vor );
@@ -3313,9 +3313,9 @@ blue_val = (char)ROUND( 255.*( 1. - 10000.*(vor/ave_vor_n)*(vor/ave_vor_n)));
  }
 #endif /* MARK_ORIGIN_FOR_REFERENCE */
 
-      if( fwrite( &blue_val,  1, 1, o_vor ) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &green_val, 1, 1, o_vor ) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &red_val,   1, 1, o_vor ) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &blue_val,  1, 1, o_vor ) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &green_val, 1, 1, o_vor ) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &red_val,   1, 1, o_vor ) != 1) { printf("BOOM!\n"); process_exit(1);}
 
     } /* for( i=0; i<lattice->param.LY; i++) */
 
@@ -3323,7 +3323,7 @@ blue_val = (char)ROUND( 255.*( 1. - 10000.*(vor/ave_vor_n)*(vor/ave_vor_n)));
     val = (char)0;
     for( i=0; i<pad; i++)
     {
-      if( fwrite( &val, 1, 1, o_vor ) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &val, 1, 1, o_vor ) != 1) { printf("BOOM!\n"); process_exit(1);}
     }
 
   } /* for( j=0; j<lattice->param.LY; j++) */
@@ -3396,7 +3396,7 @@ void force2bmp( lattice_ptr lattice)
   if( !( in = fopen( filename, "r")))
   {
     printf("force2bmp() -- Error opening file \"%s\".\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   // n = fread( void *BUF, size_t SIZE, size_t COUNT, FILE *FP);
@@ -3406,7 +3406,7 @@ void force2bmp( lattice_ptr lattice)
   {
     printf("ERROR: Can't process this file type.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
   n = fread( &bmih, sizeof(struct bitmap_info_header), 1, in );
   int_ptr = (int*)bmih.biCompression;
@@ -3414,7 +3414,7 @@ void force2bmp( lattice_ptr lattice)
   {
     printf("ERROR: Can't handle compression.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
 
   width_ptr = (int*)bmih.biWidth;
@@ -3431,7 +3431,7 @@ void force2bmp( lattice_ptr lattice)
       if( k!=1)
       {
         printf("Error reading palette entry %d.  Exiting!\n", i);
-        exit(1);
+        process_exit(1);
       }
     }
   }
@@ -3455,7 +3455,7 @@ void force2bmp( lattice_ptr lattice)
   if( !( o_u = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   sprintf( filename, "./out/force_x_%dx%d_frame%04d_subs%02d.bmp", 
@@ -3465,7 +3465,7 @@ void force2bmp( lattice_ptr lattice)
   if( !( o_ux = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   sprintf( filename, "./out/force_y_%dx%d_frame%04d_subs%02d.bmp", 
@@ -3475,7 +3475,7 @@ void force2bmp( lattice_ptr lattice)
   if( !( o_uy = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   fwrite( &bmfh, sizeof(struct bitmap_file_header), 1, o_u );
@@ -3592,9 +3592,9 @@ void force2bmp( lattice_ptr lattice)
  }
 #endif /* MARK_ORIGIN_FOR_REFERENCE */
 
-      if( fwrite( &blue_val,  1, 1, o_u ) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &green_val, 1, 1, o_u ) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &red_val,   1, 1, o_u ) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &blue_val,  1, 1, o_u ) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &green_val, 1, 1, o_u ) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &red_val,   1, 1, o_u ) != 1) { printf("BOOM!\n"); process_exit(1);}
 
       if( lattice->bc[subs][ n].bc_type == /*FLUID_NODE*/0)
       {
@@ -3684,9 +3684,9 @@ void force2bmp( lattice_ptr lattice)
  }
 #endif /* MARK_ORIGIN_FOR_REFERENCE */
 
-      if( fwrite( &blue_val,  1, 1, o_ux) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &val,       1, 1, o_ux) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &red_val,   1, 1, o_ux) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &blue_val,  1, 1, o_ux) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &val,       1, 1, o_ux) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &red_val,   1, 1, o_ux) != 1) { printf("BOOM!\n"); process_exit(1);}
 
       if( lattice->bc[subs][ n].bc_type == /*FLUID_NODE*/0)
       {
@@ -3776,9 +3776,9 @@ void force2bmp( lattice_ptr lattice)
  }
 #endif /* MARK_ORIGIN_FOR_REFERENCE */
 
-      if( fwrite( &blue_val,  1, 1, o_uy) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &green_val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &red_val,   1, 1, o_uy) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &blue_val,  1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &green_val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &red_val,   1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
      
     } /* for( i=0; i<lattice->param.LY; i++) */
 
@@ -3786,9 +3786,9 @@ void force2bmp( lattice_ptr lattice)
     val = (char)0;
     for( i=0; i<pad; i++)
     {
-      if( fwrite( &val, 1, 1, o_u ) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &val, 1, 1, o_ux) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &val, 1, 1, o_u ) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &val, 1, 1, o_ux) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
     }
 
   } /* for( j=0; j<lattice->param.LY; j++) */
@@ -3874,7 +3874,7 @@ void sforce2bmp( lattice_ptr lattice)
   if( !( in = fopen( filename, "r")))
   {
     printf("sforce2bmp() -- Error opening file \"%s\".\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   // n = fread( void *BUF, size_t SIZE, size_t COUNT, FILE *FP);
@@ -3884,7 +3884,7 @@ void sforce2bmp( lattice_ptr lattice)
   {
     printf("ERROR: Can't process this file type.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
   n = fread( &bmih, sizeof(struct bitmap_info_header), 1, in );
   int_ptr = (int*)bmih.biCompression;
@@ -3892,7 +3892,7 @@ void sforce2bmp( lattice_ptr lattice)
   {
     printf("ERROR: Can't handle compression.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
 
   width_ptr = (int*)bmih.biWidth;
@@ -3909,7 +3909,7 @@ void sforce2bmp( lattice_ptr lattice)
       if( k!=1)
       {
         printf("Error reading palette entry %d.  Exiting!\n", i);
-        exit(1);
+        process_exit(1);
       }
     }
   }
@@ -3933,7 +3933,7 @@ void sforce2bmp( lattice_ptr lattice)
   if( !( o_u = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   sprintf( filename, "./out/sforce_x_%dx%d_frame%04d_subs%02d.bmp", 
@@ -3943,7 +3943,7 @@ void sforce2bmp( lattice_ptr lattice)
   if( !( o_ux = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   sprintf( filename, "./out/sforce_y_%dx%d_frame%04d_subs%02d.bmp", 
@@ -3953,7 +3953,7 @@ void sforce2bmp( lattice_ptr lattice)
   if( !( o_uy = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   fwrite( &bmfh, sizeof(struct bitmap_file_header), 1, o_u );
@@ -4070,9 +4070,9 @@ void sforce2bmp( lattice_ptr lattice)
  }
 #endif /* MARK_ORIGIN_FOR_REFERENCE */
 
-      if( fwrite( &blue_val,  1, 1, o_u ) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &green_val, 1, 1, o_u ) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &red_val,   1, 1, o_u ) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &blue_val,  1, 1, o_u ) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &green_val, 1, 1, o_u ) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &red_val,   1, 1, o_u ) != 1) { printf("BOOM!\n"); process_exit(1);}
 
       if( lattice->bc[subs][ n].bc_type == /*FLUID_NODE*/0)
       {
@@ -4162,9 +4162,9 @@ void sforce2bmp( lattice_ptr lattice)
  }
 #endif /* MARK_ORIGIN_FOR_REFERENCE */
 
-      if( fwrite( &blue_val,  1, 1, o_ux) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &val,       1, 1, o_ux) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &red_val,   1, 1, o_ux) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &blue_val,  1, 1, o_ux) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &val,       1, 1, o_ux) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &red_val,   1, 1, o_ux) != 1) { printf("BOOM!\n"); process_exit(1);}
 
       if( lattice->bc[subs][ n].bc_type == /*FLUID_NODE*/0)
       {
@@ -4254,9 +4254,9 @@ void sforce2bmp( lattice_ptr lattice)
  }
 #endif /* MARK_ORIGIN_FOR_REFERENCE */
 
-      if( fwrite( &blue_val,  1, 1, o_uy) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &green_val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &red_val,   1, 1, o_uy) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &blue_val,  1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &green_val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &red_val,   1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
      
     } /* for( i=0; i<lattice->param.LY; i++) */
 
@@ -4264,9 +4264,9 @@ void sforce2bmp( lattice_ptr lattice)
     val = (char)0;
     for( i=0; i<pad; i++)
     {
-      if( fwrite( &val, 1, 1, o_u ) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &val, 1, 1, o_ux) != 1) { printf("BOOM!\n"); exit(1);}
-      if( fwrite( &val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); exit(1);}
+      if( fwrite( &val, 1, 1, o_u ) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &val, 1, 1, o_ux) != 1) { printf("BOOM!\n"); process_exit(1);}
+      if( fwrite( &val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
     }
 
   } /* for( j=0; j<lattice->param.LY; j++) */
@@ -4350,7 +4350,7 @@ void pdf2bmp( lattice_ptr lattice, int time)
 
   printf("%s (%d) >> pdf2bmp() is not yet implemented. Exiting!\n", 
     __FILE__, __LINE__);
-  exit(1);
+  process_exit(1);
 
 #if SAY_HI
   printf("pdf2bmp() -- Bye!\n");
@@ -4487,7 +4487,7 @@ void private_slice(
     if( !( o = fopen( filename, "w+")))
     {
       printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-      exit(1);
+      process_exit(1);
     }
 
     fprintf( 
@@ -4640,7 +4640,7 @@ void private_slice(
     if( !( o = fopen( filename, "w+")))
     {
       printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-      exit(1);
+      process_exit(1);
     }
 
     fprintf( 
@@ -4814,7 +4814,7 @@ void private_slice(
     if( !( o = fopen( filename, "w+")))
     {
       printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
-      exit(1);
+      process_exit(1);
     }
 
     for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
@@ -5405,7 +5405,7 @@ void count_colormap( int *num_colors)
   if( !( in = fopen( filename, "r+")))
   {
     printf("Error opening file \"%s\" for reading.  Exiting!\n", filename);
-    exit(1);
+    process_exit(1);
   }
   *num_colors = 0;
   fscanf( in, "%lf %lf %lf", &r, &g, &b);
@@ -5463,7 +5463,7 @@ void read_colormap( double **colormap, int num_colors)
   if( !( in = fopen( filename, "r+")))
   {
     printf("Error opening file \"%s\" for reading.  Exiting!\n", filename);
-    exit(1);
+    process_exit(1);
   }
 
   n = 0;
@@ -5572,19 +5572,19 @@ void chen_output( lattice_ptr lattice)
   if( !( app7 = fopen( filename,"a")))
   {
     printf("Error opening \"%s\" for reading.  Exiting!\n", filename);
-    exit(1);
+    process_exit(1);
   }
   sprintf( filename, "%s", "./out/chen_xy_ux_uy.dat");
   if( !( app8 = fopen( filename,"a")))
   {
     printf("Error opening \"%s\" for reading.  Exiting!\n", filename);
-    exit(1);
+    process_exit(1);
   }
   sprintf( filename, "%s", "./out/chen_time.dat");
   if( !( app9 = fopen( filename,"a")))
   {
     printf("Error opening \"%s\" for reading.  Exiting!\n", filename);
-    exit(1);
+    process_exit(1);
   }
   
 #if STORE_U_COMPOSITE
@@ -5719,7 +5719,7 @@ void bmp_read_header( FILE *in, struct bitmap_info_header *bmih)
   {
     printf("ERROR: Can't process this file type.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
   n = fread( bmih, sizeof(struct bitmap_info_header), 1, in );
   int_ptr = (int*)bmih->biCompression;
@@ -5727,7 +5727,7 @@ void bmp_read_header( FILE *in, struct bitmap_info_header *bmih)
   {
     printf("ERROR: Can't handle compression.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
 
 printf("%s %d >> biWidth = %d\n", __FILE__, __LINE__, bmih->biWidth);
@@ -5746,7 +5746,7 @@ printf("%s %d >> biWidth = %d\n", __FILE__, __LINE__, bmih->biWidth);
       if( k!=1)
       {
         printf("Error reading palette entry %d.  Exiting!\n", i);
-        exit(1);
+        process_exit(1);
       }
     }
   }
@@ -5813,7 +5813,7 @@ void bmp_read_entry(
       "bmp_read_entry() -- ERROR:"
       "Attempt to read past the end of file. "
       "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
   switch(ENDIAN2(*bitcount_ptr))
@@ -5822,17 +5822,17 @@ void bmp_read_entry(
       printf("read_bcs() -- "
           "Support for Monochrome BMPs is pending.  "
           "Exiting!\n");
-      exit(1);
+      process_exit(1);
     case 4: // 16 colors.
       printf("read_bcs() -- "
           "Support for 16 color BMPs is pending.  "
           "Exiting!\n");
-      exit(1);
+      process_exit(1);
     case 8: // 256 colors.
       printf("read_bcs() -- "
           "Support for 256 color BMPs is pending.  "
           "Exiting!\n");
-      exit(1);
+      process_exit(1);
     case 24: // 24-bit colors.
     if( !feof(in)) { n+=( k = fread( b, 1, 1, in ));}
     if( !feof(in)) { n+=( k = fread( g, 1, 1, in ));}
@@ -5842,7 +5842,7 @@ void bmp_read_entry(
     default: // 32-bit colors?
       printf("ERROR: Unhandled color depth, "
           "BitCount = %d. Exiting!\n", ENDIAN2(*bitcount_ptr));
-      exit(1);
+      process_exit(1);
       break;
 
   } /* switch(*(bmih.biBitCount)) */
@@ -5853,7 +5853,7 @@ void bmp_read_entry(
       "bmp_read_entry() -- ERROR:"
       "Attempt to read past the end of file. "
       "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
 } /* void bmp_read_entry( FILE *in, char *r, char *g, char *b) */

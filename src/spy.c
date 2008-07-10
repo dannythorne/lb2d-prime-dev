@@ -118,7 +118,7 @@ main( int argc, int **argv)
     printf("\n");
     printf("usage>> ./spy [ input_file_name [output_file_name]]\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
   else
   {
@@ -233,7 +233,7 @@ read_bmp( char *filename)
   {
     printf("ERROR: Can't process this file type.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
   printf("struct bitmap_file_header:\n");
   //char bfType[2];
@@ -258,7 +258,7 @@ read_bmp( char *filename)
   {
     printf("ERROR: Can't handle compression.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
   printf("struct bitmap_info_header:\n");
   // char biSize[4]
@@ -312,7 +312,7 @@ read_bmp( char *filename)
       if( k!=1)
       {
         printf("Error reading palette entry %d.  Exiting!\n", i);
-        exit(1);
+        process_exit(1);
       }
 #if 0
       printf("%4d: [ \"%c\" \"%c\" \"%c\"] (\"%c\")\n", 
@@ -412,7 +412,7 @@ read_bmp( char *filename)
       default: // 32-bit colors?
         printf("ERROR: Unhandled color depth, "
             "BitCount = %d. Exiting!\n", depth);
-        exit(1);
+        process_exit(1);
         break;
     }
     printf(" |");
@@ -490,7 +490,7 @@ spy_bmp( char *filename, int ***spy, int *arg_height, int *arg_width)
   {
     printf("ERROR: Can't process this file type.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
   n = fread( &bmih, sizeof(struct bitmap_info_header), 1, in );
   int_ptr = (int*)bmih.biCompression;
@@ -498,7 +498,7 @@ spy_bmp( char *filename, int ***spy, int *arg_height, int *arg_width)
   {
     printf("ERROR: Can't handle compression.  Exiting!\n");
     printf("\n");
-    exit(1);
+    process_exit(1);
   }
 
   width_ptr = (int*)bmih.biWidth;
@@ -520,7 +520,7 @@ spy_bmp( char *filename, int ***spy, int *arg_height, int *arg_width)
       if( k!=1)
       {
         printf("Error reading palette entry %d.  Exiting!\n", i);
-        exit(1);
+        process_exit(1);
       }
     }
   }
@@ -607,7 +607,7 @@ spy_bmp( char *filename, int ***spy, int *arg_height, int *arg_width)
       default: // 32-bit colors?
         printf("ERROR: Unhandled color depth, "
             "BitCount = %d. Exiting!\n", depth);
-        exit(1);
+        process_exit(1);
         break;
 
     } /* switch(*(bmih.biBitCount)) */

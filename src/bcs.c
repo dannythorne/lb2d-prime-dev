@@ -72,25 +72,25 @@ void bcs( lattice_ptr lattice)
       { 
         printf("bcs() -- ERROR: Support for South, Inflow pressure "
             "boundaries is pending. (Exiting!)");
-        exit(1);
+        process_exit(1);
       }
       if( *bc & BC_PRESSURE_E_IN )
       { 
         printf("bcs() -- ERROR: Support for East, Inflow pressure "
             "boundaries is pending. (Exiting!)");
-        exit(1);
+        process_exit(1);
       }
       if( *bc & BC_PRESSURE_W_IN )
       { 
         printf("bcs() -- ERROR: Support for West, Inflow pressure "
             "boundaries is pending. (Exiting!)");
-        exit(1);
+        process_exit(1);
       }
       if( *bc & BC_PRESSURE_N_OUT)
       { 
         printf("bcs() -- ERROR: Support for North, Outflow pressure "
             "boundaries is pending. (Exiting!)");
-        exit(1);
+        process_exit(1);
       }
 
       if( *bc & BC_PRESSURE_S_OUT) 
@@ -128,13 +128,13 @@ void bcs( lattice_ptr lattice)
       { 
         printf("bcs() -- ERROR: Support for East, Outflow pressure "
             "boundaries is pending. (Exiting!)");
-        exit(1);
+        process_exit(1);
       }
       if( *bc & BC_PRESSURE_W_OUT)
       { 
         printf("bcs() -- ERROR: Support for West, Outflow pressure "
             "boundaries is pending. (Exiting!)");
-        exit(1);
+        process_exit(1);
       }
 
     } /* if( *bc != 0 && *bc != BC_SOLID_NODE) */
@@ -223,25 +223,25 @@ void bcs( lattice_ptr lattice)
       { 
         printf("bcs() -- ERROR: Support for South, Inflow pressure "
             "boundaries is pending. (Exiting!)");
-        exit(1);
+        process_exit(1);
       }
       if( *bc & BC_PRESSURE_E_IN )
       { 
         printf("bcs() -- ERROR: Support for East, Inflow pressure "
             "boundaries is pending. (Exiting!)");
-        exit(1);
+        process_exit(1);
       }
       if( *bc & BC_PRESSURE_W_IN )
       { 
         printf("bcs() -- ERROR: Support for West, Inflow pressure "
             "boundaries is pending. (Exiting!)");
-        exit(1);
+        process_exit(1);
       }
       if( *bc & BC_PRESSURE_N_OUT)
       { 
         printf("bcs() -- ERROR: Support for North, Outflow pressure "
             "boundaries is pending. (Exiting!)");
-        exit(1);
+        process_exit(1);
       }
 
       if( *bc & BC_PRESSURE_S_OUT) 
@@ -266,13 +266,13 @@ void bcs( lattice_ptr lattice)
       { 
         printf("bcs() -- ERROR: Support for East, Outflow pressure "
             "boundaries is pending. (Exiting!)");
-        exit(1);
+        process_exit(1);
       }
       if( *bc & BC_PRESSURE_W_OUT)
       { 
         printf("bcs() -- ERROR: Support for West, Outflow pressure "
             "boundaries is pending. (Exiting!)");
-        exit(1);
+        process_exit(1);
       }
 
     } /* if( *bc != 0 && *bc != BC_SOLID_NODE) */
@@ -3008,7 +3008,7 @@ void bcs( lattice_ptr lattice)
               "%s (%d) >> ERROR:  "
               "constcon_w_in = %d type BC not valid. Exiting!\n",
               __FILE__,__LINE__,lattice->param.constcon_w_in);
-            exit(1);
+            process_exit(1);
           }
         }
         else
@@ -3113,7 +3113,7 @@ void bcs( lattice_ptr lattice)
               "%s (%d) >> ERROR:  "
               "constcon_e_out = %d type BC not valid. Exiting!\n",
               __FILE__,__LINE__,lattice->param.constcon_e_out);
-            exit(1);
+            process_exit(1);
           }
       }
       else
@@ -3300,7 +3300,7 @@ void bcs( lattice_ptr lattice)
          "%s (%d) >> ERROR:  "
          "constflx_w_in = %d type BC not valid. Exiting!\n",
          __FILE__,__LINE__,lattice->param.constflx_w_in);
-       exit(1);
+       process_exit(1);
      }
 
       n     +=   lattice->param.LX;
@@ -3606,7 +3606,7 @@ void process_bcs( lattice_ptr lattice, int subs)
   //############################################################################
   //
   // Report any incompatible boundary conditions.
-  // If there are incompatible bcs, exit after issuing message.
+  // If there are incompatible bcs, process_exit after issuing message.
   //
 
 #if 0 // Want to allow mix of velocity and pressure boundaries.
@@ -3622,7 +3622,7 @@ void process_bcs( lattice_ptr lattice, int subs)
     printf("ERROR:  "
         "Coincident pressure and velocity north boundaries.  "
         "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
   // South
@@ -3633,7 +3633,7 @@ void process_bcs( lattice_ptr lattice, int subs)
     printf("ERROR:  "
         "Coincident pressure and velocity south boundaries.  "
         "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
   // North
@@ -3644,7 +3644,7 @@ void process_bcs( lattice_ptr lattice, int subs)
     printf("ERROR:  "
         "Coincident pressure and velocity north boundaries.  "
         "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
   // South
@@ -3655,7 +3655,7 @@ void process_bcs( lattice_ptr lattice, int subs)
     printf("ERROR:  "
         "Coincident pressure and velocity south boundaries.  "
         "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
   // East
@@ -3666,7 +3666,7 @@ void process_bcs( lattice_ptr lattice, int subs)
     printf("ERROR:  "
         "Coincident pressure and velocity east boundaries.  "
         "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
   // West
@@ -3677,7 +3677,7 @@ void process_bcs( lattice_ptr lattice, int subs)
     printf("ERROR:  "
         "Coincident pressure and velocity west boundaries.  "
         "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
   // East
@@ -3688,7 +3688,7 @@ void process_bcs( lattice_ptr lattice, int subs)
     printf("ERROR:  "
         "Coincident pressure and velocity east boundaries.  "
         "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
   // West
@@ -3699,7 +3699,7 @@ void process_bcs( lattice_ptr lattice, int subs)
     printf("ERROR:  "
         "Coincident pressure and velocity west boundaries.  "
         "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
   // Can't have both inflow and outflow condition on same boundary.
@@ -3712,7 +3712,7 @@ void process_bcs( lattice_ptr lattice, int subs)
     printf("ERROR:  "
         "Coincident inflow and outflow condition on north boundary.  "
         "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
   // South
@@ -3722,7 +3722,7 @@ void process_bcs( lattice_ptr lattice, int subs)
     printf("ERROR:  "
         "Coincident inflow and outflow condition on south boundary.  "
         "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
   // North
@@ -3732,7 +3732,7 @@ void process_bcs( lattice_ptr lattice, int subs)
     printf("ERROR:  "
         "Coincident inflow and outflow condition on north boundary.  "
         "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
   // South
@@ -3742,7 +3742,7 @@ void process_bcs( lattice_ptr lattice, int subs)
     printf("ERROR:  "
         "Coincident inflow and outflow condition on south boundary.  "
         "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
   // East
@@ -3752,7 +3752,7 @@ void process_bcs( lattice_ptr lattice, int subs)
     printf("ERROR:  "
         "Coincident inflow and outflow condition on east boundary.  "
         "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
   // West
@@ -3762,7 +3762,7 @@ void process_bcs( lattice_ptr lattice, int subs)
     printf("ERROR:  "
         "Coincident inflow and outflow condition on west boundary.  "
         "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
   // East
@@ -3772,7 +3772,7 @@ void process_bcs( lattice_ptr lattice, int subs)
     printf("ERROR:  "
         "Coincident inflow and outflow condition on east boundary.  "
         "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 
   // West
@@ -3782,7 +3782,7 @@ void process_bcs( lattice_ptr lattice, int subs)
     printf("ERROR:  "
         "Coincident inflow and outflow condition on west boundary.  "
         "Exiting!\n");
-    exit(1);
+    process_exit(1);
   }
 #endif
 
@@ -3803,7 +3803,7 @@ void process_bcs( lattice_ptr lattice, int subs)
           || lattice->param.velocity_s_out[subs]))
     {
       // TODO: Need to prohibit flow boundaries on only one end of the domain?
-      //exit(1);
+      //process_exit(1);
     }
     else
     {
@@ -3823,7 +3823,7 @@ void process_bcs( lattice_ptr lattice, int subs)
           || lattice->param.velocity_n_out[subs]))
     {
       // TODO: Need to prohibit flow boundaries on only one end of the domain?
-      //exit(1);
+      //process_exit(1);
     }
     else
     {
@@ -3843,7 +3843,7 @@ void process_bcs( lattice_ptr lattice, int subs)
           || lattice->param.velocity_w_out[subs]))
     {
       // TODO: Need to prohibit flow boundaries on only one end of the domain?
-      //exit(1);
+      //process_exit(1);
     }
     else
     {
@@ -3863,7 +3863,7 @@ void process_bcs( lattice_ptr lattice, int subs)
           || lattice->param.velocity_e_out[subs]))
     {
       // TODO: Need to prohibit flow boundaries on only one end of the domain?
-      //exit(1);
+      //process_exit(1);
     }
     else
     {

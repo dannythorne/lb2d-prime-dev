@@ -218,7 +218,7 @@ int read_param_label( FILE *in, char *param_label, int max_length)
   if( max_length<=0)
   {
     printf("%s %d >> ERROR: max_length<=0 .\n",__FILE__,__LINE__);
-    exit(1);
+    process_exit(1);
   }
 
   c = fgetc( in);
@@ -232,7 +232,7 @@ int read_param_label( FILE *in, char *param_label, int max_length)
     printf("%s %d >> Error reading label from parameters input file. "
         "Exiting!\n",__FILE__,__LINE__);
     fclose(in);
-    exit(1);
+    process_exit(1);
 
   } /* if( ( c >= '0' && c <='9') || c == '-' || c == '.') */
 
@@ -250,7 +250,7 @@ int read_param_label( FILE *in, char *param_label, int max_length)
       if( i+1 > max_length)
       {
         printf("%s %d >> ERROR: i+1 > max_length .\n",__FILE__,__LINE__);
-        exit(1);
+        process_exit(1);
       }
       param_label[i] = c;
     }
@@ -293,7 +293,7 @@ void read_params( lattice_ptr lattice, const char *infile)
   if( !( in = fopen( infile, "r")))
   {
     printf("ERROR: fopen(\"%s\",\"r\") = NULL.  Bye, bye!\n", infile);
-    exit(1);
+    process_exit(1);
   }
 
 #if NEW_PARAMS_INPUT_ROUTINE
@@ -1509,7 +1509,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       "NUM_FLUID_COMPONENTS = %d .  "
       "Exiting!\n", 
       NUM_FLUID_COMPONENTS);
-    exit(1);
+    process_exit(1);
   }
     skip_label( in); fscanf( in, "%d ", &(lattice->param.buoyancy      ) );
     skip_label( in); fscanf( in, "%d ", &(lattice->param.incompressible) );
@@ -1570,7 +1570,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       "NUM_FLUID_COMPONENTS = %d .  "
       "Exiting!\n", 
       NUM_FLUID_COMPONENTS);
-    exit(1);
+    process_exit(1);
   }
     skip_label( in); fscanf( in, "%d", &( lattice->param.ns_flag)        );
     skip_label( in); fscanf( in, "%lf",&( lattice->param.ns)             );
@@ -1648,7 +1648,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       "NUM_FLUID_COMPONENTS = %d .  "
       "Exiting!\n", 
       NUM_FLUID_COMPONENTS);
-    exit(1);
+    process_exit(1);
   }
   if( INAMURO_SIGMA_COMPONENT)
   {
@@ -1768,7 +1768,7 @@ void read_params( lattice_ptr lattice, const char *infile)
           __FILE__, __LINE__);
       printf("\n");
       printf("\n");
-      exit(1);
+      process_exit(1);
     }
   }
 
@@ -1785,7 +1785,7 @@ void read_params( lattice_ptr lattice, const char *infile)
           __FILE__, __LINE__);
       printf("\n");
       printf("\n");
-      exit(1);
+      process_exit(1);
     }
   }
 
@@ -1867,7 +1867,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( lattice->param.rho_sigma_in != lattice->param.C_in)
       {
         printf("%s %d >> ERROR: 0.!=rho_sigma_in!=C_in. Exiting.",__FILE__,__LINE__);
-        exit(1);
+        process_exit(1);
       }
     }
     else
@@ -1883,7 +1883,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( lattice->param.rho_sigma_out != lattice->param.C_out)
       {
         printf("%s %d >> ERROR: 0.!=rho_sigma_out!=C_out. Exiting.",__FILE__,__LINE__);
-        exit(1);
+        process_exit(1);
       }
     }
     else
@@ -1921,7 +1921,7 @@ void dump_params( struct lattice_struct *lattice)
         __FILE__, __LINE__, filename);
     printf("\n%s %d >> NOTE: Maybe need to create directory \"out/\"\n", 
         __FILE__, __LINE__, filename);
-    exit(1);
+    process_exit(1);
   }
 
   fprintf( o, "LX                   %d\n", lattice->param.LX             );
@@ -1957,7 +1957,7 @@ void dump_params( struct lattice_struct *lattice)
       "NUM_FLUID_COMPONENTS = %d .  "
       "Exiting!\n", 
       NUM_FLUID_COMPONENTS);
-    exit(1);
+    process_exit(1);
   }
   fprintf( o, "buoyancy             %d\n", lattice->param.buoyancy        );
   fprintf( o, "incompressible       %d\n", lattice->param.incompressible  );
@@ -1982,7 +1982,7 @@ void dump_params( struct lattice_struct *lattice)
       "NUM_FLUID_COMPONENTS = %d .  "
       "Exiting!\n", 
       NUM_FLUID_COMPONENTS);
-    exit(1);
+    process_exit(1);
   }
 #if INAMURO_SIGMA_COMPONENT
   fprintf( o, "rho_sigma            %f\n", lattice->param.rho_sigma      );
@@ -2041,7 +2041,7 @@ void dump_params( struct lattice_struct *lattice)
       "NUM_FLUID_COMPONENTS = %d .  "
       "Exiting!\n", 
       NUM_FLUID_COMPONENTS);
-    exit(1);
+    process_exit(1);
   }
   fprintf( o, "periodic_x[0]        %d\n", lattice->periodic_x[0]        );
   fprintf( o, "periodic_y[0]        %d\n", lattice->periodic_y[0]        );
@@ -2063,7 +2063,7 @@ void dump_params( struct lattice_struct *lattice)
       "NUM_FLUID_COMPONENTS = %d .  "
       "Exiting!\n", 
       NUM_FLUID_COMPONENTS);
-    exit(1);
+    process_exit(1);
   }
   fprintf( o, "ns                   %d\n", lattice->param.ns_flag        );
   fprintf( o, "ns                   %f\n", lattice->param.ns             );
@@ -2141,7 +2141,7 @@ void dump_params( struct lattice_struct *lattice)
       "NUM_FLUID_COMPONENTS = %d .  "
       "Exiting!\n", 
       NUM_FLUID_COMPONENTS);
-    exit(1);
+    process_exit(1);
   }
   if( INAMURO_SIGMA_COMPONENT)
   {

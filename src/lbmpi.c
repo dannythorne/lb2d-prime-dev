@@ -461,7 +461,7 @@ void compute_LX( lattice_ptr lattice, lbmpi_ptr lbmpi)
       get_GLX(lbmpi),  get_NPX(lbmpi),
       get_GLX(lbmpi) % get_NPX(lbmpi)
       );
-    exit(1);
+    process_exit(1);
   }
 
   set_LX( lattice, get_GLX(lbmpi) / get_NPX(lbmpi));
@@ -479,7 +479,7 @@ void compute_LY( lattice_ptr lattice, lbmpi_ptr lbmpi)
       get_GLY(lbmpi),  get_NPY(lbmpi),
       get_GLY(lbmpi) % get_NPY(lbmpi)
       );
-    exit(1);
+    process_exit(1);
   }
 
   set_LY( lattice, get_GLY(lbmpi) / get_NPY(lbmpi));

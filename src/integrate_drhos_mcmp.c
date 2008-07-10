@@ -101,7 +101,7 @@ void read_rho_file( char *filename, double **rho, double *max, double *min) {
   if( !( in = fopen(filename,"r")))
   {
     printf("ERROR: Error opening file \"%s\". Exiting.\n",filename);
-    exit(1);
+    process_exit(1);
   }
 
   j = 0;
