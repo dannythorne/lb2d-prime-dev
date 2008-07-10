@@ -2,7 +2,7 @@ LX                     16
 LY                     16
 characteristic_length  31
 NumFrames              8
-FrameRate              10000
+FrameRate              100
 tau[0]                 1
 gforce_x[0]            0.
 gforce_y[0]            0.000000625

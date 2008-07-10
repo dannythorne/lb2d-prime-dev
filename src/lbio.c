@@ -7027,4 +7027,4 @@ void report_partition( report_ptr report)
 
 
 //##############################################################################
-// vim: foldmethod=marker:foldlevel=0
+// vim: foldmethod=syntax:foldlevel=0
