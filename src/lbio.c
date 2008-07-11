@@ -84,33 +84,33 @@ void output_frame( lattice_ptr lattice)
 
   compute_ave_u( lattice, u, 0);
   s = sqrt( u[0]*u[0] + u[1]*u[1]);
-  printf("subs 0: Re = ux_ave*L/nu = %20.17f * %d / %20.17f = %20.17f\n",
-    u[0], L, nu, u[0]*L/nu );
-  printf("subs 0: Re = uy_ave*L/nu = %20.17f * %d / %20.17f = %20.17f\n",
-    u[1], L, nu, u[1]*L/nu );
-  printf("subs 0: Re = u_ave*L/nu  = %20.17f * %d / %20.17f = %20.17f\n",
-    s, L, nu, s*L/nu );
+  printf("p%02d, subs 0: Re = ux_ave*L/nu = %20.17f * %d / %20.17f = %20.17f\n",
+    get_proc_id(lattice), u[0], L, nu, u[0]*L/nu );
+  printf("p%02d, subs 0: Re = uy_ave*L/nu = %20.17f * %d / %20.17f = %20.17f\n",
+    get_proc_id(lattice), u[1], L, nu, u[1]*L/nu );
+  printf("p%02d, subs 0: Re = u_ave*L/nu  = %20.17f * %d / %20.17f = %20.17f\n",
+    get_proc_id(lattice), s, L, nu, s*L/nu );
 
 #if NUM_FLUID_COMPONENTS == 2
   compute_ave_u( lattice, u, 1);
   s = sqrt( u[0]*u[0] + u[1]*u[1]);
-  printf("subs 1: Re = ux_ave*L/nu = %20.17f * %d / %20.17f = %20.17f\n",
-    u[0], L, nu, u[0]*L/nu );
-  printf("subs 1: Re = uy_ave*L/nu = %20.17f * %d / %20.17f = %20.17f\n",
-    u[1], L, nu, u[1]*L/nu );
-  printf("subs 1: Re = u_ave*L/nu  = %20.17f * %d / %20.17f = %20.17f\n",
-    s, L, nu, s*L/nu );
+  printf("p%02d, subs 1: Re = ux_ave*L/nu = %20.17f * %d / %20.17f = %20.17f\n",
+    get_proc_id(lattice), u[0], L, nu, u[0]*L/nu );
+  printf("p%02d, subs 1: Re = uy_ave*L/nu = %20.17f * %d / %20.17f = %20.17f\n",
+    get_proc_id(lattice), u[1], L, nu, u[1]*L/nu );
+  printf("p%02d, subs 1: Re = u_ave*L/nu  = %20.17f * %d / %20.17f = %20.17f\n",
+    get_proc_id(lattice), s, L, nu, s*L/nu );
 #endif /* NUM_FLUID_COMPONENTS == 2 */
 
 #if STORE_U_COMPOSITE
   compute_ave_upr( lattice, u);
   s = sqrt( u[0]*u[0] + u[1]*u[1]);
-  printf("eq:     Re = ux_ave*L/nu = %20.17f * %d / %20.17f = %20.17f\n",
-    u[0], L, nu, u[0]*L/nu );
-  printf("eq:     Re = uy_ave*L/nu = %20.17f * %d / %20.17f = %20.17f\n",
-    u[1], L, nu, u[1]*L/nu );
-  printf("eq:     Re = u_ave*L/nu  = %20.17f * %d / %20.17f = %20.17f\n",
-    s, L, nu, s*L/nu );
+  printf("p%02d, eq:     Re = ux_ave*L/nu = %20.17f * %d / %20.17f = %20.17f\n",
+    get_proc_id(lattice), u[0], L, nu, u[0]*L/nu );
+  printf("p%02d, eq:     Re = uy_ave*L/nu = %20.17f * %d / %20.17f = %20.17f\n",
+    get_proc_id(lattice), u[1], L, nu, u[1]*L/nu );
+  printf("p%02d, eq:     Re = u_ave*L/nu  = %20.17f * %d / %20.17f = %20.17f\n",
+    get_proc_id(lattice), s, L, nu, s*L/nu );
 #endif /* STORE_U_COMPOSITE */
 
 } /* void output_frame( lattice_ptr lattice) */

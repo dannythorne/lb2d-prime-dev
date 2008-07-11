@@ -752,13 +752,12 @@ void process_reduce_double_sum( lattice_ptr lattice, double *arg_x)
   //        rbuf   - address of receive buffer (choice, sig't only at root )
   //
   mpierr =
-    MPI_Reduce(
+    MPI_Allreduce(
     /*void *sbuf*/         arg_x,
     /*void* rbuf*/        &sum_x,
     /*int count*/          1,
     /*MPI_Datatype dtype*/ MPI_DOUBLE,
     /*MPI_Op op*/          MPI_SUM,
-    /*int root*/           0,
     /*MPI_Comm comm*/      MPI_COMM_WORLD
     );
   if( mpierr != MPI_SUCCESS)
@@ -769,10 +768,28 @@ void process_reduce_double_sum( lattice_ptr lattice, double *arg_x)
       __FILE__,__LINE__,get_proc_id(lattice), mpierr);
     process_exit(1);
   }
+#if 0
   if( is_on_root_proc( lattice))
   {
     *arg_x = sum_x;
   }
+  mpierr =
+    MPI_Bcast(
+    /*void *buffer*/          arg_x,
+    /*int count*/             1,
+    /*MPI_Datatype datatype*/ MPI_DOUBLE,
+    /*int root*/              0,
+    /*MPI_Comm comm*/         MPI_COMM_WORLD
+    );
+  if( mpierr != MPI_SUCCESS)
+  {
+    printf( "%s %d %04d >> "
+      "ERROR: %d <-- MPI_Reduce( ave_rho, MPI_DOUBLE, MPI_SUM)"
+      "\n",
+      __FILE__,__LINE__,get_proc_id(lattice), mpierr);
+    process_exit(1);
+  }
+#endif
 #endif
 } /* void process_reduce_double_sum( lattice_ptr lattice, double &arg_x) */
 
@@ -795,13 +812,12 @@ void process_reduce_int_sum( lattice_ptr lattice, int *arg_n)
   //        rbuf   - address of receive buffer (choice, sig't only at root )
   //
   mpierr =
-    MPI_Reduce(
+    MPI_Allreduce(
     /*void *sbuf*/         arg_n,
     /*void* rbuf*/        &sum_n,
     /*int count*/          1,
     /*MPI_Datatype dtype*/ MPI_INT,
     /*MPI_Op op*/          MPI_SUM,
-    /*int root*/           0,
     /*MPI_Comm comm*/      MPI_COMM_WORLD
     );
   if( mpierr != MPI_SUCCESS)
@@ -812,10 +828,28 @@ void process_reduce_int_sum( lattice_ptr lattice, int *arg_n)
       __FILE__,__LINE__,get_proc_id(lattice), mpierr);
     process_exit(1);
   }
+#if 0
   if( is_on_root_proc( lattice))
   {
     *arg_n = sum_n;
   }
+  mpierr =
+    MPI_Bcast(
+    /*void *buffer*/          arg_n,
+    /*int count*/             1,
+    /*MPI_Datatype datatype*/ MPI_DOUBLE,
+    /*int root*/              0,
+    /*MPI_Comm comm*/         MPI_COMM_WORLD
+    );
+  if( mpierr != MPI_SUCCESS)
+  {
+    printf( "%s %d %04d >> "
+      "ERROR: %d <-- MPI_Reduce( ave_rho, MPI_DOUBLE, MPI_SUM)"
+      "\n",
+      __FILE__,__LINE__,get_proc_id(lattice), mpierr);
+    process_exit(1);
+  }
+#endif
 #endif
 } /* void process_reduce_int_sum( lattice_ptr lattice, int *arg_n) */
 
@@ -838,13 +872,12 @@ void process_reduce_double_max( lattice_ptr lattice, double *arg_x)
   //        rbuf   - address of receive buffer (choice, sig't only at root )
   //
   mpierr =
-    MPI_Reduce(
+    MPI_Allreduce(
     /*void *sbuf*/         arg_x,
     /*void* rbuf*/        &max_x,
     /*int count*/          1,
     /*MPI_Datatype dtype*/ MPI_DOUBLE,
     /*MPI_Op op*/          MPI_MAX,
-    /*int root*/           0,
     /*MPI_Comm comm*/      MPI_COMM_WORLD
     );
   if( mpierr != MPI_SUCCESS)
@@ -855,30 +888,28 @@ void process_reduce_double_max( lattice_ptr lattice, double *arg_x)
       __FILE__,__LINE__,get_proc_id(lattice), mpierr);
     process_exit(1);
   }
+#if 0
   if( is_on_root_proc( lattice))
   {
     *arg_x = max_x;
-    mpierr =
-      MPI_Bcast(
-      /*void *buffer*/          arg_x,
-      /*int count*/             1,
-      /*MPI_Datatype datatype*/ MPI_DOUBLE,
-      /*int root*/              0,
-      /*MPI_Comm comm*/         MPI_COMM_WORLD
-      );
   }
-  else
+  mpierr =
+    MPI_Bcast(
+    /*void *buffer*/          arg_x,
+    /*int count*/             1,
+    /*MPI_Datatype datatype*/ MPI_DOUBLE,
+    /*int root*/              0,
+    /*MPI_Comm comm*/         MPI_COMM_WORLD
+    );
+  if( mpierr != MPI_SUCCESS)
   {
-    mpierr =
-      MPI_Bcast(
-      /*void *buffer*/          arg_x,
-      /*int count*/             1,
-      /*MPI_Datatype datatype*/ MPI_DOUBLE,
-      /*int root*/              0,
-      /*MPI_Comm comm*/         MPI_COMM_WORLD
-      );
+    printf( "%s %d %04d >> "
+      "ERROR: %d <-- MPI_Reduce( ave_rho, MPI_DOUBLE, MPI_SUM)"
+      "\n",
+      __FILE__,__LINE__,get_proc_id(lattice), mpierr);
+    process_exit(1);
   }
-
+#endif
 #endif
 } /* void process_reduce_double_sum( lattice_ptr lattice, double &arg_x) */
 
@@ -901,13 +932,12 @@ void process_reduce_double_min( lattice_ptr lattice, double *arg_x)
   //        rbuf   - address of receive buffer (choice, sig't only at root )
   //
   mpierr =
-    MPI_Reduce(
+    MPI_Allreduce(
     /*void *sbuf*/         arg_x,
     /*void* rbuf*/        &min_x,
     /*int count*/          1,
     /*MPI_Datatype dtype*/ MPI_DOUBLE,
     /*MPI_Op op*/          MPI_MIN,
-    /*int root*/           0,
     /*MPI_Comm comm*/      MPI_COMM_WORLD
     );
   if( mpierr != MPI_SUCCESS)
@@ -918,29 +948,28 @@ void process_reduce_double_min( lattice_ptr lattice, double *arg_x)
       __FILE__,__LINE__,get_proc_id(lattice), mpierr);
     process_exit(1);
   }
+#if 0
   if( is_on_root_proc( lattice))
   {
     *arg_x = min_x;
-    mpierr =
-      MPI_Bcast(
-      /*void *buffer*/          arg_x,
-      /*int count*/             1,
-      /*MPI_Datatype datatype*/ MPI_DOUBLE,
-      /*int root*/              0,
-      /*MPI_Comm comm*/         MPI_COMM_WORLD
-      );
   }
-  else
+  mpierr =
+    MPI_Bcast(
+    /*void *buffer*/          arg_x,
+    /*int count*/             1,
+    /*MPI_Datatype datatype*/ MPI_DOUBLE,
+    /*int root*/              0,
+    /*MPI_Comm comm*/         MPI_COMM_WORLD
+    );
+  if( mpierr != MPI_SUCCESS)
   {
-    mpierr =
-      MPI_Bcast(
-      /*void *buffer*/          arg_x,
-      /*int count*/             1,
-      /*MPI_Datatype datatype*/ MPI_DOUBLE,
-      /*int root*/              0,
-      /*MPI_Comm comm*/         MPI_COMM_WORLD
-      );
+    printf( "%s %d %04d >> "
+      "ERROR: %d <-- MPI_Reduce( ave_rho, MPI_DOUBLE, MPI_SUM)"
+      "\n",
+      __FILE__,__LINE__,get_proc_id(lattice), mpierr);
+    process_exit(1);
   }
+#endif
 #endif
 } /* void process_reduce_double_sum( lattice_ptr lattice, double &arg_x) */
 
