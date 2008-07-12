@@ -1,11 +1,11 @@
 LX                     16
 LY                     16
 characteristic_length  31
-NumFrames              8
-FrameRate              100
+NumFrames              4
+FrameRate              10
 tau[0]                 1
 gforce_x[0]            0.
-gforce_y[0]            0.000000625
+gforce_y[0]            0.01
 end_grav[0]            0
 tau[1]                 1.
 gforce_x[1]            0.00

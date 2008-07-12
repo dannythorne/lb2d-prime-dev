@@ -901,6 +901,25 @@ void process_reduce_double_min( lattice_ptr lattice, double *arg_x)
   if( is_on_root_proc( lattice))
   {
     *arg_x = min_x;
+    mpierr =
+      MPI_Bcast(
+      /*void *buffer*/          arg_x,
+      /*int count*/             1,
+      /*MPI_Datatype datatype*/ MPI_DOUBLE,
+      /*int root*/              0,
+      /*MPI_Comm comm*/         MPI_COMM_WORLD
+      );
+  }
+  else
+  {
+    mpierr =
+      MPI_Bcast(
+      /*void *buffer*/          arg_x,
+      /*int count*/             1,
+      /*MPI_Datatype datatype*/ MPI_DOUBLE,
+      /*int root*/              0,
+      /*MPI_Comm comm*/         MPI_COMM_WORLD
+      );
   }
 #endif
 } /* void process_reduce_double_sum( lattice_ptr lattice, double &arg_x) */

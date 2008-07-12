@@ -434,15 +434,17 @@ void dump_macro_vars( struct lattice_struct *lattice, int time)
     n = j*get_LX(lattice);
     for( i=0; i<get_LX(lattice); i++, n++)
     {
-      fprintf( o_rho, "%10.8f ", lattice->macro_vars[subs][n].rho);
-      fprintf( o_ux,  "%10.8f ", lattice->macro_vars[subs][n].u[0]);
       if( is_not_solid_node(lattice, subs, n))
       {
+        fprintf( o_rho, "%10.8f ", lattice->macro_vars[subs][n].rho);
+        fprintf( o_ux,  "%10.8f ", lattice->macro_vars[subs][n].u[0]);
         fprintf( o_uy,  "%10.8f ", lattice->macro_vars[subs][n].u[1]);
       }
       else
       {
-        fprintf( o_uy,  "----------");
+        fprintf( o_rho, "---------- ");
+        fprintf( o_ux,  "---------- ");
+        fprintf( o_uy,  "---------- ");
       }
 #if STORE_U_COMPOSITE
       fprintf( o_upr_x,  "%10.8f ", lattice->upr[n].u[0]);

@@ -2848,4 +2848,4 @@ void compute_ave_vor(
                                                                           // }}}
 
 //##############################################################################
-// vim: foldmethod=marker:foldlevel=0
+// vim: foldmethod=syntax:foldlevel=0
