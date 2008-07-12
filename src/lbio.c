@@ -1958,6 +1958,7 @@ void rho2bmp( lattice_ptr lattice, int time)
 
   frame = time/lattice->param.FrameRate;
 
+#if 0
   sprintf( filename, "./in/%dx%d_proc%04d.bmp",
     get_LX(lattice), get_LY(lattice), get_proc_id(lattice));
   if( !( in = fopen( filename, "r")))
@@ -2005,6 +2006,35 @@ void rho2bmp( lattice_ptr lattice, int time)
   }
 
   fclose(in);
+
+#else
+  bmfh.bfType[0] = 'B';
+  bmfh.bfType[1] = 'M';
+  *((int*)bmfh.bfSize)= get_LY(lattice)*(
+    (int)ceil( ( ((double)get_LX(lattice))*( /*depth*/24.))/8.) // bytes per row
+  + ( 4 - (int)ceil( ( ((double)get_LX(lattice))*( /*depth*/24.))/8.) % 4) % 4 // pad
+  );
+  *((short int*)bmfh.bfReserved1) = 0;
+  *((short int*)bmfh.bfReserved2) = 0;
+  *((int*)bmfh.bfOffBits) = 54; // 14 byte file header and 40 byte info header
+
+  *((int*)bmih.biSize) = 40;
+  *((int*)bmih.biWidth) = get_LX(lattice);
+  *((int*)bmih.biHeight) = get_LY(lattice);
+  *((short int*)bmih.biPlanes) = 1;
+  *((short int*)bmih.biBitCount) = 24;
+  *((int*)bmih.biCompression) = 0;
+  *((int*)bmih.biSizeImage) = 0;
+  *((int*)bmih.biXPelsPerMeter) = 0;
+  *((int*)bmih.biYPelsPerMeter) = 0;
+  *((int*)bmih.biClrUsed) = 0;
+  *((int*)bmih.biClrImportant) = 0;
+
+  width_ptr = (int*)bmih.biWidth;
+  height_ptr = (int*)bmih.biHeight;
+  bitcount_ptr = (short int*)bmih.biBitCount;
+
+#endif
 
   // Bytes per row of the bitmap.
   bytes_per_row = 
@@ -2500,6 +2530,7 @@ void u2bmp( lattice_ptr lattice, int time)
 
   frame = time/lattice->param.FrameRate;
 
+#if 0
   sprintf( filename, "./in/%dx%d_proc%04d.bmp",
       get_LX(lattice), get_LY(lattice), get_proc_id(lattice));
   if( !( in = fopen( filename, "r")))
@@ -2557,6 +2588,35 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
   }
 
   fclose(in);
+
+#else
+  bmfh.bfType[0] = 'B';
+  bmfh.bfType[1] = 'M';
+  *((int*)bmfh.bfSize)= get_LY(lattice)*(
+    (int)ceil( ( ((double)get_LX(lattice))*( /*depth*/24.))/8.) // bytes per row
+  + ( 4 - (int)ceil( ( ((double)get_LX(lattice))*( /*depth*/24.))/8.) % 4) % 4 // pad
+  );
+  *((short int*)bmfh.bfReserved1) = 0;
+  *((short int*)bmfh.bfReserved2) = 0;
+  *((int*)bmfh.bfOffBits) = 54; // 14 byte file header and 40 byte info header
+
+  *((int*)bmih.biSize) = 40;
+  *((int*)bmih.biWidth) = get_LX(lattice);
+  *((int*)bmih.biHeight) = get_LY(lattice);
+  *((short int*)bmih.biPlanes) = 1;
+  *((short int*)bmih.biBitCount) = 24;
+  *((int*)bmih.biCompression) = 0;
+  *((int*)bmih.biSizeImage) = 0;
+  *((int*)bmih.biXPelsPerMeter) = 0;
+  *((int*)bmih.biYPelsPerMeter) = 0;
+  *((int*)bmih.biClrUsed) = 0;
+  *((int*)bmih.biClrImportant) = 0;
+
+  width_ptr = (int*)bmih.biWidth;
+  height_ptr = (int*)bmih.biHeight;
+  bitcount_ptr = (short int*)bmih.biBitCount;
+
+#endif
 
   // Bytes per row of the bitmap.
   bytes_per_row = 
@@ -3421,6 +3481,7 @@ void vor2bmp( lattice_ptr lattice, int time)
 
   frame = time/lattice->param.FrameRate;
 
+#if 0
   sprintf( filename, "./in/%dx%d_proc%04d.bmp",
       get_LX(lattice), get_LY(lattice), get_proc_id(lattice));
   if( !( in = fopen( filename, "r")))
@@ -3468,6 +3529,34 @@ void vor2bmp( lattice_ptr lattice, int time)
   }
 
   fclose(in);
+#else
+  bmfh.bfType[0] = 'B';
+  bmfh.bfType[1] = 'M';
+  *((int*)bmfh.bfSize)= get_LY(lattice)*(
+    (int)ceil( ( ((double)get_LX(lattice))*( /*depth*/24.))/8.) // bytes per row
+  + ( 4 - (int)ceil( ( ((double)get_LX(lattice))*( /*depth*/24.))/8.) % 4) % 4 // pad
+  );
+  *((short int*)bmfh.bfReserved1) = 0;
+  *((short int*)bmfh.bfReserved2) = 0;
+  *((int*)bmfh.bfOffBits) = 54; // 14 byte file header and 40 byte info header
+
+  *((int*)bmih.biSize) = 40;
+  *((int*)bmih.biWidth) = get_LX(lattice);
+  *((int*)bmih.biHeight) = get_LY(lattice);
+  *((short int*)bmih.biPlanes) = 1;
+  *((short int*)bmih.biBitCount) = 24;
+  *((int*)bmih.biCompression) = 0;
+  *((int*)bmih.biSizeImage) = 0;
+  *((int*)bmih.biXPelsPerMeter) = 0;
+  *((int*)bmih.biYPelsPerMeter) = 0;
+  *((int*)bmih.biClrUsed) = 0;
+  *((int*)bmih.biClrImportant) = 0;
+
+  width_ptr = (int*)bmih.biWidth;
+  height_ptr = (int*)bmih.biHeight;
+  bitcount_ptr = (short int*)bmih.biBitCount;
+
+#endif
 
   // Bytes per row of the bitmap.
   bytes_per_row = 
@@ -3703,6 +3792,7 @@ void force2bmp( lattice_ptr lattice)
 
   frame = lattice->time/lattice->param.FrameRate;
 
+#if 0
   sprintf( filename, "./in/%dx%d_proc%04d.bmp",
       get_LX(lattice), get_LY(lattice), get_proc_id(lattice));
   if( !( in = fopen( filename, "r")))
@@ -3750,6 +3840,34 @@ void force2bmp( lattice_ptr lattice)
   }
 
   fclose(in);
+#else
+  bmfh.bfType[0] = 'B';
+  bmfh.bfType[1] = 'M';
+  *((int*)bmfh.bfSize)= get_LY(lattice)*(
+    (int)ceil( ( ((double)get_LX(lattice))*( /*depth*/24.))/8.) // bytes per row
+  + ( 4 - (int)ceil( ( ((double)get_LX(lattice))*( /*depth*/24.))/8.) % 4) % 4 // pad
+  );
+  *((short int*)bmfh.bfReserved1) = 0;
+  *((short int*)bmfh.bfReserved2) = 0;
+  *((int*)bmfh.bfOffBits) = 54; // 14 byte file header and 40 byte info header
+
+  *((int*)bmih.biSize) = 40;
+  *((int*)bmih.biWidth) = get_LX(lattice);
+  *((int*)bmih.biHeight) = get_LY(lattice);
+  *((short int*)bmih.biPlanes) = 1;
+  *((short int*)bmih.biBitCount) = 24;
+  *((int*)bmih.biCompression) = 0;
+  *((int*)bmih.biSizeImage) = 0;
+  *((int*)bmih.biXPelsPerMeter) = 0;
+  *((int*)bmih.biYPelsPerMeter) = 0;
+  *((int*)bmih.biClrUsed) = 0;
+  *((int*)bmih.biClrImportant) = 0;
+
+  width_ptr = (int*)bmih.biWidth;
+  height_ptr = (int*)bmih.biHeight;
+  bitcount_ptr = (short int*)bmih.biBitCount;
+
+#endif
 
   // Bytes per row of the bitmap.
   bytes_per_row = 
@@ -4171,6 +4289,7 @@ void sforce2bmp( lattice_ptr lattice)
 
   frame = lattice->time/lattice->param.FrameRate;
 
+#if 0
   sprintf( filename, "./in/%dx%d_proc%04d.bmp",
       get_LX(lattice), get_LY(lattice), get_proc_id(lattice));
   if( !( in = fopen( filename, "r")))
@@ -4218,6 +4337,34 @@ void sforce2bmp( lattice_ptr lattice)
   }
 
   fclose(in);
+#else
+  bmfh.bfType[0] = 'B';
+  bmfh.bfType[1] = 'M';
+  *((int*)bmfh.bfSize)= get_LY(lattice)*(
+    (int)ceil( ( ((double)get_LX(lattice))*( /*depth*/24.))/8.) // bytes per row
+  + ( 4 - (int)ceil( ( ((double)get_LX(lattice))*( /*depth*/24.))/8.) % 4) % 4 // pad
+  );
+  *((short int*)bmfh.bfReserved1) = 0;
+  *((short int*)bmfh.bfReserved2) = 0;
+  *((int*)bmfh.bfOffBits) = 54; // 14 byte file header and 40 byte info header
+
+  *((int*)bmih.biSize) = 40;
+  *((int*)bmih.biWidth) = get_LX(lattice);
+  *((int*)bmih.biHeight) = get_LY(lattice);
+  *((short int*)bmih.biPlanes) = 1;
+  *((short int*)bmih.biBitCount) = 24;
+  *((int*)bmih.biCompression) = 0;
+  *((int*)bmih.biSizeImage) = 0;
+  *((int*)bmih.biXPelsPerMeter) = 0;
+  *((int*)bmih.biYPelsPerMeter) = 0;
+  *((int*)bmih.biClrUsed) = 0;
+  *((int*)bmih.biClrImportant) = 0;
+
+  width_ptr = (int*)bmih.biWidth;
+  height_ptr = (int*)bmih.biHeight;
+  bitcount_ptr = (short int*)bmih.biBitCount;
+
+#endif
 
   // Bytes per row of the bitmap.
   bytes_per_row = 
