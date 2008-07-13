@@ -77,6 +77,10 @@ void assign_default_param_vals( lattice_ptr lattice)
 #if INAMURO_SIGMA_COMPONENT
   lattice->param.bc_sigma_slip = 0;
   lattice->param.bc_sigma_walls = 0;
+#if TAU_ZHANG_ANISOTROPIC_DISPERSION
+  lattice->param.Dl = 1.;
+  lattice->param.Dt = 1.;
+#endif
 #endif /* INAMURO_SIGMA_COMPONENT */
   lattice->param.pressure_n_in[0] = 0;
   lattice->param.pressure_s_in[0] = 0;
@@ -791,6 +795,32 @@ void read_params( lattice_ptr lattice, const char *infile)
         "// unused: not INAMURO_SIGMA_COMPONENT\n",
         __FILE__,__LINE__, blank);
 #endif /* (INAMURO_SIGMA_COMPONENT) */
+    }
+    else if( !strncmp(param_label,"Dl",80))
+    {
+#if TAU_ZHANG_ANISOTROPIC_DISPERSION
+      fscanf( in, "%f\n", &(lattice->param.Dl));
+      printf("%s %d >> Dl = %f\n",__FILE__,__LINE__, 
+        lattice->param.Dl);
+#else
+      fscanf( in, "%f\n", &(dblank));
+      printf("%s %d >> Dl = %f "
+        "// unused: not INAMURO_SIGMA_COMPONENT\n",
+        __FILE__,__LINE__, dblank);
+#endif
+    }
+    else if( !strncmp(param_label,"Dt",80))
+    {
+#if TAU_ZHANG_ANISOTROPIC_DISPERSION
+      fscanf( in, "%f\n", &(lattice->param.Dt));
+      printf("%s %d >> Dt = %f\n",__FILE__,__LINE__, 
+        lattice->param.Dt);
+#else
+      fscanf( in, "%f\n", &(dblank));
+      printf("%s %d >> Dt = %f "
+        "// unused: not INAMURO_SIGMA_COMPONENT\n",
+        __FILE__,__LINE__, dblank);
+#endif
     }
     else if( !strncmp(param_label,"pressure_n_in[0]",80))
     {
@@ -1582,9 +1612,17 @@ void read_params( lattice_ptr lattice, const char *infile)
 #if INAMURO_SIGMA_COMPONENT
     skip_label( in); fscanf( in, "%d", &( lattice->param.bc_sigma_slip ) );
     skip_label( in); fscanf( in, "%d", &( lattice->param.bc_sigma_walls) );
+#if TAU_ZHANG_ANISOTROPIC_DISPERSION
+    skip_label( in); fscanf( in, "%lf",&( lattice->param.Dl            ) );
+    skip_label( in); fscanf( in, "%lf",&( lattice->param.Dt            ) );
+#endif
 #else /* !( INAMURO_SIGMA_COMPONENT) */
     skip_label( in); fscanf( in, "%d",   &blank                          );
     skip_label( in); fscanf( in, "%d",   &blank                          );
+#if TAU_ZHANG_ANISOTROPIC_DISPERSION
+    skip_label( in); fscanf( in, "%lf",  &dblank                         );
+    skip_label( in); fscanf( in, "%lf",  &dblank                         );
+#endif
 #endif /* INAMURO_SIGMA_COMPONENT */
     skip_label( in); fscanf( in, "%d",    lattice->param.pressure_n_in+0 );
     skip_label( in); fscanf( in, "%d",    lattice->param.pressure_s_in+0 );

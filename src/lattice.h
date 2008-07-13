@@ -432,6 +432,11 @@ struct param_struct
   // Comments: Enforce concentration (sigma component) boundary conditions on walls. This will mean skipping bounce back for the sigma component on solids. WARNING: Should only be used for walls on the sides of the domain!
   //
   int    bc_sigma_walls;
+
+#if TAU_ZHANG_ANISOTROPIC_DISPERSION
+  double Dl;
+  double Dt;
+#endif
 #endif /* INAMURO_SIGMA_COMPONENT */
 
   // Flags for pressure and velocity boundaries.
@@ -598,6 +603,10 @@ struct lattice_struct
   int    frame;
   int    periodic_x[ NUM_FLUID_COMPONENTS];
   int    periodic_y[ NUM_FLUID_COMPONENTS];
+
+#if TAU_ZHANG_ANISOTROPIC_DISPERSION
+  double *tau_zhang;
+#endif
 
 #if INAMURO_SIGMA_COMPONENT
   int    SizeBTC; // Number of BTC measurements to store.

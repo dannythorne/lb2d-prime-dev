@@ -472,12 +472,22 @@ void collide( lattice_ptr lattice)
         // f = ftemp - (1/tau[subs])( ftemp - feq)
         for( a=0; a<=8; a++)
         {
-#if 1
+#if TAU_ZHANG_ANISOTROPIC_DISPERSION
+          if( subs==1  &&  ns > 1e-12)
+          {
+            f[a] = ftemp[a] - ( ( ftemp[a] / lattice->tau_zhang[a] )
+                              - ( feq[a]   / lattice->tau_zhang[a] ) );   
+          }
+          else
+          {
+            f[a] = ftemp[a] - ( ( ftemp[a] / lattice->param.tau[subs] )
+                              - ( feq[a]   / lattice->param.tau[subs] ) );
+          }
+#else
           f[a] = ftemp[a] - ( ( ftemp[a] / lattice->param.tau[subs] )
                             - ( feq[a]   / lattice->param.tau[subs] ) );
-#else
-          f[a] = ftemp[a] - ( ( ftemp[a] )
-                            - ( feq[a]   ) ) / lattice->param.tau[subs];
+          //f[a] = ftemp[a] - ( ( ftemp[a] )
+          //                  - ( feq[a]   ) ) / lattice->param.tau[subs];
 #endif
         } /* for( a=0; a<=8; a++) */
 

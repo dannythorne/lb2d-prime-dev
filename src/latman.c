@@ -434,6 +434,11 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
   }
 #endif /* STORE_U_COMPOSITE */
 
+#if TAU_ZHANG_ANISOTROPIC_DISPERSION
+  (*lattice)->tau_zhang =
+    (double*)malloc( 9*sizeof(double));
+#endif
+
 #if POROUS_MEDIA
   switch( (*lattice)->param.ns_flag)
   {

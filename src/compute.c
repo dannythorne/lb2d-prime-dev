@@ -31,6 +31,11 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
   int    subs;
 
   double c;
+#if TAU_ZHANG_ANISOTROPIC_DISPERSION
+  double Dxx, Dyy, Dxy, Dl, Dt, ns;
+  double wt[9]={4./9.,WM,WM,WM,WM,WD,WD,WD,WD};
+  double factor=0.0, lamdax, lamday;
+#endif
 
   //############################################################################
   //
@@ -60,6 +65,7 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
 
   for( n=0; n<lattice->NumNodes; n++)
   {
+
     *rho[subs] = 0.;
     *u_x[subs] = 0.;
     *u_y[subs] = 0.;
@@ -82,6 +88,7 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
         }
 
       } /* for( a=0; a<9; a++) */
+
       if( which_f == 2)
       {
         (*rho[subs]) /= 2.;
@@ -170,18 +177,128 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
   }
   bc          =    lattice->bc[subs];
 
+#if TAU_ZHANG_ANISOTROPIC_DISPERSION
+    if( (lattice->param.ns_flag == 0)){ ns = lattice->param.ns;}
+#endif
+
   for( n=0; n<lattice->NumNodes; n++)
   {
+#if  TAU_ZHANG_ANISOTROPIC_DISPERSION
+    
+//Dl=.81;Dt=0.21;  
+ //*u_x[0] = (*u_x[0] < 1e-12 ? 0. : *u_x[0]);
+ //*u_y[0] = (*u_y[0] < 1e-12 ? 0. : *u_y[0]);
+   
+  Dxx = lattice->param.Dt *sqrt(pow((*u_x[0]),2) + pow((*u_y[0]),2) ) + ( lattice->param.Dl - lattice->param.Dt)*(*u_x[0] * (*u_x[0]))/sqrt(pow((*u_x[0]),2) + 
+			  pow((*u_y[0]),2));
+
+ 
+  Dyy= lattice->param.Dt *sqrt(pow((*u_x[0]),2) + pow((*u_y[0]),2) ) + ( lattice->param.Dl - lattice->param.Dt)*(*u_y[0] * (*u_y[0]))/sqrt(pow((*u_x[0]),2) + 
+			  pow((*u_y[0]),2));
+
+  Dxy=                                ( lattice->param.Dl - lattice->param.Dt )*(*u_x[0] * (*u_y[0]))/sqrt(pow((*u_x[0]),2) + pow((*u_y[0]),2));
+
+//printf("Dl=%f\n",lattice->param.Dl);
+  
+    lattice->tau_zhang [0] = 1.;
+
+    lamdax = (18. * Dxx + 3. - 18. * Dxy)/ 6.;
+    lamday = (18. * Dyy + 3. - 18. * Dxy)/ 6.;
+
+    	if(lamdax <0.5 | lamday <0.5)
+	      {
+		      printf("%s (%d)\n""lamda<0.5 lamdax=%f lamday=%f at n=%d, time=%d",__FILE__,__LINE__,lamdax,lamday,n,lattice->time);
+          printf("\nux=%f uy=%f Dxx=%f  Dxy=%f  Dyy=%f \n",*u_x[0],*u_y[0],Dxx,Dxy,Dyy);
+        	exit(1);	
+	      }
+    
+  if (Dxy > 1e-12)
+  {
+   
+   
+    if (lamdax < lamday)
+
+    lattice->tau_zhang [6] = lattice->tau_zhang [8] = lamdax;
+
+    else
+
+    lattice->tau_zhang [6] = lattice->tau_zhang [8] = lamday;
+
+    
+
+    lattice->tau_zhang [5] = lattice->tau_zhang [7] = ( 18.* Dxy +       lattice->tau_zhang [6]);
+    lattice->tau_zhang [2] = lattice->tau_zhang [4] = ( 18.* Dyy + 3. - (lattice->tau_zhang [5]+lattice->tau_zhang [6]) )/4.;
+    lattice->tau_zhang [1] = lattice->tau_zhang [3] = ( 18.* Dxx + 3. - (lattice->tau_zhang [5]+lattice->tau_zhang [6]) )/4.;
+  }
+  
+  else if (Dxy < 1e-12)
+  {
+    if (lamdax < lamday)
+
+    lattice->tau_zhang [6] = lattice->tau_zhang [8] = lamday;
+
+    else
+
+    lattice->tau_zhang [6] = lattice->tau_zhang [8] = lamdax;
+
+   lattice->tau_zhang [5] = lattice->tau_zhang [7] = 0.5001;
+
+   lattice->tau_zhang [6] = lattice->tau_zhang [8] = ( 18.* Dxy +       lattice->tau_zhang [5]);
+   lattice->tau_zhang [2] = lattice->tau_zhang [4] = ( 18.* Dyy + 3. - (lattice->tau_zhang [5]+lattice->tau_zhang [6]) )/4.;
+   lattice->tau_zhang [1] = lattice->tau_zhang [3] = ( 18.* Dxx + 3. - (lattice->tau_zhang [5]+lattice->tau_zhang [6]) )/4.;
+  }
+
+  else if ( Dxy == 0.)
+  {
+  
+    lattice->tau_zhang [6] = lattice->tau_zhang [8] =  0.5001; 
+    lattice->tau_zhang [5] = lattice->tau_zhang [7] = ( 18.* Dxy +       lattice->tau_zhang [6]);
+    lattice->tau_zhang [2] = lattice->tau_zhang [4] = ( 18.* Dyy + 3. - (lattice->tau_zhang [5]+lattice->tau_zhang [6]) )/4.;
+    lattice->tau_zhang [1] = lattice->tau_zhang [3] = ( 18.* Dxx + 3. - (lattice->tau_zhang [5]+lattice->tau_zhang [6]) )/4.;
+  }
+
+  else 
+  {
+   	printf("%s (%d)""at Dxy = %f  n=%d, time=%d",__FILE__,__LINE__,Dxy,n,lattice->time);
+          printf("\nux=%f uy=%f Dxx=%f  Dxy=%f  Dyy=%f \n",*u_x[0],*u_y[0],Dxx,Dxy,Dyy);
+		printf("\n%s (%d)\n""lamda<0.5 lamdax=%f lamday=%f at n=%d, time=%d",__FILE__,__LINE__,lamdax,lamday,n,lattice->time);
+	exit(1); 
+  }
+  
+  factor=0.;
+  
+  for(a=0;a<9;a++)
+  {
+   factor=factor+wt[a]/lattice->tau_zhang [a];
+
+  }
+  
+  factor=1./factor;
+#endif 
+
     *rho[subs] = 0.;
 
     if( COMPUTE_ON_SOLIDS || is_not_solid_node( lattice, subs, n))
     {
+#if TAU_ZHANG_ANISOTROPIC_DISPERSION
+      if( lattice->param.ns_flag >= 1 ) { ns = lattice->ns[n].ns;}
+      for( a=0; a<9; a++)
+      {
+        (*rho[subs]) += (*ftemp)*((ns>1e-12)
+                                 ?(factor/lattice->tau_zhang[a])
+                                 :(1.));
+        ftemp++;
+
+      } /* for( a=0; a<9; a++) */
+#else
+
       for( a=0; a<9; a++)
       {
         (*rho[subs]) += (*ftemp);
         ftemp++;
 
       } /* for( a=0; a<9; a++) */
+#endif
 
 #if PUKE_NEGATIVE_CONCENTRATIONS
       if( *rho[subs] < 0.)

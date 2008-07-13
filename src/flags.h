@@ -29,13 +29,13 @@
 
 // NUM_FLUID_COMPONENTS specifies the number of fluid components.
 // Flag: NUM_FLUID_COMPONENTS
-#define NUM_FLUID_COMPONENTS 1
+#define NUM_FLUID_COMPONENTS 2
 
 // If NUM_FLUID_COMPONENTS is 2, the second component can be the sigma
 // component for solute (or thermal) transport as in Inamuro & Yoshino
 // by turning on INAMURO_SIGMA_COMPONENT .
 // Flag: INAMURO_SIGMA_COMPONENT
-#define INAMURO_SIGMA_COMPONENT ( 0 && NUM_FLUID_COMPONENTS==2)
+#define INAMURO_SIGMA_COMPONENT ( 1 && NUM_FLUID_COMPONENTS==2)
 
 // Toggle Zhang & Chen energy transport method, PRE 67, 0066711 (2003).
 // Supposed to give thermodynamic consistency unlike old Shan & Chen method.
@@ -51,7 +51,12 @@
 // as proposed by Dardis and McCloskey,
 // Phys Rev E, 57, 4, 4834-4837, 1998
 // Flag: POROUS_MEDIA
-#define POROUS_MEDIA 0
+#define POROUS_MEDIA 1
+
+// Toggle Tau & Zhang anisotropic dispersion
+#define TAU_ZHANG_ANISOTROPIC_DISPERSION ( 1 \
+                                         && INAMURO_SIGMA_COMPONENT \
+                                         && POROUS_MEDIA)
 
 // When there are two (or more) fluid components, a single velocity is
 // sometimes (always?) used to compute the equilibrium distribution
@@ -119,13 +124,13 @@
 // where the geometry is trivial and the direction of flow is obvious.
 //
 // Flag: DETERMINE_FLOW_DIRECTION
-#define DETERMINE_FLOW_DIRECTION 0
+#define DETERMINE_FLOW_DIRECTION 1
 
 // Toggle mechanism to initialize domain with ux_in or uy_in.  This is
 // useful for setting a velocity in a periodic domain without using
 // fluid boundary conditions.
 // Flag: INITIALIZE_WITH_UX_IN
-#define INITIALIZE_WITH_UX_IN   0
+#define INITIALIZE_WITH_UX_IN   1
 // Flag: INITIALIZE_WITH_UY_IN
 #define INITIALIZE_WITH_UY_IN   0
 
@@ -143,7 +148,7 @@
 // lattices.  Note that if WRITE_MACRO_VAR_DAT_FILES is off, this flag
 // has no effect.
 // Flag: WRITE_RHO_AND_U_TO_TXT
-#define WRITE_RHO_AND_U_TO_TXT 1
+#define WRITE_RHO_AND_U_TO_TXT 0
 
 // WRITE_PDF_DAT_FILES is analogous to WRITE_MACRO_VAR_DAT_FILES.
 // Flag: WRITE_PDF_DAT_FILES

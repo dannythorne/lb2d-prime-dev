@@ -108,7 +108,7 @@ int hydrostatic( lattice_ptr lattice)
   // Pressure boundaries enforce a hydrostatic condition. This is
   // experimental and not automatic -- it requires manual fiddling
   // in the bcs.c file.
-  return 1;
+  return 0;
 }
 int hydrostatic_west( lattice_ptr lattice)
 {
@@ -121,7 +121,7 @@ int hydrostatic_compressible( lattice_ptr lattice)
 {
   // Use compressible version of density profile as opposed to linear
   // approximation.
-  return 1;
+  return 0;
 }
 
 double get_tau( lattice_ptr lattice, const int subs)

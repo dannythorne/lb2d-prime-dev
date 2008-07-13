@@ -1363,6 +1363,7 @@ void bcs( lattice_ptr lattice)
   //  -- Pressure boundary on east side using outflow pressure condition.
   if( lattice->param.pressure_e_out[subs])
   {
+#if 1
 //printf("bcs() %s %d >> pressure_e_out[%d]\n", __FILE__, __LINE__, subs);
     ftemp = lattice->pdf[subs][lattice->param.LX-1].ftemp;
     ftemp_end = lattice->pdf[subs][lattice->NumNodes].ftemp;
@@ -1370,7 +1371,7 @@ void bcs( lattice_ptr lattice)
     j = 0;
     while( ftemp < ftemp_end)
     {
-      if( ( j>0 && j<get_LY(lattice)-1) )//&& lattice->param.incompressible)
+      if( 1)//( j>0 && j<get_LY(lattice)-1) )//&& lattice->param.incompressible)
       {
         // East, Outflow
         if( hydrostatic( lattice))
@@ -1487,6 +1488,43 @@ void bcs( lattice_ptr lattice)
 
     } /* while( ftemp < ftemp_end) */
 
+#else
+    // Old version for comparison.
+    ftemp = lattice->pdf[subs][lattice->param.LX-1].ftemp;
+    ftemp_end = lattice->pdf[subs][lattice->NumNodes].ftemp;
+    while( ftemp < ftemp_end)
+    {
+      // East, Outflow
+      if( lattice->param.incompressible)
+      {
+        u_x = -lattice->param.rho_out
+            + (      ftemp[0] + ftemp[2] + ftemp[4]
+              + 2.*( ftemp[1] + ftemp[5] + ftemp[8]));
+        c = u_x;
+      }
+      else // compressible
+      {
+        u_x = -1.
+            + (      ftemp[0] + ftemp[2] + ftemp[4]
+              + 2.*( ftemp[1] + ftemp[5] + ftemp[8]))
+            / lattice->param.rho_out;
+        c = u_x*lattice->param.rho_out;
+      }
+    
+      ftemp[3] = ftemp[1] - (2./3.)*c;
+    
+      ftemp[7] = ftemp[5] + (1./2.)*( ftemp[2] - ftemp[4])
+                          - (1./6.)*c;
+    
+      ftemp[6] = ftemp[8] + (1./2.)*( ftemp[4] - ftemp[2])
+                          - (1./6.)*c; 
+
+      ftemp += ( sizeof(struct pdf_struct)/8)*lattice->param.LX;
+
+    } /* while( ftemp < ftemp_end) */
+
+
+#endif
   } /* if( lattice->param.pressure_e_out[subs]) */
                                                                           // }}}
   // P R E S S U R E   W E S T   O U T   B C  {{{
