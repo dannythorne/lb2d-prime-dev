@@ -1363,7 +1363,7 @@ void bcs( lattice_ptr lattice)
   //  -- Pressure boundary on east side using outflow pressure condition.
   if( lattice->param.pressure_e_out[subs])
   {
-#if 1
+#if 0
 //printf("bcs() %s %d >> pressure_e_out[%d]\n", __FILE__, __LINE__, subs);
     ftemp = lattice->pdf[subs][lattice->param.LX-1].ftemp;
     ftemp_end = lattice->pdf[subs][lattice->NumNodes].ftemp;

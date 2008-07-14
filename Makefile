@@ -8,7 +8,7 @@
 EXE=lb2d_prime
 
 all:
-	gcc -DOSTYPE=default -o ${EXE} ./src/lb2d_prime.c -lm
+	gcc -g -DOSTYPE=default -o ${EXE} ./src/lb2d_prime.c -lm
 
 ostype:
 	gcc -DOSTYPE=${OSTYPE} -o ${EXE} ./src/lb2d_prime.c -lm

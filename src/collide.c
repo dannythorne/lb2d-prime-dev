@@ -845,7 +845,7 @@ void collide( lattice_ptr lattice)
         if( lattice->param.ns_flag == 0)
         {
           ns = lattice->param.ns;
-
+#if 0 // OLD POROUS_MEDIA TERM
   /* 1 */ nsterm[9*n+1] = ns*( lattice->pdf[subs][ j *LX + ip].f[3]
                              - lattice->pdf[subs][ j *LX + i ].f[1]);
   /* 2 */ nsterm[9*n+2] = ns*( lattice->pdf[subs][ jp*LX + i ].f[4]
@@ -862,13 +862,31 @@ void collide( lattice_ptr lattice)
                              - lattice->pdf[subs][ j *LX + i ].f[7]);
   /* 8 */ nsterm[9*n+8] = ns*( lattice->pdf[subs][ jn*LX + ip].f[6]
                              - lattice->pdf[subs][ j *LX + i ].f[8]);
+#else
+  /* 1 */ nsterm[9*n+1] = ns*( lattice->pdf[subs][ j*LX + i].ftemp[3]
+                             - lattice->pdf[subs][ j*LX + i].f    [1]);
+  /* 2 */ nsterm[9*n+2] = ns*( lattice->pdf[subs][ j*LX + i].ftemp[4]
+                             - lattice->pdf[subs][ j*LX + i].f    [2]);
+  /* 3 */ nsterm[9*n+3] = ns*( lattice->pdf[subs][ j*LX + i].ftemp[1]
+                             - lattice->pdf[subs][ j*LX + i].f    [3]);
+  /* 4 */ nsterm[9*n+4] = ns*( lattice->pdf[subs][ j*LX + i].ftemp[2]
+                             - lattice->pdf[subs][ j*LX + i].f    [4]);
+  /* 5 */ nsterm[9*n+5] = ns*( lattice->pdf[subs][ j*LX + i].ftemp[7]
+                             - lattice->pdf[subs][ j*LX + i].f    [5]);
+  /* 6 */ nsterm[9*n+6] = ns*( lattice->pdf[subs][ j*LX + i].ftemp[8]
+                             - lattice->pdf[subs][ j*LX + i].f    [6]);
+  /* 7 */ nsterm[9*n+7] = ns*( lattice->pdf[subs][ j*LX + i].ftemp[5]
+                             - lattice->pdf[subs][ j*LX + i].f    [7]);
+  /* 8 */ nsterm[9*n+8] = ns*( lattice->pdf[subs][ j*LX + i].ftemp[6]
+                             - lattice->pdf[subs][ j*LX + i].f    [8]);
+#endif
         }
         else /* ns_flag==1 || ns_flag==2 */
         {
           // Variable solid density.
           ns = lattice->ns[n].ns;
 //printf("%s %d >> ns = %f\n",__FILE__,__LINE__,ns);
-
+#if 0 // OLD POROUS_MEDIA TERM
   /* 1 */ nsterm[9*n+1] = ns*( lattice->pdf[subs][ j *LX + ip].f[3]
                              - lattice->pdf[subs][ j *LX + i ].f[1]);
   /* 2 */ nsterm[9*n+2] = ns*( lattice->pdf[subs][ jp*LX + i ].f[4]
@@ -885,6 +903,24 @@ void collide( lattice_ptr lattice)
                              - lattice->pdf[subs][ j *LX + i ].f[7]);
   /* 8 */ nsterm[9*n+8] = ns*( lattice->pdf[subs][ jn*LX + ip].f[6]
                              - lattice->pdf[subs][ j *LX + i ].f[8]);
+#else
+  /* 1 */ nsterm[9*n+1] = ns*( lattice->pdf[subs][ j*LX + i].ftemp[3]
+                             - lattice->pdf[subs][ j*LX + i].f    [1]);
+  /* 2 */ nsterm[9*n+2] = ns*( lattice->pdf[subs][ j*LX + i].ftemp[4]
+                             - lattice->pdf[subs][ j*LX + i].f    [2]);
+  /* 3 */ nsterm[9*n+3] = ns*( lattice->pdf[subs][ j*LX + i].ftemp[1]
+                             - lattice->pdf[subs][ j*LX + i].f    [3]);
+  /* 4 */ nsterm[9*n+4] = ns*( lattice->pdf[subs][ j*LX + i].ftemp[2]
+                             - lattice->pdf[subs][ j*LX + i].f    [4]);
+  /* 5 */ nsterm[9*n+5] = ns*( lattice->pdf[subs][ j*LX + i].ftemp[7]
+                             - lattice->pdf[subs][ j*LX + i].f    [5]);
+  /* 6 */ nsterm[9*n+6] = ns*( lattice->pdf[subs][ j*LX + i].ftemp[8]
+                             - lattice->pdf[subs][ j*LX + i].f    [6]);
+  /* 7 */ nsterm[9*n+7] = ns*( lattice->pdf[subs][ j*LX + i].ftemp[5]
+                             - lattice->pdf[subs][ j*LX + i].f    [7]);
+  /* 8 */ nsterm[9*n+8] = ns*( lattice->pdf[subs][ j*LX + i].ftemp[6]
+                             - lattice->pdf[subs][ j*LX + i].f    [8]);
+#endif
         }
 
       } /* if( !( *bc_type++ & BC_SOLID_NODE)) */
@@ -910,6 +946,27 @@ void collide( lattice_ptr lattice)
             lattice->pdf[subs][n].ftemp[a] = f[a];
           }
 #endif
+          // OLD: fout = fc + ns*( fc_(x+cdt) - fc(x))
+          //        f +=      ns*( f_(x+cdt)  - f(x))
+          //
+          //  - - - >o< - - -   <------o------>   <--<---o--->-->
+          //        1 2         3             4   3  5       6  4
+          //                    ------>o<------
+          //                          5 6
+          //
+          // CUR: fout = fc + ns*( fc_(x)     - fc(x)) = (1-ns)*fc + ns*fc_(x)
+          //        f +=      ns*( f_(x)      - f(x))
+          //
+          //  - - - >o< - - -   <------o------>   <--<---o--->-->
+          //        1 2         3             4   3  4       3  4
+          //
+          // NEW: fout = fc + ns*( fin_(x)    - fc(x)) = (1-ns)*fc + ns*fin_(x)
+          //        f +=      ns*( ftemp_(x)  - f(x))
+          //
+          //  - - - >o< - - -   <------o------>   <--<- -o- ->-->
+          //        1 2         3             4   3  1       2  4
+          //
+          // c.f., Walsh, et al., Computers and Geosciences
           f[a] += nsterm[9*n+a];
 
         } /* for( a=1; a<9; a++) */

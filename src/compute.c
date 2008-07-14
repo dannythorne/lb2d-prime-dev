@@ -682,6 +682,19 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
   bc_ptr bc;
   int    subs;
 
+#if FREED_POROUS_MEDIA
+      double Rx, Ry;
+      double Gx, Gy;
+      double u_x_p, u_y_p;
+      double u_x_m, u_y_m;
+      double edotu;
+      double edotu_sq;
+      double tau0 = lattice->param.tau[0];
+      double nu = (1./3.)*(tau0-.5);
+      double rho0;
+      double wt[9]={4./9.,1./9.,1./9.,1./9.,1./9.,1./36.,1./36.,1./36.,1./36.};
+#endif
+
 #if NON_LOCAL_FORCES
 
 #if ZHANG_AND_CHEN_ENERGY_TRANSPORT
@@ -972,6 +985,59 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
 #endif /* STORE_U_COMPOSITE */
      }
 
+#if FREED_POROUS_MEDIA
+  if( lattice->param.incompressible)
+  {
+    printf("ERROR: Can't have incompressible with Freed PM!");
+    process_exit(1);
+    c  = rt0; // rt0 == rho
+    rt1 = 1./9.; 
+    rt2 = 1./36.;
+    rt0 = 4./9.; // Overwrite rt0.
+  }
+  else // compressible
+  {
+    rho0 = rt0;
+    c  = 1.;
+    rt1 = rt0/(9.); // rt0 == rho
+    rt2 = rt0/(36.);// rt0 == rho
+    rt0 *= (4./9.); // Update rt0 now that raw density is no longer needed.
+  }
+
+
+      Rx = lattice->param.ns;
+      Ry = Rx;
+
+      Gx = (1. - 3.*nu*Rx)/(1. + 0.5*Rx);
+      Gy = (1. - 3.*nu*Ry)/(1. + 0.5*Ry);
+
+      u_x_p = Gx*ux //u_x_p is post-collision velocity, 
+            + lattice->param.gforce[subs][0]*tau0/rho0;
+      u_y_p = Gy*uy // u_x is pre-collision velocity
+            + lattice->param.gforce[subs][1]*tau0/rho0;
+
+      u_x_m = (1. - 0.5/tau0)*ux + 0.5*u_x_p/tau0; // u_x_m is mean velocity
+      u_y_m = (1. - 0.5/tau0)*uy + 0.5*u_y_p/tau0;
+      usq = pow(u_x_m, 2) + pow(u_y_m, 2);
+
+      //   printf("ux =%12.10f ux_p= %12.10f ux_m=%12.10f \n", u_x, u_x_p, u_x_m);
+
+      for(a=0; a<9; a++)
+      {
+        edotu = *(vx + a)*u_x_p + *(vy +a)*u_y_p;
+        edotu_sq = pow( ( *(vx + a)*u_x_m + *(vy +a)*u_y_m ), 2.);
+
+        *feq++ = *(wt +a)*rho0 *(1. + 3.*edotu + (9./2.)*edotu_sq - (3./2.)*usq );
+
+      }
+
+      ux = u_x_m;
+      uy = u_y_m;
+      lattice->macro_vars[subs][n].u[0] = ux;
+      lattice->macro_vars[subs][n].u[1] = uy;
+
+#else
+
   if( lattice->param.incompressible)
   {
     c  = rt0; // rt0 == rho
@@ -987,6 +1053,7 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
     rt0 *= (4./9.); // Update rt0 now that raw density is no longer needed.
   }
 
+
       uxsq = ux*ux;
       uysq = uy*uy;
 
@@ -1001,8 +1068,10 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
       *feq++ = rt2*(c+f1*(-ux+uy)+f2*(-ux+uy)*(-ux+uy)-f3*usq);
       *feq++ = rt2*(c+f1*(-ux-uy)+f2*(-ux-uy)*(-ux-uy)-f3*usq);
       *feq++ = rt2*(c+f1*( ux-uy)+f2*( ux-uy)*( ux-uy)-f3*usq);
+#endif
 
       feq+=18;
+
 #if INAMURO_SIGMA_COMPONENT
       u0++;
       u1++;

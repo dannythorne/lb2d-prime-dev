@@ -277,7 +277,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
   int    width, 
          height;
   char   filename[1024];
-#if POROUS_MEDIA
+#if POROUS_MEDIA || FREED_POROUS_MEDIA
   FILE   *in;
   char   r, g, b;
   struct bitmap_info_header bmih;
@@ -439,7 +439,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
     (double*)malloc( 9*sizeof(double));
 #endif
 
-#if POROUS_MEDIA
+#if POROUS_MEDIA || FREED_POROUS_MEDIA
   switch( (*lattice)->param.ns_flag)
   {
     case 0:
@@ -1523,8 +1523,10 @@ void init_problem( struct lattice_struct *lattice)
           }
           else
           {
-            if( ( i >= lattice->param.x1) && ( j >= lattice->param.y1)
-             && ( i <= lattice->param.x2) && ( j <= lattice->param.y2))
+            if( ( i >= g2lx( lattice, lattice->param.x1))
+             && ( j >= g2ly( lattice, lattice->param.y1))
+             && ( i <= g2lx( lattice, lattice->param.x2))
+             && ( j <= g2ly( lattice, lattice->param.y2)) )
             {
               *macro_var_ptr++ = lattice->param.rho_sigma;
             }
@@ -1539,7 +1541,8 @@ void init_problem( struct lattice_struct *lattice)
 //            }
 //            else
 //            {
-              *macro_var_ptr++ = 0.;
+              //*macro_var_ptr++ = 0.;
+              *macro_var_ptr++ = lattice->param.rho_A[subs];
 //            }
             }
           }
@@ -2407,7 +2410,7 @@ int get_sizeof_lattice( lattice_ptr lattice)
 #if STORE_U_COMPOSITE
       + sizeof(struct upr_struct) 
 #endif /* STORE_U_COMPOSITE */
-#if POROUS_MEDIA
+#if POROUS_MEDIA || FREED_POROUS_MEDIA
       + sizeof(struct ns_struct) 
 #endif /* POROUS_MEDIA */
       )

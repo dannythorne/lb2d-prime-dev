@@ -1069,6 +1069,23 @@ int get_g_StartNode( lattice_ptr lattice)
   return lattice->process.g_StartNode;
 }
 
+double g2lx( lattice_ptr lattice, double g_x)
+{
+  //  1 g_ey=7 -o
+  //    g_y =6  o- y = g_y - g_sy = 6 - 4 = 2
+  //            o
+  //  1 g_sy=4 -o
+  //  0 g_ey=3 -o
+  //            o
+  //            o
+  //  0 g_sy=0 -o
+  return g_x - get_g_SX(lattice);
+}
+double g2ly( lattice_ptr lattice, double g_y)
+{
+  return g_y - get_g_SY(lattice);
+}
+
 #else
 // Defaults for non-parallel runs.
 int get_g_LX( lattice_ptr lattice) { return get_LX( lattice);}
@@ -1082,6 +1099,8 @@ int get_g_EY( lattice_ptr lattice) { return get_LY( lattice)-1;}
 //3D int get_g_EZ( lattice_ptr lattice) { return get_LZ( lattice)-1;}
 int get_g_NumNodes( lattice_ptr lattice) { return get_NumNodes( lattice);}
 int get_g_StartNode( lattice_ptr lattice) { return 0;}
+double g2lx( lattice_ptr lattice, double g_x) { return g_x;}
+double g2ly( lattice_ptr lattice, double g_y) { return g_y;}
 #endif
 
 // vim: foldmethod=syntax

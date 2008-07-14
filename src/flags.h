@@ -51,12 +51,15 @@
 // as proposed by Dardis and McCloskey,
 // Phys Rev E, 57, 4, 4834-4837, 1998
 // Flag: POROUS_MEDIA
-#define POROUS_MEDIA 1
+#define POROUS_MEDIA 0
 
-// Toggle Tau & Zhang anisotropic dispersion
+// Simulate porous media as a body force.
+#define FREED_POROUS_MEDIA 0
+
+// Toggle Tau & Zhang anisotropic dispersion.
 #define TAU_ZHANG_ANISOTROPIC_DISPERSION ( 1 \
                                          && INAMURO_SIGMA_COMPONENT \
-                                         && POROUS_MEDIA)
+                                         && POROUS_MEDIA )
 
 // When there are two (or more) fluid components, a single velocity is
 // sometimes (always?) used to compute the equilibrium distribution
@@ -130,7 +133,7 @@
 // useful for setting a velocity in a periodic domain without using
 // fluid boundary conditions.
 // Flag: INITIALIZE_WITH_UX_IN
-#define INITIALIZE_WITH_UX_IN   1
+#define INITIALIZE_WITH_UX_IN   0
 // Flag: INITIALIZE_WITH_UY_IN
 #define INITIALIZE_WITH_UY_IN   0
 

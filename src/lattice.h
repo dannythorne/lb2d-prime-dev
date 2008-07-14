@@ -86,7 +86,7 @@ struct force_struct
   double sforce[ /*NUM_DIMS*/2];
 };
 #endif /* NON_LOCAL_FORCES */
-#if POROUS_MEDIA
+#if POROUS_MEDIA || FREED_POROUS_MEDIA
 struct ns_struct
 {
   double ns;
@@ -627,7 +627,7 @@ struct lattice_struct
 #if STORE_U_COMPOSITE
   struct upr_struct        *upr;
 #endif /* STORE_U_COMPOSITE */
-#if POROUS_MEDIA
+#if POROUS_MEDIA || FREED_POROUS_MEDIA
   struct ns_struct         *ns;
 #endif /* POROUS_MEDIA */
 
