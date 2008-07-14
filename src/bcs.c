@@ -2562,8 +2562,8 @@ void bcs( lattice_ptr lattice)
     i=0;
     while( ftemp < ftemp_end)
     {
-     if( i>0 && i<get_LX(lattice)-1)
-     {
+     //if( i>0 && i<get_LX(lattice)-1)
+     //{
       // North, Outflow
       if( lattice->time >= lattice->param.sigma_start)
       {
@@ -2588,7 +2588,7 @@ void bcs( lattice_ptr lattice)
         ftemp[7] = (1./36.)*rho;
         ftemp[8] = (1./36.)*rho;
       }
-     }
+     //}
 
       ftemp += ( sizeof(struct pdf_struct)/8);
       i++;
@@ -2611,8 +2611,8 @@ void bcs( lattice_ptr lattice)
     {
       // South, Outflow
 
-     if( i>0 && i<get_LX(lattice)-1)
-     {
+     //if( i>0 && i<get_LX(lattice)-1)
+     //{
       if( lattice->time >= lattice->param.sigma_start)
       {
         c = lattice->param.C_out;
@@ -2635,7 +2635,7 @@ void bcs( lattice_ptr lattice)
         ftemp[5] = (1./36.)*rho;
         ftemp[6] = (1./36.)*rho;
       }
-     }
+     //}
 
       ftemp += ( sizeof(struct pdf_struct)/8);
       i++;

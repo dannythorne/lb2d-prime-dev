@@ -101,7 +101,7 @@ int main( int argc, char **argv)
 
     if( do_user_stuff(lattice)) { user_stuff_post_times(lattice); }
 
-#if POROUS_MEDIA
+#if POROUS_MEDIA || FREED_POROUS_MEDIA
     // Before application of the ns term, f after collision is stored in ftemp
     // so which_f=1.
     compute_macro_vars( lattice, /*which_f=*/ 2);

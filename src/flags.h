@@ -29,7 +29,7 @@
 
 // NUM_FLUID_COMPONENTS specifies the number of fluid components.
 // Flag: NUM_FLUID_COMPONENTS
-#define NUM_FLUID_COMPONENTS 2
+#define NUM_FLUID_COMPONENTS 1
 
 // If NUM_FLUID_COMPONENTS is 2, the second component can be the sigma
 // component for solute (or thermal) transport as in Inamuro & Yoshino
@@ -54,7 +54,7 @@
 #define POROUS_MEDIA 0
 
 // Simulate porous media as a body force.
-#define FREED_POROUS_MEDIA 0
+#define FREED_POROUS_MEDIA 1
 
 // Toggle Tau & Zhang anisotropic dispersion.
 #define TAU_ZHANG_ANISOTROPIC_DISPERSION ( 1 \
@@ -133,7 +133,7 @@
 // useful for setting a velocity in a periodic domain without using
 // fluid boundary conditions.
 // Flag: INITIALIZE_WITH_UX_IN
-#define INITIALIZE_WITH_UX_IN   0
+#define INITIALIZE_WITH_UX_IN   1
 // Flag: INITIALIZE_WITH_UY_IN
 #define INITIALIZE_WITH_UY_IN   0
 
@@ -151,15 +151,15 @@
 // lattices.  Note that if WRITE_MACRO_VAR_DAT_FILES is off, this flag
 // has no effect.
 // Flag: WRITE_RHO_AND_U_TO_TXT
-#define WRITE_RHO_AND_U_TO_TXT 0
+#define WRITE_RHO_AND_U_TO_TXT 1
 
 // WRITE_PDF_DAT_FILES is analogous to WRITE_MACRO_VAR_DAT_FILES.
 // Flag: WRITE_PDF_DAT_FILES
-#define WRITE_PDF_DAT_FILES 0
+#define WRITE_PDF_DAT_FILES 1
 
 // WRITE_PDF_TO_TXT is analogous to WRITE_RHO_AND_U_TO_TXT.
 // Flag: WRITE_PDF_TO_TXT
-#define WRITE_PDF_TO_TXT 0
+#define WRITE_PDF_TO_TXT 1
 
 // Value used to represent an INACTIVE_NODE .  This is used in the list
 // of neighbors ( struct node_struct::nn).  It is also used in the

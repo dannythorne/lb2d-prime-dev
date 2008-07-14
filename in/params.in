@@ -1,8 +1,8 @@
-LX                     50
-LY                     50
+LX                     5
+LY                     5
 characteristic_length  31
 NumFrames              4
-FrameRate              10
+FrameRate              1000
 tau[0]                 1.
 gforce_x[0]            0.
 gforce_y[0]            0.
@@ -101,7 +101,7 @@ zeroconcgrad_w         0
 zeroconcgrad_full      0
 plot_scale_dynamic     1
 use_colormap           0
-initial_condition      8
+initial_condition      1
 x0                     100.
 y0                     2.
 r0                     30.
