@@ -1532,18 +1532,8 @@ void init_problem( struct lattice_struct *lattice)
             }
             else
             {
-//            if( ( get_LX(lattice)-i-1 >= lattice->param.x1) 
-//             && ( j >= lattice->param.y1)
-//             && ( get_LX(lattice)-i-1 <= lattice->param.x2) 
-//             && ( j <= lattice->param.y2))
-//            {
-//            *macro_var_ptr++ = lattice->param.rho_sigma;
-//            }
-//            else
-//            {
               //*macro_var_ptr++ = 0.;
               *macro_var_ptr++ = lattice->param.rho_A[subs];
-//            }
             }
           }
 #endif /* ZHANG_AND_CHEN_ENERGY_TRANSPORT */
