@@ -54,12 +54,15 @@
 #define POROUS_MEDIA 0
 
 // Simulate porous media as a body force.
-#define FREED_POROUS_MEDIA 1
+#define FREED_POROUS_MEDIA 0
 
 // Toggle Tau & Zhang anisotropic dispersion.
 #define TAU_ZHANG_ANISOTROPIC_DISPERSION ( 1 \
                                          && INAMURO_SIGMA_COMPONENT \
                                          && POROUS_MEDIA )
+
+// Guo, Zheng & Shi: PRE 65 2002, Body force
+#define GUO_ZHENG_SHI_BODY_FORCE 1
 
 // When there are two (or more) fluid components, a single velocity is
 // sometimes (always?) used to compute the equilibrium distribution
@@ -133,7 +136,7 @@
 // useful for setting a velocity in a periodic domain without using
 // fluid boundary conditions.
 // Flag: INITIALIZE_WITH_UX_IN
-#define INITIALIZE_WITH_UX_IN   1
+#define INITIALIZE_WITH_UX_IN   0
 // Flag: INITIALIZE_WITH_UY_IN
 #define INITIALIZE_WITH_UY_IN   0
 
@@ -155,11 +158,11 @@
 
 // WRITE_PDF_DAT_FILES is analogous to WRITE_MACRO_VAR_DAT_FILES.
 // Flag: WRITE_PDF_DAT_FILES
-#define WRITE_PDF_DAT_FILES 1
+#define WRITE_PDF_DAT_FILES 0
 
 // WRITE_PDF_TO_TXT is analogous to WRITE_RHO_AND_U_TO_TXT.
 // Flag: WRITE_PDF_TO_TXT
-#define WRITE_PDF_TO_TXT 1
+#define WRITE_PDF_TO_TXT 0
 
 // Value used to represent an INACTIVE_NODE .  This is used in the list
 // of neighbors ( struct node_struct::nn).  It is also used in the

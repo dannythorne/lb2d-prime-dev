@@ -285,6 +285,13 @@ struct param_struct
   //
   int    buoyancy;
 
+  // Param: buoy_subs
+  // Type int
+  // Comment: Which substances gravity value to use in the buoyance term.
+  // Originally we used subs 0, the fluid, gravity. Then we switched to using
+  // the solutes gravity (subs 1) to avoid fluid compressibility effects.
+  int    buoy_subs;
+
   // Param: incompressible
   // Type: int
   // Comments: The "incompressible" flag toggles an incompressible lattice

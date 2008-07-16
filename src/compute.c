@@ -464,6 +464,11 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
         (*u_y[subs]) /= 2.;
       }
 
+#if GUO_ZHENG_SHI_BODY_FORCE
+      *u_x[subs] += .5*lattice->param.gforce[subs][0];
+      *u_y[subs] += .5*lattice->param.gforce[subs][1];
+#endif
+
 // PUKE_NEGATIVE_DENSITIES {{{
 #if PUKE_NEGATIVE_DENSITIES
       if( *rho[subs] < 0.)
@@ -820,16 +825,28 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
 #define BIG_U_Y_BUOY( u_, rho1_, rho2_) \
         (u_) \
       + lattice->param.tau[subs]  \
-        * lattice->param.gforce[subs][1] \
+        * lattice->param.gforce[0][1] \
+      + lattice->param.tau[subs]  \
+        * lattice->param.gforce[1][1] \
         /** rho1_ */\
         /**(1.+(get_buoyancy(lattice))*(rho2_))*/\
-        *(1. + (get_buoyancy(lattice)) \
+        *(     (get_buoyancy(lattice)) \
               /**(1./get_rho0(lattice))*(get_drhodC(lattice)) */\
               *(get_expansion_coeff(lattice))\
               *((rho2_)-get_C0(lattice))) \
 //      *((rho1_)+(get_buoyancy_sign(lattice))*(rho2_)) / (rho1_)
 
 #else /* !( INAMURO_SIGMA_COMPONENT) */
+
+#if GUO_ZHENG_SHI_BODY_FORCE
+
+#define BIG_U_X( u_, rho_) \
+        (u_) + .5*lattice->param.gforce[subs][0] / (rho_)
+
+#define BIG_U_Y( u_, rho_) \
+        (u_) + .5*lattice->param.gforce[subs][1] / (rho_)
+
+#else
 
 #define BIG_U_X( u_, rho_) \
         (u_) \
@@ -842,6 +859,8 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
       + lattice->param.tau[subs]  \
         *lattice->param.gforce[subs][1] \
         * ((lattice->param.incompressible)?(rho_):(1.))
+
+#endif
 
 #endif /* INAMURO_SIGMA_COMPONENT */
 

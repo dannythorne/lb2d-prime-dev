@@ -107,8 +107,8 @@ int main( int argc, char **argv)
     compute_macro_vars( lattice, /*which_f=*/ 2);
 #else /* !( POROUS_MEDIA) */
     // After collision so use f (which_f=0).
-    //compute_macro_vars( lattice, /*which_f=*/ 2); // solute/buoyancy/grav
-    compute_macro_vars( lattice, /*which_f=*/ 0);
+    compute_macro_vars( lattice, /*which_f=*/ 2); // solute/buoyancy/grav
+    //compute_macro_vars( lattice, /*which_f=*/ 0);
 #endif /* POROUS_MEDIA */
 
     output_frame( lattice);

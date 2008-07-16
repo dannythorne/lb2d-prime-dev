@@ -418,6 +418,13 @@ void collide( lattice_ptr lattice)
          LY = lattice->param.LY;
 #endif
 
+#if GUO_ZHENG_SHI_BODY_FORCE
+  double Fx, Fy, F;
+  double vx, vy;
+  double ex, ey, edotv;
+  double rho;
+#endif
+
 #if SAY_HI
   printf("collide() -- Hi!\n");
 #endif /* SAY_HI */
@@ -490,6 +497,57 @@ void collide( lattice_ptr lattice)
           //                  - ( feq[a]   ) ) / lattice->param.tau[subs];
 #endif
         } /* for( a=0; a<=8; a++) */
+
+#if GUO_ZHENG_SHI_BODY_FORCE
+        // Guo, Zheng & Shi: PRE 65 2002
+        // Equations (4), (19) & (20)
+        Fx = lattice->param.gforce[subs][0];
+        Fy = lattice->param.gforce[subs][1];
+        rho = f[0] + f[1] + f[2] + f[3] + f[4] + f[5] + f[6] + f[7] + f[8];
+        vx = ( 1.*f[1] - 1.*f[3] + 1.*f[5] - 1.*f[6] - 1.*f[7] + 1.*f[8]
+             + .5*Fx ) / rho;
+        vy = ( 1.*f[2] - 1.*f[4] + 1.*f[5] + 1.*f[6] - 1.*f[7] - 1.*f[8]
+             + .5*Fy ) / rho;
+
+        // Major directions ---------------------------------------------------
+        a = 3.*(1.-1./(2.*get_tau(lattice,0)))*WM;
+
+        /* e=( 1, 0) */ ex = 1.; ey = 0.; edotv = ex*vx + ey*vy;
+        F = a*( ( (ex-vx) + 3.*(edotv)*ex)*Fx + ( (ey-vy) + 3.*(edotv)*ey)*Fy);
+        f[1] += F;
+
+        /* e=( 0, 1) */ ex = 0.; ey = 1.; edotv = ex*vx + ey*vy;
+        F = a*( ( (ex-vx) + 3.*(edotv)*ex)*Fx + ( (ey-vy) + 3.*(edotv)*ey)*Fy);
+        f[2] += F;
+
+        /* e=(-1, 0) */ ex =-1.; ey = 0.; edotv = ex*vx + ey*vy;
+        F = a*( ( (ex-vx) + 3.*(edotv)*ex)*Fx + ( (ey-vy) + 3.*(edotv)*ey)*Fy);
+        f[3] += F;
+
+        /* e=( 0,-1) */ ex = 0.; ey =-1.; edotv = ex*vx + ey*vy;
+        F = a*( ( (ex-vx) + 3.*(edotv)*ex)*Fx + ( (ey-vy) + 3.*(edotv)*ey)*Fy);
+        f[4] += F;
+
+        // Diagonal directions ------------------------------------------------
+        a = 3.*(1.-1./(2.*get_tau(lattice,0)))*WD;
+
+        /* e=( 1, 1) */ ex = 1.; ey = 1.; edotv = ex*vx + ey*vy;
+        F = a*( ( (ex-vx) + 3.*(edotv)*ex)*Fx + ( (ey-vy) + 3.*(edotv)*ey)*Fy);
+        f[5] += F;
+
+        /* e=(-1, 1) */ ex =-1.; ey = 1.; edotv = ex*vx + ey*vy;
+        F = a*( ( (ex-vx) + 3.*(edotv)*ex)*Fx + ( (ey-vy) + 3.*(edotv)*ey)*Fy);
+        f[6] += F;
+
+        /* e=(-1,-1) */ ex =-1.; ey =-1.; edotv = ex*vx + ey*vy;
+        F = a*( ( (ex-vx) + 3.*(edotv)*ex)*Fx + ( (ey-vy) + 3.*(edotv)*ey)*Fy);
+        f[7] += F;
+
+        /* e=( 1,-1) */ ex = 1.; ey =-1.; edotv = ex*vx + ey*vy;
+        F = a*( ( (ex-vx) + 3.*(edotv)*ex)*Fx + ( (ey-vy) + 3.*(edotv)*ey)*Fy);
+        f[8] += F;
+
+#endif
 
 #if ZHANG_AND_CHEN_ENERGY_TRANSPORT
         if( subs==0)

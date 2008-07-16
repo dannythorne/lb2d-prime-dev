@@ -229,6 +229,10 @@ int get_buoyancy_sign( lattice_ptr lattice)
   { return ( lattice->param.buoyancy!=0)
           ?((lattice->param.buoyancy>0)?(1):(-1))
           :(0); }
+int get_buoy_subs( lattice_ptr lattice)
+{
+  return lattice->param.buoy_subs;
+}
 
 int use_slice_dot_in_file( lattice_ptr lattice)
 {

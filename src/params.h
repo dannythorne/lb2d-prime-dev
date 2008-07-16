@@ -35,6 +35,7 @@ void assign_default_param_vals( lattice_ptr lattice)
   lattice->param.end_grav[1] = 0;
 #endif /* NUM_FLUID_COMPONENTS==2 */
   lattice->param.buoyancy = 0;
+  lattice->param.buoy_subs = 0;
   lattice->param.incompressible = 0;
   lattice->param.simple_diffusion = 0;
   lattice->param.rho_A[0] = 0.;
@@ -446,6 +447,12 @@ void read_params( lattice_ptr lattice, const char *infile)
       fscanf( in, "%d\n", &(lattice->param.buoyancy));
       printf("%s %d >> buoyancy = %d\n",__FILE__,__LINE__, 
          lattice->param.buoyancy);
+    }
+    else if( !strncmp(param_label,"buoy_subs",80))
+    {
+      fscanf( in, "%d\n", &(lattice->param.buoy_subs));
+      printf("%s %d >> buoy_subs = %d\n",__FILE__,__LINE__, 
+         lattice->param.buoy_subs);
     }
     else if( !strncmp(param_label,"incompressible",80))
     {
@@ -1542,6 +1549,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     process_exit(1);
   }
     skip_label( in); fscanf( in, "%d ", &(lattice->param.buoyancy      ) );
+    skip_label( in); fscanf( in, "%d ", &(lattice->param.buoy_subs     ) );
     skip_label( in); fscanf( in, "%d ", &(lattice->param.incompressible) );
     skip_label( in); fscanf( in, "%d ", &(lattice->param.simple_diffusion) );
     skip_label( in); fscanf( in, "%lf",   lattice->param.rho_A           );
@@ -1998,6 +2006,7 @@ void dump_params( struct lattice_struct *lattice)
     process_exit(1);
   }
   fprintf( o, "buoyancy             %d\n", lattice->param.buoyancy        );
+  fprintf( o, "buoy_subs            %d\n", lattice->param.buoy_subs       );
   fprintf( o, "incompressible       %d\n", lattice->param.incompressible  );
   fprintf( o, "simple_diffusion     %d\n", lattice->param.simple_diffusion);
   fprintf( o, "rho_A[0]             %f\n", lattice->param.rho_A[0]       );
