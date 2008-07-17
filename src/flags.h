@@ -70,7 +70,7 @@
   ( lattice->param.gval[subs][(dir_)] \
   + lattice->param.gval[subs][(dir_)] \
    *get_buoyancy(lattice) \
-   *( get_expansion_coeff(lattice)) \
+   *( get_beta(lattice)) \
    *( (rho_) - get_C0(lattice)) \
   )
 #else
@@ -82,7 +82,7 @@
   ( lattice->param.gval[0][(dir_)] \
   + lattice->param.gval[1][(dir_)] \
    *(  ( get_buoyancy(lattice)) \
-      *( get_expansion_coeff(lattice))*( (rho_) - get_C0(lattice))) )
+      *( get_beta(lattice))*( (rho_) - get_C0(lattice))) )
 #else
 #define F(dir_,rho_) \
   lattice->param.gval[subs][(dir_)] \

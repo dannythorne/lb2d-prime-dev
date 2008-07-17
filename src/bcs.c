@@ -1386,14 +1386,14 @@ void bcs( lattice_ptr lattice)
                  *exp( -3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
                     *( 1. + (get_buoyancy(lattice))
-                           *(get_expansion_coeff(lattice))
+                           *(get_beta(lattice))
                            *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
                           *( (get_LY(lattice)-1.)-0.))
                  *exp(  3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
                     *( 1. + (get_buoyancy(lattice))
-                           *(get_expansion_coeff(lattice))
+                           *(get_beta(lattice))
                            *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
                           *(j+1.0));
@@ -1404,7 +1404,7 @@ void bcs( lattice_ptr lattice)
             * ( 1. - 3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
                     *( 1. + (get_buoyancy(lattice))
-                           *(get_expansion_coeff(lattice))
+                           *(get_beta(lattice))
                            *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
                     *( ( get_LY(lattice)
@@ -1445,7 +1445,7 @@ void bcs( lattice_ptr lattice)
                              *lattice->param.gval[subs][1]*rho
 #if NUM_FLUID_COMPONENTS==2 && INAMURO_SIGMA_COMPONENT==1
                     *( 1. + (get_buoyancy(lattice))
-                           *(get_expansion_coeff(lattice))
+                           *(get_beta(lattice))
                            *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
 #endif
@@ -1457,7 +1457,7 @@ void bcs( lattice_ptr lattice)
                              *lattice->param.gval[subs][1]*rho
 #if NUM_FLUID_COMPONENTS==2 && INAMURO_SIGMA_COMPONENT==1
                     *( 1. + (get_buoyancy(lattice))
-                           *(get_expansion_coeff(lattice))
+                           *(get_beta(lattice))
                            *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
 #endif
@@ -1544,7 +1544,7 @@ void bcs( lattice_ptr lattice)
 #if INAMURO_SIGMA_COMPONENT
                     //*(1.+(get_buoyancy(lattice))*lattice->param.C_out)
                     *( 1. + (get_buoyancy(lattice))
-                           *(get_expansion_coeff(lattice))
+                           *(get_beta(lattice))
                            *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
                           //*(0.5*(get_LY(lattice)-1.)-1.))
@@ -1553,7 +1553,7 @@ void bcs( lattice_ptr lattice)
 #if INAMURO_SIGMA_COMPONENT
                     //*(1.+(get_buoyancy(lattice))*lattice->param.C_out)
                     *( 1. + (get_buoyancy(lattice))
-                           *(get_expansion_coeff(lattice))
+                           *(get_beta(lattice))
                            *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
                           *(j+1.0));
@@ -1569,7 +1569,7 @@ void bcs( lattice_ptr lattice)
 #if INAMURO_SIGMA_COMPONENT
                     //*(1.+(get_buoyancy(lattice))*lattice->param.C_out)
                     *( 1. + (get_buoyancy(lattice))
-                           *(get_expansion_coeff(lattice))
+                           *(get_beta(lattice))
                            *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
                     *( ( get_LY(lattice)
@@ -1607,7 +1607,7 @@ void bcs( lattice_ptr lattice)
      //*(1.+(get_buoyancy(lattice))*(lattice->macro_vars[/*subs*/1][n].rho))
      //*(1.+(get_buoyancy(lattice))*(lattice->param.C_out))
                     *( 1. + (get_buoyancy(lattice))
-                           *(get_expansion_coeff(lattice))
+                           *(get_beta(lattice))
                            *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
 #endif
@@ -1621,7 +1621,7 @@ void bcs( lattice_ptr lattice)
      //*(1.+(get_buoyancy(lattice))*(lattice->macro_vars[/*subs*/1][n].rho))
      //*(1.+(get_buoyancy(lattice))*(lattice->param.C_out))
                     *( 1. + (get_buoyancy(lattice))
-                           *(get_expansion_coeff(lattice))
+                           *(get_beta(lattice))
                            *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
 #endif
@@ -1847,7 +1847,7 @@ void bcs( lattice_ptr lattice)
 #if NUM_FLUID_COMPONENTS==2 && INAMURO_SIGMA_COMPONENT==1
 //*(1.+(get_buoyancy(lattice))*(lattice->macro_vars[/*subs*/1][n].rho))
                     *( 1. + (get_buoyancy(lattice))
-                           *(get_expansion_coeff(lattice))
+                           *(get_beta(lattice))
                            //*(get_rhon(lattice,n,/*subs*/1)-get_C0(lattice)) )
                            *(get_C_in(lattice)-get_C0(lattice)) )
 #endif
@@ -1859,7 +1859,7 @@ void bcs( lattice_ptr lattice)
 #if NUM_FLUID_COMPONENTS==2 && INAMURO_SIGMA_COMPONENT==1
 //*(1.+(get_buoyancy(lattice))*(lattice->macro_vars[/*subs*/1][n].rho))
                     *( 1. + (get_buoyancy(lattice))
-                           *(get_expansion_coeff(lattice))
+                           *(get_beta(lattice))
                            //*(get_rhon(lattice,n,/*subs*/1)-get_C0(lattice)) )
                            *(get_C_in(lattice)-get_C0(lattice)) )
 #endif
@@ -1982,7 +1982,7 @@ void bcs( lattice_ptr lattice)
 #if NUM_FLUID_COMPONENTS==2 && INAMURO_SIGMA_COMPONENT==1
 //*(1.+(get_buoyancy(lattice))*(lattice->macro_vars[/*subs*/1][n].rho))
                     *( 1. + (get_buoyancy(lattice))
-                           *(get_expansion_coeff(lattice))
+                           *(get_beta(lattice))
                            //*(get_rhon(lattice,n,/*subs*/1)-get_C0(lattice)) )
                            *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
@@ -1994,7 +1994,7 @@ void bcs( lattice_ptr lattice)
 #if NUM_FLUID_COMPONENTS==2 && INAMURO_SIGMA_COMPONENT==1
 //*(1.+(get_buoyancy(lattice))*(lattice->macro_vars[/*subs*/1][n].rho))
                     *( 1. + (get_buoyancy(lattice))
-                           *(get_expansion_coeff(lattice))
+                           *(get_beta(lattice))
                            //*(get_rhon(lattice,n,/*subs*/1)-get_C0(lattice)) )
                            *(get_C_out(lattice)-get_C0(lattice)) )
 #endif

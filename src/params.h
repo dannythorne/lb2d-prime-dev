@@ -42,9 +42,10 @@ void assign_default_param_vals( lattice_ptr lattice)
   lattice->param.rho_B[0] = 0.;
 #if INAMURO_SIGMA_COMPONENT
   lattice->param.rho_sigma = 0.;
+  lattice->param.beta = 0.;
   lattice->param.C0 = 0.;
-  lattice->param.rho0 = 1.;
-  lattice->param.drhodC = 1.;
+  lattice->param.rho0 = 0.;
+  lattice->param.drhodC = 0.;
   lattice->param.rho_sigma_in = 0.;
   lattice->param.C_in = 0.;
   lattice->param.rho_sigma_out = 0.;
@@ -159,6 +160,7 @@ void assign_default_param_vals( lattice_ptr lattice)
   lattice->param.dump_vor = 0;
   lattice->param.do_user_stuff = 0;
   lattice->param.make_octave_scripts = 0;
+  strncpy(lattice->param.out_path,"./out",1024);
 #endif
 } /* void assign_default_param_vals( lattice_ptr lattice) */
 
@@ -186,6 +188,23 @@ void skip_label( FILE *in)
   }
 
 } /* void skip_label( FILE *in) */
+
+void get_rest_of_line_as_string( FILE *in, char **str, int maxstrlen)
+{
+  int n;
+  char c;
+
+  n = 0;
+  c = fgetc(in);
+  while( n< maxstrlen && c!='\n')
+  {
+    printf("%c",c);
+    (*str)[n] = c;
+    n++;
+    c = fgetc(in);
+  }
+  printf("%c",c);
+}
 
 // void skip_rest_of_line( FILE *in)
 //##############################################################################
@@ -487,6 +506,19 @@ void read_params( lattice_ptr lattice, const char *infile)
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%lf\n", &(dblank));
       printf("%s %d >> rho_sigma = %f "
+        "// unused: not INAMURO_SIGMA_COMPONENT\n",
+        __FILE__,__LINE__, dblank);
+#endif /* (INAMURO_SIGMA_COMPONENT) */
+    }
+    else if( !strncmp(param_label,"beta",80))
+    {
+#if INAMURO_SIGMA_COMPONENT
+      fscanf( in, "%lf\n", &(lattice->param.beta));
+      printf("%s %d >> beta = %f\n",__FILE__,__LINE__, 
+         lattice->param.beta);
+#else /* !(INAMURO_SIGMA_COMPONENT) */
+      fscanf( in, "%lf\n", &(dblank));
+      printf("%s %d >> beta = %f "
         "// unused: not INAMURO_SIGMA_COMPONENT\n",
         __FILE__,__LINE__, dblank);
 #endif /* (INAMURO_SIGMA_COMPONENT) */
@@ -1500,6 +1532,17 @@ void read_params( lattice_ptr lattice, const char *infile)
       printf("%s %d >> do_user_stuff = %d\n",__FILE__,__LINE__, 
         lattice->param.do_user_stuff);
     }
+    else if( !strncmp(param_label,"out_path",80))
+    {
+      //fscanf( in, "%s\n", &(lattice->param.out_path));
+      char *str;
+      str = (char*)malloc( 1024*sizeof(char));
+      get_rest_of_line_as_string( in, &str, 1024);
+      strncpy( lattice->param.out_path, str, 1024);
+      free(str);
+      printf("%s %d >> out_path = %s\n",__FILE__,__LINE__, 
+        lattice->param.out_path);
+    }
     else if( !strncmp(param_label,"make_octave_scripts",80))
     {
       fscanf( in, "%d\n", &(lattice->param.make_octave_scripts));
@@ -1556,6 +1599,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     skip_label( in); fscanf( in, "%lf",   lattice->param.rho_B           );
 #if INAMURO_SIGMA_COMPONENT
     skip_label( in); fscanf( in, "%lf",&( lattice->param.rho_sigma)      );
+    skip_label( in); fscanf( in, "%lf",&( lattice->param.beta     )      );
     skip_label( in); fscanf( in, "%lf",&( lattice->param.C0)             );
     skip_label( in); fscanf( in, "%lf",&( lattice->param.rho0)           );
     skip_label( in); fscanf( in, "%lf",&( lattice->param.drhodC)         );
@@ -1764,6 +1808,8 @@ void read_params( lattice_ptr lattice, const char *infile)
   skip_label( in); fscanf( in, "%d", &( lattice->param.dump_force        )   );
   skip_label( in); fscanf( in, "%d", &( lattice->param.dump_vor          )   );
   skip_label( in); fscanf( in, "%d", &( lattice->param.do_user_stuff     )   );
+  skip_label( in); fscanf( in, "%s", &( lattice->param.out_path          )   );
+  skip_label( in); fscanf( in, "%s", &( lattice->param.make_octave_scripts)  );
 #endif /* (NEW_PARAMS_INPUT_ROUTINE) */
 
 //LBMPI #if PARALLEL
@@ -1902,9 +1948,22 @@ void read_params( lattice_ptr lattice, const char *infile)
   }
 
 #if INAMURO_SIGMA_COMPONENT
-  lattice->param.expansion_coeff =
-    (1./lattice->param.rho0)
-   *(lattice->param.drhodC);
+  if( lattice->param.beta != 0.)
+  {
+    if( lattice->param.rho0 != 0. || lattice->param.drhodC != 0.)
+    {
+      printf("ERROR: beta nonzero and rho0,drhodC nonzero. "
+          "Choose on or the other.");
+      process_exit(1);
+    }
+  }
+  else
+  {
+    if( lattice->param.rho0 != 0. && lattice->param.drhodC != 0.)
+    {
+      lattice->param.beta = (1./lattice->param.rho0)*(lattice->param.drhodC);
+    }
+  }
 
   if( lattice->param.rho_sigma_in != 0.)
   {
@@ -1959,14 +2018,21 @@ void dump_params( struct lattice_struct *lattice)
   FILE *o;
   char filename[1024];
 
-  sprintf( filename, "%s", "./out/params.dat");
+  sprintf( filename, "%s/%s", get_out_path(lattice), "params.dat");
 
   if( !( o = fopen(filename,"w+")))
   {
     printf("\n%s %d >> ERROR: fopen(\"%s\",\"w+\") = NULL.\n", 
         __FILE__, __LINE__, filename);
-    printf("\n%s %d >> NOTE: Maybe need to create directory \"out/\"\n", 
-        __FILE__, __LINE__, filename);
+    printf("\n%s %d >> NOTE: You might need to create directory \"%s\"\n", 
+        __FILE__, __LINE__, get_out_path(lattice));
+    printf("%s %d >> "
+       "If the directory just shown is not \"./out\" and does not\n"
+       "look familiar as a custom directory you requested, edit\n"
+       "\"./in/params.in\" and either change the \"out_path\" parameter or\n"
+       "delete it. (Deleting the \"out_path\" entry in \"params.in\" will\n"
+       "cause the code to revert to the default \"./out\" folder.)",
+       __FILE__, __LINE__);
     process_exit(1);
   }
 
@@ -2033,6 +2099,7 @@ void dump_params( struct lattice_struct *lattice)
   }
 #if INAMURO_SIGMA_COMPONENT
   fprintf( o, "rho_sigma            %f\n", lattice->param.rho_sigma      );
+  fprintf( o, "beta                 %f\n", lattice->param.beta           );
   fprintf( o, "C0                   %f\n", lattice->param.C0             );
   fprintf( o, "rho0                 %f\n", lattice->param.rho0           );
   fprintf( o, "drhodC               %f\n", lattice->param.drhodC         );
@@ -2049,6 +2116,7 @@ void dump_params( struct lattice_struct *lattice)
   fprintf( o, "sigma_btc_spot       %d\n", lattice->param.sigma_btc_spot );
 #else /* !( INAMURO_SIGMA_COMPONENT) */
   fprintf( o, "rho_sigma            %s\n", "--"                          );
+  fprintf( o, "beta                 %s\n", "--"                          );
   fprintf( o, "C0                   %s\n", "--"                          );
   fprintf( o, "rho0                 %s\n", "--"                          );
   fprintf( o, "drhodC               %s\n", "--"                          );
@@ -2259,6 +2327,8 @@ void dump_params( struct lattice_struct *lattice)
   fprintf( o, "dump_force           %d\n", lattice->param.dump_force        );
   fprintf( o, "dump_vor             %d\n", lattice->param.dump_vor          );
   fprintf( o, "do_user_stuff        %d\n", lattice->param.do_user_stuff     );
+  fprintf( o, "out_path             %d\n", lattice->param.out_path          );
+  fprintf( o, "make_octave_scripts  %d\n", lattice->param.make_octave_scripts);
 
   fclose(o);
 

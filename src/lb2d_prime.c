@@ -44,11 +44,11 @@ int main( int argc, char **argv)
 //LBMPI   lattice->lbmpi = lbmpi;
 //LBMPI #endif /* (PARALLEL) */
 
-  report_flags();
-
   tic = clock();
 
   construct_lattice( &lattice, argc, argv);
+
+  report_flags(lattice);
 
 //LBMPI #if PARALLEL
 //LBMPI   lbmpi_construct( lbmpi, lattice, argc, argv);

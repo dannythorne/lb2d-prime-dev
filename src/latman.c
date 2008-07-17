@@ -1046,7 +1046,7 @@ void init_problem( struct lattice_struct *lattice)
 #if INAMURO_SIGMA_COMPONENT
                     //*(1.+(get_buoyancy(lattice))*lattice->param.rho_sigma)
                     *(1. + (get_buoyancy(lattice))
-                          *get_expansion_coeff(lattice)
+                          *get_beta(lattice)
                           *( get_C(lattice)
                            - get_C0(lattice)))
 #endif
@@ -1056,7 +1056,7 @@ void init_problem( struct lattice_struct *lattice)
 #if INAMURO_SIGMA_COMPONENT
                     //*(1.+(get_buoyancy(lattice))*lattice->param.rho_sigma)
                     *(1. + (get_buoyancy(lattice))
-                          *get_expansion_coeff(lattice)
+                          *get_beta(lattice)
                           *( get_C(lattice)
                            - get_C0(lattice)))
 #endif
@@ -1070,7 +1070,7 @@ void init_problem( struct lattice_struct *lattice)
 #if INAMURO_SIGMA_COMPONENT
                     //*(1.+(get_buoyancy(lattice))*lattice->param.rho_sigma)
                     *(1. + (get_buoyancy(lattice))
-                          *get_expansion_coeff(lattice)
+                          *get_beta(lattice)
                           *( get_C(lattice)
                            - get_C0(lattice)))
 #endif
@@ -2461,7 +2461,8 @@ void check_point_save( lattice_ptr lattice)
   printf("############################################################\n");
 
 
-  sprintf(filename, "./out/checkpoint_%dx%d.dat",
+  sprintf(filename, "./%s/checkpoint_%dx%d.dat",
+      get_out_path(lattice),
       get_LX(lattice),
       get_LY(lattice));
   if( !( o = fopen(filename,"w+")))
@@ -2546,7 +2547,7 @@ void check_point_load( lattice_ptr lattice)
   printf("                                                            \n");
   printf("############################################################\n");
 
-  sprintf(filename, "./out/checkpoint.dat");
+  sprintf(filename, "./%s/checkpoint.dat", get_out_path(lattice));
   if( !( in = fopen(filename,"r+")))
   {
     printf("%s %d >> WARNING: Can't load checkpoint \"%s\".\n",

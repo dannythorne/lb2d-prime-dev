@@ -335,7 +335,7 @@ struct param_struct
   double C_in;
   double rho_sigma_out;
   double C_out;
-  double expansion_coeff;
+  double beta;
   double u_sigma;
   double u_sigma_in;
   double u_sigma_out;
@@ -577,6 +577,8 @@ struct param_struct
   // which are called in lb2d_prime.c.
   //
   int    do_user_stuff;
+
+  char   out_path[1024];
 
   // Param: make_octave_scripts;
   // Type: int make_octave_scripts;

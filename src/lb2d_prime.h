@@ -103,10 +103,12 @@ double vy[9] = { 0., 0., 1., 0.,-1., 1., 1.,-1.,-1.};
 #include "runman.c"
 #endif /* DO_NOT_STORE_SOLIDS */
 
-void report_flags()
+void report_flags( lattice_ptr lattice)
 {
   struct report_struct flags;
-  report_open(          &flags, "./out/flags");
+  char filename[1024];
+  sprintf( filename, "%s/flags", get_out_path(lattice));
+  report_open(          &flags, filename);
   report_integer_entry( &flags, "VERBOSITY_LEVEL", VERBOSITY_LEVEL, "");
   report_integer_entry( &flags, "SAY_HI", SAY_HI, "");
   report_integer_entry( &flags, "NUM_FLUID_COMPONENTS", NUM_FLUID_COMPONENTS, "");

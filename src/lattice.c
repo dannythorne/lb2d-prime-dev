@@ -189,7 +189,7 @@ double get_C_in( lattice_ptr lattice) { return lattice->param.C_in;}
 double get_rho_sigma_in( lattice_ptr lattice) { return lattice->param.rho_sigma_in;}
 double get_C_out( lattice_ptr lattice) { return lattice->param.C_out;}
 double get_rho_sigma_out( lattice_ptr lattice) { return lattice->param.rho_sigma_out;}
-double get_expansion_coeff( lattice_ptr lattice) { return lattice->param.expansion_coeff;}
+double get_beta( lattice_ptr lattice) { return lattice->param.beta;}
 #endif /* INAMURO_SIGMA_COMPONENT */
 
 int is_periodic_in_x( lattice_ptr lattice, int subs)
@@ -288,4 +288,9 @@ double get_rho( lattice_ptr lattice, int i, int j, int subs)
 double get_rhon( lattice_ptr lattice, int n, int subs)
 {
   return lattice->macro_vars[subs][n].rho;
+}
+
+const char* get_out_path( lattice_ptr lattice)
+{
+  return lattice->param.out_path;
 }

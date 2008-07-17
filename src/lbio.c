@@ -133,12 +133,12 @@ void dump_frame_summary( struct lattice_struct *lattice)
   if( is_incompressible( lattice)
       && annotate_incompressible_filenames( lattice))
   {
-   sprintf( filename, "./out/frames%dx%di_subs%02d_proc%04d.dat",
+   sprintf( filename, "%s/frames%dx%di_subs%02d_proc%04d.dat", get_out_path(lattice),
        get_LX(lattice), get_LY(lattice), subs, get_proc_id(lattice));
   }
   else
   {
-   sprintf( filename, "./out/frames%dx%d_subs%02d_proc%04d.dat",
+   sprintf( filename, "%s/frames%dx%d_subs%02d_proc%04d.dat", get_out_path(lattice),
        get_LX(lattice), get_LY(lattice), subs, get_proc_id(lattice));
   }
   // On the first timestep, make sure we start with a new file.
@@ -294,12 +294,12 @@ void dump_macro_vars( struct lattice_struct *lattice, int time)
   if(    is_incompressible( lattice)
       && annotate_incompressible_filenames( lattice))
   {
-    sprintf( filename, "./out/rho%dx%di_frame%04d_subs%02d_proc%04d.dat",
+    sprintf( filename, "%s/rho%dx%di_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
         get_LX( lattice), get_LY( lattice), frame, subs, get_proc_id(lattice));
   }
   else
   {
-    sprintf( filename, "./out/rho%dx%d_frame%04d_subs%02d_proc%04d.dat",
+    sprintf( filename, "%s/rho%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
         get_LX( lattice), get_LY( lattice), frame, subs, get_proc_id(lattice));
   }
   if( !( o_rho = fopen( filename, "w+")))
@@ -308,7 +308,7 @@ void dump_macro_vars( struct lattice_struct *lattice, int time)
     process_exit(1);
   }
 
-  sprintf( filename, "./out/u%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/u%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX( lattice), get_LY( lattice), frame, subs, get_proc_id(lattice));
   if( !( o_u = fopen( filename, "w+")))
   {
@@ -317,7 +317,7 @@ void dump_macro_vars( struct lattice_struct *lattice, int time)
   }
 
 #if STORE_U_COMPOSITE
-  sprintf( filename, "./out/upr%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/upr%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX( lattice), get_LY( lattice), frame, subs, get_proc_id(lattice));
   if( !( o_upr = fopen( filename, "w+")))
   {
@@ -370,20 +370,20 @@ void dump_macro_vars( struct lattice_struct *lattice, int time)
 
   fclose(o_u);
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/u%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/u%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
 #endif /* VERBOSITY_LEVEL > 0 */
   printf("dump_macro_vars() -- Wrote file \"%s\"\n", filename);
   fclose(o_rho);
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/rho%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/rho%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
 #endif /* VERBOSITY_LEVEL > 0 */
   printf("dump_macro_vars() -- Wrote file \"%s\"\n", filename);
 #if STORE_U_COMPOSITE
   fclose(o_upr);
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/upr%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/upr%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
 #endif /* VERBOSITY_LEVEL > 0 */
   printf("dump_macro_vars() -- Wrote file \"%s\"\n", filename);
@@ -392,21 +392,21 @@ void dump_macro_vars( struct lattice_struct *lattice, int time)
 #if WRITE_RHO_AND_U_TO_TXT
   // NOTE: This is very inefficient.  But it's only intended
   // for debugging purposes on small problems.
-  sprintf( filename, "./out/rho%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/rho%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_rho = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
     process_exit(1);
   }
-  sprintf( filename, "./out/ux%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/ux%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_ux = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
     process_exit(1);
   }
-  sprintf( filename, "./out/uy%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/uy%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_uy = fopen( filename, "w+")))
   {
@@ -414,14 +414,14 @@ void dump_macro_vars( struct lattice_struct *lattice, int time)
     process_exit(1);
   }
 #if STORE_U_COMPOSITE
-  sprintf( filename, "./out/upr_x%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/upr_x%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_upr_x = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
     process_exit(1);
   }
-  sprintf( filename, "./out/upr_y%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/upr_y%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_upr_y = fopen( filename, "w+")))
   {
@@ -472,32 +472,32 @@ void dump_macro_vars( struct lattice_struct *lattice, int time)
 
   fclose(o_ux);
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/ux%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/ux%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
 #endif /* VERBOSITY_LEVEL > 0 */
   printf("dump_macro_vars() -- Wrote file \"%s\"\n", filename);
   fclose(o_uy);
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/uy%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/uy%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
 #endif /* VERBOSITY_LEVEL > 0 */
   printf("dump_macro_vars() -- Wrote file \"%s\"\n", filename);
   fclose(o_rho);
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/rho%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/rho%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
 #endif /* VERBOSITY_LEVEL > 0 */
   printf("dump_macro_vars() -- Wrote file \"%s\"\n", filename);
 #if STORE_U_COMPOSITE
   fclose(o_upr_x);
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/upr_x%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/upr_x%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
 #endif /* VERBOSITY_LEVEL > 0 */
   printf("dump_macro_vars() -- Wrote file \"%s\"\n", filename);
   fclose(o_upr_y);
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/upr_y%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/upr_y%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
 #endif /* VERBOSITY_LEVEL > 0 */
   printf("dump_macro_vars() -- Wrote file \"%s\"\n", filename);
@@ -508,7 +508,7 @@ void dump_macro_vars( struct lattice_struct *lattice, int time)
  } /* for( subs = 0; subs < NUM_FLUID_COMPONENTS; subs++) */
 
 #if WRITE_MACRO_VAR_DAT_FILES || WRITE_PDF_DAT_FILES
-  sprintf( filename, "./out/obst%dx%d_proc%04d.dat",
+  sprintf( filename, "%s/obst%dx%d_proc%04d.dat", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), get_proc_id(lattice));
   if( !( o = fopen( filename, "w+")))
   {
@@ -564,7 +564,7 @@ void read_macro_vars( struct lattice_struct *lattice, int time)
   //  - Read the density and velocity values at the active nodes to
   //    the rho and u dat files.
   //
-  sprintf( filename, "./out/rho%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/rho%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( rho_in = fopen( filename, "r+")))
   {
@@ -572,7 +572,7 @@ void read_macro_vars( struct lattice_struct *lattice, int time)
     process_exit(1);
   }
 
-  sprintf( filename, "./out/u%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/u%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( u_in = fopen( filename, "r+")))
   {
@@ -595,13 +595,13 @@ void read_macro_vars( struct lattice_struct *lattice, int time)
 
   fclose(u_in);
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/u%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/u%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
 #endif /* VERBOSITY_LEVEL > 0 */
   printf("read_macro_vars() -- Read file \"%s\"\n", filename);
   fclose(rho_in);
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/rho%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/rho%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
 #endif /* VERBOSITY_LEVEL > 0 */
   printf("read_macro_vars() -- Read file \"%s\"\n", filename);
@@ -663,7 +663,7 @@ void dump_pdf( struct lattice_struct *lattice, int time)
 
   frame = time/lattice->param.FrameRate;
 
-  sprintf( filename, "./out/feq%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/feq%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_feq = fopen( filename, "w+")))
   {
@@ -671,7 +671,7 @@ void dump_pdf( struct lattice_struct *lattice, int time)
     process_exit(1);
   }
 
-  sprintf( filename, "./out/f%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/f%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_f = fopen( filename, "w+")))
   {
@@ -679,7 +679,7 @@ void dump_pdf( struct lattice_struct *lattice, int time)
     process_exit(1);
   }
 
-  sprintf( filename, "./out/ftemp%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/ftemp%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_ftemp = fopen( filename, "w+")))
   {
@@ -687,7 +687,7 @@ void dump_pdf( struct lattice_struct *lattice, int time)
     process_exit(1);
   }
 
-  sprintf( filename, "./out/fdiff%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/fdiff%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_fdiff = fopen( filename, "w+")))
   {
@@ -776,7 +776,7 @@ void dump_pdf( struct lattice_struct *lattice, int time)
 
   frame = time/lattice->param.FrameRate;
 
-  sprintf( filename, "./out/feq%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/feq%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_feq = fopen( filename, "w+")))
   {
@@ -784,7 +784,7 @@ void dump_pdf( struct lattice_struct *lattice, int time)
     process_exit(1);
   }
 
-  sprintf( filename, "./out/f%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/f%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_f = fopen( filename, "w+")))
   {
@@ -792,7 +792,7 @@ void dump_pdf( struct lattice_struct *lattice, int time)
     process_exit(1);
   }
 
-  sprintf( filename, "./out/ftemp%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/ftemp%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_ftemp = fopen( filename, "w+")))
   {
@@ -800,7 +800,7 @@ void dump_pdf( struct lattice_struct *lattice, int time)
     process_exit(1);
   }
 
-  sprintf( filename, "./out/fdiff%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/fdiff%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_fdiff = fopen( filename, "w+")))
   {
@@ -1042,14 +1042,14 @@ void dump_forces( struct lattice_struct *lattice)
       frame);
 #endif /* VERBOSITY_LEVEL > 0 */
 
-  sprintf( filename, "./out/force_x%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/force_x%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( ox = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
     process_exit(1);
   }
-  sprintf( filename, "./out/force_y%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/force_y%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( oy = fopen( filename, "w+")))
   {
@@ -1068,13 +1068,13 @@ void dump_forces( struct lattice_struct *lattice)
 
   fclose(ox);
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/force_x%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/force_x%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
 #endif /* VERBOSITY_LEVEL > 0 */
   printf("dump_forces() -- Wrote file \"%s\"\n", filename);
   fclose(oy);
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/force_y%dx%d_frame%04d_subs%02d_proc%04d.dat",
+  sprintf( filename, "%s/force_y%dx%d_frame%04d_subs%02d_proc%04d.dat", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
 #endif /* VERBOSITY_LEVEL > 0 */
   printf("dump_forces() -- Wrote file \"%s\"\n", filename);
@@ -1082,14 +1082,14 @@ void dump_forces( struct lattice_struct *lattice)
 #if WRITE_RHO_AND_U_TO_TXT
   // NOTE: This is very inefficient.  But it's only intended
   // for debugging purposes on small problems.
-  sprintf( filename, "./out/force_x%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/force_x%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( ox = fopen( filename, "w+")))
   {
     printf("ERROR: fopen( \"%s\", \"w+\") = NULL.  Bye, bye!\n", filename);
     process_exit(1);
   }
-  sprintf( filename, "./out/force_y%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/force_y%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( oy = fopen( filename, "w+")))
   {
@@ -1115,13 +1115,13 @@ void dump_forces( struct lattice_struct *lattice)
 
   fclose(ox);
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/force_x%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/force_x%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
 #endif /* VERBOSITY_LEVEL > 0 */
   printf("dump_forces() -- Wrote file \"%s\"\n", filename);
   fclose(oy);
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/force_y%dx%d_frame%04d_subs%02d_proc%04d.txt",
+  sprintf( filename, "%s/force_y%dx%d_frame%04d_subs%02d_proc%04d.txt", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
 #endif /* VERBOSITY_LEVEL > 0 */
   printf("dump_forces() -- Wrote file \"%s\"\n", filename);
@@ -2047,7 +2047,7 @@ void rho2bmp( lattice_ptr lattice, int time)
   compute_min_rho( lattice, &min_rho, subs);
   compute_max_rho( lattice, &max_rho, subs);
 
-  sprintf( filename, "./out/rho%dx%d_frame%04d_subs%02d_proc%04d.bmp", 
+  sprintf( filename, "%s/rho%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice), 
       get_LX(lattice), 
       get_LY(lattice), 
       frame, subs, get_proc_id(lattice));
@@ -2387,7 +2387,7 @@ void rho2bmp( lattice_ptr lattice, int time)
   // The length of a row in the file will be bytes_per_row + pad .
   pad = ((4) - bytes_per_row%4)%4;
 
-  sprintf( filename, "./out/rho%dx%d_frame%04d_subs%02d.bmp", 
+  sprintf( filename, "%s/rho%dx%d_frame%04d_subs%02d.bmp", get_out_path(lattice), 
       get_LX(lattice), 
       get_LY(lattice), 
       frame, subs);
@@ -2628,7 +2628,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
 
   compute_max_u( lattice, max_u, subs);
 
-  sprintf( filename, "./out/u%dx%d_frame%04d_subs%02d_proc%04d.bmp", 
+  sprintf( filename, "%s/u%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice), 
       get_LX(lattice), 
       get_LY(lattice), 
       frame, subs, get_proc_id(lattice));
@@ -2638,7 +2638,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
     process_exit(1);
   }
 
-  sprintf( filename, "./out/u_x%dx%d_frame%04d_subs%02d_proc%04d.bmp", 
+  sprintf( filename, "%s/u_x%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice), 
       get_LX(lattice), 
       get_LY(lattice), 
       frame, subs, get_proc_id(lattice));
@@ -2648,7 +2648,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
     process_exit(1);
   }
 
-  sprintf( filename, "./out/u_y%dx%d_frame%04d_subs%02d_proc%04d.bmp", 
+  sprintf( filename, "%s/u_y%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice), 
       get_LX(lattice), 
       get_LY(lattice), 
       frame, subs, get_proc_id(lattice));
@@ -2984,19 +2984,19 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
   fclose(o_uy);
 
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/u%dx%d_frame%04d_subs%02d_proc%04d.bmp", 
+  sprintf( filename, "%s/u%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice), 
       get_LX(lattice), 
       get_LY(lattice), 
       frame, subs, get_proc_id(lattice));
   printf("u2bmp()   -- Wrote file \"%s\".\n", filename);
 
-  sprintf( filename, "./out/u_x%dx%d_frame%04d_subs%02d_proc%04d.bmp", 
+  sprintf( filename, "%s/u_x%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice), 
       get_LX(lattice), 
       get_LY(lattice), 
       frame, subs, get_proc_id(lattice));
   printf("u2bmp()   -- Wrote file \"%s\".\n", filename);
 
-  sprintf( filename, "./out/u_y%dx%d_frame%04d_subs%02d_proc%04d.bmp", 
+  sprintf( filename, "%s/u_y%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice), 
       get_LX(lattice), 
       get_LY(lattice), 
       frame, subs, get_proc_id(lattice));
@@ -3067,7 +3067,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
 
   compute_max_upr( lattice, max_u);
 
-  sprintf( filename, "./out/upr%dx%d_frame%04d_proc%04d.bmp", 
+  sprintf( filename, "%s/upr%dx%d_frame%04d_proc%04d.bmp", get_out_path(lattice), 
       get_LX(lattice), 
       get_LY(lattice), 
       frame, get_proc_id(lattice));
@@ -3077,7 +3077,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
     process_exit(1);
   }
 
-  sprintf( filename, "./out/upr_x%dx%d_frame%04d_proc%04d.bmp", 
+  sprintf( filename, "%s/upr_x%dx%d_frame%04d_proc%04d.bmp", get_out_path(lattice), 
       get_LX(lattice), 
       get_LY(lattice), 
       frame, get_proc_id(lattice));
@@ -3087,7 +3087,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
     process_exit(1);
   }
 
-  sprintf( filename, "./out/upr_y%dx%d_frame%04d_proc%04d.bmp", 
+  sprintf( filename, "%s/upr_y%dx%d_frame%04d_proc%04d.bmp", get_out_path(lattice), 
       get_LX(lattice), 
       get_LY(lattice), 
       frame, get_proc_id(lattice));
@@ -3417,15 +3417,15 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
   fclose(o_uy);
 
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/upr%dx%d_frame%04d_proc%04d.bmp",
+  sprintf( filename, "%s/upr%dx%d_frame%04d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, get_proc_id(lattice));
   printf("u2bmp()   -- Wrote file \"%s\".\n", filename);
 
-  sprintf( filename, "./out/upr_x%dx%d_frame%04d_proc%04d.bmp",
+  sprintf( filename, "%s/upr_x%dx%d_frame%04d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, get_proc_id(lattice));
   printf("u2bmp()   -- Wrote file \"%s\".\n", filename);
 
-  sprintf( filename, "./out/upr_y%dx%d_frame%04d_proc%04d.bmp",
+  sprintf( filename, "%s/upr_y%dx%d_frame%04d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, get_proc_id(lattice));
   printf("u2bmp()   -- Wrote file \"%s\".\n", filename);
 #endif /* VERBOSITY_LEVEL > 0 */
@@ -3577,7 +3577,7 @@ void vor2bmp( lattice_ptr lattice, int time)
   printf("vor2bmp() -- ave_vor_n = %f\n", ave_vor_n);
 #endif /* 0 && VERBOSITY_LEVEL > 0 */
 
-  sprintf( filename, "./out/vor%dx%d_frame%04d_subs%02d_proc%04d.bmp",
+  sprintf( filename, "%s/vor%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_vor = fopen( filename, "w+")))
   {
@@ -3734,7 +3734,7 @@ blue_val = (char)ROUND( 255.*( 1. - 10000.*(vor/ave_vor_n)*(vor/ave_vor_n)));
   fclose(o_vor );
 
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/vor%dx%d_frame%04d_subs%02d_proc%04d.bmp",
+  sprintf( filename, "%s/vor%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   printf("vor2bmp()   -- Wrote file \"%s\".\n", filename);
 #endif /* VERBOSITY_LEVEL > 0 */
@@ -3879,7 +3879,7 @@ void force2bmp( lattice_ptr lattice)
 
   compute_max_force( lattice, max_force, subs);
 
-  sprintf( filename, "./out/force_%dx%d_frame%04d_subs%02d_proc%04d.bmp",
+  sprintf( filename, "%s/force_%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_u = fopen( filename, "w+")))
   {
@@ -3887,7 +3887,7 @@ void force2bmp( lattice_ptr lattice)
     process_exit(1);
   }
 
-  sprintf( filename, "./out/force_x_%dx%d_frame%04d_subs%02d_proc%04d.bmp",
+  sprintf( filename, "%s/force_x_%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_ux = fopen( filename, "w+")))
   {
@@ -3895,7 +3895,7 @@ void force2bmp( lattice_ptr lattice)
     process_exit(1);
   }
 
-  sprintf( filename, "./out/force_y_%dx%d_frame%04d_subs%02d_proc%04d.bmp",
+  sprintf( filename, "%s/force_y_%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_uy = fopen( filename, "w+")))
   {
@@ -4224,15 +4224,15 @@ void force2bmp( lattice_ptr lattice)
   fclose(o_uy);
 
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/force_%dx%d_frame%04d_subs%02d_proc%04d.bmp",
+  sprintf( filename, "%s/force_%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   printf("force2bmp()   -- Wrote file \"%s\".\n", filename);
 
-  sprintf( filename, "./out/force_x_%dx%d_frame%04d_subs%02d_proc%04d.bmp",
+  sprintf( filename, "%s/force_x_%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   printf("force2bmp()   -- Wrote file \"%s\".\n", filename);
 
-  sprintf( filename, "./out/force_y_%dx%d_frame%04d_subs%02d_proc%04d.bmp",
+  sprintf( filename, "%s/force_y_%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   printf("force2bmp()   -- Wrote file \"%s\".\n", filename);
 #endif /* VERBOSITY_LEVEL > 0 */
@@ -4376,7 +4376,7 @@ void sforce2bmp( lattice_ptr lattice)
 
   compute_max_sforce( lattice, max_sforce, subs);
 
-  sprintf( filename, "./out/sforce_%dx%d_frame%04d_subs%02d_proc%04d.bmp",
+  sprintf( filename, "%s/sforce_%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_u = fopen( filename, "w+")))
   {
@@ -4384,7 +4384,7 @@ void sforce2bmp( lattice_ptr lattice)
     process_exit(1);
   }
 
-  sprintf( filename, "./out/sforce_x_%dx%d_frame%04d_subs%02d_proc%04d.bmp",
+  sprintf( filename, "%s/sforce_x_%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_ux = fopen( filename, "w+")))
   {
@@ -4392,7 +4392,7 @@ void sforce2bmp( lattice_ptr lattice)
     process_exit(1);
   }
 
-  sprintf( filename, "./out/sforce_y_%dx%d_frame%04d_subs%02d_proc%04d.bmp",
+  sprintf( filename, "%s/sforce_y_%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   if( !( o_uy = fopen( filename, "w+")))
   {
@@ -4722,15 +4722,15 @@ void sforce2bmp( lattice_ptr lattice)
   fclose(o_uy);
 
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "./out/sforce_%dx%d_frame%04d_subs%02d_proc%04d.bmp",
+  sprintf( filename, "%s/sforce_%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   printf("sforce2bmp()   -- Wrote file \"%s\".\n", filename);
 
-  sprintf( filename, "./out/sforce_x_%dx%d_frame%04d_subs%02d_proc%04d.bmp",
+  sprintf( filename, "%s/sforce_x_%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   printf("sforce2bmp()   -- Wrote file \"%s\".\n", filename);
 
-  sprintf( filename, "./out/sforce_y_%dx%d_frame%04d_subs%02d_proc%04d.bmp",
+  sprintf( filename, "%s/sforce_y_%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
   printf("sforce2bmp()   -- Wrote file \"%s\".\n", filename);
 #endif /* VERBOSITY_LEVEL > 0 */
@@ -4934,7 +4934,7 @@ void private_slice(
 #endif /* (STORE_U_COMPOSITE) */
 
     // Generate matlab script to plot the slices.
-    sprintf( filename, "./out/%s%dx%d_frame%04d.m", 
+    sprintf( filename, "%s/%s%dx%d_frame%04d.m", get_out_path(lattice), 
              root_word,
              get_LX(lattice), get_LY(lattice),
              lattice->time/lattice->param.FrameRate);
@@ -5183,7 +5183,7 @@ void private_slice(
 #endif /* (STORE_U_COMPOSITE) */
 
     // Generate matlab script to plot the slices.
-    sprintf( filename, "./out/%s%dx%d_frame%04d.m", 
+    sprintf( filename, "%s/%s%dx%d_frame%04d.m", get_out_path(lattice), 
              root_word,
              get_LX(lattice), 
              get_LY(lattice),
@@ -5454,7 +5454,7 @@ void private_slice(
 #endif /* (STORE_U_COMPOSITE) */
 
     // Generate matlab script to plot the slices.
-    sprintf( filename, "./out/%s%dx%d_frame%04d.m", 
+    sprintf( filename, "%s/%s%dx%d_frame%04d.m", get_out_path(lattice), 
              root_word,
              get_LX(lattice), 
              get_LY(lattice),
@@ -6068,7 +6068,7 @@ void dump_sigma_btc( lattice_ptr lattice)
     ?(lattice->param.sigma_start)
     :(0);
 
-  sprintf( fn, "./out/sigma_btc.m");
+  sprintf( fn, "%s/sigma_btc.m", get_out_path(lattice));
 
   o = fopen( fn, "w+");
 
@@ -6499,19 +6499,19 @@ printf("\n\nWARNING: chen_output() function is deprecated!\n\n");
     sum_mass[ subs] = 0.;
   }
 
-  sprintf( filename, "%s", "./out/chen_xyrho.dat");
+  sprintf( filename, "%s", "%s/chen_xyrho.dat", get_out_path(lattice));
   if( !( app7 = fopen( filename,"a")))
   {
     printf("Error opening \"%s\" for reading.  Exiting!\n", filename);
     process_exit(1);
   }
-  sprintf( filename, "%s", "./out/chen_xy_ux_uy.dat");
+  sprintf( filename, "%s", "%s/chen_xy_ux_uy.dat", get_out_path(lattice));
   if( !( app8 = fopen( filename,"a")))
   {
     printf("Error opening \"%s\" for reading.  Exiting!\n", filename);
     process_exit(1);
   }
-  sprintf( filename, "%s", "./out/chen_time.dat");
+  sprintf( filename, "%s", "%s/chen_time.dat", get_out_path(lattice));
   if( !( app9 = fopen( filename,"a")))
   {
     printf("Error opening \"%s\" for reading.  Exiting!\n", filename);
@@ -6611,11 +6611,11 @@ printf("\n\nWARNING: chen_output() function is deprecated!\n\n");
   fclose( app9);
 
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "%s", "./out/chen_xyrho.dat");
+  sprintf( filename, "%s", "%s/chen_xyrho.dat", get_out_path(lattice));
   printf("chen_output() -- Wrote file \"%s\".\n", filename);
-  sprintf( filename, "%s", "./out/chen_xy_ux_uy.dat");
+  sprintf( filename, "%s", "%s/chen_xy_ux_uy.dat", get_out_path(lattice));
   printf("chen_output() -- Wrote file \"%s\".\n", filename);
-  sprintf( filename, "%s", "./out/chen_time.dat");
+  sprintf( filename, "%s", "%s/chen_time.dat", get_out_path(lattice));
   printf("chen_output() -- Wrote file \"%s\".\n", filename);
 #endif /* VERBOSITY_LEVEL > 0 */
   
