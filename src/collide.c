@@ -470,7 +470,7 @@ void collide( lattice_ptr lattice)
         // Testing alternative way of applying body force...
         if( subs==0)
         {
-          feq[4] += -(1./3.)*lattice->param.gforce[0][1]
+          feq[4] += -(1./3.)*lattice->param.gval[0][1]
                   * (lattice->macro_vars[1][n].rho)
                   ;
         }
@@ -501,8 +501,8 @@ void collide( lattice_ptr lattice)
 #if GUO_ZHENG_SHI_BODY_FORCE
         // Guo, Zheng & Shi: PRE 65 2002
         // Equations (4), (19) & (20)
-        Fx = lattice->param.gforce[subs][0];
-        Fy = lattice->param.gforce[subs][1];
+        Fx = lattice->param.gval[subs][0];
+        Fy = lattice->param.gval[subs][1];
         rho = f[0] + f[1] + f[2] + f[3] + f[4] + f[5] + f[6] + f[7] + f[8];
         vx = ( 1.*f[1] - 1.*f[3] + 1.*f[5] - 1.*f[6] - 1.*f[7] + 1.*f[8]
              + .5*Fx ) / rho;
@@ -650,21 +650,21 @@ void collide( lattice_ptr lattice)
                - (1./2.)
 #else
                  ( .25
-                  *lattice->param.gforce[subs][1]
+                  *lattice->param.gval[subs][1]
                  +
                    .25
-                  *lattice->param.gforce[subs][1]
-                  *lattice->param.gforce[subs][1]
+                  *lattice->param.gval[subs][1]
+                  *lattice->param.gval[subs][1]
                  )
                + (1.)//2.)
 #endif
                *
                ( (-1.)
-                *lattice->param.gforce[subs][1]
+                *lattice->param.gval[subs][1]
 #if APPLY_DEL_FEQ_HIGH_ORDER
                + (1.)
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
 #endif
                )
 #else
@@ -677,11 +677,11 @@ void collide( lattice_ptr lattice)
                - (1./2.)
                *
                ( (1.)
-                *lattice->param.gforce[subs][1]
+                *lattice->param.gval[subs][1]
 #if APPLY_DEL_FEQ_HIGH_ORDER
                + (1.)
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
 #endif
                )
 #endif
@@ -691,16 +691,16 @@ void collide( lattice_ptr lattice)
                - (1./2.)
                *
                ( (-1./12.)
-                *lattice->param.gforce[subs][1]
+                *lattice->param.gval[subs][1]
 #if APPLY_DEL_FEQ_HIGH_ORDER
                + (1./8.)
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
                + (-1./24.)
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
 #endif
                )
 #endif
@@ -710,16 +710,16 @@ void collide( lattice_ptr lattice)
                - (1./2.)
                *
                ( (-1./12.)
-                *lattice->param.gforce[subs][1]
+                *lattice->param.gval[subs][1]
 #if APPLY_DEL_FEQ_HIGH_ORDER
                + (1./8.)
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
                + (-1./24.)
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
 #endif
                )
 #endif
@@ -729,16 +729,16 @@ void collide( lattice_ptr lattice)
                - (1./2.)
                *
                ( (1./12.)
-                *lattice->param.gforce[subs][1]
+                *lattice->param.gval[subs][1]
 #if APPLY_DEL_FEQ_HIGH_ORDER
                + (1./8.)
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
                + (-1./24.)
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
 #endif
                )
 #endif
@@ -748,16 +748,16 @@ void collide( lattice_ptr lattice)
                - (1./2.)
                *
                ( (1./12.)
-                *lattice->param.gforce[subs][1]
+                *lattice->param.gval[subs][1]
 #if APPLY_DEL_FEQ_HIGH_ORDER
                + (1./8.)
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
                + (-1./24.)
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
-                *lattice->param.gforce[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
+                *lattice->param.gval[subs][1]
 #endif
                )
 #endif

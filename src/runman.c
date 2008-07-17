@@ -26,11 +26,11 @@ inline void manage_body_force( lattice_ptr lattice)
   s = sqrt( u[0]*u[0] + u[1]*u[1]);
   if( s > .0091 )
   {
-    lattice->param.gforce[0][0] = 0.;
+    lattice->param.gval[0][0] = 0.;
   }
   else
   {
-    lattice->param.gforce[0][0] = 0.00001;
+    lattice->param.gval[0][0] = 0.00001;
   }
 
   for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
@@ -39,27 +39,27 @@ inline void manage_body_force( lattice_ptr lattice)
    {
     if( lattice->time >= lattice->param.end_grav[subs])
     {
-      if( lattice->param.gforce[subs][0]<EPS)
+      if( lattice->param.gval[subs][0]<EPS)
       {
-        lattice->param.gforce[subs][0] = 0.;
+        lattice->param.gval[subs][0] = 0.;
       }
       else
       {
-        lattice->param.gforce[subs][0]/=2.;
+        lattice->param.gval[subs][0]/=2.;
 #if VERBOSITY_LEVEL>0
-printf("subs %02d: gforce_x = %f\n", subs, lattice->param.gforce[subs][0]);
+printf("subs %02d: gval_x = %f\n", subs, lattice->param.gval[subs][0]);
 #endif /* VERBOSITY_LEVEL>0 */
       }
 
-      if( lattice->param.gforce[subs][1]<EPS)
+      if( lattice->param.gval[subs][1]<EPS)
       {
-        lattice->param.gforce[subs][1] = 0.;
+        lattice->param.gval[subs][1] = 0.;
       }
       else
       {
-        lattice->param.gforce[subs][1]/=2.;
+        lattice->param.gval[subs][1]/=2.;
 #if VERBOSITY_LEVEL>0
-printf("subs %02d: gforce_y = %f\n", subs, lattice->param.gforce[subs][1]);
+printf("subs %02d: gval_y = %f\n", subs, lattice->param.gval[subs][1]);
 #endif /* VERBOSITY_LEVEL>0 */
       }
 
