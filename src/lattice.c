@@ -131,7 +131,7 @@ double get_tau( lattice_ptr lattice, const int subs)
 
 int gravitationally_adjacent_to_a_solid( lattice_ptr lattice, int subs, int n, int dir)
 {
-  if( lattice->param.gforce[subs][dir] != 0)
+  if( lattice->param.gval[subs][dir] != 0)
   {
     return ( is_solid_node( lattice, subs, n-get_LX(lattice))
            ||is_solid_node( lattice, subs, n+get_LX(lattice)));

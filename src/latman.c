@@ -684,15 +684,15 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
   else
   {
     if( // Gravity driving flow vertically.
-        (*lattice)->param.gforce[0][1] != 0.
-     && (*lattice)->param.gforce[0][0] == 0.
+        (*lattice)->param.gval[0][1] != 0.
+     && (*lattice)->param.gval[0][0] == 0.
       )
     {
       (*lattice)->FlowDir = /*Vertical*/2;
     }
     else if( // Gravity driving flow horizontally.
-             (*lattice)->param.gforce[0][0] != 0.
-          && (*lattice)->param.gforce[0][1] == 0.
+             (*lattice)->param.gval[0][0] != 0.
+          && (*lattice)->param.gval[0][1] == 0.
            )
     {
       (*lattice)->FlowDir = /*Horizontal*/1;
@@ -1042,7 +1042,7 @@ void init_problem( struct lattice_struct *lattice)
               {
                 *macro_var_ptr++ =
                   lattice->param.rho_out
-                  *exp( -3.*lattice->param.gforce[0][1]
+                  *exp( -3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
                     //*(1.+(get_buoyancy(lattice))*lattice->param.rho_sigma)
                     *(1. + (get_buoyancy(lattice))
@@ -1052,7 +1052,7 @@ void init_problem( struct lattice_struct *lattice)
 #endif
                            //*(0.5*(get_LY(lattice)-1.)-1.))
                            *( (get_LY(lattice)-1.)-0.))
-                  *exp(  3.*lattice->param.gforce[0][1]
+                  *exp(  3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
                     //*(1.+(get_buoyancy(lattice))*lattice->param.rho_sigma)
                     *(1. + (get_buoyancy(lattice))
@@ -1066,7 +1066,7 @@ void init_problem( struct lattice_struct *lattice)
               {
                 *macro_var_ptr++ =
                       lattice->param.rho_out
-                    * ( 1. - 3.*lattice->param.gforce[0][1]
+                    * ( 1. - 3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
                     //*(1.+(get_buoyancy(lattice))*lattice->param.rho_sigma)
                     *(1. + (get_buoyancy(lattice))
@@ -1116,10 +1116,10 @@ void init_problem( struct lattice_struct *lattice)
               {
                 *macro_var_ptr++ =
                       lattice->param.rho_out
-                     *exp( -3.*lattice->param.gforce[0][1]
+                     *exp( -3.*lattice->param.gval[0][1]
                               //*(0.5*(get_LY(lattice)-1.)-1.))
                               *( (get_LY(lattice)-1.)-0.))
-                     *exp(  3.*lattice->param.gforce[0][1]
+                     *exp(  3.*lattice->param.gval[0][1]
                               //*(j-1.0));
                               *(j+1.0));
               }
@@ -1127,7 +1127,7 @@ void init_problem( struct lattice_struct *lattice)
               {
                 *macro_var_ptr++ =
                       lattice->param.rho_out
-                    * ( 1. - 3.*lattice->param.gforce[0][1]
+                    * ( 1. - 3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
                     *(1.+lattice->param.rho_sigma_in)
 #endif
@@ -1299,7 +1299,7 @@ void init_problem( struct lattice_struct *lattice)
 			  * ( 1. 
           - 3.
            *((get_LY(lattice)-2. + 1.*((get_LY(lattice)%2)?(-1.):(1.)))/2.+1.-j)
-           *lattice->param.gforce[0][1]
+           *lattice->param.gval[0][1]
           )
         );
        }
@@ -1312,7 +1312,7 @@ void init_problem( struct lattice_struct *lattice)
           - 3.
            *((get_LY(lattice)-2. + 1.*((get_LY(lattice)%2)?(-1.):(1.)) )/2.+1.-j)
            *(1.+lattice->param.rho_sigma_out)
-           *lattice->param.gforce[0][1]
+           *lattice->param.gval[0][1]
           )
         );
        }
@@ -1342,7 +1342,7 @@ void init_problem( struct lattice_struct *lattice)
 			      * ( 1. 
               - 3.
                *((get_LY(lattice)-2. + 1.*((get_LY(lattice)%2)?(-1.):(1.)) )/2.+1.-j)
-               *lattice->param.gforce[0][1]
+               *lattice->param.gval[0][1]
               )
             );
           }

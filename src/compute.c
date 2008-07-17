@@ -9,10 +9,80 @@
 //    - compute_rho_and_u
 //    - compute_feq
 //    - compute_big_u
-//    - compute_gforce
+//    - compute_gval
 //    - compute_fluid_fluid_force
 //    - etc...
 //
+
+// P R E P R O C E S S O R   M A C R O S
+#if NON_LOCAL_FORCES
+
+#if ZHANG_AND_CHEN_ENERGY_TRANSPORT
+
+#define BIG_U_X( u_) \
+        (u_) \
+        + lattice->param.tau[subs]  \
+          * lattice->param.gval[subs][0]
+
+#define BIG_U_Y( u_) \
+        (u_) \
+        + lattice->param.tau[subs]  \
+          * lattice->param.gval[subs][1]
+
+#define BIG_U_X_BUOY( u_, rho1_, rho2_) 1.
+#define BIG_U_Y( u_, rho1_, rho2_) 1.
+
+#else /* !( ZHANG_AND_CHEN_ENERGY_TRANSPORT) */
+
+#define BIG_U_X( u_, rho_) \
+        (u_) \
+        + lattice->param.tau[subs]  \
+          * lattice->force[subs][n].force[0]/(rho_) \
+        + lattice->param.tau[subs]  \
+          * lattice->force[subs][n].sforce[0]/(rho_) \
+          /** lattice->force[subs][n].sforce[0]*(rho_) */\
+          /** lattice->force[subs][n].sforce[0] */\
+        + lattice->param.tau[subs]  \
+          * lattice->param.gval[subs][0]
+
+#define BIG_U_Y( u_, rho_) \
+        (u_) \
+        + lattice->param.tau[subs]  \
+          * lattice->force[subs][n].force[1]/(rho_) \
+        + lattice->param.tau[subs]  \
+          * lattice->force[subs][n].sforce[1]/(rho_) \
+          /** lattice->force[subs][n].sforce[1]*(rho_) */\
+          /** lattice->force[subs][n].sforce[1] */\
+        + lattice->param.tau[subs]  \
+          * lattice->param.gval[subs][1]
+
+#endif /* ZHANG_AND_CHEN_ENERGY_TRANSPORT */
+
+#else /* !( NON_LOCAL_FORCES) */
+
+#if INAMURO_SIGMA_COMPONENT
+
+#if GUO_ZHENG_SHI_BODY_FORCE
+#define BIG_U_X( u_, rho1_, rho2_) (u_) + .5*F(0,rho2_)
+#define BIG_U_Y( u_, rho1_, rho2_) (u_) + .5*F(1,rho2_)
+#else
+#define BIG_U_X( u_, rho1_, rho2_) (u_) + get_tau(lattice,subs) * F(0,rho2_)
+#define BIG_U_Y( u_, rho1_, rho2_) (u_) + get_tau(lattice,subs) * F(1,rho2_)
+#endif
+
+#else /* !( INAMURO_SIGMA_COMPONENT) */
+
+#if GUO_ZHENG_SHI_BODY_FORCE
+#define BIG_U_X( u_, rho_) (u_) + .5*F(0)
+#define BIG_U_Y( u_, rho_) (u_) + .5*F(1)
+#else
+#define BIG_U_X( u_, rho_) (u_) + get_tau(lattice,subs) * F(0,rho_)
+#define BIG_U_X( u_, rho_) (u_) + get_tau(lattice,subs) * F(1,rho_)
+#endif
+
+#endif /* INAMURO_SIGMA_COMPONENT */
+
+#endif /* NON_LOCAL_FORCES */
 
 #if INAMURO_SIGMA_COMPONENT
 // C O M P U T E _ M A C R O _ V A R S  {{{1
@@ -95,6 +165,11 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
         (*u_x[subs]) /= 2.;
         (*u_y[subs]) /= 2.;
       }
+
+#if GUO_ZHENG_SHI_BODY_FORCE
+      *u_x[subs] += .5*lattice->param.gval[subs][0]*(*rho[subs]);
+      *u_y[subs] += .5*lattice->param.gval[subs][1]*(*rho[subs]);
+#endif
 
 #if PUKE_NEGATIVE_DENSITIES
       if( *rho[subs] < 0.)
@@ -465,8 +540,8 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
       }
 
 #if GUO_ZHENG_SHI_BODY_FORCE
-      *u_x[subs] += .5*lattice->param.gforce[subs][0];
-      *u_y[subs] += .5*lattice->param.gforce[subs][1];
+      *u_x[subs] += .5*lattice->param.gval[subs][0]*(*rho[subs]);
+      *u_y[subs] += .5*lattice->param.gval[subs][1]*(*rho[subs]);
 #endif
 
 // PUKE_NEGATIVE_DENSITIES {{{
@@ -701,48 +776,6 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
 #endif
 
 #if NON_LOCAL_FORCES
-
-#if ZHANG_AND_CHEN_ENERGY_TRANSPORT
-
-#define BIG_U_X( u_) \
-        (u_) \
-        + lattice->param.tau[subs]  \
-          * lattice->param.gforce[subs][0]
-
-#define BIG_U_Y( u_) \
-        (u_) \
-        + lattice->param.tau[subs]  \
-          * lattice->param.gforce[subs][1]
-
-#define BIG_U_X_BUOY( u_, rho1_, rho2_) 1.
-#define BIG_U_Y_BUOY( u_, rho1_, rho2_) 1.
-
-#else /* !( ZHANG_AND_CHEN_ENERGY_TRANSPORT) */
-
-#define BIG_U_X( u_, rho_) \
-        (u_) \
-        + lattice->param.tau[subs]  \
-          * lattice->force[subs][n].force[0]/(rho_) \
-        + lattice->param.tau[subs]  \
-          * lattice->force[subs][n].sforce[0]/(rho_) \
-          /** lattice->force[subs][n].sforce[0]*(rho_) */\
-          /** lattice->force[subs][n].sforce[0] */\
-        + lattice->param.tau[subs]  \
-          * lattice->param.gforce[subs][0]
-
-#define BIG_U_Y( u_, rho_) \
-        (u_) \
-        + lattice->param.tau[subs]  \
-          * lattice->force[subs][n].force[1]/(rho_) \
-        + lattice->param.tau[subs]  \
-          * lattice->force[subs][n].sforce[1]/(rho_) \
-          /** lattice->force[subs][n].sforce[1]*(rho_) */\
-          /** lattice->force[subs][n].sforce[1] */\
-        + lattice->param.tau[subs]  \
-          * lattice->param.gforce[subs][1]
-
-#endif /* ZHANG_AND_CHEN_ENERGY_TRANSPORT */
-
   if( NUM_FLUID_COMPONENTS == 2)
   {
 #if ZHANG_AND_CHEN_ENERGY_TRANSPORT
@@ -776,97 +809,9 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
   }
   //dump_forces( lattice);
   //force2bmp( lattice);
-#else /* !( NON_LOCAL_FORCES) */
-
-#if INAMURO_SIGMA_COMPONENT
-
-#define BIG_U_X_BAK( u_, rho1_, rho2_) \
-        (u_) \
-      + lattice->param.tau[subs]  \
-        * lattice->param.gforce[subs][0]*((rho1_)+(rho2_))\
-                                        /lattice->param.rho_A[0]
-
-#define BIG_U_X_BAK2( u_) \
-        (u_) \
-      + lattice->param.tau[subs]  \
-        * lattice->param.gforce[subs][0]
-//    + .00000*( (double)rand()/(double)RAND_MAX - .5)
-
-#define BIG_U_X( u_) \
-        (u_) \
-      + lattice->param.tau[subs]  \
-        * lattice->param.gforce[subs][0]
-
-#define BIG_U_X_BUOY( u_, rho1_, rho2_) \
-        (u_) \
-      + lattice->param.tau[subs]  \
-        * lattice->param.gforce[subs][0] /*\
-        *((rho1_)+(get_buoyancy_sign(lattice))*(rho2_)) / (rho1_)*/
-        /**(1.+(get_buoyancy(lattice))*(1./get_rho0(lattice))*(get_drhodC(lattice))*(rho2_-get_C0(lattice)))*/
-
-#define BIG_U_Y_BAK( u_, rho1_, rho2_) \
-        (u_) \
-      + lattice->param.tau[subs]  \
-        * lattice->param.gforce[subs][1]*((rho1_)+(rho2_))\
-                                        /lattice->param.rho_A[0]
-
-#define BIG_U_Y_BAK2( u_) \
-        (u_) \
-      + lattice->param.tau[subs]  \
-        * lattice->param.gforce[subs][1]
-//    + .00000*( (double)rand()/(double)RAND_MAX - .5)
-
-#define BIG_U_Y( u_, rho_) \
-        (u_) \
-      + lattice->param.tau[subs]  \
-        * rho_ \
-        * lattice->param.gforce[subs][1]
-
-#define BIG_U_Y_BUOY( u_, rho1_, rho2_) \
-        (u_) \
-      + lattice->param.tau[subs]  \
-        * lattice->param.gforce[0][1] \
-      + lattice->param.tau[subs]  \
-        * lattice->param.gforce[1][1] \
-        /** rho1_ */\
-        /**(1.+(get_buoyancy(lattice))*(rho2_))*/\
-        *(     (get_buoyancy(lattice)) \
-              /**(1./get_rho0(lattice))*(get_drhodC(lattice)) */\
-              *(get_expansion_coeff(lattice))\
-              *((rho2_)-get_C0(lattice))) \
-//      *((rho1_)+(get_buoyancy_sign(lattice))*(rho2_)) / (rho1_)
-
-#else /* !( INAMURO_SIGMA_COMPONENT) */
-
-#if GUO_ZHENG_SHI_BODY_FORCE
-
-#define BIG_U_X( u_, rho_) \
-        (u_) + .5*lattice->param.gforce[subs][0] / (rho_)
-
-#define BIG_U_Y( u_, rho_) \
-        (u_) + .5*lattice->param.gforce[subs][1] / (rho_)
-
-#else
-
-#define BIG_U_X( u_, rho_) \
-        (u_) \
-      + lattice->param.tau[subs]  \
-        *lattice->param.gforce[subs][0] \
-        * ((lattice->param.incompressible)?(rho_):(1.))
-
-#define BIG_U_Y( u_, rho_) \
-        (u_) \
-      + lattice->param.tau[subs]  \
-        *lattice->param.gforce[subs][1] \
-        * ((lattice->param.incompressible)?(rho_):(1.))
-
+//printf("%s %d >> rand() = %f\n", __FILE__, __LINE__,
+//  .00001*(double)rand()/(double)RAND_MAX);
 #endif
-
-#endif /* INAMURO_SIGMA_COMPONENT */
-
-#endif /* NON_LOCAL_FORCES */
-
-//printf("%s %d >> rand() = %f\n", __FILE__, __LINE__, .00001*(double)rand()/(double)RAND_MAX);
 
  f1 = 3.;
  f2 = 9./2.;
@@ -901,28 +846,13 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
 #else /* !( STORE_U_COMPOSITE) */
 
 #if INAMURO_SIGMA_COMPONENT
-      if( get_buoyancy_flag( lattice))
-      {
-        //ux = BIG_U_X_BUOY( *macro_var, rt0, lattice->macro_vars[1][n].rho); 
-        ux = BIG_U_X( *macro_var); 
-      }
-      else
-      {
-//#if ZHANG_AND_CHEN_ENERGY_TRANSPORT
-//        ux = BIG_U_X( *macro_var, rt0);
-//#else /* !( ZHANG_AND_CHEN_ENERGY_TRANSPORT) */
-        ux = BIG_U_X( *macro_var); 
-//#endif /* ZHANG_AND_CHEN_ENERGY_TRANSPORT */
-      }
+      ux = BIG_U_X( *macro_var, rt0, lattice->macro_vars[1][n].rho); 
       macro_var++;
       *u1++ = *u0++;
 #else /* !( INAMURO_SIGMA_COMPONENT) */
       ux = BIG_U_X( *macro_var, rt0); macro_var++;
 #endif /* INAMURO_SIGMA_COMPONENT */
 #if INAMURO_SIGMA_COMPONENT
-      if( get_buoyancy_flag( lattice))
-      {
-        uy = BIG_U_Y_BUOY( *macro_var, rt0, lattice->macro_vars[1][n].rho); 
 #if 0
       if(  //gravitationally_adjacent_to_a_solid( lattice, subs, n, 1) ||
            //on_the_east_or_west( lattice, n)
@@ -933,37 +863,15 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
         // Preliminary, experimental mechanism to skip applying the
         // gravity term when adjacent to a solid and/or on a node that
         // has a boundary condition enforced.
-        //uy = *macro_var;
-        uy = BIG_U_Y( *macro_var); 
-      }
-#endif
-      }
-      else
-      {
-//#if ZHANG_AND_CHEN_ENERGY_TRANSPORT
-//        uy = BIG_U_Y( *macro_var, rt0); macro_var++;
-//#else /* !( ZHANG_AND_CHEN_ENERGY_TRANSPORT) */
-        uy = BIG_U_Y( *macro_var, rt0); 
-#if 0
-      if(  //gravitationally_adjacent_to_a_solid( lattice, subs, n, 1) ||
-           on_the_east_or_west( lattice, n)
-           //on_the_east( lattice, n)
-           //0
-         )
-      {
-        // Preliminary, experimental mechanism to skip applying the
-        // gravity term when adjacent to a solid and/or on a node that
-        // has a boundary condition enforced.
         uy = *macro_var;
       }
+#else
+        uy = BIG_U_Y( *macro_var, rt0, lattice->macro_vars[1][n].rho); 
 #endif
-//#endif /* ZHANG_AND_CHEN_ENERGY_TRANSPORT */
-      }
       macro_var++;
       *u1++ = *u0++;
 #else /* !( INAMURO_SIGMA_COMPONENT) */
 
-      uy = BIG_U_Y( *macro_var, rt0);
 #if 0
       if(  //gravitationally_adjacent_to_a_solid( lattice, subs, n, 1)
            //||
@@ -977,6 +885,8 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
         // has a boundary condition enforced.
         uy = *macro_var;
       }
+#else
+      uy = BIG_U_Y( *macro_var, rt0);
 #endif
       macro_var++;
 
@@ -1005,23 +915,23 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
      }
 
 #if FREED_POROUS_MEDIA
-  if( lattice->param.incompressible)
-  {
-    printf("ERROR: Can't have incompressible with Freed PM!");
-    process_exit(1);
-    c  = rt0; // rt0 == rho
-    rt1 = 1./9.; 
-    rt2 = 1./36.;
-    rt0 = 4./9.; // Overwrite rt0.
-  }
-  else // compressible
-  {
-    rho0 = rt0;
-    c  = 1.;
-    rt1 = rt0/(9.); // rt0 == rho
-    rt2 = rt0/(36.);// rt0 == rho
-    rt0 *= (4./9.); // Update rt0 now that raw density is no longer needed.
-  }
+    if( lattice->param.incompressible)
+    {
+      printf("ERROR: Can't have incompressible with Freed PM!");
+      process_exit(1);
+      c  = rt0; // rt0 == rho
+      rt1 = 1./9.; 
+      rt2 = 1./36.;
+      rt0 = 4./9.; // Overwrite rt0.
+    }
+    else // compressible
+    {
+      rho0 = rt0;
+      c  = 1.;
+      rt1 = rt0/(9.); // rt0 == rho
+      rt2 = rt0/(36.);// rt0 == rho
+      rt0 *= (4./9.); // Update rt0 now that raw density is no longer needed.
+    }
 
 
       Rx = lattice->param.ns;
@@ -1031,9 +941,9 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
       Gy = (1. - 3.*nu*Ry)/(1. + 0.5*Ry);
 
       u_x_p = Gx*ux //u_x_p is post-collision velocity, 
-            + lattice->param.gforce[subs][0]*tau0/rho0;
+            + lattice->param.gval[subs][0]*tau0/rho0;
       u_y_p = Gy*uy // u_x is pre-collision velocity
-            + lattice->param.gforce[subs][1]*tau0/rho0;
+            + lattice->param.gval[subs][1]*tau0/rho0;
 
       u_x_m = (1. - 0.5/tau0)*ux + 0.5*u_x_p/tau0; // u_x_m is mean velocity
       u_y_m = (1. - 0.5/tau0)*uy + 0.5*u_y_p/tau0;

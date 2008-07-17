@@ -1363,7 +1363,7 @@ void bcs( lattice_ptr lattice)
   //  -- Pressure boundary on east side using outflow pressure condition.
   if( lattice->param.pressure_e_out[subs])
   {
-#if 0
+#if 1
 //printf("bcs() %s %d >> pressure_e_out[%d]\n", __FILE__, __LINE__, subs);
     ftemp = lattice->pdf[subs][lattice->param.LX-1].ftemp;
     ftemp_end = lattice->pdf[subs][lattice->NumNodes].ftemp;
@@ -1383,35 +1383,26 @@ void bcs( lattice_ptr lattice)
           //  compute_ave_rho( lattice, &(lattice->param.rho_out), /*subs*/0);
           //}
             rho = lattice->param.rho_out
-                 *exp( -3.*lattice->param.gforce[0][1]
+                 *exp( -3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
-                    //*(1.+(get_buoyancy(lattice))*lattice->param.C_out)
                     *( 1. + (get_buoyancy(lattice))
                            *(get_expansion_coeff(lattice))
                            *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
-                          //*(0.5*(get_LY(lattice)-1.)-1.))
                           *( (get_LY(lattice)-1.)-0.))
-                 *exp(  3.*lattice->param.gforce[0][1]
+                 *exp(  3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
-                    //*(1.+(get_buoyancy(lattice))*lattice->param.C_out)
                     *( 1. + (get_buoyancy(lattice))
                            *(get_expansion_coeff(lattice))
                            *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
                           *(j+1.0));
-               //*exp( -3.*lattice->param.gforce[0][1]
-               //         *(0.5*(get_LY(lattice)-1)-1))
-               //*exp(  3.*lattice->param.gforce[0][1]
-               //         *(get_LY(lattice)+.5-j));
           }
           else
           {
-            //  rho = rho_ave*(1-3*g*((nj+-1)/2-j))
             rho = lattice->param.rho_out
-            * ( 1. - 3.*lattice->param.gforce[0][1]
+            * ( 1. - 3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
-                    //*(1.+(get_buoyancy(lattice))*lattice->param.C_out)
                     *( 1. + (get_buoyancy(lattice))
                            *(get_expansion_coeff(lattice))
                            *(get_C_out(lattice)-get_C0(lattice)) )
@@ -1451,10 +1442,8 @@ void bcs( lattice_ptr lattice)
         ftemp[7] = ftemp[5] + (1./2.)*( ftemp[2] - ftemp[4])
 #if 1 // Body force term
                             - (1./2.)*(-1./2.)
-                             *lattice->param.gforce[subs][1]*rho
+                             *lattice->param.gval[subs][1]*rho
 #if NUM_FLUID_COMPONENTS==2 && INAMURO_SIGMA_COMPONENT==1
-     //*(1.+(get_buoyancy(lattice))*(lattice->macro_vars[/*subs*/1][n].rho))
-     //*(1.+(get_buoyancy(lattice))*(lattice->param.C_out))
                     *( 1. + (get_buoyancy(lattice))
                            *(get_expansion_coeff(lattice))
                            *(get_C_out(lattice)-get_C0(lattice)) )
@@ -1465,10 +1454,8 @@ void bcs( lattice_ptr lattice)
         ftemp[6] = ftemp[8] + (1./2.)*( ftemp[4] - ftemp[2])
 #if 1 // Body force term
                             + (1./2.)*(-1./2.)
-                             *lattice->param.gforce[subs][1]*rho
+                             *lattice->param.gval[subs][1]*rho
 #if NUM_FLUID_COMPONENTS==2 && INAMURO_SIGMA_COMPONENT==1
-     //*(1.+(get_buoyancy(lattice))*(lattice->macro_vars[/*subs*/1][n].rho))
-     //*(1.+(get_buoyancy(lattice))*(lattice->param.C_out))
                     *( 1. + (get_buoyancy(lattice))
                            *(get_expansion_coeff(lattice))
                            *(get_C_out(lattice)-get_C0(lattice)) )
@@ -1553,7 +1540,7 @@ void bcs( lattice_ptr lattice)
           //  compute_ave_rho( lattice, &(lattice->param.rho_out), /*subs*/0);
           //}
             rho = lattice->param.rho_out
-                 *exp( -3.*lattice->param.gforce[0][1]
+                 *exp( -3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
                     //*(1.+(get_buoyancy(lattice))*lattice->param.C_out)
                     *( 1. + (get_buoyancy(lattice))
@@ -1562,7 +1549,7 @@ void bcs( lattice_ptr lattice)
 #endif
                           //*(0.5*(get_LY(lattice)-1.)-1.))
                           *( (get_LY(lattice)-1.)-0.))
-                 *exp(  3.*lattice->param.gforce[0][1]
+                 *exp(  3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
                     //*(1.+(get_buoyancy(lattice))*lattice->param.C_out)
                     *( 1. + (get_buoyancy(lattice))
@@ -1570,15 +1557,15 @@ void bcs( lattice_ptr lattice)
                            *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
                           *(j+1.0));
-               //*exp( -3.*lattice->param.gforce[0][1]
+               //*exp( -3.*lattice->param.gval[0][1]
                //         *(0.5*(get_LY(lattice)-1)-1))
-               //*exp(  3.*lattice->param.gforce[0][1]
+               //*exp(  3.*lattice->param.gval[0][1]
                //         *(get_LY(lattice)+.5-j));
           }
           else
           {
           rho = lattice->param.rho_out
-              * ( 1. - 3.*lattice->param.gforce[0][1]
+              * ( 1. - 3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
                     //*(1.+(get_buoyancy(lattice))*lattice->param.C_out)
                     *( 1. + (get_buoyancy(lattice))
@@ -1615,7 +1602,7 @@ void bcs( lattice_ptr lattice)
         ftemp[5] = ftemp[7] + (1./2.)*( ftemp[4] - ftemp[2])
 #if 1 // Body force term
                             + (1./2.)*(-1./2.)
-                             *lattice->param.gforce[subs][1]*rho
+                             *lattice->param.gval[subs][1]*rho
 #if NUM_FLUID_COMPONENTS==2 && INAMURO_SIGMA_COMPONENT==1
      //*(1.+(get_buoyancy(lattice))*(lattice->macro_vars[/*subs*/1][n].rho))
      //*(1.+(get_buoyancy(lattice))*(lattice->param.C_out))
@@ -1629,7 +1616,7 @@ void bcs( lattice_ptr lattice)
         ftemp[8] = ftemp[6] + (1./2.)*( ftemp[2] - ftemp[4])
 #if 1 // Body force term
                             - (1./2.)*(-1./2.)
-                             *lattice->param.gforce[subs][1]*rho
+                             *lattice->param.gval[subs][1]*rho
 #if NUM_FLUID_COMPONENTS==2 && INAMURO_SIGMA_COMPONENT==1
      //*(1.+(get_buoyancy(lattice))*(lattice->macro_vars[/*subs*/1][n].rho))
      //*(1.+(get_buoyancy(lattice))*(lattice->param.C_out))
@@ -1855,7 +1842,7 @@ void bcs( lattice_ptr lattice)
       ftemp[1] = ftemp[3] + (2./3.)*c;
 
       ftemp[5] = ftemp[7] + (1./2.)*( ftemp[4] - ftemp[2])
-                          + (1./2.)*(-1./2.)*lattice->param.gforce[subs][1]
+                          + (1./2.)*(-1./2.)*lattice->param.gval[subs][1]
                                             *rho
 #if NUM_FLUID_COMPONENTS==2 && INAMURO_SIGMA_COMPONENT==1
 //*(1.+(get_buoyancy(lattice))*(lattice->macro_vars[/*subs*/1][n].rho))
@@ -1867,7 +1854,7 @@ void bcs( lattice_ptr lattice)
                           + (1./6.)*c;
 
       ftemp[8] = ftemp[6] + (1./2.)*( ftemp[2] - ftemp[4])
-                          - (1./2.)*(-1./2.)*lattice->param.gforce[subs][1]
+                          - (1./2.)*(-1./2.)*lattice->param.gval[subs][1]
                                             *rho
 #if NUM_FLUID_COMPONENTS==2 && INAMURO_SIGMA_COMPONENT==1
 //*(1.+(get_buoyancy(lattice))*(lattice->macro_vars[/*subs*/1][n].rho))
@@ -1990,7 +1977,7 @@ void bcs( lattice_ptr lattice)
       ftemp[3] = ftemp[1] - (2./3.)*c;
 
       ftemp[7] = ftemp[5] + (1./2.)*( ftemp[2] - ftemp[4])
-                          - (1./2.)*(-1./2.)*lattice->param.gforce[subs][1]
+                          - (1./2.)*(-1./2.)*lattice->param.gval[subs][1]
                                             *rho
 #if NUM_FLUID_COMPONENTS==2 && INAMURO_SIGMA_COMPONENT==1
 //*(1.+(get_buoyancy(lattice))*(lattice->macro_vars[/*subs*/1][n].rho))
@@ -2002,7 +1989,7 @@ void bcs( lattice_ptr lattice)
                           - (1./6.)*c;
 
       ftemp[6] = ftemp[8] + (1./2.)*( ftemp[4] - ftemp[2])
-                          - (1./2.)*(-1./2.)*lattice->param.gforce[subs][1]
+                          - (1./2.)*(-1./2.)*lattice->param.gval[subs][1]
                                             *rho
 #if NUM_FLUID_COMPONENTS==2 && INAMURO_SIGMA_COMPONENT==1
 //*(1.+(get_buoyancy(lattice))*(lattice->macro_vars[/*subs*/1][n].rho))

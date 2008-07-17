@@ -5920,8 +5920,8 @@ void private_slice(
   // Compare with analytical poissuille flow profile.
  for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
  {
-  if(    lattice->param.gforce[subs][0] == 0 
-      && lattice->param.gforce[subs][1] != 0 )
+  if(    lattice->param.gval[subs][0] == 0 
+      && lattice->param.gval[subs][1] != 0 )
   {
     // Poisseuille in y direction.
     fprintf( o, "disp(sprintf('\\nPoisseuille in y direction:'));\n");
@@ -5941,13 +5941,13 @@ void private_slice(
     fprintf( o, "disp(sprintf('  rho_ave    = %%20.17f', rho_ave));\n");
     //fprintf( o, "mu = nu*%20.17f;\n", ave_rho);
     //fprintf( o, "disp(sprintf('  mu         = %%20.17f', mu));\n");
-    fprintf( o, "gforceval = %20.17f;\n", 
-      lattice->param.gforce[subs][1]/lattice->param.tau[subs]);
-    fprintf( o, "disp(sprintf('  gforceval  = %%20.17f', gforceval));\n");
+    fprintf( o, "gvalval = %20.17f;\n", 
+      lattice->param.gval[subs][1]/lattice->param.tau[subs]);
+    fprintf( o, "disp(sprintf('  gvalval  = %%20.17f', gvalval));\n");
     fprintf( o, 
       "i = [i0:1:i1];\n"
       "ucalc = "
-      "( gforceval / (2*nu)) * "
+      "( gvalval / (2*nu)) * "
       "( R^2 - ( abs( i - (i1+i0)/2 ).^2));\n" 
       );
     fprintf( o, "disp(sprintf('  size(ucalc) = %%dx%%d\\n',size(ucalc,1),size(ucalc,2)));\n");
@@ -5960,10 +5960,10 @@ void private_slice(
     fprintf( o, "plot( i, u_y_slice%02d, 'bo');", subs);
     fprintf( o, "title(sprintf('LB results overlaying analytical Poiseuille profile, norm(diff)=%%20.17f',norm(u_y_slice%02d-ucalc)));\n", subs);
     fprintf( o, "hold off;\n");
-  } /* if( lattice->param.gforce[subs][0] == 0 && lattice->param.gforce... */
+  } /* if( lattice->param.gval[subs][0] == 0 && lattice->param.gval... */
 
-  else if(    lattice->param.gforce[subs][1] == 0 
-           && lattice->param.gforce[subs][0] != 0 )
+  else if(    lattice->param.gval[subs][1] == 0 
+           && lattice->param.gval[subs][0] != 0 )
   {
     // Poisseuille in x direction.
     fprintf( o, "disp(sprintf('\\nPoisseuille in x direction:'));\n");
@@ -5982,13 +5982,13 @@ void private_slice(
     fprintf( o, "disp(sprintf('  rho_ave    = %%20.17f', rho_ave));\n");
     //fprintf( o, "mu = nu*%20.17f;\n", ave_rho);
     //fprintf( o, "disp(sprintf('  mu         = %%20.17f', mu));\n");
-    fprintf( o, "gforceval = %20.17f;\n", 
-      lattice->param.gforce[subs][0]/lattice->param.tau[subs]);
-    fprintf( o, "disp(sprintf('  gforceval  = %%20.17f', gforceval));\n");
+    fprintf( o, "gvalval = %20.17f;\n", 
+      lattice->param.gval[subs][0]/lattice->param.tau[subs]);
+    fprintf( o, "disp(sprintf('  gvalval  = %%20.17f', gvalval));\n");
     fprintf( o, 
       "j = [j0:1:j1];"
       "ucalc = "
-      "( gforceval / (2*nu)) * "
+      "( gvalval / (2*nu)) * "
       "( R^2 - ( abs( j - (j1+j0)/2 ).^2));\n" 
       );
     fprintf( o, "disp(sprintf('  size(ucalc) = %%dx%%d\\n',"
@@ -6005,7 +6005,7 @@ void private_slice(
     //printf( o, "figure;\n");
     //fprintf( o, "plot( ucalc(j0+1:10:10*j1+1) - u_x_slice%02d, 'r');", subs);
     //fprintf( o, "title( 'ucalc - u_x_slice%02d');\n", subs);
-  } /* if( lattice->param.gforce[subs][0] == 0 && lattice->param.gforce... */
+  } /* if( lattice->param.gval[subs][0] == 0 && lattice->param.gval... */
 
 
 

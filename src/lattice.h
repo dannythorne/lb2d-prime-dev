@@ -248,17 +248,17 @@ struct param_struct
   //
   double tau[ NUM_FLUID_COMPONENTS];
 
-  // Param: gforce[subs][dir]
+  // Param: gval[subs][dir]
   // Type: double**
-  // Comments: gforce[subs][dir] is the gravitational (body) force(s). If
-  // NUM_FLUID_COMPONENTS==1, then gforce[0][dir] holds the gravitational force.
-  // If NUM_FLUID_COMPONENTS==2, then gforce[0][dir] holds the gravitational
-  // force for component 0 and gforce[1][dir] holds the gravitational force for
-  // component 1. In either case, gforce[subs][0] is the gravitational force
-  // in the x-direction and gforce[subs][1] is the gravitational force in the
+  // Comments: gval[subs][dir] is the gravitational (body) force(s). If
+  // NUM_FLUID_COMPONENTS==1, then gval[0][dir] holds the gravitational force.
+  // If NUM_FLUID_COMPONENTS==2, then gval[0][dir] holds the gravitational
+  // force for component 0 and gval[1][dir] holds the gravitational force for
+  // component 1. In either case, gval[subs][0] is the gravitational force
+  // in the x-direction and gval[subs][1] is the gravitational force in the
   // y-direction.
   //
-  double gforce[   NUM_FLUID_COMPONENTS][2];
+  double gval[   NUM_FLUID_COMPONENTS][2];
 
   // Param: end_grav[subs]
   // Type: int

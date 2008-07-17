@@ -25,13 +25,13 @@ void assign_default_param_vals( lattice_ptr lattice)
   lattice->param.NumFrames = 0;
   lattice->param.FrameRate = 0;
   lattice->param.tau[0] = 0.;
-  lattice->param.gforce[0][0] = 0.;
-  lattice->param.gforce[0][1] = 0.;
+  lattice->param.gval[0][0] = 0.;
+  lattice->param.gval[0][1] = 0.;
   lattice->param.end_grav[0] = 0;
 #if NUM_FLUID_COMPONENTS==2
   lattice->param.tau[1] = 0.;
-  lattice->param.gforce[1][0] = 0.;
-  lattice->param.gforce[1][1] = 0.;
+  lattice->param.gval[1][0] = 0.;
+  lattice->param.gval[1][1] = 0.;
   lattice->param.end_grav[1] = 0;
 #endif /* NUM_FLUID_COMPONENTS==2 */
   lattice->param.buoyancy = 0;
@@ -368,17 +368,17 @@ void read_params( lattice_ptr lattice, const char *infile)
       printf("%s %d >> tau[0] = %f\n",__FILE__,__LINE__, 
          lattice->param.tau[0]);
     }
-    else if( !strncmp(param_label,"gforce_x[0]",80))
+    else if( !strncmp(param_label,"gval_x[0]",80))
     {
-      fscanf( in, "%lf\n", &(lattice->param.gforce[0][0]));
-      printf("%s %d >> gforce_x[0] = %f\n",__FILE__,__LINE__, 
-         lattice->param.gforce[0][0]);
+      fscanf( in, "%lf\n", &(lattice->param.gval[0][0]));
+      printf("%s %d >> gval_x[0] = %f\n",__FILE__,__LINE__, 
+         lattice->param.gval[0][0]);
     }
-    else if( !strncmp(param_label,"gforce_y[0]",80))
+    else if( !strncmp(param_label,"gval_y[0]",80))
     {
-      fscanf( in, "%lf\n", &(lattice->param.gforce[0][1]));
-      printf("%s %d >> gforce_y[0] = %f\n",__FILE__,__LINE__, 
-         lattice->param.gforce[0][1]);
+      fscanf( in, "%lf\n", &(lattice->param.gval[0][1]));
+      printf("%s %d >> gval_y[0] = %f\n",__FILE__,__LINE__, 
+         lattice->param.gval[0][1]);
     }
     else if( !strncmp(param_label,"end_grav[0]",80))
     {
@@ -400,32 +400,32 @@ void read_params( lattice_ptr lattice, const char *infile)
         printf("%s %d >> tau[1] = %f // unused: NUM_FLUID_COMPONENTS==1\n",__FILE__,__LINE__, dblank);
       }
     }
-    else if( !strncmp(param_label,"gforce_x[1]",80))
+    else if( !strncmp(param_label,"gval_x[1]",80))
     {
       if( NUM_FLUID_COMPONENTS==2)
       {
-        fscanf( in, "%lf\n", &(lattice->param.gforce[1][0]));
-        printf("%s %d >> gforce_x[1] = %f\n",__FILE__,__LINE__, 
-           lattice->param.gforce[1][0]);
+        fscanf( in, "%lf\n", &(lattice->param.gval[1][0]));
+        printf("%s %d >> gval_x[1] = %f\n",__FILE__,__LINE__, 
+           lattice->param.gval[1][0]);
       }
       else
       {
         fscanf( in, "%lf\n", &(dblank));
-        printf("%s %d >> gforce_y[0] = %f // unused: NUM_FLUID_COMPONENTS==1\n",__FILE__,__LINE__, dblank);
+        printf("%s %d >> gval_y[0] = %f // unused: NUM_FLUID_COMPONENTS==1\n",__FILE__,__LINE__, dblank);
       }
     }
-    else if( !strncmp(param_label,"gforce_y[1]",80))
+    else if( !strncmp(param_label,"gval_y[1]",80))
     {
       if( NUM_FLUID_COMPONENTS==2)
       {
-        fscanf( in, "%lf\n", &(lattice->param.gforce[1][1]));
-        printf("%s %d >> gforce_y[1] = %f\n",__FILE__,__LINE__, 
-           lattice->param.gforce[1][1]);
+        fscanf( in, "%lf\n", &(lattice->param.gval[1][1]));
+        printf("%s %d >> gval_y[1] = %f\n",__FILE__,__LINE__, 
+           lattice->param.gval[1][1]);
       }
       else
       {
         fscanf( in, "%lf\n", &(dblank));
-        printf("%s %d >> gforce_y[1] = %f // unused: NUM_FLUID_COMPONENTS==1\n",__FILE__,__LINE__, dblank);
+        printf("%s %d >> gval_y[1] = %f // unused: NUM_FLUID_COMPONENTS==1\n",__FILE__,__LINE__, dblank);
       }
     }
     else if( !strncmp(param_label,"end_grav[1]",80))
@@ -1521,14 +1521,14 @@ void read_params( lattice_ptr lattice, const char *infile)
   skip_label( in); fscanf( in, "%d", &( lattice->param.NumFrames)      );
   skip_label( in); fscanf( in, "%d", &( lattice->param.FrameRate)      );
   skip_label( in); fscanf( in, "%lf",&( lattice->param.tau[0])         );
-  skip_label( in); fscanf( in, "%lf",   lattice->param.gforce[0]       );
-  skip_label( in); fscanf( in, "%lf",   lattice->param.gforce[0]+1     );
+  skip_label( in); fscanf( in, "%lf",   lattice->param.gval[0]       );
+  skip_label( in); fscanf( in, "%lf",   lattice->param.gval[0]+1     );
   skip_label( in); fscanf( in, "%d",    lattice->param.end_grav        );
   if( NUM_FLUID_COMPONENTS==2)
   {
   skip_label( in); fscanf( in, "%lf",&( lattice->param.tau[1])         );
-  skip_label( in); fscanf( in, "%lf",   lattice->param.gforce[1]       );
-  skip_label( in); fscanf( in, "%lf",   lattice->param.gforce[1]+1     );
+  skip_label( in); fscanf( in, "%lf",   lattice->param.gval[1]       );
+  skip_label( in); fscanf( in, "%lf",   lattice->param.gval[1]+1     );
   skip_label( in); fscanf( in, "%d",    lattice->param.end_grav+1      );
   }
   else if( NUM_FLUID_COMPONENTS==1)
@@ -1790,8 +1790,8 @@ void read_params( lattice_ptr lattice, const char *infile)
 #if 0
   for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
   {
-    lattice->param.gforce[subs][0] *= lattice->param.tau[subs];
-    lattice->param.gforce[subs][1] *= lattice->param.tau[subs];
+    lattice->param.gval[subs][0] *= lattice->param.tau[subs];
+    lattice->param.gval[subs][1] *= lattice->param.tau[subs];
   }
 #endif
 
@@ -1978,21 +1978,21 @@ void dump_params( struct lattice_struct *lattice)
   fprintf( o, "FrameRate            %d\n", lattice->param.FrameRate      );
   fprintf( o, "NumTimeSteps         %d\n", lattice->NumTimeSteps         );
   fprintf( o, "tau[0]               %f\n", lattice->param.tau[0]         );
-  fprintf( o, "gforce[0][0]         %f\n", lattice->param.gforce[0][0]   );
-  fprintf( o, "gforce[0][1]         %f\n", lattice->param.gforce[0][1]   );
+  fprintf( o, "gval[0][0]         %f\n", lattice->param.gval[0][0]   );
+  fprintf( o, "gval[0][1]         %f\n", lattice->param.gval[0][1]   );
   fprintf( o, "end_grav[0]          %d\n", lattice->param.end_grav[0]    );
   if( NUM_FLUID_COMPONENTS==2)
   {
   fprintf( o, "tau[1]               %f\n", lattice->param.tau[1]         );
-  fprintf( o, "gforce[1][0]         %f\n", lattice->param.gforce[1][0]   );
-  fprintf( o, "gforce[1][1]         %f\n", lattice->param.gforce[1][1]   );
+  fprintf( o, "gval[1][0]         %f\n", lattice->param.gval[1][0]   );
+  fprintf( o, "gval[1][1]         %f\n", lattice->param.gval[1][1]   );
   fprintf( o, "end_grav[1]          %d\n", lattice->param.end_grav[1]    );
   }
   else if( NUM_FLUID_COMPONENTS==1)
   {
   fprintf( o, "tau[1]               %s\n", "--"                          );
-  fprintf( o, "gforce[1][0]         %s\n", "--"                          );
-  fprintf( o, "gforce[1][1]         %s\n", "--"                          );
+  fprintf( o, "gval[1][0]         %s\n", "--"                          );
+  fprintf( o, "gval[1][1]         %s\n", "--"                          );
   fprintf( o, "end_grav[1]          %s\n", "--"                          );
   }
   else
