@@ -87,6 +87,12 @@ void make_solid_node( lattice_ptr lattice, const int subs, const int n)
   lattice->bc[subs][n].bc_type|=BC_SOLID_NODE;
 }
 
+int bcs_on_solids( lattice_ptr lattice)
+{
+  // TODO: Input this from params.
+  return 0;
+}
+
 int is_incompressible( lattice_ptr lattice)
 {
   return lattice->param.incompressible;
@@ -108,7 +114,7 @@ int hydrostatic( lattice_ptr lattice)
   // Pressure boundaries enforce a hydrostatic condition. This is
   // experimental and not automatic -- it requires manual fiddling
   // in the bcs.c file.
-  return 0;
+  return 1;
 }
 int hydrostatic_west( lattice_ptr lattice)
 {
@@ -121,7 +127,7 @@ int hydrostatic_compressible( lattice_ptr lattice)
 {
   // Use compressible version of density profile as opposed to linear
   // approximation.
-  return 0;
+  return 1;
 }
 
 double get_tau( lattice_ptr lattice, const int subs)

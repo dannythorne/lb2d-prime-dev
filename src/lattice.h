@@ -283,6 +283,8 @@ struct param_struct
   // buoyancy effects. Use the accessor functions get_buoyancy_flag(lattice),
   // get_buoyancy_sign(lattice) and get_buoyancy(lattice).
   //
+  // NOTE: Deprecated. Should just use beta for this mechanism now, right?
+  //
   int    buoyancy;
 
   // Param: buoy_subs

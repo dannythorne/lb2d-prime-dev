@@ -63,11 +63,13 @@
 #if INAMURO_SIGMA_COMPONENT
 
 #if GUO_ZHENG_SHI_BODY_FORCE
-#define BIG_U_X( u_, rho1_, rho2_) (u_) + .5*F(0,rho2_)
-#define BIG_U_Y( u_, rho1_, rho2_) (u_) + .5*F(1,rho2_)
+#define BIG_U_X( u_, rho1_, rho2_) (u_) + .5*F(0,rho1_,rho2_)
+#define BIG_U_Y( u_, rho1_, rho2_) (u_) + .5*F(1,rho1_,rho2_)
 #else
-#define BIG_U_X( u_, rho1_, rho2_) (u_) + get_tau(lattice,subs) * F(0,rho2_)
-#define BIG_U_Y( u_, rho1_, rho2_) (u_) + get_tau(lattice,subs) * F(1,rho2_)
+#define BIG_U_X( u_, rho1_, rho2_) \
+  (u_) + get_tau(lattice,subs) * F(0,rho1_,rho2_)
+#define BIG_U_Y( u_, rho1_, rho2_) \
+  (u_) + get_tau(lattice,subs) * F(1,rho1_,rho2_)
 #endif
 
 #else /* !( INAMURO_SIGMA_COMPONENT) */
@@ -77,7 +79,7 @@
 #define BIG_U_Y( u_, rho_) (u_) + .5*F(1)
 #else
 #define BIG_U_X( u_, rho_) (u_) + get_tau(lattice,subs) * F(0,rho_)
-#define BIG_U_X( u_, rho_) (u_) + get_tau(lattice,subs) * F(1,rho_)
+#define BIG_U_Y( u_, rho_) (u_) + get_tau(lattice,subs) * F(1,rho_)
 #endif
 
 #endif /* INAMURO_SIGMA_COMPONENT */
@@ -105,6 +107,10 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
   double Dxx, Dyy, Dxy, Dl, Dt, ns;
   double wt[9]={4./9.,WM,WM,WM,WM,WD,WD,WD,WD};
   double factor=0.0, lamdax, lamday;
+#endif
+
+#if GUO_ZHENG_SHI_BODY_FORCE
+  double conc; // For computing concentration to use in body force.
 #endif
 
   //############################################################################
@@ -165,11 +171,41 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
         (*u_x[subs]) /= 2.;
         (*u_y[subs]) /= 2.;
       }
-
+      else
+      {
 #if GUO_ZHENG_SHI_BODY_FORCE
-      *u_x[subs] += .5*lattice->param.gval[subs][0]*(*rho[subs]);
-      *u_y[subs] += .5*lattice->param.gval[subs][1]*(*rho[subs]);
+    //conc = lattice->pdf[/*sigma*/ 1 ][n].f[0]
+    //     + lattice->pdf[/*sigma*/ 1 ][n].f[1]
+    //     + lattice->pdf[/*sigma*/ 1 ][n].f[2]
+    //     + lattice->pdf[/*sigma*/ 1 ][n].f[3]
+    //     + lattice->pdf[/*sigma*/ 1 ][n].f[4]
+    //     + lattice->pdf[/*sigma*/ 1 ][n].f[5]
+    //     + lattice->pdf[/*sigma*/ 1 ][n].f[6]
+    //     + lattice->pdf[/*sigma*/ 1 ][n].f[7]
+    //     + lattice->pdf[/*sigma*/ 1 ][n].f[8]
+    //     + lattice->pdf[/*sigma*/ 1 ][n].f[9];
+
+      conc = lattice->macro_vars[1][n].rho;
+
+      *u_x[subs] += .5*lattice->param.gval[subs][0]
+                      *(*rho[subs])
+#if 1
+                      *( 1. + ( get_buoyancy(lattice))
+                         *( get_beta(lattice))
+                         *( conc - get_C0(lattice)))
 #endif
+                      ;
+
+      *u_y[subs] += .5*lattice->param.gval[subs][1]
+                      *(*rho[subs])
+#if 1
+                      *( 1. + ( get_buoyancy(lattice))
+                         *( get_beta(lattice))
+                         *( conc - get_C0(lattice)))
+#endif
+                      ;
+#endif
+      }
 
 #if PUKE_NEGATIVE_DENSITIES
       if( *rho[subs] < 0.)
@@ -538,11 +574,13 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
         (*u_x[subs]) /= 2.;
         (*u_y[subs]) /= 2.;
       }
-
+      else
+      {
 #if GUO_ZHENG_SHI_BODY_FORCE
       *u_x[subs] += .5*lattice->param.gval[subs][0]*(*rho[subs]);
       *u_y[subs] += .5*lattice->param.gval[subs][1]*(*rho[subs]);
 #endif
+      }
 
 // PUKE_NEGATIVE_DENSITIES {{{
 #if PUKE_NEGATIVE_DENSITIES

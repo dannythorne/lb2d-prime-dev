@@ -625,33 +625,35 @@ void bcs( lattice_ptr lattice)
     ftemp_end = lattice->pdf[subs][lattice->NumNodes].ftemp;
     while( ftemp < ftemp_end)
     {
-      // North, Inflow
-      if( lattice->param.incompressible)
+      if( bcs_on_solids(lattice) || is_not_solid_node(lattice,0,n))
       {
-        u_y = -lattice->param.rho_in
-            + ( ftemp[0] + ftemp[1] + ftemp[3]
-              + 2.*( ftemp[2] + ftemp[5] + ftemp[6]));
-        c = u_y;
-      }
-      else // compressible
-      {
-        u_y = -1.
-            + ( ftemp[0] + ftemp[1] + ftemp[3]
-              + 2.*( ftemp[2] + ftemp[5] + ftemp[6])) 
-            / lattice->param.rho_in;
-        c = u_y*lattice->param.rho_in;
-      }
-    
-      ftemp[4] = ftemp[2] - (2./3.)*c;
-    
-      ftemp[7] = ftemp[5] + (1./2.)*( ftemp[1] - ftemp[3])
-                          - (1./6.)*c;
-    
-      ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
-                          - (1./6.)*c; 
+        // North, Inflow
+        if( lattice->param.incompressible)
+        {
+          u_y = -lattice->param.rho_in
+              + ( ftemp[0] + ftemp[1] + ftemp[3]
+                + 2.*( ftemp[2] + ftemp[5] + ftemp[6]));
+          c = u_y;
+        }
+        else // compressible
+        {
+          u_y = -1.
+              + ( ftemp[0] + ftemp[1] + ftemp[3]
+                + 2.*( ftemp[2] + ftemp[5] + ftemp[6])) 
+              / lattice->param.rho_in;
+          c = u_y*lattice->param.rho_in;
+        }
+      
+        ftemp[4] = ftemp[2] - (2./3.)*c;
+      
+        ftemp[7] = ftemp[5] + (1./2.)*( ftemp[1] - ftemp[3])
+                            - (1./6.)*c;
+      
+        ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
+                            - (1./6.)*c; 
 
-      ftemp += ( sizeof(struct pdf_struct)/8);
-
+        ftemp += ( sizeof(struct pdf_struct)/8);
+      }
     } /* while( ftemp < ftemp_end) */
 
   } /* if( lattice->param.pressure_n_in[subs] ) */
@@ -667,33 +669,35 @@ void bcs( lattice_ptr lattice)
     ftemp_end = lattice->pdf[subs][lattice->param.LX].ftemp;
     while( ftemp < ftemp_end)
     {
-      // South, Inflow
-      if( lattice->param.incompressible)
+      if( bcs_on_solids(lattice) || is_not_solid_node(lattice,0,n))
       {
-        u_y = lattice->param.rho_in
-            - ( ftemp[0] + ftemp[1] + ftemp[3]
-              + 2.*( ftemp[4] + ftemp[7] + ftemp[8]));
-        c = u_y;
-      }
-      else // compressible
-      {
-        u_y = 1.
-            - ( ftemp[0] + ftemp[1] + ftemp[3]
-              + 2.*( ftemp[4] + ftemp[7] + ftemp[8])) 
-            / lattice->param.rho_in;
-        c = u_y*lattice->param.rho_in;
-      }
-    
-      ftemp[2] = ftemp[4] + (2./3.)*c;
-    
-      ftemp[5] = ftemp[7] + (1./2.)*( ftemp[3] - ftemp[1])
-                          + (1./6.)*c;
-    
-      ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
-                          + (1./6.)*c; 
+        // South, Inflow
+        if( lattice->param.incompressible)
+        {
+          u_y = lattice->param.rho_in
+              - ( ftemp[0] + ftemp[1] + ftemp[3]
+                + 2.*( ftemp[4] + ftemp[7] + ftemp[8]));
+          c = u_y;
+        }
+        else // compressible
+        {
+          u_y = 1.
+              - ( ftemp[0] + ftemp[1] + ftemp[3]
+                + 2.*( ftemp[4] + ftemp[7] + ftemp[8])) 
+              / lattice->param.rho_in;
+          c = u_y*lattice->param.rho_in;
+        }
+      
+        ftemp[2] = ftemp[4] + (2./3.)*c;
+      
+        ftemp[5] = ftemp[7] + (1./2.)*( ftemp[3] - ftemp[1])
+                            + (1./6.)*c;
+      
+        ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
+                            + (1./6.)*c; 
 
-      ftemp += ( sizeof(struct pdf_struct)/8);
-
+        ftemp += ( sizeof(struct pdf_struct)/8);
+      }
     } /* while( ftemp < ftemp_end) */
 
   } /* if( lattice->param.pressure_s_in[subs] ) */
@@ -709,33 +713,35 @@ void bcs( lattice_ptr lattice)
     ftemp_end = lattice->pdf[subs][lattice->NumNodes].ftemp;
     while( ftemp < ftemp_end)
     {
-      // North, Inflow
-      if( lattice->param.incompressible)
+      if( bcs_on_solids(lattice) || is_not_solid_node(lattice,0,n))
       {
-        u_y = -lattice->param.rho_out
-            + ( ftemp[0] + ftemp[1] + ftemp[3]
-              + 2.*( ftemp[2] + ftemp[5] + ftemp[6]));
-        c = u_y;
-      }
-      else // compressible
-      {
-        u_y = -1.
-            + ( ftemp[0] + ftemp[1] + ftemp[3]
-              + 2.*( ftemp[2] + ftemp[5] + ftemp[6])) 
-            / lattice->param.rho_out;
-        c = u_y*lattice->param.rho_out;
-      }
-    
-      ftemp[4] = ftemp[2] - (2./3.)*c;
-    
-      ftemp[7] = ftemp[5] + (1./2.)*( ftemp[1] - ftemp[3])
-                          - (1./6.)*c;
-    
-      ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
-                          - (1./6.)*c; 
+        // North, Inflow
+        if( lattice->param.incompressible)
+        {
+          u_y = -lattice->param.rho_out
+              + ( ftemp[0] + ftemp[1] + ftemp[3]
+                + 2.*( ftemp[2] + ftemp[5] + ftemp[6]));
+          c = u_y;
+        }
+        else // compressible
+        {
+          u_y = -1.
+              + ( ftemp[0] + ftemp[1] + ftemp[3]
+                + 2.*( ftemp[2] + ftemp[5] + ftemp[6])) 
+              / lattice->param.rho_out;
+          c = u_y*lattice->param.rho_out;
+        }
+      
+        ftemp[4] = ftemp[2] - (2./3.)*c;
+      
+        ftemp[7] = ftemp[5] + (1./2.)*( ftemp[1] - ftemp[3])
+                            - (1./6.)*c;
+      
+        ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
+                            - (1./6.)*c; 
 
-      ftemp += ( sizeof(struct pdf_struct)/8);
-
+        ftemp += ( sizeof(struct pdf_struct)/8);
+      }
     } /* while( ftemp < ftemp_end) */
 
   } /* if( lattice->param.pressure_n_out[subs]) */
@@ -751,33 +757,35 @@ void bcs( lattice_ptr lattice)
     ftemp_end = lattice->pdf[subs][lattice->param.LX].ftemp;
     while( ftemp < ftemp_end)
     {
-      // South, Outflow
-      if( lattice->param.incompressible)
+      if( bcs_on_solids(lattice) || is_not_solid_node(lattice,0,n))
       {
-        u_y = lattice->param.rho_out
-            - ( ftemp[0] + ftemp[1] + ftemp[3]
-              + 2.*( ftemp[4] + ftemp[7] + ftemp[8]));
-        c = u_y;
-      }
-      else // compressible
-      {
-        u_y = 1.
-            - ( ftemp[0] + ftemp[1] + ftemp[3]
-              + 2.*( ftemp[4] + ftemp[7] + ftemp[8])) 
-            / lattice->param.rho_out;
-        c = u_y*lattice->param.rho_out;
-      }
-    
-      ftemp[2] = ftemp[4] + (2./3.)*c;
-    
-      ftemp[5] = ftemp[7] + (1./2.)*( ftemp[3] - ftemp[1])
-                          + (1./6.)*c;
-    
-      ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
-                          + (1./6.)*c; 
+        // South, Outflow
+        if( lattice->param.incompressible)
+        {
+          u_y = lattice->param.rho_out
+              - ( ftemp[0] + ftemp[1] + ftemp[3]
+                + 2.*( ftemp[4] + ftemp[7] + ftemp[8]));
+          c = u_y;
+        }
+        else // compressible
+        {
+          u_y = 1.
+              - ( ftemp[0] + ftemp[1] + ftemp[3]
+                + 2.*( ftemp[4] + ftemp[7] + ftemp[8])) 
+              / lattice->param.rho_out;
+          c = u_y*lattice->param.rho_out;
+        }
+      
+        ftemp[2] = ftemp[4] + (2./3.)*c;
+      
+        ftemp[5] = ftemp[7] + (1./2.)*( ftemp[3] - ftemp[1])
+                            + (1./6.)*c;
+      
+        ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
+                            + (1./6.)*c; 
 
-      ftemp += ( sizeof(struct pdf_struct)/8);
-
+        ftemp += ( sizeof(struct pdf_struct)/8);
+      }
     } /* while( ftemp < ftemp_end) */
 
   } /* if( pressure_s_out[subs]) */
@@ -811,7 +819,7 @@ void bcs( lattice_ptr lattice)
     while( ftemp < ftemp_end)
     {
       // North, Inflow
-     if( 1 || !( *bc_type & BC_SOLID_NODE))
+     if( bcs_on_solids(lattice) || is_not_solid_node(lattice,0,n))
      {
       //u = u_in[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       //u = 0.;
@@ -928,7 +936,7 @@ void bcs( lattice_ptr lattice)
     while( ftemp < ftemp_end)
     {
       // South, Inflow
-     if( 1 || !( *bc_type & BC_SOLID_NODE))
+     if( bcs_on_solids(lattice) || is_not_solid_node(lattice,0,n))
      {
       //u = u_in[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       //u = 0.;
@@ -1044,7 +1052,7 @@ void bcs( lattice_ptr lattice)
     while( ftemp < ftemp_end)
     {
       // North, Inflow
-     if( ( i>0 && i<get_LX(lattice)-1) && ( 1 || !( *bc_type & BC_SOLID_NODE)))
+     if( bcs_on_solids(lattice) || is_not_solid_node(lattice,0,n))
      {
       //u = u_out[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       //u = 0.;
@@ -1172,7 +1180,7 @@ void bcs( lattice_ptr lattice)
     while( ftemp < ftemp_end)
     {
       // South, Outflow
-     if( ( i>0 && i<get_LX(lattice)-1) && ( 1 || !( *bc_type & BC_SOLID_NODE)))
+     if( bcs_on_solids(lattice) || is_not_solid_node(lattice,0,n))
      {
       //u = u_out[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       //u = 0.;
@@ -1283,32 +1291,35 @@ void bcs( lattice_ptr lattice)
     ftemp_end = lattice->pdf[subs][lattice->NumNodes].ftemp;
     while( ftemp < ftemp_end)
     {
-      // East, Inflow
-      if( lattice->param.incompressible)
+      if( bcs_on_solids(lattice) || is_not_solid_node(lattice,0,n))
       {
-        u_x = -lattice->param.rho_in
-            + (      ftemp[0] + ftemp[2] + ftemp[4]
-              + 2.*( ftemp[1] + ftemp[5] + ftemp[8]));
-        c = u_x;
-      }
-      else // compressible
-      {
-        u_x = -1.
-            + (      ftemp[0] + ftemp[2] + ftemp[4]
-              + 2.*( ftemp[1] + ftemp[5] + ftemp[8])) 
-            / lattice->param.rho_in;
-        c = u_x*lattice->param.rho_in;
-      }
-    
-      ftemp[3] = ftemp[1] - (2./3.)*c;
-    
-      ftemp[7] = ftemp[5] + (1./2.)*( ftemp[2] - ftemp[4])
-                          - (1./6.)*c;
-    
-      ftemp[6] = ftemp[8] + (1./2.)*( ftemp[4] - ftemp[2])
-                          - (1./6.)*c; 
+        // East, Inflow
+        if( lattice->param.incompressible)
+        {
+          u_x = -lattice->param.rho_in
+              + (      ftemp[0] + ftemp[2] + ftemp[4]
+                + 2.*( ftemp[1] + ftemp[5] + ftemp[8]));
+          c = u_x;
+        }
+        else // compressible
+        {
+          u_x = -1.
+              + (      ftemp[0] + ftemp[2] + ftemp[4]
+                + 2.*( ftemp[1] + ftemp[5] + ftemp[8])) 
+              / lattice->param.rho_in;
+          c = u_x*lattice->param.rho_in;
+        }
+      
+        ftemp[3] = ftemp[1] - (2./3.)*c;
+      
+        ftemp[7] = ftemp[5] + (1./2.)*( ftemp[2] - ftemp[4])
+                            - (1./6.)*c;
+      
+        ftemp[6] = ftemp[8] + (1./2.)*( ftemp[4] - ftemp[2])
+                            - (1./6.)*c; 
 
-      ftemp += ( sizeof(struct pdf_struct)/8)*lattice->param.LX;
+        ftemp += ( sizeof(struct pdf_struct)/8)*lattice->param.LX;
+      }
 
     } /* while( ftemp < ftemp_end) */
 
@@ -1326,33 +1337,35 @@ void bcs( lattice_ptr lattice)
       lattice->pdf[subs][(lattice->param.LY+1)*lattice->param.LX].ftemp;
     while( ftemp < ftemp_end)
     {
-      // West, Inflow
-      if( lattice->param.incompressible)
+      if( bcs_on_solids(lattice) || is_not_solid_node(lattice,0,n))
       {
-        u_x = lattice->param.rho_in
-            - (      ftemp[0] + ftemp[2] + ftemp[4]
-              + 2.*( ftemp[3] + ftemp[7] + ftemp[6]));
-        c = u_x;
-      }
-      else // compressible
-      {
-        u_x = 1.
-            - (      ftemp[0] + ftemp[2] + ftemp[4]
-              + 2.*( ftemp[3] + ftemp[7] + ftemp[6]))
-            / lattice->param.rho_in;
-        c = u_x*lattice->param.rho_in;
-      }
-    
-      ftemp[1] = ftemp[3] + (2./3.)*c;
-    
-      ftemp[5] = ftemp[7] + (1./2.)*( ftemp[4] - ftemp[2])
-                          + (1./6.)*c;
-    
-      ftemp[8] = ftemp[6] + (1./2.)*( ftemp[2] - ftemp[4])
-                          + (1./6.)*c; 
+        // West, Inflow
+        if( lattice->param.incompressible)
+        {
+          u_x = lattice->param.rho_in
+              - (      ftemp[0] + ftemp[2] + ftemp[4]
+                + 2.*( ftemp[3] + ftemp[7] + ftemp[6]));
+          c = u_x;
+        }
+        else // compressible
+        {
+          u_x = 1.
+              - (      ftemp[0] + ftemp[2] + ftemp[4]
+                + 2.*( ftemp[3] + ftemp[7] + ftemp[6]))
+              / lattice->param.rho_in;
+          c = u_x*lattice->param.rho_in;
+        }
+      
+        ftemp[1] = ftemp[3] + (2./3.)*c;
+      
+        ftemp[5] = ftemp[7] + (1./2.)*( ftemp[4] - ftemp[2])
+                            + (1./6.)*c;
+      
+        ftemp[8] = ftemp[6] + (1./2.)*( ftemp[2] - ftemp[4])
+                            + (1./6.)*c; 
 
-      ftemp += ( sizeof(struct pdf_struct)/8)*lattice->param.LX;
-
+        ftemp += ( sizeof(struct pdf_struct)/8)*lattice->param.LX;
+      }
     } /* while( ftemp < ftemp_end) */
 
   } /* if( lattice->param.pressure_w_in[subs] ) */
@@ -1371,7 +1384,7 @@ void bcs( lattice_ptr lattice)
     j = 0;
     while( ftemp < ftemp_end)
     {
-      if( 1)//( j>0 && j<get_LY(lattice)-1) )//&& lattice->param.incompressible)
+      if( bcs_on_solids(lattice) || is_not_solid_node(lattice,0,n))
       {
         // East, Outflow
         if( hydrostatic( lattice))
@@ -1382,6 +1395,26 @@ void bcs( lattice_ptr lattice)
           //{ // Try to adjust for discrepancy between rho_out and rho_ave.
           //  compute_ave_rho( lattice, &(lattice->param.rho_out), /*subs*/0);
           //}
+#if 1
+            // Reference density computed in terms of average density
+            lattice->param.rho_out = 
+               ( 3.*lattice->param.gval[0][1]
+#if 0//INAMURO_SIGMA_COMPONENT
+                    *( 1. + (get_buoyancy(lattice))
+                           *(get_beta(lattice))
+                           *(get_C_out(lattice)-get_C0(lattice)) )
+#endif
+                   *(get_LY(lattice)-2)
+                   *lattice->param.rho_A[0])
+               /
+               ( 1. - exp( -3.*lattice->param.gval[0][1]
+#if 0//INAMURO_SIGMA_COMPONENT
+                    *( 1. + (get_buoyancy(lattice))
+                           *(get_beta(lattice))
+                           *(get_C_out(lattice)-get_C0(lattice)) )
+#endif
+                              *(get_LY(lattice)-2)));
+#endif
             rho = lattice->param.rho_out
                  *exp( -3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
@@ -1434,8 +1467,6 @@ void bcs( lattice_ptr lattice)
         {
           //c = 0.;
         }
-
-        rho = lattice->param.rho_out;
 
         ftemp[3] = ftemp[1] - (2./3.)*c;
 
@@ -1529,7 +1560,7 @@ void bcs( lattice_ptr lattice)
     while( ftemp < ftemp_end)
     {
       // West, Outflow
-      if( ( j>0 && j<get_LY(lattice)-1))// && lattice->param.incompressible)
+      if( bcs_on_solids(lattice) || is_not_solid_node(lattice,0,n))
       {
         if( hydrostatic_west( lattice))
         {
@@ -1539,6 +1570,27 @@ void bcs( lattice_ptr lattice)
           //{ // Try to adjust for discrepancy between rho_out and rho_ave.
           //  compute_ave_rho( lattice, &(lattice->param.rho_out), /*subs*/0);
           //}
+#if 1
+            // Reference density computed in terms of average density
+            lattice->param.rho_out =
+               ( 3.*lattice->param.gval[0][1]
+#if 0//INAMURO_SIGMA_COMPONENT
+                    *( 1. + (get_buoyancy(lattice))
+                           *(get_beta(lattice))
+                           *(get_C_out(lattice)-get_C0(lattice)) )
+#endif
+                   *(get_LY(lattice)-2)
+                   *lattice->param.rho_A[0])
+               /
+               ( 1. - exp( -3.*lattice->param.gval[0][1]
+#if 0//INAMURO_SIGMA_COMPONENT
+                    *( 1. + (get_buoyancy(lattice))
+                           *(get_beta(lattice))
+                           *(get_C_out(lattice)-get_C0(lattice)) )
+#endif
+                              *(get_LY(lattice)-2)));
+            //printf("rho_ref = %20.17f\n", lattice->param.rho_out);
+#endif
             rho = lattice->param.rho_out
                  *exp( -3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
@@ -1594,8 +1646,6 @@ void bcs( lattice_ptr lattice)
                       + 2.*( ftemp[3] + ftemp[7] + ftemp[6]) ) / rho;
           c = u_x*rho;
         }
-
-        rho = lattice->param.rho_out;
 
         ftemp[1] = ftemp[3] + (2./3.)*c;
 
@@ -1690,7 +1740,7 @@ void bcs( lattice_ptr lattice)
     while( ftemp < ftemp_end)
     {
       // East, Inflow
-     if( 1 || !( *bc_type & BC_SOLID_NODE))
+     if( bcs_on_solids(lattice) || is_not_solid_node(lattice,0,n))
      {
       //u = u_in[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       //u = 0.;
@@ -1808,7 +1858,7 @@ void bcs( lattice_ptr lattice)
     while( ftemp < ftemp_end)
     {
       // West, Inflow
-     if( ( j>0 && j<get_LY(lattice)-1) && ( 1 || !( *bc_type & BC_SOLID_NODE)))
+     if( bcs_on_solids(lattice) || is_not_solid_node(lattice,0,n))
      {
       //u = u_in[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       //u = 0.;
@@ -1942,7 +1992,7 @@ void bcs( lattice_ptr lattice)
     while( ftemp < ftemp_end)
     {
       // East, Outflow
-     if( ( j>0 && j<get_LY(lattice)-1) && ( 1 || !( *bc_type & BC_SOLID_NODE)))
+     if( bcs_on_solids(lattice) || is_not_solid_node(lattice,0,n))
      {
       //u = u_out[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       //u = 0.;
@@ -2077,7 +2127,7 @@ void bcs( lattice_ptr lattice)
     while( ftemp < ftemp_end)
     {
       // West, Outflow
-     if( 1 || !( *bc_type & BC_SOLID_NODE))
+     if( bcs_on_solids(lattice) || is_not_solid_node(lattice,0,n))
      {
       //u = u_out[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       //u = 0.;

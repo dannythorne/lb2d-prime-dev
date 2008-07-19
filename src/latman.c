@@ -1040,6 +1040,27 @@ void init_problem( struct lattice_struct *lattice)
               //*macro_var_ptr++ = ( 1.00216 - (j-1)*.00054);
               if( hydrostatic_compressible( lattice))
               {
+#if 1
+            // Reference density computed in terms of average density
+            lattice->param.rho_out =
+               ( 3.*lattice->param.gval[0][1]
+#if 0//INAMURO_SIGMA_COMPONENT
+                    *( 1. + (get_buoyancy(lattice))
+                           *(get_beta(lattice))
+                           *(get_C(lattice)-get_C0(lattice)) )
+#endif
+                   *(get_LY(lattice)-1)
+                   *lattice->param.rho_A[0])
+               /
+               ( 1. - exp( -3.*lattice->param.gval[0][1]
+#if 0//INAMURO_SIGMA_COMPONENT
+                    *( 1. + (get_buoyancy(lattice))
+                           *(get_beta(lattice))
+                           *(get_C_out(lattice)-get_C0(lattice)) )
+#endif
+                              *(get_LY(lattice)-1)));
+            //printf("rho_ref = %20.17f\n", lattice->param.rho_out);
+#endif
                 *macro_var_ptr++ =
                   lattice->param.rho_out
                   *exp( -3.*lattice->param.gval[0][1]

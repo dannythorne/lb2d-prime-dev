@@ -423,6 +423,9 @@ void collide( lattice_ptr lattice)
   double vx, vy;
   double ex, ey, edotv;
   double rho;
+#if INAMURO_SIGMA_COMPONENT
+  double conc;
+#endif
 #endif
 
 #if SAY_HI
@@ -499,15 +502,47 @@ void collide( lattice_ptr lattice)
         } /* for( a=0; a<=8; a++) */
 
 #if GUO_ZHENG_SHI_BODY_FORCE
+        if( subs==0)
+        {
         // Guo, Zheng & Shi: PRE 65 2002
         // Equations (4), (19) & (20)
-        Fx = lattice->param.gval[subs][0];
-        Fy = lattice->param.gval[subs][1];
-        rho = f[0] + f[1] + f[2] + f[3] + f[4] + f[5] + f[6] + f[7] + f[8];
-        vx = ( 1.*f[1] - 1.*f[3] + 1.*f[5] - 1.*f[6] - 1.*f[7] + 1.*f[8]
-             + .5*Fx ) / rho;
-        vy = ( 1.*f[2] - 1.*f[4] + 1.*f[5] + 1.*f[6] - 1.*f[7] - 1.*f[8]
-             + .5*Fy ) / rho;
+#if INAMURO_SIGMA_COMPONENT
+      //conc = lattice->pdf[/*sigma*/ 1 ][n].ftemp[0]
+      //     + lattice->pdf[/*sigma*/ 1 ][n].ftemp[1]
+      //     + lattice->pdf[/*sigma*/ 1 ][n].ftemp[2]
+      //     + lattice->pdf[/*sigma*/ 1 ][n].ftemp[3]
+      //     + lattice->pdf[/*sigma*/ 1 ][n].ftemp[4]
+      //     + lattice->pdf[/*sigma*/ 1 ][n].ftemp[5]
+      //     + lattice->pdf[/*sigma*/ 1 ][n].ftemp[6]
+      //     + lattice->pdf[/*sigma*/ 1 ][n].ftemp[7]
+      //     + lattice->pdf[/*sigma*/ 1 ][n].ftemp[8]
+      //     + lattice->pdf[/*sigma*/ 1 ][n].ftemp[9];
+
+        conc = lattice->macro_vars[1][n].rho;
+
+#endif
+
+        rho = f[0] + f[1] + f[2] + f[3] + f[4]
+                   + f[5] + f[6] + f[7] + f[8];
+
+        Fx = lattice->param.gval[subs][0]*rho
+#if INAMURO_SIGMA_COMPONENT
+            *( 1. + ( get_buoyancy(lattice))
+                   *( get_beta(lattice))
+                   *( (conc) - get_C0(lattice)))
+#endif
+          ;
+        Fy = lattice->param.gval[subs][1]*rho
+#if INAMURO_SIGMA_COMPONENT
+            *( 1. + ( get_buoyancy(lattice))
+                   *( get_beta(lattice))
+                   *( (conc) - get_C0(lattice)))
+#endif
+          ;
+        vx = ( 1.*f[1]           - 1.*f[3]
+             + 1.*f[5] - 1.*f[6] - 1.*f[7] + 1.*f[8] + .5*Fx ) / rho;
+        vy = (           1.*f[2]           - 1.*f[4]
+             + 1.*f[5] + 1.*f[6] - 1.*f[7] - 1.*f[8] + .5*Fy ) / rho;
 
         // Major directions ---------------------------------------------------
         a = 3.*(1.-1./(2.*get_tau(lattice,0)))*WM;
@@ -547,6 +582,7 @@ void collide( lattice_ptr lattice)
         F = a*( ( (ex-vx) + 3.*(edotv)*ex)*Fx + ( (ey-vy) + 3.*(edotv)*ey)*Fy);
         f[8] += F;
 
+        }
 #endif
 
 #if ZHANG_AND_CHEN_ENERGY_TRANSPORT

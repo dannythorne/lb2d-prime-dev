@@ -29,7 +29,7 @@
 
 // NUM_FLUID_COMPONENTS specifies the number of fluid components.
 // Flag: NUM_FLUID_COMPONENTS
-#define NUM_FLUID_COMPONENTS 2
+#define NUM_FLUID_COMPONENTS 1
 
 // If NUM_FLUID_COMPONENTS is 2, the second component can be the sigma
 // component for solute (or thermal) transport as in Inamuro & Yoshino
@@ -64,25 +64,29 @@
 // Guo, Zheng & Shi: PRE 65 2002, Body force
 #define GUO_ZHENG_SHI_BODY_FORCE 0
 
+// Body force macros
 #if GUO_ZHENG_SHI_BODY_FORCE
 #if INAMURO_SIGMA_COMPONENT
-#define F(dir_,rho_) \
-  ( lattice->param.gval[subs][(dir_)] \
-  + lattice->param.gval[subs][(dir_)] \
-   *get_buoyancy(lattice) \
-   *( get_beta(lattice)) \
-   *( (rho_) - get_C0(lattice)) \
-  )
+#define F(dir_,rho_,conc_) \
+    ( lattice->param.gval[0][(dir_)] \
+  /*+ lattice->param.gval[subs][(dir_)] */\
+  /* *(rho_) */\
+     *( 1. + get_buoyancy(lattice) \
+     *( get_beta(lattice)) \
+     *( (conc_) - get_C0(lattice))) \
+    )
 #else
 #define F(dir_) lattice->param.gval[subs][(dir_)]
 #endif
 #else
 #if INAMURO_SIGMA_COMPONENT
-#define F(dir_,rho_) \
+#define F(dir_,rho_,conc_) \
   ( lattice->param.gval[0][(dir_)] \
-  + lattice->param.gval[1][(dir_)] \
-   *(  ( get_buoyancy(lattice)) \
-      *( get_beta(lattice))*( (rho_) - get_C0(lattice))) )
+/*+ lattice->param.gval[1][(dir_)] */\
+/* *(rho_) */\
+   *( 1. + ( get_buoyancy(lattice)) \
+      *( get_beta(lattice)) \
+      *( (conc_) - get_C0(lattice))) )
 #else
 #define F(dir_,rho_) \
   lattice->param.gval[subs][(dir_)] \
@@ -170,7 +174,7 @@
 // take up a lot of disk space.  If all that is needed is the BMP files, then
 // turn WRITE_MACRO_VAR_DAT_FILES off to save time and space.
 // Flag: WRITE_MACRO_VAR_DAT_FILES
-#define WRITE_MACRO_VAR_DAT_FILES 0
+#define WRITE_MACRO_VAR_DAT_FILES 1
 
 // Usually the density and velocity are written only for the active nodes
 // and in a way designed for post-processing.  Additional files with the 
@@ -180,7 +184,7 @@
 // lattices.  Note that if WRITE_MACRO_VAR_DAT_FILES is off, this flag
 // has no effect.
 // Flag: WRITE_RHO_AND_U_TO_TXT
-#define WRITE_RHO_AND_U_TO_TXT 0
+#define WRITE_RHO_AND_U_TO_TXT 1
 
 // WRITE_PDF_DAT_FILES is analogous to WRITE_MACRO_VAR_DAT_FILES.
 // Flag: WRITE_PDF_DAT_FILES
