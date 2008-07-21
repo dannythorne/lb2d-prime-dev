@@ -1035,75 +1035,76 @@ void init_problem( struct lattice_struct *lattice)
 
       else // !lattice->param.ic_poisseuille
       {
-            if( hydrostatic( lattice))
+        if( hydrostatic( lattice))
+        {
+          //*macro_var_ptr++ = ( 1.00216 - (j-1)*.00054);
+          if( hydrostatic_compressible( lattice))
+          {
+            if( hydrostatic_compute_rho_ref(lattice))
             {
-              //*macro_var_ptr++ = ( 1.00216 - (j-1)*.00054);
-              if( hydrostatic_compressible( lattice))
-              {
-#if 1
-            // Reference density computed in terms of average density
-            lattice->param.rho_out =
-               ( 3.*lattice->param.gval[0][1]
+              // Reference density computed in terms of average density
+              lattice->param.rho_out =
+                ( 3.*lattice->param.gval[0][1]
 #if 0//INAMURO_SIGMA_COMPONENT
-                    *( 1. + (get_buoyancy(lattice))
-                           *(get_beta(lattice))
-                           *(get_C(lattice)-get_C0(lattice)) )
+                  *( 1. + (get_buoyancy(lattice))
+                    *(get_beta(lattice))
+                    *(get_C(lattice)-get_C0(lattice)) )
 #endif
-                   *(get_LY(lattice)-1)
-                   *lattice->param.rho_A[0])
-               /
-               ( 1. - exp( -3.*lattice->param.gval[0][1]
+                  *(get_LY(lattice)-2)
+                  *lattice->param.rho_A[0])
+                /
+                ( 1. - exp( -3.*lattice->param.gval[0][1]
 #if 0//INAMURO_SIGMA_COMPONENT
-                    *( 1. + (get_buoyancy(lattice))
-                           *(get_beta(lattice))
-                           *(get_C_out(lattice)-get_C0(lattice)) )
+                            *( 1. + (get_buoyancy(lattice))
+                              *(get_beta(lattice))
+                              *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
-                              *(get_LY(lattice)-1)));
-            //printf("rho_ref = %20.17f\n", lattice->param.rho_out);
-#endif
-                *macro_var_ptr++ =
-                  lattice->param.rho_out
-                  *exp( -3.*lattice->param.gval[0][1]
+                            *(get_LY(lattice)-2)));
+              //printf("rho_ref = %20.17f\n", lattice->param.rho_out);
+            }
+            *macro_var_ptr++ =
+              lattice->param.rho_out
+              *exp( -3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
-                    //*(1.+(get_buoyancy(lattice))*lattice->param.rho_sigma)
-                    *(1. + (get_buoyancy(lattice))
-                          *get_beta(lattice)
-                          *( get_C(lattice)
-                           - get_C0(lattice)))
+                  //*(1.+(get_buoyancy(lattice))*lattice->param.rho_sigma)
+                  *(1. + (get_buoyancy(lattice))
+                    *get_beta(lattice)
+                    *( get_C(lattice)
+                      - get_C0(lattice)))
 #endif
-                           //*(0.5*(get_LY(lattice)-1.)-1.))
-                           *( (get_LY(lattice)-1.)-0.))
+                  //*(0.5*(get_LY(lattice)-1.)-1.))
+                  *( (get_LY(lattice)-1.)-0.))
                   *exp(  3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
-                    //*(1.+(get_buoyancy(lattice))*lattice->param.rho_sigma)
-                    *(1. + (get_buoyancy(lattice))
-                          *get_beta(lattice)
-                          *( get_C(lattice)
-                           - get_C0(lattice)))
+                      //*(1.+(get_buoyancy(lattice))*lattice->param.rho_sigma)
+                      *(1. + (get_buoyancy(lattice))
+                        *get_beta(lattice)
+                        *( get_C(lattice)
+                          - get_C0(lattice)))
 #endif
-                           *(j+1.0));
-              }
-              else
-              {
-                *macro_var_ptr++ =
-                      lattice->param.rho_out
-                    * ( 1. - 3.*lattice->param.gval[0][1]
+                      *(j+1.0));
+          }
+          else
+          {
+            *macro_var_ptr++ =
+              lattice->param.rho_out
+              * ( 1. - 3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
-                    //*(1.+(get_buoyancy(lattice))*lattice->param.rho_sigma)
-                    *(1. + (get_buoyancy(lattice))
-                          *get_beta(lattice)
-                          *( get_C(lattice)
-                           - get_C0(lattice)))
+                  //*(1.+(get_buoyancy(lattice))*lattice->param.rho_sigma)
+                  *(1. + (get_buoyancy(lattice))
+                    *get_beta(lattice)
+                    *( get_C(lattice)
+                      - get_C0(lattice)))
 #endif
-                               *( ( get_LY(lattice)
-                                  + ((get_LY(lattice)%2)?(-1.):(1.)))/2.
-                                - j ) );
-              }
-            }
-            else
-            {
-              *macro_var_ptr++ = lattice->param.rho_A[subs];
-            }
+                  *( ( get_LY(lattice)
+                      + ((get_LY(lattice)%2)?(-1.):(1.)))/2.
+                    - j ) );
+          }
+        }
+        else
+        {
+          *macro_var_ptr++ = lattice->param.rho_A[subs];
+        }
       } /* if( lattice->param.ic_poisseuille) else */
 
           }
@@ -1113,59 +1114,42 @@ void init_problem( struct lattice_struct *lattice)
           }
 #else /* !( INAMURO_SIGMA_COMPONENT) */
 
-          if( 0)
+        if( hydrostatic( lattice))
+        {
+          if( hydrostatic_compressible( lattice))
           {
-            // TESTING!
-#if 0
-            if( j==0 || j==1)
+            if( hydrostatic_compute_rho_ref(lattice))
             {
-              *macro_var_ptr++ = ( 1.00999 - j*.00027);
+              // Reference density computed in terms of average density
+              lattice->param.rho_out =
+                ( 3.*lattice->param.gval[0][1]
+                  *(get_LY(lattice)-2)
+                  *lattice->param.rho_A[0])
+                /
+                ( 1. - exp( -3.*lattice->param.gval[0][1]
+                            *(get_LY(lattice)-2)));
             }
-            else if( j==38 || j==39)
-            {
-              *macro_var_ptr++ = ( .99001 - (j-39)*.00027);
-            }
-            else
-            {
-              *macro_var_ptr++ = ( 1.00999 - .00027 - (j-1)*.00054);
-            }
-#else
-            if( hydrostatic( lattice))
-            {
-              //*macro_var_ptr++ = ( 1.00216 - (j-1)*.00054);
-              if( hydrostatic_compressible( lattice))
-              {
-                *macro_var_ptr++ =
-                      lattice->param.rho_out
-                     *exp( -3.*lattice->param.gval[0][1]
-                              //*(0.5*(get_LY(lattice)-1.)-1.))
-                              *( (get_LY(lattice)-1.)-0.))
-                     *exp(  3.*lattice->param.gval[0][1]
-                              //*(j-1.0));
-                              *(j+1.0));
-              }
-              else
-              {
-                *macro_var_ptr++ =
-                      lattice->param.rho_out
-                    * ( 1. - 3.*lattice->param.gval[0][1]
-#if INAMURO_SIGMA_COMPONENT
-                    *(1.+lattice->param.rho_sigma_in)
-#endif
-                    *( ( get_LY(lattice)
-                       + ((get_LY(lattice)%2)?(-1.):(1.)))/2. - j ) );
-              }
-            }
-            else
-            {
-              *macro_var_ptr++ = lattice->param.rho_A[subs];
-            }
-#endif
+            *macro_var_ptr++ =
+              lattice->param.rho_out
+              *exp( -3.*lattice->param.gval[0][1]
+                  *( (get_LY(lattice)-1.)-0.))
+                  *exp(  3.*lattice->param.gval[0][1]
+                      *(j+1.0));
           }
           else
           {
-            *macro_var_ptr++ = lattice->param.rho_A[subs];
+            *macro_var_ptr++ =
+              lattice->param.rho_out
+              * ( 1. - 3.*lattice->param.gval[0][1]
+                  *( ( get_LY(lattice)
+                      + ((get_LY(lattice)%2)?(-1.):(1.)))/2.
+                    - j ) );
           }
+        }
+        else
+        {
+          *macro_var_ptr++ = lattice->param.rho_A[subs];
+        }
 
 #endif /* INAMURO_SIGMA_COMPONENT */
           break;

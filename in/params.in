@@ -2,10 +2,10 @@ LX                     39
 LY                     25
 characteristic_length  31
 NumFrames              10
-FrameRate              2000
+FrameRate              1
 tau[0]                1.
 gval_x[0]             0.
-gval_y[0]            -0.0412
+gval_y[0]            -0.1
 end_grav[0]           0
 tau[1]                1.
 gval_x[1]             0.00
@@ -28,7 +28,7 @@ sigma_stop            -1
 sigma_btc_rate        -1
 sigma_btc_spot        -1
 rho_in                 1.001
-rho_out                0.70448869592638
+rho_out                1.
 ux_in                  0.001
 ux_out                 0.0
 uy_in                  0.0

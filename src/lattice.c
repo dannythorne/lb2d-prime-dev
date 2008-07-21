@@ -130,6 +130,14 @@ int hydrostatic_compressible( lattice_ptr lattice)
   return 1;
 }
 
+int hydrostatic_compute_rho_ref( lattice_ptr lattice)
+{
+  // Compute the reference density for the compressible density profile.
+  // If this switch is off, the value of rho_out will be used as the
+  // reference density.
+  return 0;
+}
+
 double get_tau( lattice_ptr lattice, const int subs)
 {
   return lattice->param.tau[subs];

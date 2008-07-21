@@ -1395,26 +1395,27 @@ void bcs( lattice_ptr lattice)
           //{ // Try to adjust for discrepancy between rho_out and rho_ave.
           //  compute_ave_rho( lattice, &(lattice->param.rho_out), /*subs*/0);
           //}
-#if 1
-            // Reference density computed in terms of average density
-            lattice->param.rho_out = 
-               ( 3.*lattice->param.gval[0][1]
+            if( hydrostatic_compute_rho_ref(lattice))
+            {
+              // Reference density computed in terms of average density
+              lattice->param.rho_out = 
+                 ( 3.*lattice->param.gval[0][1]
 #if 0//INAMURO_SIGMA_COMPONENT
-                    *( 1. + (get_buoyancy(lattice))
-                           *(get_beta(lattice))
-                           *(get_C_out(lattice)-get_C0(lattice)) )
+                      *( 1. + (get_buoyancy(lattice))
+                             *(get_beta(lattice))
+                             *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
-                   *(get_LY(lattice)-2)
-                   *lattice->param.rho_A[0])
-               /
-               ( 1. - exp( -3.*lattice->param.gval[0][1]
+                     *(get_LY(lattice)-2)
+                     *lattice->param.rho_A[0])
+                 /
+                 ( 1. - exp( -3.*lattice->param.gval[0][1]
 #if 0//INAMURO_SIGMA_COMPONENT
-                    *( 1. + (get_buoyancy(lattice))
-                           *(get_beta(lattice))
-                           *(get_C_out(lattice)-get_C0(lattice)) )
+                      *( 1. + (get_buoyancy(lattice))
+                             *(get_beta(lattice))
+                             *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
-                              *(get_LY(lattice)-2)));
-#endif
+                                *(get_LY(lattice)-2)));
+            }
             rho = lattice->param.rho_out
                  *exp( -3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
@@ -1570,27 +1571,28 @@ void bcs( lattice_ptr lattice)
           //{ // Try to adjust for discrepancy between rho_out and rho_ave.
           //  compute_ave_rho( lattice, &(lattice->param.rho_out), /*subs*/0);
           //}
-#if 1
-            // Reference density computed in terms of average density
-            lattice->param.rho_out =
-               ( 3.*lattice->param.gval[0][1]
+            if( hydrostatic_compute_rho_ref(lattice))
+            {
+              // Reference density computed in terms of average density
+              lattice->param.rho_out =
+                 ( 3.*lattice->param.gval[0][1]
 #if 0//INAMURO_SIGMA_COMPONENT
-                    *( 1. + (get_buoyancy(lattice))
-                           *(get_beta(lattice))
-                           *(get_C_out(lattice)-get_C0(lattice)) )
+                      *( 1. + (get_buoyancy(lattice))
+                             *(get_beta(lattice))
+                             *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
-                   *(get_LY(lattice)-2)
-                   *lattice->param.rho_A[0])
-               /
-               ( 1. - exp( -3.*lattice->param.gval[0][1]
+                     *(get_LY(lattice)-2)
+                     *lattice->param.rho_A[0])
+                 /
+                 ( 1. - exp( -3.*lattice->param.gval[0][1]
 #if 0//INAMURO_SIGMA_COMPONENT
-                    *( 1. + (get_buoyancy(lattice))
-                           *(get_beta(lattice))
-                           *(get_C_out(lattice)-get_C0(lattice)) )
+                      *( 1. + (get_buoyancy(lattice))
+                             *(get_beta(lattice))
+                             *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
-                              *(get_LY(lattice)-2)));
-            //printf("rho_ref = %20.17f\n", lattice->param.rho_out);
-#endif
+                                *(get_LY(lattice)-2)));
+              //printf("rho_ref = %20.17f\n", lattice->param.rho_out);
+            }
             rho = lattice->param.rho_out
                  *exp( -3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
