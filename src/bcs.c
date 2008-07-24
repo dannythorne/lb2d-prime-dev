@@ -1400,7 +1400,7 @@ void bcs( lattice_ptr lattice)
               // Reference density computed in terms of average density
               lattice->param.rho_out = 
                  ( 3.*lattice->param.gval[0][1]
-#if 0//INAMURO_SIGMA_COMPONENT
+#if INAMURO_SIGMA_COMPONENT
                       *( 1. + (get_buoyancy(lattice))
                              *(get_beta(lattice))
                              *(get_C_out(lattice)-get_C0(lattice)) )
@@ -1409,14 +1409,16 @@ void bcs( lattice_ptr lattice)
                      *lattice->param.rho_A[0])
                  /
                  ( 1. - exp( -3.*lattice->param.gval[0][1]
-#if 0//INAMURO_SIGMA_COMPONENT
+#if INAMURO_SIGMA_COMPONENT
                       *( 1. + (get_buoyancy(lattice))
                              *(get_beta(lattice))
                              *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
                                 *(get_LY(lattice)-2)));
             }
-            rho = lattice->param.rho_out
+            rho =
+#if 0
+                  lattice->param.rho_out
                  *exp( -3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
                     *( 1. + (get_buoyancy(lattice))
@@ -1431,6 +1433,26 @@ void bcs( lattice_ptr lattice)
                            *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
                           *(j+1.0));
+#else
+              3.*lattice->param.gval[0][1]
+#if INAMURO_SIGMA_COMPONENT
+                    *( 1. + (get_buoyancy(lattice))
+                           *(get_beta(lattice))
+                           *(get_C_out(lattice)-get_C0(lattice)) )
+#endif
+                *(get_LY(lattice)-2)
+                *lattice->param.rho_A[0]
+                *exp( -3.*lattice->param.gval[0][1]
+                         *( ( get_LY(lattice)-2.) - (j-.5)) )
+              /
+              ( 1. - exp( -3.*lattice->param.gval[0][1]
+#if INAMURO_SIGMA_COMPONENT
+                    *( 1. + (get_buoyancy(lattice))
+                           *(get_beta(lattice))
+                           *(get_C_out(lattice)-get_C0(lattice)) )
+#endif
+                          *(get_LY(lattice)-2)));
+#endif
           }
           else
           {
@@ -1576,7 +1598,7 @@ void bcs( lattice_ptr lattice)
               // Reference density computed in terms of average density
               lattice->param.rho_out =
                  ( 3.*lattice->param.gval[0][1]
-#if 0//INAMURO_SIGMA_COMPONENT
+#if INAMURO_SIGMA_COMPONENT
                       *( 1. + (get_buoyancy(lattice))
                              *(get_beta(lattice))
                              *(get_C_out(lattice)-get_C0(lattice)) )
@@ -1585,7 +1607,7 @@ void bcs( lattice_ptr lattice)
                      *lattice->param.rho_A[0])
                  /
                  ( 1. - exp( -3.*lattice->param.gval[0][1]
-#if 0//INAMURO_SIGMA_COMPONENT
+#if INAMURO_SIGMA_COMPONENT
                       *( 1. + (get_buoyancy(lattice))
                              *(get_beta(lattice))
                              *(get_C_out(lattice)-get_C0(lattice)) )
@@ -1593,7 +1615,9 @@ void bcs( lattice_ptr lattice)
                                 *(get_LY(lattice)-2)));
               //printf("rho_ref = %20.17f\n", lattice->param.rho_out);
             }
-            rho = lattice->param.rho_out
+            rho =
+#if 0
+                  lattice->param.rho_out
                  *exp( -3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
                     //*(1.+(get_buoyancy(lattice))*lattice->param.C_out)
@@ -1615,6 +1639,28 @@ void bcs( lattice_ptr lattice)
                //         *(0.5*(get_LY(lattice)-1)-1))
                //*exp(  3.*lattice->param.gval[0][1]
                //         *(get_LY(lattice)+.5-j));
+#else
+              3.*lattice->param.gval[0][1]
+#if INAMURO_SIGMA_COMPONENT
+                    //*(1.+(get_buoyancy(lattice))*lattice->param.C_out)
+                    *( 1. + (get_buoyancy(lattice))
+                           *(get_beta(lattice))
+                           *(get_C_out(lattice)-get_C0(lattice)) )
+#endif
+                *(get_LY(lattice)-2)
+                *lattice->param.rho_A[0]
+                *exp( -3.*lattice->param.gval[0][1]
+                         *( ( get_LY(lattice)-2.) - (j-.5)) )
+              /
+              ( 1. - exp( -3.*lattice->param.gval[0][1]
+#if INAMURO_SIGMA_COMPONENT
+                    //*(1.+(get_buoyancy(lattice))*lattice->param.C_out)
+                    *( 1. + (get_buoyancy(lattice))
+                           *(get_beta(lattice))
+                           *(get_C_out(lattice)-get_C0(lattice)) )
+#endif
+                          *(get_LY(lattice)-2)));
+#endif
           }
           else
           {
@@ -1843,6 +1889,7 @@ void bcs( lattice_ptr lattice)
       lattice->pdf[subs][(lattice->param.LY+1)*lattice->param.LX].ftemp;
     bc_type = &( lattice->bc[subs][0].bc_type);
     j = 0;
+    n = 0;
 #if RHO0_TEST
 //------------------------------------------------------------------[ TEST ]----
     rho0 = &( lattice->macro_vars[subs][0].rho);
@@ -1946,6 +1993,7 @@ void bcs( lattice_ptr lattice)
 
      bc_type++;
      j++;
+     n+=get_LX(lattice);
 
     } /* while( ftemp < ftemp_end) */
 

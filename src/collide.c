@@ -428,6 +428,8 @@ void collide( lattice_ptr lattice)
 #endif
 #endif
 
+  double rho_diff;
+
 #if SAY_HI
   printf("collide() -- Hi!\n");
 #endif /* SAY_HI */
@@ -678,6 +680,71 @@ void collide( lattice_ptr lattice)
           //    /|\           /|\
           //   F G H         C B A
           */
+#if !( APPLY_DEL_FEQ || APPLY_DEL_FEQ_HIGH_ORDER)
+#if 1
+#if 1
+          f[1] = ftemp[3];
+          f[2] = ftemp[4];
+          f[3] = ftemp[1];
+          f[4] = ftemp[2];
+          f[5] = ftemp[7];
+          f[6] = ftemp[8];
+          f[7] = ftemp[5];
+          f[8] = ftemp[6];
+#else
+          // Try doing regular collision on the solid before applying
+          // bounce-back
+          double ftemptemp[9];
+          for( a=1; a<9; a++)
+          {
+            ftemptemp[a] = ftemp[a] - ( ( ftemp[a] / get_tau(lattice,subs) )
+                                      - ( feq[a]   / get_tau(lattice,subs) ) );
+          }
+          f[1] = ftemptemp[3];
+          f[2] = ftemptemp[4];
+          f[3] = ftemptemp[1];
+          f[4] = ftemptemp[2];
+          f[5] = ftemptemp[7];
+          f[6] = ftemptemp[8];
+          f[7] = ftemptemp[5];
+          f[8] = ftemptemp[6];
+#endif
+#else
+          // Experimenting: Trying to compensate for loss of mass into
+          // the solid nodes.
+          compute_ave_rho( lattice, &rho_diff, 0);
+          rho_diff -= lattice->param.rho_A[0];
+
+          if( j==0)
+          {
+            f[1] = ( ftemp[3]);
+            f[2] = ( ftemp[4] - .50*rho_diff/2./get_LX(lattice));
+            f[3] = ( ftemp[1]);
+            f[4] = ( ftemp[2]);
+            f[5] = ( ftemp[7] - .25*rho_diff/2./get_LX(lattice));
+            f[6] = ( ftemp[8] - .25*rho_diff/2./get_LX(lattice));
+            f[7] = ( ftemp[5]);
+            f[8] = ( ftemp[6]);
+          }
+          else if( j==get_LY(lattice)-1)
+          {
+            f[1] = ( ftemp[3]);
+            f[2] = ( ftemp[4]);
+            f[3] = ( ftemp[1]);
+            f[4] = ( ftemp[2] - .50*rho_diff/2./get_LX(lattice));
+            f[5] = ( ftemp[7]);
+            f[6] = ( ftemp[8]);
+            f[7] = ( ftemp[5] - .25*rho_diff/2./get_LX(lattice));
+            f[8] = ( ftemp[6] - .25*rho_diff/2./get_LX(lattice));
+          }
+          else
+          {
+            printf("ERROR: Experimental bounceback only works on top and "
+               "bottom of domain.");
+            process_exit(1);
+          }
+#endif
+#else
           f[1] = ftemp[3];
           f[2] =
 #if APPLY_DEL_FEQ
@@ -799,6 +866,7 @@ void collide( lattice_ptr lattice)
 #endif
                ;
 
+#endif
         } /* if( subs==0) */
 
 #if NUM_FLUID_COMPONENTS==2

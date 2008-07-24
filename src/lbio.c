@@ -904,6 +904,7 @@ void dump_pdf( struct lattice_struct *lattice, int time)
     fprintf( o_fdiff, "|");
     for( i=0; i<get_LX(lattice); i++, n++)
     {
+#if 0
 fprintf(o_feq,  "%3d ",X2N(lattice->pdf[subs][n].feq[6]  /max_feq5678  ,s));
 fprintf(o_feq,  "%3d ",X2N(lattice->pdf[subs][n].feq[2]  /max_feq1234  ,s));
 fprintf(o_feq,  "%3d|",X2N(lattice->pdf[subs][n].feq[5]  /max_feq5678  ,s));
@@ -916,6 +917,20 @@ fprintf(o_ftemp,"%3d|",X2N(lattice->pdf[subs][n].ftemp[5]/max_ftemp5678,s));
 fprintf(o_fdiff,"%3d ",X2N(fdiff[9*n+6]/max_fdiff5678,s));
 fprintf(o_fdiff,"%3d ",X2N(fdiff[9*n+2]/max_fdiff1234,s));
 fprintf(o_fdiff,"%3d|",X2N(fdiff[9*n+5]/max_fdiff5678,s));
+#else
+fprintf(o_feq,  "%.15f ", lattice->pdf[subs][n].feq[6]  );
+fprintf(o_feq,  "%.15f ", lattice->pdf[subs][n].feq[2]  );
+fprintf(o_feq,  "%.15f|", lattice->pdf[subs][n].feq[5]  );
+fprintf(o_f,    "%.15f ", lattice->pdf[subs][n].f[6]    );
+fprintf(o_f,    "%.15f ", lattice->pdf[subs][n].f[2]    );
+fprintf(o_f,    "%.15f|", lattice->pdf[subs][n].f[5]    );
+fprintf(o_ftemp,"%.15f ", lattice->pdf[subs][n].ftemp[6]);
+fprintf(o_ftemp,"%.15f ", lattice->pdf[subs][n].ftemp[2]);
+fprintf(o_ftemp,"%.15f|", lattice->pdf[subs][n].ftemp[5]);
+fprintf(o_fdiff,"%.15f ", fdiff[9*n+6]                  );
+fprintf(o_fdiff,"%.15f ", fdiff[9*n+2]                  );
+fprintf(o_fdiff,"%.15f|", fdiff[9*n+5]                  );
+#endif
     } /* for( i=0; i<get_LX(lattice); i++, n++) */                     
                                                                        
     fprintf( o_feq,  "\n");                                            
@@ -930,6 +945,7 @@ fprintf(o_fdiff,"%3d|",X2N(fdiff[9*n+5]/max_fdiff5678,s));
     fprintf( o_fdiff, "|");
     for( i=0; i<get_LX(lattice); i++, n++)                             
     {                                                                  
+#if 0
 fprintf(o_feq,  "%3d ",X2N( lattice->pdf[subs][n].feq[3]  /max_feq1234  ,s));
 fprintf(o_feq,  "%3d ",X2N( lattice->pdf[subs][n].feq[0]  /max_feq0     ,s));
 fprintf(o_feq,  "%3d|",X2N( lattice->pdf[subs][n].feq[1]  /max_feq1234  ,s));
@@ -942,6 +958,20 @@ fprintf(o_ftemp,"%3d|",X2N( lattice->pdf[subs][n].ftemp[1]/max_ftemp1234,s));
 fprintf(o_fdiff,"%3d ",X2N( fdiff[9*n+3]/max_fdiff1234,s));
 fprintf(o_fdiff,"%3d ",X2N( fdiff[9*n+0]/max_fdiff0   ,s));
 fprintf(o_fdiff,"%3d|",X2N( fdiff[9*n+1]/max_fdiff1234,s));
+#else
+fprintf(o_feq,  "%.15f ", lattice->pdf[subs][n].feq[3]  );
+fprintf(o_feq,  "%.15f ", lattice->pdf[subs][n].feq[0]  );
+fprintf(o_feq,  "%.15f|", lattice->pdf[subs][n].feq[1]  );
+fprintf(o_f,    "%.15f ", lattice->pdf[subs][n].f[3]    );
+fprintf(o_f,    "%.15f ", lattice->pdf[subs][n].f[0]    );
+fprintf(o_f,    "%.15f|", lattice->pdf[subs][n].f[1]    );
+fprintf(o_ftemp,"%.15f ", lattice->pdf[subs][n].ftemp[3]);
+fprintf(o_ftemp,"%.15f ", lattice->pdf[subs][n].ftemp[0]);
+fprintf(o_ftemp,"%.15f|", lattice->pdf[subs][n].ftemp[1]);
+fprintf(o_fdiff,"%.15f ", fdiff[9*n+3]                  );
+fprintf(o_fdiff,"%.15f ", fdiff[9*n+0]                  );
+fprintf(o_fdiff,"%.15f|", fdiff[9*n+1]                  );
+#endif
     } /* for( i=0; i<get_LX(lattice); i++, n++) */                     
                                                                        
     fprintf( o_feq,  "\n");                                            
@@ -956,6 +986,7 @@ fprintf(o_fdiff,"%3d|",X2N( fdiff[9*n+1]/max_fdiff1234,s));
     fprintf( o_fdiff, "|");
     for( i=0; i<get_LX(lattice); i++, n++)                             
     {                                                                  
+#if 0
 fprintf(o_feq,  "%3d ",X2N(lattice->pdf[subs][n].feq[7]  /max_feq5678  ,s));
 fprintf(o_feq,  "%3d ",X2N(lattice->pdf[subs][n].feq[4]  /max_feq1234  ,s));
 fprintf(o_feq,  "%3d|",X2N(lattice->pdf[subs][n].feq[8]  /max_feq5678  ,s));
@@ -968,6 +999,20 @@ fprintf(o_ftemp,"%3d|",X2N(lattice->pdf[subs][n].ftemp[8]/max_ftemp5678,s));
 fprintf(o_fdiff,"%3d ",X2N(fdiff[9*n+7]/max_fdiff5678,s));
 fprintf(o_fdiff,"%3d ",X2N(fdiff[9*n+4]/max_fdiff1234,s));
 fprintf(o_fdiff,"%3d|",X2N(fdiff[9*n+8]/max_fdiff5678,s));
+#else
+fprintf(o_feq,  "%.15f ", lattice->pdf[subs][n].feq[7]  );
+fprintf(o_feq,  "%.15f ", lattice->pdf[subs][n].feq[4]  );
+fprintf(o_feq,  "%.15f|", lattice->pdf[subs][n].feq[8]  );
+fprintf(o_f,    "%.15f ", lattice->pdf[subs][n].f[7]    );
+fprintf(o_f,    "%.15f ", lattice->pdf[subs][n].f[4]    );
+fprintf(o_f,    "%.15f|", lattice->pdf[subs][n].f[8]    );
+fprintf(o_ftemp,"%.15f ", lattice->pdf[subs][n].ftemp[7]);
+fprintf(o_ftemp,"%.15f ", lattice->pdf[subs][n].ftemp[4]);
+fprintf(o_ftemp,"%.15f|", lattice->pdf[subs][n].ftemp[8]);
+fprintf(o_fdiff,"%.15f ", fdiff[9*n+7]                  );
+fprintf(o_fdiff,"%.15f ", fdiff[9*n+4]                  );
+fprintf(o_fdiff,"%.15f|", fdiff[9*n+8]                  );
+#endif
     } /* for( i=0; i<get_LX(lattice); i++, n++) */
 
     fprintf( o_feq,  "\n");

@@ -741,7 +741,7 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
  {
   for( n=0; n<lattice->NumNodes; n++)
   {
-    if( COMPUTE_ON_SOLIDS || is_not_solid_node( lattice, subs, n))
+    if( COMPUTE_ON_SOLIDS || is_not_solid_node( lattice, /*subs*/0, n))
     {
       //assert( *rho[0] != 0.);
 
@@ -1179,7 +1179,7 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
 #else
       feq+=27;
 #endif
-      rho+=3;
+      rho+=1;
       u+=3;
     }
 

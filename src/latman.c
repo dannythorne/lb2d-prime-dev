@@ -1044,8 +1044,9 @@ void init_problem( struct lattice_struct *lattice)
             {
               // Reference density computed in terms of average density
               lattice->param.rho_out =
+#if 0
                 ( 3.*lattice->param.gval[0][1]
-#if 0//INAMURO_SIGMA_COMPONENT
+#if INAMURO_SIGMA_COMPONENT
                   *( 1. + (get_buoyancy(lattice))
                     *(get_beta(lattice))
                     *(get_C(lattice)-get_C0(lattice)) )
@@ -1054,15 +1055,35 @@ void init_problem( struct lattice_struct *lattice)
                   *lattice->param.rho_A[0])
                 /
                 ( 1. - exp( -3.*lattice->param.gval[0][1]
-#if 0//INAMURO_SIGMA_COMPONENT
+#if INAMURO_SIGMA_COMPONENT
                             *( 1. + (get_buoyancy(lattice))
                               *(get_beta(lattice))
                               *(get_C_out(lattice)-get_C0(lattice)) )
 #endif
                             *(get_LY(lattice)-2)));
+
+#else
+                ( 3.*lattice->param.gval[0][1]
+#if INAMURO_SIGMA_COMPONENT
+                  *( 1. + (get_buoyancy(lattice))
+                    *(get_beta(lattice))
+                    *(get_C(lattice)-get_C0(lattice)) )
+#endif
+                  *(get_LY(lattice)-2)
+                  *lattice->param.rho_A[0])
+                /
+                ( 1. - exp( -3.*lattice->param.gval[0][1]
+#if INAMURO_SIGMA_COMPONENT
+                            *( 1. + (get_buoyancy(lattice))
+                              *(get_beta(lattice))
+                              *(get_C_out(lattice)-get_C0(lattice)) )
+#endif
+                            *(get_LY(lattice)-2)));
+#endif
               //printf("rho_ref = %20.17f\n", lattice->param.rho_out);
             }
             *macro_var_ptr++ =
+#if 0
               lattice->param.rho_out
               *exp( -3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
@@ -1083,6 +1104,30 @@ void init_problem( struct lattice_struct *lattice)
                           - get_C0(lattice)))
 #endif
                       *(j+1.0));
+#else
+              3.*lattice->param.gval[0][1]
+#if INAMURO_SIGMA_COMPONENT
+                  //*(1.+(get_buoyancy(lattice))*lattice->param.rho_sigma)
+                  *(1. + (get_buoyancy(lattice))
+                    *get_beta(lattice)
+                    *( get_C(lattice)
+                      - get_C0(lattice)))
+#endif
+                *(get_LY(lattice)-2)
+                *lattice->param.rho_A[0]
+                *exp( -3.*lattice->param.gval[0][1]
+                         *( ( get_LY(lattice)-2.) - (j-.5)) )
+              /
+              ( 1. - exp( -3.*lattice->param.gval[0][1]
+#if INAMURO_SIGMA_COMPONENT
+                      //*(1.+(get_buoyancy(lattice))*lattice->param.rho_sigma)
+                      *(1. + (get_buoyancy(lattice))
+                        *get_beta(lattice)
+                        *( get_C(lattice)
+                          - get_C0(lattice)))
+#endif
+                          *(get_LY(lattice)-2)));
+#endif
           }
           else
           {
@@ -1130,11 +1175,22 @@ void init_problem( struct lattice_struct *lattice)
                             *(get_LY(lattice)-2)));
             }
             *macro_var_ptr++ =
+#if 0
               lattice->param.rho_out
               *exp( -3.*lattice->param.gval[0][1]
                   *( (get_LY(lattice)-1.)-0.))
                   *exp(  3.*lattice->param.gval[0][1]
                       *(j+1.0));
+#else
+              3.*lattice->param.gval[0][1]
+                *(get_LY(lattice)-2)
+                *lattice->param.rho_A[0]
+                *exp( -3.*lattice->param.gval[0][1]
+                         *( ( get_LY(lattice)-2.) - (j-.5)) )
+              /
+              ( 1. - exp( -3.*lattice->param.gval[0][1]
+                          *(get_LY(lattice)-2)));
+#endif
           }
           else
           {

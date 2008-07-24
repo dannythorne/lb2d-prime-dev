@@ -2018,7 +2018,11 @@ void dump_params( struct lattice_struct *lattice)
   FILE *o;
   char filename[1024];
 
-  sprintf( filename, "%s/%s", get_out_path(lattice), "params.dat");
+  sprintf( filename
+         , "%s/params%dx%d_proc%04d.dat"
+         , get_out_path(lattice)
+         , get_LX(lattice), get_LY(lattice), get_proc_id(lattice)
+         );
 
   if( !( o = fopen(filename,"w+")))
   {
@@ -2333,7 +2337,7 @@ void dump_params( struct lattice_struct *lattice)
   fclose(o);
 
 #if VERBOSITY_LEVEL >= 1
-  printf("lbio.c: dump_params() -- Wrote file \"params.dat\".\n");
+  printf("lbio.c: dump_params() -- Wrote file \"%s\".\n",filename);
 #endif /* VERBOSITY_LEVEL >= 1 */
 
 } /* void dump_params( struct lattice_struct *lattice) */
