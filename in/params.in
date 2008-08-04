@@ -1,11 +1,11 @@
-LX                     12
-LY                     9
+LX                     23
+LY                     17
 characteristic_length  31
 NumFrames              10
 FrameRate              2000
 tau[0]                1.
 gval_x[0]             0.
-gval_y[0]            -.4
+gval_y[0]            -.01
 end_grav[0]           0
 tau[1]                1.
 gval_x[1]             0.00
@@ -91,8 +91,8 @@ constflx_n_out         0
 constflx_s_out         0
 constcon_e_in          0
 constcon_w_in          0
-constcon_e_out         0
-constcon_w_out         0
+constcon_e_out         1
+constcon_w_out         1
 constflx_e_in          0
 constflx_w_in          0
 constflx_e_out         0
@@ -122,4 +122,3 @@ dump_u                 1
 dump_force             0
 dump_vor               0
 do_user_stuff          0
-out_path               E:\home\danny thorne\Thorne\Stuff\Research\LB2D_Prime\out
