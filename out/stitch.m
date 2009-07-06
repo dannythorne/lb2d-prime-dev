@@ -17,12 +17,12 @@ function []=stitch( g_ni, g_nj, num_procs, start_frame, end_frame)
     NumLayersOnRoot = NumLayersPerProc;
   end
 
-  g_rho = zeros(g_ni,g_nj,3);
+  g_rho = zeros(g_nj,g_ni,3);
 
   for frame=start_frame:end_frame
 
     % Root proc handled separately
-    nj = NumLayersOnRoot;
+    nj = NumLayersOnRoot
     g_sj = 0;
     g_ej = 0 + NumLayersOnRoot - 1;
     g_StartNode = 0;
@@ -33,9 +33,9 @@ function []=stitch( g_ni, g_nj, num_procs, start_frame, end_frame)
              , subs ...
              , 0);
     rho = imread(filename,'bmp');
-    %figure; image(rho);
-    %size(g_rho)
-    %size(  rho)
+     figure; image(rho);
+     size(g_rho)
+     size(  rho)
     g_rho(g_nj+1-(g_sj+1:g_ej+1),:,1) = flipud(rho(:,:,1));
     g_rho(g_nj+1-(g_sj+1:g_ej+1),:,2) = flipud(rho(:,:,2));
     g_rho(g_nj+1-(g_sj+1:g_ej+1),:,3) = flipud(rho(:,:,3));
@@ -74,7 +74,7 @@ function []=stitch( g_ni, g_nj, num_procs, start_frame, end_frame)
       g_rho(:,:,3) = g_rho(:,:,3) / 255;%max(max(g_rho(:,:,3)));
     end
 
-    figure; image(g_rho);
+    figure; image(g_rho); axis image;
 
     filename = sprintf('g_rho%dx%d_frame%04d_subs%02d.bmp' ...
              , g_ni ...
