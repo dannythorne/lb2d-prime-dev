@@ -8,10 +8,10 @@
 //    old mcmp code from last summer (2004).
 //
 
-void lbmpi_construct( 
-       lbmpi_ptr lbmpi, 
-       lattice_ptr lattice, 
-       int argc, 
+void lbmpi_construct(
+       lbmpi_ptr lbmpi,
+       lattice_ptr lattice,
+       int argc,
        char **argv)
 {
   int i, j;
@@ -36,8 +36,8 @@ void lbmpi_construct(
   // Say "hi".
   printf(
    "Proc %d (%d,%d) of %d (%d-by-%d) says, \"Hi!\" "
-   "// (N,S,E,W) = (%d,%d,%d,%d)\n", 
-    lbmpi->ProcID,   lbmpi->PX, lbmpi->PY, 
+   "// (N,S,E,W) = (%d,%d,%d,%d)\n",
+    lbmpi->ProcID,   lbmpi->PX, lbmpi->PY,
     lbmpi->NumProcs, lbmpi->NPX,  lbmpi->NPY,
     lbmpi->NorthID, lbmpi->SouthID, lbmpi->EastID, lbmpi->WestID );
 
@@ -52,28 +52,28 @@ void lbmpi_construct(
   //
 
   printf("\n%d: Making MPI_South2North... \n", lbmpi_get_ProcID(lbmpi));
-  MPI_Address( 
+  MPI_Address(
     get_ftemp_ptr( lattice,
-                   /*subs*/0, 
-                   /*j*/get_sj(lattice), 
-                   /*i*/get_si(lattice), 
+                   /*subs*/0,
+                   /*j*/get_sj(lattice),
+                   /*i*/get_si(lattice),
                    /*a*/0),
     (MPI_Aint *)lbmpi_get_Index0_ptr(lbmpi));
 
   // Acquire memory addresses of all the elements.  With these
-  // we will compute the indices needed by MPI_Type_struct 
+  // we will compute the indices needed by MPI_Type_struct
   // below.
   for(i=get_si(lattice); i<=get_ei(lattice); i++)
   {
-    MPI_Address( get_ftemp_ptr(lattice,0,get_sj(lattice),i,2), 
+    MPI_Address( get_ftemp_ptr(lattice,0,get_sj(lattice),i,2),
                  &( lbmpi->AddrsNS[ 3*(i-0)+0]) );
     MPI_Address( get_ftemp_ptr(lattice,0,get_sj(lattice),i,5),
                  &( lbmpi->AddrsNS[ 3*(i-0)+1]) );
     MPI_Address( get_ftemp_ptr(lattice,0,get_sj(lattice),i,6),
                  &( lbmpi->AddrsNS[ 3*(i-0)+2]) );
-  
+
   } /* for(i=1; i<=get_LX(lattice); i++) */
-  
+
   // Stuff needed by MPI_Type_struct.
   for(i=1; i<=get_LX(lattice); i++)
   {
@@ -102,7 +102,7 @@ void lbmpi_construct(
            /* MPI_Datatype old_types[] */ lbmpi->TypesNS,
            /* MPI_Datatype *newtype */    &lbmpi->MPI_South2North    );
 
-  ierr = MPI_Type_commit( 
+  ierr = MPI_Type_commit(
            /* MPI_Datatype *datatype */   &lbmpi->MPI_South2North    );
 
   printf("\n%d: Done making MPI_South2North\n", lbmpi_get_ProcID(lbmpi));
@@ -118,8 +118,8 @@ void lbmpi_construct(
       lbmpi->IndicesNS[ 3*(i-1)+1],
       lbmpi->IndicesNS[ 3*(i-1)+2] );
   }
-  printf("\n%d: MPI_South2North { %s }\n", 
-    lbmpi_get_ProcID(lbmpi), 
+  printf("\n%d: MPI_South2North { %s }\n",
+    lbmpi_get_ProcID(lbmpi),
     lbmpi->iobuf);
 #endif
 
@@ -131,29 +131,29 @@ void lbmpi_construct(
   //
 
   printf("\n%d: Making MPI_North2South... \n", lbmpi_get_ProcID(lbmpi));
-  MPI_Address( 
+  MPI_Address(
     get_ftemp_ptr( lattice,
-                   /*subs*/0, 
-                   /*j*/get_ej(lattice), 
-                   /*i*/get_si(lattice), 
+                   /*subs*/0,
+                   /*j*/get_ej(lattice),
+                   /*i*/get_si(lattice),
                    /*a*/4),
     (MPI_Aint *)lbmpi_get_Index0_ptr(lbmpi));
 
   // Acquire memory addresses of all the elements.  With these
-  // we will compute the indices needed by MPI_Type_struct 
+  // we will compute the indices needed by MPI_Type_struct
   // below.
   for(i=get_si(lattice); i<=get_ei(lattice); i++)
   {
-    MPI_Address( 
+    MPI_Address(
       get_ftemp_ptr(lattice,0,get_ej(lattice),i,4),
       &( lbmpi->AddrsNS[ 3*(i-0)+0]));
-    MPI_Address( 
+    MPI_Address(
       get_ftemp_ptr(lattice,0,get_ej(lattice),i,7),
       &( lbmpi->AddrsNS[ 3*(i-0)+1]));
-    MPI_Address( 
+    MPI_Address(
       get_ftemp_ptr(lattice,0,get_ej(lattice),i,8),
       &( lbmpi->AddrsNS[ 3*(i-0)+2]));
-  
+
   } /* for(i=1; i<=get_LX(lattice); i++) */
 
   // Stuff needed by MPI_Type_struct.
@@ -183,7 +183,7 @@ void lbmpi_construct(
            /* MPI_Datatype old_types[] */ lbmpi->TypesNS,
            /* MPI_Datatype *newtype */    &lbmpi->MPI_North2South    );
 
-  ierr = MPI_Type_commit( 
+  ierr = MPI_Type_commit(
            /* MPI_Datatype *datatype */   &lbmpi->MPI_North2South    );
 
   printf("\n%d: Done making MPI_North2South\n", lbmpi->ProcID);
@@ -199,7 +199,7 @@ void lbmpi_construct(
       lbmpi->IndicesNS[ 3*(i-1)+1],
       lbmpi->IndicesNS[ 3*(i-1)+2] );
   }
-  printf("\n%d: MPI_North2South { %s }\n", 
+  printf("\n%d: MPI_North2South { %s }\n",
     lbmpi_get_ProcID(lbmpi),
     lbmpi->iobuf);
 #endif
@@ -213,26 +213,26 @@ void lbmpi_construct(
 
   printf("\n%d: Making MPI_East2West... \n", lbmpi_get_ProcID(lbmpi));
   //MPI_Address( &( ftemp[1][1][get_LX(lattice)][3]), &Index0);
-  MPI_Address( 
+  MPI_Address(
     get_ftemp_ptr( lattice,
-                   /*subs*/0, 
-                   /*j*/get_sj(lattice), 
-                   /*i*/get_ei(lattice), 
+                   /*subs*/0,
+                   /*j*/get_sj(lattice),
+                   /*i*/get_ei(lattice),
                    /*a*/3),
     (MPI_Aint *)lbmpi_get_Index0_ptr(lbmpi));
 
   // Acquire memory addresses of all the elements.  With these
-  // we will compute the indices needed by MPI_Type_struct 
+  // we will compute the indices needed by MPI_Type_struct
   // below.
   for(j=get_sj(lattice); j<=get_ej(lattice); j++)
   {
     MPI_Address(
       get_ftemp_ptr(lattice,0,j,get_ei(lattice),3),
       &( lbmpi->AddrsEW[ 3*(j-0)+0]));
-    MPI_Address( 
+    MPI_Address(
       get_ftemp_ptr(lattice,0,j,get_ei(lattice),6),
       &( lbmpi->AddrsEW[ 3*(j-0)+1]));
-    MPI_Address( 
+    MPI_Address(
       get_ftemp_ptr(lattice,0,j,get_ei(lattice),7),
       &( lbmpi->AddrsEW[ 3*(j-0)+2]));
 
@@ -265,7 +265,7 @@ void lbmpi_construct(
            /* MPI_Datatype old_types[] */ lbmpi->TypesEW,
            /* MPI_Datatype *newtype */    &lbmpi->MPI_East2West    );
 
-  ierr = MPI_Type_commit( 
+  ierr = MPI_Type_commit(
            /* MPI_Datatype *datatype */   &lbmpi->MPI_East2West    );
 
   printf("\n%d: Done making MPI_East2West\n", lbmpi_get_ProcID(lbmpi));
@@ -294,27 +294,27 @@ void lbmpi_construct(
 
   printf("\n%d: Making MPI_West2East... \n", lbmpi_get_ProcID(lbmpi));
   //MPI_Address( &( ftemp[1][1][1][1]), &Index0);
-  MPI_Address( 
+  MPI_Address(
     get_ftemp_ptr( lattice,
-                   /*subs*/0, 
-                   /*j*/get_sj(lattice), 
-                   /*i*/get_si(lattice), 
+                   /*subs*/0,
+                   /*j*/get_sj(lattice),
+                   /*i*/get_si(lattice),
                    /*a*/1),
     (MPI_Aint *)lbmpi_get_Index0_ptr(lbmpi));
 
   // Acquire memory addresses of all the elements.  With these
-  // we will compute the indices needed by MPI_Type_struct 
+  // we will compute the indices needed by MPI_Type_struct
   // below.
   for(j=get_sj(lattice); j<=get_ej(lattice); j++)
   {
-    MPI_Address( 
-      get_ftemp_ptr(lattice,0,j,get_si(lattice),1), 
+    MPI_Address(
+      get_ftemp_ptr(lattice,0,j,get_si(lattice),1),
       &( lbmpi->AddrsEW[ 3*(j-1)+0]));
-    MPI_Address( 
-      get_ftemp_ptr(lattice,0,j,get_si(lattice),5), 
+    MPI_Address(
+      get_ftemp_ptr(lattice,0,j,get_si(lattice),5),
       &( lbmpi->AddrsEW[ 3*(j-1)+1]));
-    MPI_Address( 
-      get_ftemp_ptr(lattice,0,j,get_si(lattice),8), 
+    MPI_Address(
+      get_ftemp_ptr(lattice,0,j,get_si(lattice),8),
       &( lbmpi->AddrsEW[ 3*(j-1)+2]));
 
   } /* for(j=1; j<=get_LY(lattice); j++) */
@@ -326,17 +326,17 @@ void lbmpi_construct(
     lbmpi->BlockLengthsEW[ 3*j+0] = 1;
     lbmpi->BlockLengthsEW[ 3*j+1] = 1;
     lbmpi->BlockLengthsEW[ 3*j+2] = 1;
-   
+
     // Compute offsets from the first element.
     lbmpi->IndicesEW[ 3*j+0] = lbmpi->AddrsEW[ 3*j+0]-lbmpi->AddrsEW[0];
     lbmpi->IndicesEW[ 3*j+1] = lbmpi->AddrsEW[ 3*j+1]-lbmpi->AddrsEW[0];
     lbmpi->IndicesEW[ 3*j+2] = lbmpi->AddrsEW[ 3*j+2]-lbmpi->AddrsEW[0];
-   
+
     // All the types are doubles.
     lbmpi->TypesEW[ 3*j+0] = MPI_DOUBLE;
     lbmpi->TypesEW[ 3*j+1] = MPI_DOUBLE;
     lbmpi->TypesEW[ 3*j+2] = MPI_DOUBLE;
-  
+
   } /* for(j=1; j<=get_LY(lattice); j++) */
 
   ierr = MPI_Type_struct(
@@ -346,7 +346,7 @@ void lbmpi_construct(
          /* MPI_Datatype old_types[] */ lbmpi->TypesEW,
          /* MPI_Datatype *newtype */    &lbmpi->MPI_West2East    );
 
-  ierr = MPI_Type_commit( 
+  ierr = MPI_Type_commit(
          /* MPI_Datatype *datatype */   &lbmpi->MPI_West2East    );
 
   printf("\n%d: Done making MPI_West2East\n", lbmpi_get_ProcID(lbmpi));
@@ -379,7 +379,7 @@ void lbmpi_communicate( lbmpi_ptr lbmpi, lattice_ptr lattice)
 
 // void lbmpi_allocate_data_structures( lbmpi, lattice)
 //
-// Allocate datatypes for 
+// Allocate datatypes for
 void lbmpi_allocate_datatypes( lbmpi_ptr lbmpi, lattice_ptr lattice)
 {
   //int BlockLengthsEW[3*LY];
@@ -616,9 +616,9 @@ void lbmpi_write_local_bmp( lattice_ptr lattice, int **sub_matrix)
 
   bmp_hdr = (bmp_hdr_ptr)malloc( sizeof(struct bmp_hdr_struct));
 
-  sprintf( filename, "./in/%dx%d_id%05d_px%05d_py%05d.bmp", 
-    get_LX(lattice), 
-    get_LY(lattice), 
+  sprintf( filename, "./in/%dx%d_id%05d_px%05d_py%05d.bmp",
+    get_LX(lattice),
+    get_LY(lattice),
     get_NumProcs(lbmpi),
     get_PX(lbmpi),
     get_PY(lbmpi) );

@@ -122,10 +122,10 @@
 // The phase force weighting factors:
 //   WM = weights in the direction of major axes
 //   WD = weights in the direction of diagonals
-// According to Raskinmaki, it should be WM=2 and WD=1.  
+// According to Raskinmaki, it should be WM=2 and WD=1.
 // According to Chen (via correspondence) it should be WM=4 and WD=1.
 // According to Sukop and Thorne, it should be WM=1/9 and WD=1/36.
-// The corresonding G values (a.k.a. G, as in params.in) for the usual 
+// The corresonding G values (a.k.a. G, as in params.in) for the usual
 // equation of state that we like are -5, -10/3, and -120, respectively.
 // Flag: WM
 #define WM (1./ 9.)
@@ -177,8 +177,8 @@
 #define WRITE_MACRO_VAR_DAT_FILES 1
 
 // Usually the density and velocity are written only for the active nodes
-// and in a way designed for post-processing.  Additional files with the 
-// variables written in a readable grid of all lattice nodes will be 
+// and in a way designed for post-processing.  Additional files with the
+// variables written in a readable grid of all lattice nodes will be
 // generated when WRITE_RHO_AND_U_TO_TXT is on.  This is done in an
 // inefficient way and is intended only for debugging purposes on tiny
 // lattices.  Note that if WRITE_MACRO_VAR_DAT_FILES is off, this flag
@@ -202,7 +202,7 @@
 
 // Negative densities (f_a) generally signify impending doom.  The code
 // will die "gracefully" when this happens if PUKE_NEGATIVE_DENSITIES is on.
-// Might want to turn this off to boost performance on big, long runs that 
+// Might want to turn this off to boost performance on big, long runs that
 // are expected to survive without such instabilities.
 // Flag: PUKE_NEGATIVE_DENSITIES
 #define PUKE_NEGATIVE_DENSITIES 0
@@ -218,8 +218,8 @@
 // Flag: END_GRAV
 #define END_GRAV 2000
 
-// A single white pixel will be placed in at the (0,0) lattice node if 
-// MARK_ORIGIN_FOR_REFERENCE is turned on.  This is good for assisting with the 
+// A single white pixel will be placed in at the (0,0) lattice node if
+// MARK_ORIGIN_FOR_REFERENCE is turned on.  This is good for assisting with the
 // problem of tracking orientation of the results between regimes (e.g. C, BMP,
 // Matlab...).
 // Flag: MARK_ORIGIN_FOR_REFERENCE

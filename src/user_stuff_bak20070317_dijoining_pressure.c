@@ -18,7 +18,7 @@ void user_stuff_pre_frames( lattice_ptr lattice)
 
   lattice->user_stuff->rho_c_start   = 83.70420;
   lattice->user_stuff->rho_c_reverse = 85.70420;
-  lattice->user_stuff->rho_c_inc     = 
+  lattice->user_stuff->rho_c_inc     =
     ( lattice->user_stuff->rho_c_reverse
     - lattice->user_stuff->rho_c_start   )/15.;//0.2138;
 
@@ -29,21 +29,21 @@ void user_stuff_pre_frames( lattice_ptr lattice)
 
   lattice->user_stuff->rho_c = lattice->user_stuff->rho_c_start;
 
-  lattice->param.rho_in  = 
+  lattice->param.rho_in  =
     lattice->user_stuff->rho_c;
-  lattice->param.rho_out = 
+  lattice->param.rho_out =
     lattice->user_stuff->rho_c;
 
   lattice->user_stuff->o = fopen( "rho_c_frames.txt", "w+");
-  fprintf( 
-    lattice->user_stuff->o, 
-    "%04d %f %f\n", 
-    /*frames*/0, 
-    lattice->user_stuff->rho_c, 
+  fprintf(
+    lattice->user_stuff->o,
+    "%04d %f %f\n",
+    /*frames*/0,
+    lattice->user_stuff->rho_c,
     lattice->user_stuff->rho_c);
   fclose(lattice->user_stuff->o);
 
-  printf("\n\n%s %d >> frame %4d: Boundary pressure, rho_c = %f\n\n", 
+  printf("\n\n%s %d >> frame %4d: Boundary pressure, rho_c = %f\n\n",
       __FILE__, __LINE__, lattice->frame, lattice->param.rho_in);
 
 } /* void user_stuff_pre_frames( lattice_ptr lattice) */
@@ -66,7 +66,7 @@ void user_stuff_frame( lattice_ptr lattice)
   printf("  rho_ave      = %f\n", lattice->user_stuff->rho_ave);
   printf("  rho_ave_prev = %f\n", lattice->user_stuff->rho_ave_prev);
 
-  drho_ave  = fabs( lattice->user_stuff->rho_ave 
+  drho_ave  = fabs( lattice->user_stuff->rho_ave
                   - lattice->user_stuff->rho_ave_prev);
   du_ave[0] = fabs( lattice->user_stuff->u_ave[0]
                   - lattice->user_stuff->u_ave_prev[0]);
@@ -83,7 +83,7 @@ void user_stuff_frame( lattice_ptr lattice)
   {
     rho_c0 = lattice->user_stuff->rho_c;
 
-    if( lattice->user_stuff->rho_c < lattice->user_stuff->rho_c_reverse) 
+    if( lattice->user_stuff->rho_c < lattice->user_stuff->rho_c_reverse)
     {
       printf("\n\n%s %d >> Bing! Incrementing rho_c.\n\n", __FILE__, __LINE__);
 
@@ -100,7 +100,7 @@ void user_stuff_frame( lattice_ptr lattice)
     {
       if( lattice->user_stuff->rho_c >= lattice->user_stuff->rho_c_reverse)
       {
-        printf("\n\n%s %d >> Bing! Decrementing rho_c.\n\n", 
+        printf("\n\n%s %d >> Bing! Decrementing rho_c.\n\n",
           __FILE__, __LINE__);
         lattice->user_stuff->rho_c -= lattice->user_stuff->rho_c_inc;
       }
@@ -115,9 +115,9 @@ void user_stuff_frame( lattice_ptr lattice)
     lattice->param.rho_out = lattice->user_stuff->rho_c;
 
     lattice->user_stuff->o = fopen( "rho_c_frames.txt", "a+");
-    fprintf( lattice->user_stuff->o, "%04d %f %f\n", 
-      get_frame( lattice), 
-      rho_c0, 
+    fprintf( lattice->user_stuff->o, "%04d %f %f\n",
+      get_frame( lattice),
+      rho_c0,
       lattice->user_stuff->rho_c);
     fclose( lattice->user_stuff->o);
 
@@ -133,7 +133,7 @@ void user_stuff_frame( lattice_ptr lattice)
   //t1 = ((double)clock() - (double)tic)/(double)CLK_TCK;
   //printf("Resuming at time %f\n", t1);
 
-  printf("\n\n%s %d >> frame %4d: Boundary pressure, rho_c = %f\n\n", 
+  printf("\n\n%s %d >> frame %4d: Boundary pressure, rho_c = %f\n\n",
       __FILE__, __LINE__, lattice->frame, lattice->param.rho_in);
 
 } /* void user_stuff_frame( lattice_ptr lattice) */

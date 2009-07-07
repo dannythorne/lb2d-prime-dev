@@ -12,7 +12,7 @@
 //
 // M A N A G E   B O D Y   F O R C E
 //
-//  - Reduce gravity to avoid run-away velocities and numerical 
+//  - Reduce gravity to avoid run-away velocities and numerical
 //    instability, if lattice->param.end_grav is specified.
 //
 inline void manage_body_force( lattice_ptr lattice)
@@ -82,9 +82,9 @@ inline void dump( lattice_ptr lattice, int dump_num)
 {
 #if WRITE_PDF_DAT_FILES
   int time=get_time(lattice);
-  if( 1 && time>=DELAY && !(time%get_FrameRate(lattice))) 
-  { 
-    dump_pdf( lattice, get_FrameRate(lattice)*1000*dump_num + time); 
+  if( 1 && time>=DELAY && !(time%get_FrameRate(lattice)))
+  {
+    dump_pdf( lattice, get_FrameRate(lattice)*1000*dump_num + time);
   }
 #endif /* WRITE_PDF_DAT_FILES */
 }

@@ -31,13 +31,13 @@
 #define INAMURO_SIGMA_COMPONENT 1
 
 // Simulate POROUS_MEDIA via a solid density parameter
-// as proposed by Dardis and McCloskey, 
+// as proposed by Dardis and McCloskey,
 // Phys Rev E, 57, 4, 4834-4837, 1998
 #define POROUS_MEDIA 0
 
-// When there are two (or more) fluid components, a single velocity is 
-// sometimes (always?) used to compute the equilibrium distribution 
-// function.  This single velocity will be called ueq, and the 
+// When there are two (or more) fluid components, a single velocity is
+// sometimes (always?) used to compute the equilibrium distribution
+// function.  This single velocity will be called ueq, and the
 // STORE_UEQ flag will toggle its use.
 #define STORE_UEQ 1 && NUM_FLUID_COMPONENTS==2 && !INAMURO_SIGMA_COMPONENT
 
@@ -82,8 +82,8 @@
 #define WRITE_MACRO_VAR_DAT_FILES 1
 
 // Usually the density and velocity are written only for the active nodes
-// and in a way designed for post-processing.  Additional files with the 
-// variables written in a readable grid of all lattice nodes will be 
+// and in a way designed for post-processing.  Additional files with the
+// variables written in a readable grid of all lattice nodes will be
 // generated when WRITE_RHO_AND_U_TO_TXT is on.  This is done in an
 // inefficient way and is intended only for debugging purposes on tiny
 // lattices.  Note that if WRITE_MACRO_VAR_DAT_FILES is off, this flag
@@ -103,7 +103,7 @@
 
 // Negative densities (f_a) generally signify impending doom.  The code
 // will die "gracefully" when this happens if PUKE_NEGATIVE_DENSITIES is on.
-// Might want to turn this off to boost performance on big, long runs that 
+// Might want to turn this off to boost performance on big, long runs that
 // are expected to survive without such instabilities.
 #define PUKE_NEGATIVE_DENSITIES 0
 
@@ -114,8 +114,8 @@
 #define DELAY    0
 #define END_GRAV 2000
 
-// A single white pixel will be placed in at the (0,0) lattice node if 
-// MARK_ORIGIN_FOR_REFERENCE is turned on.  This is good for assisting with the 
+// A single white pixel will be placed in at the (0,0) lattice node if
+// MARK_ORIGIN_FOR_REFERENCE is turned on.  This is good for assisting with the
 // problem of tracking orientation of the results between regimes (e.g. C, BMP,
 // Matlab...).
 #define MARK_ORIGIN_FOR_REFERENCE 0
@@ -127,8 +127,8 @@
 #define WRITE_CHEN_DAT_FILES 0
 
 
-// IC_* flags are for initial conditions.  Used in switch statement in 
-// init_problem() in latmat.c .  Set the initial_condition parameter 
+// IC_* flags are for initial conditions.  Used in switch statement in
+// init_problem() in latmat.c .  Set the initial_condition parameter
 // in params.in .
 #define IC_UNIFORM_RHO_A          1
 #define IC_UNIFORM_RHO_IN         2

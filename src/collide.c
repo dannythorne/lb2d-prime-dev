@@ -488,7 +488,7 @@ void collide( lattice_ptr lattice)
           if( subs==1  &&  ns > 1e-12)
           {
             f[a] = ftemp[a] - ( ( ftemp[a] / lattice->tau_zhang[a] )
-                              - ( feq[a]   / lattice->tau_zhang[a] ) );   
+                              - ( feq[a]   / lattice->tau_zhang[a] ) );
           }
           else
           {

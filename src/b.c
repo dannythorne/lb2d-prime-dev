@@ -32,13 +32,13 @@ void collide( lattice_ptr lattice)
 #endif /* ZHANG_AND_CHEN_ENERGY_TRANSPORT */
 
 #if INAMURO_SIGMA_COMPONENT
-    if( ( get_bc_sigma_walls(lattice) && subs==1) 
+    if( ( get_bc_sigma_walls(lattice) && subs==1)
       || !( bc_type & BC_SOLID_NODE))
 #else /* !(INAMURO_SIGMA_COMPONENT) */
     if(  !( bc_type & BC_SOLID_NODE))
 #endif /* (INAMURO_SIGMA_COMPONENT) */
     {
-        // C O L L I D E 
+        // C O L L I D E
 
         // f = ftemp - (1/tau[subs])( ftemp - feq)
         for( a=0; a<=8; a++)
@@ -88,8 +88,8 @@ void collide( lattice_ptr lattice)
               "collide() -- Node %d (%d,%d), subs %d, "
               "has negative density %20.17f "
               "in direction %d "
-              "at timestep %d. Exiting!\n", 
-              n, n%lattice->param.LX, 
+              "at timestep %d. Exiting!\n",
+              n, n%lattice->param.LX,
                  n/lattice->param.LX,
                  subs,
                  f[a], a,
@@ -104,17 +104,17 @@ void collide( lattice_ptr lattice)
 
     else // bc_type & BC_SOLID_NODE
     {
-      // B O U N C E B A C K 
+      // B O U N C E B A C K
 
       if(   lattice->param.bc_slip_north
          && n >= lattice->NumNodes - lattice->param.LX)
       {
         // Slip condition on north boundary.
         /*
-        //   A B C               
-        //    \|/           \|/  
-        //   D-o-E   -->   D-o-E 
-        //    /|\           /|\  
+        //   A B C
+        //    \|/           \|/
+        //   D-o-E   -->   D-o-E
+        //    /|\           /|\
         //                 A B C
         */
         f[1] = ftemp[1];
@@ -134,10 +134,10 @@ void collide( lattice_ptr lattice)
         {
           // Usual non-slip bounce-back condition.
           /*
-          //   A B C         H G F 
-          //    \|/           \|/  
-          //   D-o-E   -->   E-o-D 
-          //    /|\           /|\  
+          //   A B C         H G F
+          //    \|/           \|/
+          //   D-o-E   -->   E-o-D
+          //    /|\           /|\
           //   F G H         C B A
           */
           f[1] = ftemp[3];
@@ -168,10 +168,10 @@ void collide( lattice_ptr lattice)
               {
                 // Slip condition on east/west boundary.
                 /*
-                //   A B C         C B A 
-                //    \|/           \|/  
-                //   D-o-E   -->   E-o-D 
-                //    /|\           /|\  
+                //   A B C         C B A
+                //    \|/           \|/
+                //   D-o-E   -->   E-o-D
+                //    /|\           /|\
                 //   F G H         H G F
                 */
                 f[1] = ftemp[3];
@@ -192,10 +192,10 @@ void collide( lattice_ptr lattice)
               {
                 // Slip condition on north/south boundary.
                 /*
-                //   A B C         F G H 
-                //    \|/           \|/  
-                //   D-o-E   -->   D-o-E 
-                //    /|\           /|\  
+                //   A B C         F G H
+                //    \|/           \|/
+                //   D-o-E   -->   D-o-E
+                //    /|\           /|\
                 //   F G H         A B C
                 */
                 f[1] = ftemp[1];
@@ -237,10 +237,10 @@ void collide( lattice_ptr lattice)
 #endif /* INAMURO_SIGMA_COMPONENT */
             // Usual non-slip bounce-back condition.
             /*
-            //   A B C         H G F 
-            //    \|/           \|/  
-            //   D-o-E   -->   E-o-D 
-            //    /|\           /|\  
+            //   A B C         H G F
+            //    \|/           \|/
+            //   D-o-E   -->   E-o-D
+            //    /|\           /|\
             //   F G H         C B A
             */
             f[1] = ftemp[3];

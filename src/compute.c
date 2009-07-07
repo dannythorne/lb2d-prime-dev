@@ -92,8 +92,8 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
 {
   int n, a;
 
-  double *rho[ NUM_FLUID_COMPONENTS], 
-         *u_x[ NUM_FLUID_COMPONENTS], 
+  double *rho[ NUM_FLUID_COMPONENTS],
+         *u_x[ NUM_FLUID_COMPONENTS],
          *u_y[ NUM_FLUID_COMPONENTS];
 
   double *f, *ftemp;
@@ -214,9 +214,9 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
         printf(
           "compute_macro_vars() -- "
           "Node %d (%d,%d) has negative density %20.17f "
-          "at timestep %d. Exiting!\n", 
+          "at timestep %d. Exiting!\n",
           n, n%lattice->param.LX,
-             n/lattice->param.LX, *rho[subs], 
+             n/lattice->param.LX, *rho[subs],
              lattice->time             );
         printf("\n");
         process_exit(1);
@@ -233,7 +233,7 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
                "Exiting!\n",
                __FILE__,__LINE__,
                subs,
-               n/lattice->param.LX, 
+               n/lattice->param.LX,
                n%lattice->param.LX,
                lattice->time        );
         printf("\n");
@@ -295,22 +295,22 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
   for( n=0; n<lattice->NumNodes; n++)
   {
 #if  TAU_ZHANG_ANISOTROPIC_DISPERSION
-    
-//Dl=.81;Dt=0.21;  
+
+//Dl=.81;Dt=0.21;
  //*u_x[0] = (*u_x[0] < 1e-12 ? 0. : *u_x[0]);
  //*u_y[0] = (*u_y[0] < 1e-12 ? 0. : *u_y[0]);
-   
-  Dxx = lattice->param.Dt *sqrt(pow((*u_x[0]),2) + pow((*u_y[0]),2) ) + ( lattice->param.Dl - lattice->param.Dt)*(*u_x[0] * (*u_x[0]))/sqrt(pow((*u_x[0]),2) + 
+
+  Dxx = lattice->param.Dt *sqrt(pow((*u_x[0]),2) + pow((*u_y[0]),2) ) + ( lattice->param.Dl - lattice->param.Dt)*(*u_x[0] * (*u_x[0]))/sqrt(pow((*u_x[0]),2) +
 			  pow((*u_y[0]),2));
 
- 
-  Dyy= lattice->param.Dt *sqrt(pow((*u_x[0]),2) + pow((*u_y[0]),2) ) + ( lattice->param.Dl - lattice->param.Dt)*(*u_y[0] * (*u_y[0]))/sqrt(pow((*u_x[0]),2) + 
+
+  Dyy= lattice->param.Dt *sqrt(pow((*u_x[0]),2) + pow((*u_y[0]),2) ) + ( lattice->param.Dl - lattice->param.Dt)*(*u_y[0] * (*u_y[0]))/sqrt(pow((*u_x[0]),2) +
 			  pow((*u_y[0]),2));
 
   Dxy=                                ( lattice->param.Dl - lattice->param.Dt )*(*u_x[0] * (*u_y[0]))/sqrt(pow((*u_x[0]),2) + pow((*u_y[0]),2));
 
 //printf("Dl=%f\n",lattice->param.Dl);
-  
+
     lattice->tau_zhang [0] = 1.;
 
     lamdax = (18. * Dxx + 3. - 18. * Dxy)/ 6.;
@@ -322,11 +322,11 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
           printf("\nux=%f uy=%f Dxx=%f  Dxy=%f  Dyy=%f \n",*u_x[0],*u_y[0],Dxx,Dxy,Dyy);
         	exit(1);	
 	      }
-    
+
   if (Dxy > 1e-12)
   {
-   
-   
+
+
     if (lamdax < lamday)
 
     lattice->tau_zhang [6] = lattice->tau_zhang [8] = lamdax;
@@ -335,13 +335,13 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
 
     lattice->tau_zhang [6] = lattice->tau_zhang [8] = lamday;
 
-    
+
 
     lattice->tau_zhang [5] = lattice->tau_zhang [7] = ( 18.* Dxy +       lattice->tau_zhang [6]);
     lattice->tau_zhang [2] = lattice->tau_zhang [4] = ( 18.* Dyy + 3. - (lattice->tau_zhang [5]+lattice->tau_zhang [6]) )/4.;
     lattice->tau_zhang [1] = lattice->tau_zhang [3] = ( 18.* Dxx + 3. - (lattice->tau_zhang [5]+lattice->tau_zhang [6]) )/4.;
   }
-  
+
   else if (Dxy < 1e-12)
   {
     if (lamdax < lamday)
@@ -361,31 +361,31 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
 
   else if ( Dxy == 0.)
   {
-  
-    lattice->tau_zhang [6] = lattice->tau_zhang [8] =  0.5001; 
+
+    lattice->tau_zhang [6] = lattice->tau_zhang [8] =  0.5001;
     lattice->tau_zhang [5] = lattice->tau_zhang [7] = ( 18.* Dxy +       lattice->tau_zhang [6]);
     lattice->tau_zhang [2] = lattice->tau_zhang [4] = ( 18.* Dyy + 3. - (lattice->tau_zhang [5]+lattice->tau_zhang [6]) )/4.;
     lattice->tau_zhang [1] = lattice->tau_zhang [3] = ( 18.* Dxx + 3. - (lattice->tau_zhang [5]+lattice->tau_zhang [6]) )/4.;
   }
 
-  else 
+  else
   {
    	printf("%s (%d)""at Dxy = %f  n=%d, time=%d",__FILE__,__LINE__,Dxy,n,lattice->time);
           printf("\nux=%f uy=%f Dxx=%f  Dxy=%f  Dyy=%f \n",*u_x[0],*u_y[0],Dxx,Dxy,Dyy);
 		printf("\n%s (%d)\n""lamda<0.5 lamdax=%f lamday=%f at n=%d, time=%d",__FILE__,__LINE__,lamdax,lamday,n,lattice->time);
-	exit(1); 
+	exit(1);
   }
-  
+
   factor=0.;
-  
+
   for(a=0;a<9;a++)
   {
    factor=factor+wt[a]/lattice->tau_zhang [a];
 
   }
-  
+
   factor=1./factor;
-#endif 
+#endif
 
     *rho[subs] = 0.;
 
@@ -418,9 +418,9 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
         printf(
           "compute_macro_vars() -- "
           "Node %d (%d,%d) has negative density %20.17f "
-          "at timestep %d. Exiting!\n", 
+          "at timestep %d. Exiting!\n",
           n, n%lattice->param.LX,
-             n/lattice->param.LX, *rho[subs], 
+             n/lattice->param.LX, *rho[subs],
              lattice->time             );
         printf("\n");
         process_exit(1);
@@ -462,7 +462,7 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
                "Exiting!\n",
                __FILE__,__LINE__,
                0,
-               n/lattice->param.LX, 
+               n/lattice->param.LX,
                n%lattice->param.LX,
                lattice->time        );
         printf("\n");
@@ -502,8 +502,8 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
 {
   int n, a;
 
-  double *rho[ NUM_FLUID_COMPONENTS], 
-         *u_x[ NUM_FLUID_COMPONENTS], 
+  double *rho[ NUM_FLUID_COMPONENTS],
+         *u_x[ NUM_FLUID_COMPONENTS],
          *u_y[ NUM_FLUID_COMPONENTS];
 
   double ux_sum, uy_sum;
@@ -590,9 +590,9 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
         printf(
           "compute_macro_vars() -- "
           "Node %d (%d,%d) has negative density %20.17f "
-          "at timestep %d. Exiting!\n", 
+          "at timestep %d. Exiting!\n",
           n, n%lattice->param.LX,
-             n/lattice->param.LX, *rho[subs], 
+             n/lattice->param.LX, *rho[subs],
              lattice->time             );
         printf("\n");
         process_exit(1);
@@ -667,8 +667,8 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
       //assert( *rho[0] != 0.);
       //assert( *rho[1] != 0.);
 
-      if( ux_sum != 0.) 
-      { 
+      if( ux_sum != 0.)
+      {
         if( *rho[0] != 0)
         {
           *u_x[0] = ux_sum / *rho[0];
@@ -693,8 +693,8 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
         *u_x[1] = 0.;
       }
 
-      if( uy_sum != 0.) 
-      { 
+      if( uy_sum != 0.)
+      {
         if( *rho[0] != 0)
         {
           *u_y[0] = uy_sum / *rho[0];
@@ -785,7 +785,7 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
 
   double rt0,  rt1,  rt2;
   double f1,   f2,   f3;
-  double ux,   uy, 
+  double ux,   uy,
          uxsq, uysq, usq;
   double c;
 
@@ -884,7 +884,7 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
 #else /* !( STORE_U_COMPOSITE) */
 
 #if INAMURO_SIGMA_COMPONENT
-      ux = BIG_U_X( *macro_var, rt0, lattice->macro_vars[1][n].rho); 
+      ux = BIG_U_X( *macro_var, rt0, lattice->macro_vars[1][n].rho);
       macro_var++;
       *u1++ = *u0++;
 #else /* !( INAMURO_SIGMA_COMPONENT) */
@@ -904,7 +904,7 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
         uy = *macro_var;
       }
 #else
-        uy = BIG_U_Y( *macro_var, rt0, lattice->macro_vars[1][n].rho); 
+        uy = BIG_U_Y( *macro_var, rt0, lattice->macro_vars[1][n].rho);
 #endif
       macro_var++;
       *u1++ = *u0++;
@@ -958,7 +958,7 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
       printf("ERROR: Can't have incompressible with Freed PM!");
       process_exit(1);
       c  = rt0; // rt0 == rho
-      rt1 = 1./9.; 
+      rt1 = 1./9.;
       rt2 = 1./36.;
       rt0 = 4./9.; // Overwrite rt0.
     }
@@ -978,7 +978,7 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
       Gx = (1. - 3.*nu*Rx)/(1. + 0.5*Rx);
       Gy = (1. - 3.*nu*Ry)/(1. + 0.5*Ry);
 
-      u_x_p = Gx*ux //u_x_p is post-collision velocity, 
+      u_x_p = Gx*ux //u_x_p is post-collision velocity,
             + lattice->param.gval[subs][0]*tau0/rho0;
       u_y_p = Gy*uy // u_x is pre-collision velocity
             + lattice->param.gval[subs][1]*tau0/rho0;
@@ -1008,7 +1008,7 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
   if( lattice->param.incompressible)
   {
     c  = rt0; // rt0 == rho
-    rt1 = 1./9.; 
+    rt1 = 1./9.;
     rt2 = 1./36.;
     rt0 = 4./9.; // Overwrite rt0.
   }
@@ -1102,7 +1102,7 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
     if( COMPUTE_ON_SOLIDS || is_not_solid_node( lattice, subs, n))
     {
       rt0 = *rho; // Preserve raw density until after BIG_U.
-      rho+=3; 
+      rho+=3;
 
       ux = *u++;
       uy = *u++;
@@ -1205,8 +1205,8 @@ void compute_fluid_fluid_force( lattice_ptr lattice)
 
   double *force[2];
 
-  int    i,  j, 
-         in, jn, 
+  int    i,  j,
+         in, jn,
          ip, jp;
 
   int    n, LX, LY;
@@ -1280,7 +1280,7 @@ void compute_fluid_fluid_force( lattice_ptr lattice)
   } /* for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++) */
 
 //printf("sizeof( struct force_struct) = %d\n", sizeof( struct force_struct));
-//printf("NumNodes*sizeof( struct force_struct) = %d\n", 
+//printf("NumNodes*sizeof( struct force_struct) = %d\n",
 //    lattice->NumNodes*sizeof( struct force_struct));
 
   for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
@@ -1309,7 +1309,7 @@ void compute_fluid_fluid_force( lattice_ptr lattice)
         in = ( i>0   )?( i-1):( LX-1);
 
 //printf("compute_fluid_fluid_force() -- "
-//    "subs %d, ( i, j) = ( %2d, %2d), | f - f0| = %d\n", 
+//    "subs %d, ( i, j) = ( %2d, %2d), | f - f0| = %d\n",
 //    subs, i, j,
 //    force[subs] - lattice->force[subs][0].force );
 
@@ -1402,8 +1402,8 @@ void compute_fluid_fluid_force( lattice_ptr lattice)
 
   double *force[2];
 
-  int    i,  j, 
-         in, jn, 
+  int    i,  j,
+         in, jn,
          ip, jp;
 
   int    n, LX, LY;
@@ -1460,7 +1460,7 @@ void compute_fluid_fluid_force( lattice_ptr lattice)
   } /* for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++) */
 
 //printf("sizeof( struct force_struct) = %d\n", sizeof( struct force_struct));
-//printf("NumNodes*sizeof( struct force_struct) = %d\n", 
+//printf("NumNodes*sizeof( struct force_struct) = %d\n",
 //    lattice->NumNodes*sizeof( struct force_struct));
 
 
@@ -1511,13 +1511,13 @@ void compute_fluid_fluid_force( lattice_ptr lattice)
 
   } /* for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++) */
 
-lattice->force[0][j*LX+i].force[0] 
+lattice->force[0][j*LX+i].force[0]
   = -lattice->param.G*psi[0][j][i]*( psi_x[1]);
-lattice->force[0][j*LX+i].force[1] 
+lattice->force[0][j*LX+i].force[1]
   = -lattice->param.G*psi[0][j][i]*( psi_y[1]);
-lattice->force[1][j*LX+i].force[0] 
+lattice->force[1][j*LX+i].force[0]
   = -lattice->param.G*psi[1][j][i]*( psi_x[0]);
-lattice->force[1][j*LX+i].force[1] 
+lattice->force[1][j*LX+i].force[1]
   = -lattice->param.G*psi[1][j][i]*( psi_y[0]);
       }
       else
@@ -1571,8 +1571,8 @@ void compute_phase_force( lattice_ptr lattice, int subs)
 
   double a, b, R;
 
-  int    i,  j, 
-         in, jn, 
+  int    i,  j,
+         in, jn,
          ip, jp;
 
   int    n, LX, LY;
@@ -1639,10 +1639,10 @@ void compute_phase_force( lattice_ptr lattice, int subs)
 #else
         // Carnahan-Starling
         y = (*rho)*b/4.;
-        U[j][i] = R*(*T)*(*rho)*( ( 1. + y + y*y - y*y*y) 
+        U[j][i] = R*(*T)*(*rho)*( ( 1. + y + y*y - y*y*y)
                 / ( (1.-y)*(1.-y)*(1.-y)))
                 - a*(*rho)*(*rho);
-//printf("%s (%d) >> U[%d][%d](rho=%f,T=%f) = %20.17f\n", 
+//printf("%s (%d) >> U[%d][%d](rho=%f,T=%f) = %20.17f\n",
 //    __FILE__, __LINE__, j, i, *rho, *T, U[j][i]);
 #endif
 
@@ -1655,7 +1655,7 @@ void compute_phase_force( lattice_ptr lattice, int subs)
   } /* for( j=0; j<LY; j++) */
 
 //printf("sizeof( struct force_struct) = %d\n", sizeof( struct force_struct));
-//printf("NumNodes*sizeof( struct force_struct) = %d\n", 
+//printf("NumNodes*sizeof( struct force_struct) = %d\n",
 //    lattice->NumNodes*sizeof( struct force_struct));
 
   //############################################################################
@@ -1746,8 +1746,8 @@ void compute_phase_force( lattice_ptr lattice, int subs)
 
   double *force;
 
-  int    i,  j, 
-         in, jn, 
+  int    i,  j,
+         in, jn,
          ip, jp;
 
   int    n, LX, LY;
@@ -2003,10 +2003,10 @@ void compute_phase_force( lattice_ptr lattice, int subs)
 void compute_double_fluid_solid_force( lattice_ptr lattice)
 {
   // Declare local variables.
-  double sum_x, 
+  double sum_x,
          sum_y;
-  int    x, y, 
-         xn, yn, 
+  int    x, y,
+         xn, yn,
          xp, yp;
 
   int subs;
@@ -2029,14 +2029,14 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
       xp = ( x<LX-1)?( x+1):( 0   );
       xn = ( x>0   )?( x-1):( LX-1);
 
-      //if( !( lattice->bc[0][ y*LX + x].bc_type & BC_SOLID_NODE)) 
+      //if( !( lattice->bc[0][ y*LX + x].bc_type & BC_SOLID_NODE))
       if( is_not_solid_node( lattice, /*subs*/0, IJ2N( x, y)))
       {
         sum_x=0.;
         sum_y=0.;
 
         // neighbor 1
-        //if( b[y][xp]) 
+        //if( b[y][xp])
         //if( lattice->bc[0][ y*LX + xp].bc_type & BC_SOLID_NODE)
         if( is_solid_node( lattice, /*subs*/0, IJ2N( xp, y)))
         {
@@ -2044,7 +2044,7 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
           sum_y = sum_x + WM*vy[1] ;
         }
         // neighbor 2
-        //if( b[yp][x]) 
+        //if( b[yp][x])
         //if( lattice->bc[0][ yp*LX + x].bc_type & BC_SOLID_NODE)
         if( is_solid_node( lattice, /*subs*/0, IJ2N( x, yp)))
         {
@@ -2052,7 +2052,7 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
           sum_y = sum_y + WM*vy[2] ;
         }
         // neighbor 3
-        //if( b[y][xn]) 
+        //if( b[y][xn])
         //if( lattice->bc[0][ y*LX + xn].bc_type & BC_SOLID_NODE)
         if( is_solid_node( lattice, /*subs*/0, IJ2N( xn, y)))
         {
@@ -2060,7 +2060,7 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
           sum_y = sum_y + WM*vy[3] ;
         }
         // neighbor 4
-        //if( b[yn][x]) 
+        //if( b[yn][x])
         //if( lattice->bc[0][ yn*LX + x].bc_type & BC_SOLID_NODE)
         if( is_solid_node( lattice, /*subs*/0, IJ2N( x, yn)))
         {
@@ -2069,7 +2069,7 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
           printf("SFORCE: BING %f %f\n", sum_x, sum_y);
         }
         // neighbor 5
-        //if( b[yp][xp]) 
+        //if( b[yp][xp])
         //if( lattice->bc[0][ yp*LX + xp].bc_type & BC_SOLID_NODE)
         if( is_solid_node( lattice, /*subs*/0, IJ2N( xp, yp)))
         {
@@ -2077,7 +2077,7 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
           sum_y = sum_y + WD*vy[5] ;
         }
         // neighbor 6
-        //if( b[yp][xn]) 
+        //if( b[yp][xn])
         //if( lattice->bc[0][ yp*LX + xn].bc_type & BC_SOLID_NODE)
         if( is_solid_node( lattice, /*subs*/0, IJ2N( xn, yp)))
         {
@@ -2085,7 +2085,7 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
           sum_y = sum_y + WD*vy[6] ;
         }
         // neighbor 7
-        //if( b[yn][xn]) 
+        //if( b[yn][xn])
         //if( lattice->bc[0][ yn*LX + xn].bc_type & BC_SOLID_NODE)
         if( is_solid_node( lattice, /*subs*/0, IJ2N( xn, yn)))
         {
@@ -2228,62 +2228,62 @@ void compute_single_fluid_solid_force( lattice_ptr lattice, int subs)
       xp = ( x<LX-1)?( x+1):( 0   );
       xn = ( x>0   )?( x-1):( LX-1);
 
-      if( !( lattice->bc[0][ y*LX + x].bc_type & BC_SOLID_NODE)) 
+      if( !( lattice->bc[0][ y*LX + x].bc_type & BC_SOLID_NODE))
       {
         sum_x=0.;
         sum_y=0.;
 
         // neighbor 1
-        //if( b[y][xp]) 
+        //if( b[y][xp])
         if( lattice->bc[0][ y*LX + xp].bc_type & BC_SOLID_NODE)
         {
           sum_x = WM*vx[1] ;
           sum_y = WM*vy[1] ;
         }
         // neighbor 2
-        //if( b[yp][x]) 
+        //if( b[yp][x])
         if( lattice->bc[0][ yp*LX + x].bc_type & BC_SOLID_NODE)
         {
           sum_x = sum_x + WM*vx[2] ;
           sum_y = sum_y + WM*vy[2] ;
         }
         // neighbor 3
-        //if( b[y][xn]) 
+        //if( b[y][xn])
         if( lattice->bc[0][ y*LX + xn].bc_type & BC_SOLID_NODE)
         {
           sum_x = sum_x + WM*vx[3] ;
           sum_y = sum_y + WM*vy[3] ;
         }
         // neighbor 4
-        //if( b[yn][x]) 
+        //if( b[yn][x])
         if( lattice->bc[0][ yn*LX + x].bc_type & BC_SOLID_NODE)
         {
           sum_x = sum_x + WM*vx[4] ;
           sum_y = sum_y + WM*vy[4] ;
         }
         // neighbor 5
-        //if( b[yp][xp]) 
+        //if( b[yp][xp])
         if( lattice->bc[0][ yp*LX + xp].bc_type & BC_SOLID_NODE)
         {
           sum_x = sum_x + WD*vx[5] ;
           sum_y = sum_y + WD*vy[5] ;
         }
         // neighbor 6
-        //if( b[yp][xn]) 
+        //if( b[yp][xn])
         if( lattice->bc[0][ yp*LX + xn].bc_type & BC_SOLID_NODE)
         {
           sum_x = sum_x + WD*vx[6] ;
           sum_y = sum_y + WD*vy[6] ;
         }
         // neighbor 7
-        //if( b[yn][xn]) 
+        //if( b[yn][xn])
         if( lattice->bc[0][ yn*LX + xn].bc_type & BC_SOLID_NODE)
         {
           sum_x = sum_x + WD*vx[7] ;
           sum_y = sum_y + WD*vy[7] ;
         }
         // neighbor 8
-        //if( b[yn][xp]) 
+        //if( b[yn][xp])
         if( lattice->bc[0][ yn*LX + xp].bc_type & BC_SOLID_NODE)
         {
           sum_x = sum_x + WD*vx[8] ;
@@ -2292,9 +2292,9 @@ void compute_single_fluid_solid_force( lattice_ptr lattice, int subs)
 
         if( lattice->macro_vars[subs][y*LX+x].rho != 0)
         {
-          lattice->force[ subs][ y*LX+x].sforce[0] 
+          lattice->force[ subs][ y*LX+x].sforce[0]
             = -lattice->param.Gads[subs]*psi[y][x]*sum_x;///(*rho);
-          lattice->force[ subs][ y*LX+x].sforce[1] 
+          lattice->force[ subs][ y*LX+x].sforce[1]
             = -lattice->param.Gads[subs]*psi[y][x]*sum_y;///(*rho);
         }
         else
@@ -2613,8 +2613,8 @@ void compute_ave_u( lattice_ptr lattice, double *ave_u, int subs)
   process_reduce_double_sum( lattice, ave_u+1);
   process_reduce_int_sum( lattice, &nn);
 
-  if( nn != 0) 
-  { 
+  if( nn != 0)
+  {
     *(ave_u+0) = (*(ave_u+0))/nn;
     *(ave_u+1) = (*(ave_u+1))/nn;
   }
@@ -2652,8 +2652,8 @@ void compute_ave_u_all( lattice_ptr lattice, double *ave_u, int subs)
       nn++;
     }
   }
-  if( nn != 0) 
-  { 
+  if( nn != 0)
+  {
     *(ave_u+0) = (*(ave_u+0))/nn;
     *(ave_u+1) = (*(ave_u+1))/nn;
     *(ave_u+2) = (*(ave_u+2))/nn;
@@ -2686,8 +2686,8 @@ void compute_flux( lattice_ptr lattice, double *flux, int subs)
       nn++;
     }
   }
-  if( nn != 0) 
-  { 
+  if( nn != 0)
+  {
     *(flux+0) = (*(flux+0))/nn;
     *(flux+1) = (*(flux+1))/nn;
     *(flux+2) = (*(flux+2))/nn;
@@ -2813,13 +2813,13 @@ void compute_ave_upr( lattice_ptr lattice, double *ave_u)
 #endif /* STORE_U_COMPOSITE */
 
 // COMPUTE_VORTICITY {{{1
-void compute_vorticity( 
+void compute_vorticity(
        lattice_ptr lattice, int i, int j, int n, double *vor, int subs)
 {
   double duyx, duxy;
   int    nn[5]; // Indices of neighbors;
 
-  int    LX=lattice->param.LX, 
+  int    LX=lattice->param.LX,
          LY=lattice->param.LY;
 
   int    ip, in,
@@ -2860,10 +2860,10 @@ void compute_vorticity(
 //    "n=%d, (i,j)=(%d,%d), duyx=%f, "
 //    "nn1 = %d, nn3 = %d,"
 //    "bc1 = %d, bc3 = %d"
-//    "\n", 
-//    n, i, j, duyx, 
+//    "\n",
+//    n, i, j, duyx,
 //    nn[1], nn[3],
-//    lattice->bc[subs][nn[1]].bc_type, 
+//    lattice->bc[subs][nn[1]].bc_type,
 //    lattice->bc[subs][nn[3]].bc_type);
 
   // Derivative of ux wrt y.
@@ -2897,7 +2897,7 @@ void compute_vorticity(
 } /* void compute_vorticity( lattice_ptr lattice, int i, int j, int n, ... */
                                                                           // }}}
 // COMPUTE_MAX_VOR {{{1
-void compute_max_vor( 
+void compute_max_vor(
        lattice_ptr lattice, double *max_vor_p, double *max_vor_n, int subs)
 {
   int n;
@@ -2937,14 +2937,14 @@ void compute_max_vor(
   } /* for( n=0; n<=lattice->NumNodes; n++) */
 
 #if 0 && VERBOSITY_LEVEL > 0
-  printf("compute_max_vor() -- nnz = %d.  nnz/NumNodes = %f\n", 
+  printf("compute_max_vor() -- nnz = %d.  nnz/NumNodes = %f\n",
     nnz, (double)nnz/(double)lattice->NumNodes);
 #endif /* 0 && VERBOSITY_LEVEL > 0 */
 
 } /* void compute_max_vor( lattice_ptr lattice, double *max_vor_p, ... */
                                                                           // }}}
 // COMPUTE_AVE_VOR {{{1
-void compute_ave_vor( 
+void compute_ave_vor(
        lattice_ptr lattice, double *ave_vor_p, double *ave_vor_n, int subs)
 {
   int n;
@@ -2993,7 +2993,7 @@ void compute_ave_vor(
   if( num_n > 0) { *ave_vor_n /= num_n;}
 
 #if 0 && VERBOSITY_LEVEL > 0
-  printf("compute_ave_vor() -- nnz = %d.  nnz/NumNodes = %f\n", 
+  printf("compute_ave_vor() -- nnz = %d.  nnz/NumNodes = %f\n",
     nnz, (double)nnz/(double)lattice->NumNodes);
 #endif /* VERBOSITY_LEVEL > 0 */
 

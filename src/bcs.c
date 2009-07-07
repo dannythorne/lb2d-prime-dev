@@ -21,8 +21,8 @@ void bcs( lattice_ptr lattice)
   int    subs;
   int    *bc;
   double *ftemp;
-  double u_x, 
-         u_y, 
+  double u_x,
+         u_y,
          rho;
 
  for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
@@ -33,15 +33,15 @@ void bcs( lattice_ptr lattice)
 
   for( n=0; n<lattice->NumNodes; n++)
   {
-    if(    *bc != BC_FLUID_NODE 
+    if(    *bc != BC_FLUID_NODE
         && *bc != ( BC_FLUID_NODE | BC_FILM_NODE)
         && *bc != BC_SOLID_NODE)
     {
-      if( *bc & BC_PRESSURE_N_IN ) 
+      if( *bc & BC_PRESSURE_N_IN )
       {
         // North, Inflow
 
-//printf("bcs() -- North, Inflow at n = %d, ( %d, %d)\n", 
+//printf("bcs() -- North, Inflow at n = %d, ( %d, %d)\n",
 //  n, lattice->node[n].i, lattice->node[n].j);
 //printf("  Before>> %f %f %f %f [%f] %f %f [%f] [%f]\n",
 //    ftemp[0], ftemp[1], ftemp[2],
@@ -50,16 +50,16 @@ void bcs( lattice_ptr lattice)
 
         u_y = -1.
             + ( ftemp[0] + ftemp[1] + ftemp[3]
-              + 2.*( ftemp[2] + ftemp[5] + ftemp[6])) 
+              + 2.*( ftemp[2] + ftemp[5] + ftemp[6]))
             / lattice->param.rho_in;
-    
+
         ftemp[4] = ftemp[2] - (2./3.)*lattice->param.rho_in*u_y;
-    
+
         ftemp[7] = ftemp[5] + (1./2.)*( ftemp[1] - ftemp[3])
                             - (1./6.)*lattice->param.rho_in*u_y;
-    
+
         ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
-                            - (1./6.)*lattice->param.rho_in*u_y; 
+                            - (1./6.)*lattice->param.rho_in*u_y;
 
 //printf("  Before>> %f %f %f %f [%f] %f %f [%f] [%f]\n",
 //    ftemp[0], ftemp[1], ftemp[2],
@@ -68,33 +68,33 @@ void bcs( lattice_ptr lattice)
 
       } /* if( *bc & BC_PRESSURE_N_IN ) */
 
-      if( *bc & BC_PRESSURE_S_IN ) 
-      { 
+      if( *bc & BC_PRESSURE_S_IN )
+      {
         printf("bcs() -- ERROR: Support for South, Inflow pressure "
             "boundaries is pending. (Exiting!)");
         process_exit(1);
       }
       if( *bc & BC_PRESSURE_E_IN )
-      { 
+      {
         printf("bcs() -- ERROR: Support for East, Inflow pressure "
             "boundaries is pending. (Exiting!)");
         process_exit(1);
       }
       if( *bc & BC_PRESSURE_W_IN )
-      { 
+      {
         printf("bcs() -- ERROR: Support for West, Inflow pressure "
             "boundaries is pending. (Exiting!)");
         process_exit(1);
       }
       if( *bc & BC_PRESSURE_N_OUT)
-      { 
+      {
         printf("bcs() -- ERROR: Support for North, Outflow pressure "
             "boundaries is pending. (Exiting!)");
         process_exit(1);
       }
 
-      if( *bc & BC_PRESSURE_S_OUT) 
-      { 
+      if( *bc & BC_PRESSURE_S_OUT)
+      {
         // South, Outflow
 
 //printf("bcs() -- South, Outflow at n = %d, ( %d, %d)\n",
@@ -106,16 +106,16 @@ void bcs( lattice_ptr lattice)
 
         u_y = 1.
             - ( ftemp[0] + ftemp[1] + ftemp[3]
-              + 2.*( ftemp[4] + ftemp[7] + ftemp[8])) 
+              + 2.*( ftemp[4] + ftemp[7] + ftemp[8]))
             / lattice->param.rho_out;
-    
+
         ftemp[2] = ftemp[4] + (2./3.)*lattice->param.rho_out*u_y;
-    
+
         ftemp[5] = ftemp[7] + (1./2.)*( ftemp[3] - ftemp[1])
                             + (1./6.)*lattice->param.rho_out*u_y;
-    
+
         ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
-                            + (1./6.)*lattice->param.rho_out*u_y; 
+                            + (1./6.)*lattice->param.rho_out*u_y;
 
 //printf("  Before>> %f %f [%f] %f %f [%f] [%f] %f %f\n",
 //    ftemp[0], ftemp[1], ftemp[2],
@@ -125,13 +125,13 @@ void bcs( lattice_ptr lattice)
       } /* if( *bc & BC_PRESSURE_S_OUT) */
 
       if( *bc & BC_PRESSURE_E_OUT)
-      { 
+      {
         printf("bcs() -- ERROR: Support for East, Outflow pressure "
             "boundaries is pending. (Exiting!)");
         process_exit(1);
       }
       if( *bc & BC_PRESSURE_W_OUT)
-      { 
+      {
         printf("bcs() -- ERROR: Support for West, Outflow pressure "
             "boundaries is pending. (Exiting!)");
         process_exit(1);
@@ -161,8 +161,8 @@ void bcs( lattice_ptr lattice)
   double *ftemp, *ftemp_end, *ftemp_mid;
   double u_x,
          u_y;
-  double u_in[2][2], 
-         u_out[2][2], 
+  double u_in[2][2],
+         u_out[2][2],
          u,
          rho;
 
@@ -197,79 +197,79 @@ void bcs( lattice_ptr lattice)
 
   for( n=0; n<lattice->NumNodes; n++)
   {
-    if(    *bc != BC_FLUID_NODE 
+    if(    *bc != BC_FLUID_NODE
         && *bc != ( BC_FLUID_NODE | BC_FILM_NODE)
         && *bc != BC_SOLID_NODE)
     {
-      if( *bc & BC_PRESSURE_N_IN ) 
+      if( *bc & BC_PRESSURE_N_IN )
       {
         // North, Inflow
         u_y = -1.
             + ( ftemp[0] + ftemp[1] + ftemp[3]
-              + 2.*( ftemp[2] + ftemp[5] + ftemp[6])) 
+              + 2.*( ftemp[2] + ftemp[5] + ftemp[6]))
             / lattice->param.rho_in;
-    
+
         ftemp[4] = ftemp[2] - (2./3.)*lattice->param.rho_in*u_y;
-    
+
         ftemp[7] = ftemp[5] + (1./2.)*( ftemp[1] - ftemp[3])
                             - (1./6.)*lattice->param.rho_in*u_y;
-    
+
         ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
-                            - (1./6.)*lattice->param.rho_in*u_y; 
+                            - (1./6.)*lattice->param.rho_in*u_y;
 
       } /* if( *bc & BC_PRESSURE_N_IN ) */
 
-      if( *bc & BC_PRESSURE_S_IN ) 
-      { 
+      if( *bc & BC_PRESSURE_S_IN )
+      {
         printf("bcs() -- ERROR: Support for South, Inflow pressure "
             "boundaries is pending. (Exiting!)");
         process_exit(1);
       }
       if( *bc & BC_PRESSURE_E_IN )
-      { 
+      {
         printf("bcs() -- ERROR: Support for East, Inflow pressure "
             "boundaries is pending. (Exiting!)");
         process_exit(1);
       }
       if( *bc & BC_PRESSURE_W_IN )
-      { 
+      {
         printf("bcs() -- ERROR: Support for West, Inflow pressure "
             "boundaries is pending. (Exiting!)");
         process_exit(1);
       }
       if( *bc & BC_PRESSURE_N_OUT)
-      { 
+      {
         printf("bcs() -- ERROR: Support for North, Outflow pressure "
             "boundaries is pending. (Exiting!)");
         process_exit(1);
       }
 
-      if( *bc & BC_PRESSURE_S_OUT) 
-      { 
+      if( *bc & BC_PRESSURE_S_OUT)
+      {
         // South, Outflow
         u_y = 1.
             - ( ftemp[0] + ftemp[1] + ftemp[3]
-              + 2.*( ftemp[4] + ftemp[7] + ftemp[8])) 
+              + 2.*( ftemp[4] + ftemp[7] + ftemp[8]))
             / lattice->param.rho_out;
-    
+
         ftemp[2] = ftemp[4] + (2./3.)*lattice->param.rho_out*u_y;
-    
+
         ftemp[5] = ftemp[7] + (1./2.)*( ftemp[3] - ftemp[1])
                             + (1./6.)*lattice->param.rho_out*u_y;
-    
+
         ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
-                            + (1./6.)*lattice->param.rho_out*u_y; 
+                            + (1./6.)*lattice->param.rho_out*u_y;
 
       } /* if( *bc & BC_PRESSURE_S_OUT) */
 
       if( *bc & BC_PRESSURE_E_OUT)
-      { 
+      {
         printf("bcs() -- ERROR: Support for East, Outflow pressure "
             "boundaries is pending. (Exiting!)");
         process_exit(1);
       }
       if( *bc & BC_PRESSURE_W_OUT)
-      { 
+      {
         printf("bcs() -- ERROR: Support for West, Outflow pressure "
             "boundaries is pending. (Exiting!)");
         process_exit(1);
@@ -283,8 +283,8 @@ void bcs( lattice_ptr lattice)
 
   } /* for( n=0; n<lattice->NumNodes; n++) */
 #else
-  // NOTE: Should previously (in initialization stage) have checked to 
-  // insure no solid nodes on inflow/outflow boundaries. Do not do it here 
+  // NOTE: Should previously (in initialization stage) have checked to
+  // insure no solid nodes on inflow/outflow boundaries. Do not do it here
   // inside the loop!
   if( lattice->param.pressure_n_in[subs] )
   {
@@ -296,16 +296,16 @@ void bcs( lattice_ptr lattice)
       // North, Inflow
       u_y = -1.
           + ( ftemp[0] + ftemp[1] + ftemp[3]
-            + 2.*( ftemp[2] + ftemp[5] + ftemp[6])) 
+            + 2.*( ftemp[2] + ftemp[5] + ftemp[6]))
           / lattice->param.rho_in;
-    
+
       ftemp[4] = ftemp[2] - (2./3.)*lattice->param.rho_in*u_y;
-    
+
       ftemp[7] = ftemp[5] + (1./2.)*( ftemp[1] - ftemp[3])
                           - (1./6.)*lattice->param.rho_in*u_y;
-    
+
       ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
-                          - (1./6.)*lattice->param.rho_in*u_y; 
+                          - (1./6.)*lattice->param.rho_in*u_y;
 
       ftemp += ( sizeof(struct pdf_struct)/8);
 
@@ -327,16 +327,16 @@ void bcs( lattice_ptr lattice)
     {
       u_y = 1.
           - ( ftemp[0] + ftemp[1] + ftemp[3]
-            + 2.*( ftemp[4] + ftemp[7] + ftemp[8])) 
+            + 2.*( ftemp[4] + ftemp[7] + ftemp[8]))
           / lattice->param.rho_out;
-    
+
       ftemp[2] = ftemp[4] + (2./3.)*lattice->param.rho_out*u_y;
-    
+
       ftemp[5] = ftemp[7] + (1./2.)*( ftemp[3] - ftemp[1])
                           + (1./6.)*lattice->param.rho_out*u_y;
-    
+
       ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
-                          + (1./6.)*lattice->param.rho_out*u_y; 
+                          + (1./6.)*lattice->param.rho_out*u_y;
 
       ftemp += ( sizeof(struct pdf_struct)/8);
 
@@ -357,14 +357,14 @@ ftemp_mid = lattice->pdf[subs][lattice->NumNodes-7*lattice->param.LX/8].ftemp;
       //u = u_in[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       u = 0.;
       rho = ( ftemp[0] + ftemp[1] + ftemp[3]
-             + 2.*( ftemp[2] + ftemp[5] + ftemp[6])) 
+             + 2.*( ftemp[2] + ftemp[5] + ftemp[6]))
            / ( 1. + u);
-    
+
       ftemp[4] = ftemp[2] - (2./3.)*rho*u;
-    
+
       ftemp[7] = ftemp[5] + (1./2.)*( ftemp[1] - ftemp[3])
                           - (1./6.)*rho*u;
-    
+
       ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
                           - (1./6.)*rho*u;
 
@@ -378,14 +378,14 @@ ftemp_mid = lattice->pdf[subs][lattice->NumNodes-3*lattice->param.LX/4].ftemp;
       //u = u_in[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       u = u_in[0][subs];
       rho = ( ftemp[0] + ftemp[1] + ftemp[3]
-             + 2.*( ftemp[2] + ftemp[5] + ftemp[6])) 
+             + 2.*( ftemp[2] + ftemp[5] + ftemp[6]))
            / ( 1. + u);
-    
+
       ftemp[4] = ftemp[2] - (2./3.)*rho*u;
-    
+
       ftemp[7] = ftemp[5] + (1./2.)*( ftemp[1] - ftemp[3])
                           - (1./6.)*rho*u;
-    
+
       ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
                           - (1./6.)*rho*u;
 
@@ -399,14 +399,14 @@ ftemp_mid = lattice->pdf[subs][lattice->NumNodes-lattice->param.LX/2].ftemp;
       //u = u_in[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       u = 0.;
       rho = ( ftemp[0] + ftemp[1] + ftemp[3]
-             + 2.*( ftemp[2] + ftemp[5] + ftemp[6])) 
+             + 2.*( ftemp[2] + ftemp[5] + ftemp[6]))
            / ( 1. + u);
-    
+
       ftemp[4] = ftemp[2] - (2./3.)*rho*u;
-    
+
       ftemp[7] = ftemp[5] + (1./2.)*( ftemp[1] - ftemp[3])
                           - (1./6.)*rho*u;
-    
+
       ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
                           - (1./6.)*rho*u;
 
@@ -420,14 +420,14 @@ ftemp_mid = lattice->pdf[subs][lattice->NumNodes-3*lattice->param.LX/8].ftemp;
       //u = u_in[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       u = u_in[1][subs];
       rho = ( ftemp[0] + ftemp[1] + ftemp[3]
-             + 2.*( ftemp[2] + ftemp[5] + ftemp[6])) 
+             + 2.*( ftemp[2] + ftemp[5] + ftemp[6]))
            / ( 1. + u);
-    
+
       ftemp[4] = ftemp[2] - (2./3.)*rho*u;
-    
+
       ftemp[7] = ftemp[5] + (1./2.)*( ftemp[1] - ftemp[3])
                           - (1./6.)*rho*u;
-    
+
       ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
                           - (1./6.)*rho*u;
 
@@ -440,14 +440,14 @@ ftemp_mid = lattice->pdf[subs][lattice->NumNodes-3*lattice->param.LX/8].ftemp;
       //u = u_in[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       u = 0.;
       rho = ( ftemp[0] + ftemp[1] + ftemp[3]
-             + 2.*( ftemp[2] + ftemp[5] + ftemp[6])) 
+             + 2.*( ftemp[2] + ftemp[5] + ftemp[6]))
            / ( 1. + u);
-    
+
       ftemp[4] = ftemp[2] - (2./3.)*rho*u;
-    
+
       ftemp[7] = ftemp[5] + (1./2.)*( ftemp[1] - ftemp[3])
                           - (1./6.)*rho*u;
-    
+
       ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
                           - (1./6.)*rho*u;
 
@@ -473,14 +473,14 @@ ftemp_mid = lattice->pdf[subs][lattice->NumNodes-3*lattice->param.LX/8].ftemp;
       //u = u_out[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       u = 0.;
       rho = ( ftemp[0] + ftemp[1] + ftemp[3]
-             + 2.*( ftemp[4] + ftemp[7] + ftemp[8])) 
+             + 2.*( ftemp[4] + ftemp[7] + ftemp[8]))
            / ( 1. - u);
-    
+
       ftemp[2] = ftemp[4] + (2./3.)*rho*u;
-    
+
       ftemp[5] = ftemp[7] + (1./2.)*( ftemp[3] - ftemp[1])
                           + (1./6.)*rho*u;
-    
+
       ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
                           + (1./6.)*rho*u;
 
@@ -493,14 +493,14 @@ ftemp_mid = lattice->pdf[subs][lattice->NumNodes-3*lattice->param.LX/8].ftemp;
       //u = u_out[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       u = u_out[0][subs];
       rho = ( ftemp[0] + ftemp[1] + ftemp[3]
-             + 2.*( ftemp[4] + ftemp[7] + ftemp[8])) 
+             + 2.*( ftemp[4] + ftemp[7] + ftemp[8]))
            / ( 1. - u);
-    
+
       ftemp[2] = ftemp[4] + (2./3.)*rho*u;
-    
+
       ftemp[5] = ftemp[7] + (1./2.)*( ftemp[3] - ftemp[1])
                           + (1./6.)*rho*u;
-    
+
       ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
                           + (1./6.)*rho*u;
 
@@ -513,14 +513,14 @@ ftemp_mid = lattice->pdf[subs][lattice->NumNodes-3*lattice->param.LX/8].ftemp;
       //u = u_out[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       u = 0.;
       rho = ( ftemp[0] + ftemp[1] + ftemp[3]
-             + 2.*( ftemp[4] + ftemp[7] + ftemp[8])) 
+             + 2.*( ftemp[4] + ftemp[7] + ftemp[8]))
            / ( 1. - u);
-    
+
       ftemp[2] = ftemp[4] + (2./3.)*rho*u;
-    
+
       ftemp[5] = ftemp[7] + (1./2.)*( ftemp[3] - ftemp[1])
                           + (1./6.)*rho*u;
-    
+
       ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
                           + (1./6.)*rho*u;
 
@@ -533,14 +533,14 @@ ftemp_mid = lattice->pdf[subs][lattice->NumNodes-3*lattice->param.LX/8].ftemp;
       //u = u_out[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       u = u_out[1][subs];
       rho = ( ftemp[0] + ftemp[1] + ftemp[3]
-             + 2.*( ftemp[4] + ftemp[7] + ftemp[8])) 
+             + 2.*( ftemp[4] + ftemp[7] + ftemp[8]))
            / ( 1. - u);
-    
+
       ftemp[2] = ftemp[4] + (2./3.)*rho*u;
-    
+
       ftemp[5] = ftemp[7] + (1./2.)*( ftemp[3] - ftemp[1])
                           + (1./6.)*rho*u;
-    
+
       ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
                           + (1./6.)*rho*u;
 
@@ -552,14 +552,14 @@ ftemp_mid = lattice->pdf[subs][lattice->NumNodes-3*lattice->param.LX/8].ftemp;
       //u = u_out[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       u = 0.;
       rho = ( ftemp[0] + ftemp[1] + ftemp[3]
-             + 2.*( ftemp[4] + ftemp[7] + ftemp[8])) 
+             + 2.*( ftemp[4] + ftemp[7] + ftemp[8]))
            / ( 1. - u);
-    
+
       ftemp[2] = ftemp[4] + (2./3.)*rho*u;
-    
+
       ftemp[5] = ftemp[7] + (1./2.)*( ftemp[3] - ftemp[1])
                           + (1./6.)*rho*u;
-    
+
       ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
                           + (1./6.)*rho*u;
 
@@ -602,20 +602,20 @@ void bcs( lattice_ptr lattice)
 #endif /* RHO0_TEST */
   double u_x,
          u_y;
-  double u_in[2][2], 
-         u_out[2][2], 
+  double u_in[2][2],
+         u_out[2][2],
          u,
          rho;
   double c;
 
-  // NOTE: Should previously (in initialization stage) have checked to 
-  // insure no solid nodes on inflow/outflow boundaries. Do not do it here 
+  // NOTE: Should previously (in initialization stage) have checked to
+  // insure no solid nodes on inflow/outflow boundaries. Do not do it here
   // inside the loop!
 
  for( subs=0; subs<(NUM_FLUID_COMPONENTS)-(INAMURO_SIGMA_COMPONENT); subs++)
  {
   // P R E S S U R E   N O R T H   I N   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // pressure north inflow
   //  -- Pressure boundary on north side using inflow pressure condition.
   if( lattice->param.pressure_n_in[subs] )
@@ -639,18 +639,18 @@ void bcs( lattice_ptr lattice)
         {
           u_y = -1.
               + ( ftemp[0] + ftemp[1] + ftemp[3]
-                + 2.*( ftemp[2] + ftemp[5] + ftemp[6])) 
+                + 2.*( ftemp[2] + ftemp[5] + ftemp[6]))
               / lattice->param.rho_in;
           c = u_y*lattice->param.rho_in;
         }
-      
+
         ftemp[4] = ftemp[2] - (2./3.)*c;
-      
+
         ftemp[7] = ftemp[5] + (1./2.)*( ftemp[1] - ftemp[3])
                             - (1./6.)*c;
-      
+
         ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
-                            - (1./6.)*c; 
+                            - (1./6.)*c;
 
         ftemp += ( sizeof(struct pdf_struct)/8);
       }
@@ -659,7 +659,7 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.pressure_n_in[subs] ) */
                                                                           // }}}
   // P R E S S U R E   S O U T H   I N   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // pressure south inflow
   //  -- Pressure boundary on south side using inflow pressure condition.
   if( lattice->param.pressure_s_in[subs] )
@@ -683,18 +683,18 @@ void bcs( lattice_ptr lattice)
         {
           u_y = 1.
               - ( ftemp[0] + ftemp[1] + ftemp[3]
-                + 2.*( ftemp[4] + ftemp[7] + ftemp[8])) 
+                + 2.*( ftemp[4] + ftemp[7] + ftemp[8]))
               / lattice->param.rho_in;
           c = u_y*lattice->param.rho_in;
         }
-      
+
         ftemp[2] = ftemp[4] + (2./3.)*c;
-      
+
         ftemp[5] = ftemp[7] + (1./2.)*( ftemp[3] - ftemp[1])
                             + (1./6.)*c;
-      
+
         ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
-                            + (1./6.)*c; 
+                            + (1./6.)*c;
 
         ftemp += ( sizeof(struct pdf_struct)/8);
       }
@@ -703,7 +703,7 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.pressure_s_in[subs] ) */
                                                                           // }}}
   // P R E S S U R E   N O R T H   O U T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // pressure north outflow
   //  -- Pressure boundary on north side using outflow pressure condition.
   if( lattice->param.pressure_n_out[subs])
@@ -727,18 +727,18 @@ void bcs( lattice_ptr lattice)
         {
           u_y = -1.
               + ( ftemp[0] + ftemp[1] + ftemp[3]
-                + 2.*( ftemp[2] + ftemp[5] + ftemp[6])) 
+                + 2.*( ftemp[2] + ftemp[5] + ftemp[6]))
               / lattice->param.rho_out;
           c = u_y*lattice->param.rho_out;
         }
-      
+
         ftemp[4] = ftemp[2] - (2./3.)*c;
-      
+
         ftemp[7] = ftemp[5] + (1./2.)*( ftemp[1] - ftemp[3])
                             - (1./6.)*c;
-      
+
         ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
-                            - (1./6.)*c; 
+                            - (1./6.)*c;
 
         ftemp += ( sizeof(struct pdf_struct)/8);
       }
@@ -747,7 +747,7 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.pressure_n_out[subs]) */
                                                                           // }}}
   // P R E S S U R E   S O U T H   O U T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // pressure south outflow
   //  -- Pressure boundary on south side using outflow pressure condition.
   if( lattice->param.pressure_s_out[subs])
@@ -771,18 +771,18 @@ void bcs( lattice_ptr lattice)
         {
           u_y = 1.
               - ( ftemp[0] + ftemp[1] + ftemp[3]
-                + 2.*( ftemp[4] + ftemp[7] + ftemp[8])) 
+                + 2.*( ftemp[4] + ftemp[7] + ftemp[8]))
               / lattice->param.rho_out;
           c = u_y*lattice->param.rho_out;
         }
-      
+
         ftemp[2] = ftemp[4] + (2./3.)*c;
-      
+
         ftemp[5] = ftemp[7] + (1./2.)*( ftemp[3] - ftemp[1])
                             + (1./6.)*c;
-      
+
         ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
-                            + (1./6.)*c; 
+                            + (1./6.)*c;
 
         ftemp += ( sizeof(struct pdf_struct)/8);
       }
@@ -792,7 +792,7 @@ void bcs( lattice_ptr lattice)
                                                                           // }}}
 
   // V E L O C I T Y   N O R T H   I N   B C   {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // velocity north inflow
   //  -- Velocity boundary on north side using inflow velocity condition.
   if( lattice->param.velocity_n_in[subs])
@@ -803,7 +803,7 @@ void bcs( lattice_ptr lattice)
     bc_type = &( lattice->bc[subs][lattice->NumNodes-lattice->param.LX].bc_type);
 #if RHO0_TEST
 //------------------------------------------------------------------[ TEST ]----
-    rho0 = 
+    rho0 =
       &( lattice->macro_vars[subs][lattice->NumNodes-lattice->param.LX].rho);
 //------------------------------------------------------------------[ TEST ]----
 #endif /* RHO0_TEST */
@@ -827,9 +827,9 @@ void bcs( lattice_ptr lattice)
       {
         u = ( 1.5*( lattice->param.uy_in)
                  /( .25*(lattice->param.LX-2)*(lattice->param.LX-2)) )
-                 *( 
-                    .25*( lattice->param.LX-2)*( lattice->param.LX-2) 
-                  - 
+                 *(
+                    .25*( lattice->param.LX-2)*( lattice->param.LX-2)
+                  -
                     (i-.5*( lattice->param.LX-2)-.5)
                    *(i-.5*( lattice->param.LX-2)-.5)
                   )
@@ -846,16 +846,16 @@ void bcs( lattice_ptr lattice)
       else // compressible
       {
         rho = (      ftemp[0] + ftemp[1] + ftemp[3]
-              + 2.*( ftemp[2] + ftemp[5] + ftemp[6])) 
+              + 2.*( ftemp[2] + ftemp[5] + ftemp[6]))
               / ( 1. + u);
         c = rho*u;
       }
-    
+
       ftemp[4] = ftemp[2] - (2./3.)*c;
-    
+
       ftemp[7] = ftemp[5] + (1./2.)*( ftemp[1] - ftemp[3])
                           - (1./6.)*c;
-    
+
       ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
                           - (1./6.)*c;
 
@@ -874,7 +874,7 @@ void bcs( lattice_ptr lattice)
 #endif /* RHO0_TEST */
 
       ftemp += ( sizeof(struct pdf_struct)/8);
-      
+
      }
      else
      {
@@ -910,7 +910,7 @@ void bcs( lattice_ptr lattice)
   }
                                                                           // }}}
   // V E L O C I T Y   S O U T H   I N   B C   {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // velocity south inflow
   //  -- Velocity boundary on south side using inflow velocity condition.
   if( lattice->param.velocity_s_in[subs] )
@@ -944,9 +944,9 @@ void bcs( lattice_ptr lattice)
       {
         u = ( 1.5*( lattice->param.uy_in)
                  /( .25*(lattice->param.LX-2)*(lattice->param.LX-2)) )
-                 *( 
-                    .25*( lattice->param.LX-2)*( lattice->param.LX-2) 
-                  - 
+                 *(
+                    .25*( lattice->param.LX-2)*( lattice->param.LX-2)
+                  -
                     (i-.5*( lattice->param.LX-2)-.5)
                    *(i-.5*( lattice->param.LX-2)-.5)
                   )
@@ -962,16 +962,16 @@ void bcs( lattice_ptr lattice)
       else
       {
         rho = ( ftemp[0] + ftemp[1] + ftemp[3]
-              + 2.*( ftemp[4] + ftemp[7] + ftemp[8])) 
+              + 2.*( ftemp[4] + ftemp[7] + ftemp[8]))
               / ( 1. - u);
         c = rho*u;
       }
-    
+
       ftemp[2] = ftemp[4] + (2./3.)*c;
-    
+
       ftemp[5] = ftemp[7] + (1./2.)*( ftemp[3] - ftemp[1])
                           + (1./6.)*c;
-    
+
       ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
                           + (1./6.)*c;
 #if RHO0_TEST
@@ -1024,7 +1024,7 @@ void bcs( lattice_ptr lattice)
   }
                                                                           // }}}
   // V E L O C I T Y   N O R T H   O U T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // velocity north outflow
   //  -- Velocity boundary on north side using outflow velocity condition.
   if( lattice->param.velocity_n_out[subs])
@@ -1036,7 +1036,7 @@ void bcs( lattice_ptr lattice)
     i = 0;
 #if RHO0_TEST
 //------------------------------------------------------------------[ TEST ]----
-    rho0 = 
+    rho0 =
       &( lattice->macro_vars[subs][lattice->NumNodes-lattice->param.LX].rho);
 //------------------------------------------------------------------[ TEST ]----
 #endif /* RHO0_TEST */
@@ -1060,9 +1060,9 @@ void bcs( lattice_ptr lattice)
       {
         u = ( 1.5*( lattice->param.uy_out)
                  /( .25*(lattice->param.LX-2)*(lattice->param.LX-2)) )
-                 *( 
-                    .25*( lattice->param.LX-2)*( lattice->param.LX-2) 
-                  - 
+                 *(
+                    .25*( lattice->param.LX-2)*( lattice->param.LX-2)
+                  -
                     (i-.5*( lattice->param.LX-2)-.5)
                    *(i-.5*( lattice->param.LX-2)-.5)
                   )
@@ -1079,16 +1079,16 @@ void bcs( lattice_ptr lattice)
       else // compressible
       {
         rho = (      ftemp[0] + ftemp[1] + ftemp[3]
-              + 2.*( ftemp[2] + ftemp[5] + ftemp[6])) 
+              + 2.*( ftemp[2] + ftemp[5] + ftemp[6]))
               / ( 1. + u);
         c = rho*u;
       }
-    
+
       ftemp[4] = ftemp[2] - (2./3.)*c;
-    
+
       ftemp[7] = ftemp[5] + (1./2.)*( ftemp[1] - ftemp[3])
                           - (1./6.)*c;
-    
+
       ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
                           - (1./6.)*c;
 
@@ -1117,7 +1117,7 @@ void bcs( lattice_ptr lattice)
 #endif /* RHO0_TEST */
 
       ftemp += ( sizeof(struct pdf_struct)/8);
-      
+
      }
      else
      {
@@ -1153,7 +1153,7 @@ void bcs( lattice_ptr lattice)
   }
                                                                           // }}}
   // V E L O C I T Y   S O U T H   O U T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // velocity south outflow
   //  -- Velocity boundary on south side using outflow velocity condition.
   if( lattice->param.velocity_s_out[subs])
@@ -1188,9 +1188,9 @@ void bcs( lattice_ptr lattice)
       {
         u = ( 1.5*( lattice->param.uy_out)
                  /( .25*(lattice->param.LX-2)*(lattice->param.LX-2)) )
-                 *( 
-                    .25*( lattice->param.LX-2)*( lattice->param.LX-2) 
-                  - 
+                 *(
+                    .25*( lattice->param.LX-2)*( lattice->param.LX-2)
+                  -
                     (i-.5*( lattice->param.LX-2)-.5)
                    *(i-.5*( lattice->param.LX-2)-.5)
                   )
@@ -1206,16 +1206,16 @@ void bcs( lattice_ptr lattice)
       else
       {
         rho = ( ftemp[0] + ftemp[1] + ftemp[3]
-              + 2.*( ftemp[4] + ftemp[7] + ftemp[8])) 
+              + 2.*( ftemp[4] + ftemp[7] + ftemp[8]))
               / ( 1. - u);
         c = rho*u;
       }
-    
+
       ftemp[2] = ftemp[4] + (2./3.)*c;
-    
+
       ftemp[5] = ftemp[7] + (1./2.)*( ftemp[3] - ftemp[1])
                           + (1./6.)*c;
-    
+
       ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
                           + (1./6.)*c;
 
@@ -1281,7 +1281,7 @@ void bcs( lattice_ptr lattice)
                                                                           // }}}
 
   // P R E S S U R E   E A S T   I N   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // pressure east inflow
   //  -- Pressure boundary on east side using inflow pressure condition.
   if( lattice->param.pressure_e_in[subs] )
@@ -1305,18 +1305,18 @@ void bcs( lattice_ptr lattice)
         {
           u_x = -1.
               + (      ftemp[0] + ftemp[2] + ftemp[4]
-                + 2.*( ftemp[1] + ftemp[5] + ftemp[8])) 
+                + 2.*( ftemp[1] + ftemp[5] + ftemp[8]))
               / lattice->param.rho_in;
           c = u_x*lattice->param.rho_in;
         }
-      
+
         ftemp[3] = ftemp[1] - (2./3.)*c;
-      
+
         ftemp[7] = ftemp[5] + (1./2.)*( ftemp[2] - ftemp[4])
                             - (1./6.)*c;
-      
+
         ftemp[6] = ftemp[8] + (1./2.)*( ftemp[4] - ftemp[2])
-                            - (1./6.)*c; 
+                            - (1./6.)*c;
 
         ftemp += ( sizeof(struct pdf_struct)/8)*lattice->param.LX;
       }
@@ -1326,14 +1326,14 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.pressure_e_in[subs] ) */
                                                                           // }}}
   // P R E S S U R E   W E S T   I N   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // pressure west inflow
   //  -- Pressure boundary on west side using inflow pressure condition.
   if( lattice->param.pressure_w_in[subs] )
   {
 //printf("bcs() %s %d >> pressure_w_in[%d]\n", __FILE__, __LINE__, subs);
     ftemp     = lattice->pdf[subs][0].ftemp;
-    ftemp_end = 
+    ftemp_end =
       lattice->pdf[subs][(lattice->param.LY+1)*lattice->param.LX].ftemp;
     while( ftemp < ftemp_end)
     {
@@ -1355,14 +1355,14 @@ void bcs( lattice_ptr lattice)
               / lattice->param.rho_in;
           c = u_x*lattice->param.rho_in;
         }
-      
+
         ftemp[1] = ftemp[3] + (2./3.)*c;
-      
+
         ftemp[5] = ftemp[7] + (1./2.)*( ftemp[4] - ftemp[2])
                             + (1./6.)*c;
-      
+
         ftemp[8] = ftemp[6] + (1./2.)*( ftemp[2] - ftemp[4])
-                            + (1./6.)*c; 
+                            + (1./6.)*c;
 
         ftemp += ( sizeof(struct pdf_struct)/8)*lattice->param.LX;
       }
@@ -1371,7 +1371,7 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.pressure_w_in[subs] ) */
                                                                           // }}}
   // P R E S S U R E   E A S T   O U T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // pressure east outflow
   //  -- Pressure boundary on east side using outflow pressure condition.
   if( lattice->param.pressure_e_out[subs])
@@ -1398,7 +1398,7 @@ void bcs( lattice_ptr lattice)
             if( hydrostatic_compute_rho_ref(lattice))
             {
               // Reference density computed in terms of average density
-              lattice->param.rho_out = 
+              lattice->param.rho_out =
                  ( 3.*lattice->param.gval[0][1]
 #if INAMURO_SIGMA_COMPONENT
                       *( 1. + (get_buoyancy(lattice))
@@ -1551,14 +1551,14 @@ void bcs( lattice_ptr lattice)
             / lattice->param.rho_out;
         c = u_x*lattice->param.rho_out;
       }
-    
+
       ftemp[3] = ftemp[1] - (2./3.)*c;
-    
+
       ftemp[7] = ftemp[5] + (1./2.)*( ftemp[2] - ftemp[4])
                           - (1./6.)*c;
-    
+
       ftemp[6] = ftemp[8] + (1./2.)*( ftemp[4] - ftemp[2])
-                          - (1./6.)*c; 
+                          - (1./6.)*c;
 
       ftemp += ( sizeof(struct pdf_struct)/8)*lattice->param.LX;
 
@@ -1761,7 +1761,7 @@ void bcs( lattice_ptr lattice)
                                                                           // }}}
 
   // V E L O C I T Y   E A S T   I N   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // velocity east inflow
   //  -- Velocity boundary on east side using inflow velocity condition.
   if( lattice->param.velocity_e_in[subs])
@@ -1772,7 +1772,7 @@ void bcs( lattice_ptr lattice)
     bc_type = &( lattice->bc[subs][lattice->param.LX-1].bc_type);
 #if RHO0_TEST
 //------------------------------------------------------------------[ TEST ]----
-    rho0 = 
+    rho0 =
       &( lattice->macro_vars[subs][lattice->param.LX-1].rho);
 //------------------------------------------------------------------[ TEST ]----
 #endif /* RHO0_TEST */
@@ -1796,9 +1796,9 @@ void bcs( lattice_ptr lattice)
       {
         u = ( 1.5*( lattice->param.ux_in)
                  /( .25*(lattice->param.LY-2)*(lattice->param.LY-2)) )
-                 *( 
-                    .25*( lattice->param.LY-2)*( lattice->param.LY-2) 
-                  - 
+                 *(
+                    .25*( lattice->param.LY-2)*( lattice->param.LY-2)
+                  -
                     (i-.5*( lattice->param.LY-2)-.5)
                    *(i-.5*( lattice->param.LY-2)-.5)
                   )
@@ -1815,16 +1815,16 @@ void bcs( lattice_ptr lattice)
       else // compressible
       {
         rho = (      ftemp[0] + ftemp[2] + ftemp[4]
-              + 2.*( ftemp[1] + ftemp[5] + ftemp[8])) 
+              + 2.*( ftemp[1] + ftemp[5] + ftemp[8]))
               / ( 1. + u);
         c = rho*u;
       }
-    
+
       ftemp[3] = ftemp[1] - (2./3.)*c;
-    
+
       ftemp[7] = ftemp[5] + (1./2.)*( ftemp[2] - ftemp[4])
                           - (1./6.)*c;
-    
+
       ftemp[6] = ftemp[8] + (1./2.)*( ftemp[4] - ftemp[2])
                           - (1./6.)*c;
 
@@ -1843,7 +1843,7 @@ void bcs( lattice_ptr lattice)
 #endif /* RHO0_TEST */
 
       ftemp += ( sizeof(struct pdf_struct)/8)*lattice->param.LX;
-      
+
      }
      else
      {
@@ -2015,7 +2015,7 @@ void bcs( lattice_ptr lattice)
   }
                                                                           // }}}
   // V E L O C I T Y   E A S T   O U T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // velocity east outflow
   //  -- Velocity boundary on east side using outflow velocity condition.
   if( lattice->param.velocity_e_out[subs])
@@ -2026,7 +2026,7 @@ void bcs( lattice_ptr lattice)
     bc_type = &( lattice->bc[subs][lattice->param.LX-1].bc_type);
 #if RHO0_TEST
 //------------------------------------------------------------------[ TEST ]----
-    rho0 = 
+    rho0 =
       &( lattice->macro_vars[subs][lattice->param.LX-1].rho);
 //------------------------------------------------------------------[ TEST ]----
 #endif /* RHO0_TEST */
@@ -2050,9 +2050,9 @@ void bcs( lattice_ptr lattice)
       {
         u = ( 1.5*( lattice->param.ux_out)
                  /( .25*(lattice->param.LY-2)*(lattice->param.LY-2)) )
-                 *( 
-                    .25*( lattice->param.LY-2)*( lattice->param.LY-2) 
-                  - 
+                 *(
+                    .25*( lattice->param.LY-2)*( lattice->param.LY-2)
+                  -
                     (i-.5*( lattice->param.LY-2)-.5)
                    *(i-.5*( lattice->param.LY-2)-.5)
                   )
@@ -2069,7 +2069,7 @@ void bcs( lattice_ptr lattice)
       else // compressible
       {
         rho = (      ftemp[0] + ftemp[2] + ftemp[4]
-              + 2.*( ftemp[1] + ftemp[5] + ftemp[8])) 
+              + 2.*( ftemp[1] + ftemp[5] + ftemp[8]))
               / ( 1. + u);
         c = rho*u;
       }
@@ -2115,7 +2115,7 @@ void bcs( lattice_ptr lattice)
 #endif /* RHO0_TEST */
 
       ftemp += ( sizeof(struct pdf_struct)/8)*lattice->param.LX;
-      
+
      }
      else
      {
@@ -2150,14 +2150,14 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.velocity_e_out[subs]) */
                                                                           // }}}
   // V E L O C I T Y   W E S T   O U T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // velocity west outflow
   //  -- Velocity boundary on west side using outflow velocity condition.
   if( lattice->param.velocity_w_out[subs])
   {
 //printf("bcs() %s %d >> velocity_w_out[%d]\n", __FILE__, __LINE__, subs);
     ftemp     = lattice->pdf[subs][0].ftemp;
-    ftemp_end = 
+    ftemp_end =
       lattice->pdf[subs][(lattice->param.LY+1)*lattice->param.LX].ftemp;
     bc_type = &( lattice->bc[subs][0].bc_type);
 #if RHO0_TEST
@@ -2185,9 +2185,9 @@ void bcs( lattice_ptr lattice)
       {
         u = ( 1.5*( lattice->param.ux_out)
                  /( .25*(lattice->param.LY-2)*(lattice->param.LY-2)) )
-                 *( 
-                    .25*( lattice->param.LY-2)*( lattice->param.LY-2) 
-                  - 
+                 *(
+                    .25*( lattice->param.LY-2)*( lattice->param.LY-2)
+                  -
                     (i-.5*( lattice->param.LY-2)-.5)
                    *(i-.5*( lattice->param.LY-2)-.5)
                   )
@@ -2203,16 +2203,16 @@ void bcs( lattice_ptr lattice)
       else
       {
         rho = (      ftemp[0] + ftemp[2] + ftemp[4]
-              + 2.*( ftemp[3] + ftemp[7] + ftemp[6])) 
+              + 2.*( ftemp[3] + ftemp[7] + ftemp[6]))
               / ( 1. - u);
         c = rho*u;
       }
-    
+
       ftemp[1] = ftemp[3] + (2./3.)*c;
-    
+
       ftemp[5] = ftemp[7] + (1./2.)*( ftemp[4] - ftemp[2])
                           + (1./6.)*c;
-    
+
       ftemp[8] = ftemp[6] + (1./2.)*( ftemp[2] - ftemp[4])
                           + (1./6.)*c;
 #if RHO0_TEST
@@ -2265,15 +2265,15 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.velocity_w_out[subs]) */
                                                                           // }}}
 #if 0
-  // C O R N E R S 
+  // C O R N E R S
   //############################################################################
   // S O U T H   W E S T   C O R N E R   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // south west corner
   //  -- Average adjacent cells (east side and north side cells)
   //  -- This is only for when boundary conditions are applied on the
   //     adjecent sides, south and west, so that the corners overlap.
-  if( 
+  if(
       1 ||
     (
       (
@@ -2338,12 +2338,12 @@ void bcs( lattice_ptr lattice)
   }
                                                                           // }}}
   // S O U T H   E A S T   C O R N E R   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // south east corner
   //  -- Average adjacent cells (west side and north side cells)
   //  -- This is only for when boundary conditions are applied on the
   //     adjecent sides, south and east, so that the corners overlap.
-  if( 
+  if(
       1 ||
     (
       (
@@ -2387,7 +2387,7 @@ void bcs( lattice_ptr lattice)
     //  6 2 5
     //   \|/
     //  3-o 1
-    //   /  
+    //   /
     //  7 4 8
     ftemp[3] = ftemp[1];
     ftemp[2] = ftemp[4];
@@ -2409,12 +2409,12 @@ void bcs( lattice_ptr lattice)
   }
                                                                           // }}}
   // N O R T H   W E S T   C O R N E R   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // north west corner
   //  -- Average adjacent cells (east side and south side cells)
   //  -- This is only for when boundary conditions are applied on the
   //     adjecent sides, north and west, so that the corners overlap.
-  if( 
+  if(
       1 ||
     (
       (
@@ -2480,12 +2480,12 @@ void bcs( lattice_ptr lattice)
   }
                                                                           // }}}
   // N O R T H   E A S T   C O R N E R   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // north east corner
   //  -- Average adjacent cells (west side and south side cells)
   //  -- This is only for when boundary conditions are applied on the
   //     adjecent sides, north and east, so that the corners overlap.
-  if( 
+  if(
       1 ||
     (
       (
@@ -2554,7 +2554,7 @@ void bcs( lattice_ptr lattice)
 #if INAMURO_SIGMA_COMPONENT
   subs=1;
   // C O N S T   C O N C   N O R T H   I N   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant conc north inflow
   //  -- Constant concentration boundary on north side using inflow value.
   if( lattice->param.constcon_n_in )
@@ -2574,7 +2574,7 @@ void bcs( lattice_ptr lattice)
       {
         c = 0.;
       }
-    
+
       if( lattice->param.simple_diffusion)
       {
         rho = 8.*( c - ( ftemp[0] + ftemp[1] + ftemp[3] + ftemp[2]));
@@ -2596,7 +2596,7 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.constcon_n_in ) */
                                                                           // }}}
   // C O N S T   C O N C   S O U T H   I N   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant conc south inflow
   //  -- Constant concentration boundary on south side using inflow value.
   if( lattice->param.constcon_s_in )
@@ -2638,7 +2638,7 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.constcon_s_in ) */
 // }}}
   // C O N S T   C O N C   N O R T H   O U T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant conc north outflow
   //  -- Constant concentration boundary on north side using outflow value.
   if( lattice->param.constcon_n_out)
@@ -2685,7 +2685,7 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.constcon_n_out) */
                                                                           // }}}
   // C O N S T   C O N C   S O U T H   O U T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant conc south outflow
   //  -- Constant concentration boundary on south side with outflow value.
   if( lattice->param.constcon_s_out)
@@ -2733,7 +2733,7 @@ void bcs( lattice_ptr lattice)
                                                                           // }}}
 
   // C O N S T   F L U X   N O R T H   I N   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant flux north inflow
   //  -- Constant flux boundary on north side with inflow value.
   if( lattice->param.constflx_n_in )
@@ -2762,7 +2762,7 @@ void bcs( lattice_ptr lattice)
       else
       {
         rho = 6.*( u + ftemp[2] + ftemp[5] + ftemp[6]);
-    
+
         ftemp[4] = (1./ 9.)*rho;
         ftemp[7] = (1./36.)*rho;
         ftemp[8] = (1./36.)*rho;
@@ -2775,7 +2775,7 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.constflx_n_in ) */
                                                                           // }}}
   // C O N S T   F L U X   S O U T H   I N   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant flux south inflow
   //  -- Constant flux boundary on south side with inflow value.
   if( lattice->param.constflx_s_in )
@@ -2804,7 +2804,7 @@ void bcs( lattice_ptr lattice)
       else
       {
         rho = 6.*( u + ftemp[7] + ftemp[4] + ftemp[8]);
-    
+
         ftemp[2] = (1./9.)*rho;
         ftemp[5] = (1./36.)*rho;
         ftemp[6] = (1./36.)*rho;
@@ -2817,7 +2817,7 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.constflx_s_in ) */
                                                                           // }}}
   // C O N S T   F L U X   N O R T H   O U T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant flux north outflow
   //  -- Constant flux boundary on north side with outflow value.
   if( lattice->param.constflx_n_out)
@@ -2850,7 +2850,7 @@ void bcs( lattice_ptr lattice)
       else
       {
         rho = 6.*( u + ftemp[2] + ftemp[5] + ftemp[6]);
-    
+
         ftemp[4] = (1./9.)*rho;
         ftemp[7] = (1./36.)*rho;
         ftemp[8] = (1./36.)*rho;
@@ -2864,7 +2864,7 @@ void bcs( lattice_ptr lattice)
          // East corner
          ftemp[6] = ftemp[5];
          rho = 6.*( u + ftemp[2] + ftemp[5] + ftemp[6]);
-    
+
          ftemp[4] = (1./9.)*rho;
          ftemp[7] = (1./36.)*rho;
          ftemp[8] = (1./36.)*rho;
@@ -2874,7 +2874,7 @@ void bcs( lattice_ptr lattice)
          // West corner
          ftemp[5] = ftemp[6];
          rho = 6.*( u + ftemp[2] + ftemp[5] + ftemp[6]);
-    
+
          ftemp[4] = (1./9.)*rho;
          ftemp[7] = (1./36.)*rho;
          ftemp[8] = (1./36.)*rho;
@@ -2890,7 +2890,7 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.constflx_n_out) */
                                                                           // }}}
   // C O N S T   F L U X   S O U T H   O U T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant flux south outflow
   //  -- Constant flux boundary on south side with outflow value.
   if( lattice->param.constflx_s_out)
@@ -2923,7 +2923,7 @@ void bcs( lattice_ptr lattice)
       else
       {
         rho = 6.*( u + ftemp[7] + ftemp[4] + ftemp[8]);
-    
+
         ftemp[2] = (1./9.)*rho;
         ftemp[5] = (1./36.)*rho;
         ftemp[6] = (1./36.)*rho;
@@ -2937,7 +2937,7 @@ void bcs( lattice_ptr lattice)
          // East corner
          ftemp[7] = ftemp[8];
          rho = 6.*( u + ftemp[7] + ftemp[4] + ftemp[8]);
-    
+
          ftemp[2] = (1./9.)*rho;
          ftemp[5] = (1./36.)*rho;
          ftemp[6] = (1./36.)*rho;
@@ -2947,7 +2947,7 @@ void bcs( lattice_ptr lattice)
          // West corner
          ftemp[8] = ftemp[7];
          rho = 6.*( u + ftemp[7] + ftemp[4] + ftemp[8]);
-    
+
          ftemp[2] = (1./9.)*rho;
          ftemp[5] = (1./36.)*rho;
          ftemp[6] = (1./36.)*rho;
@@ -2964,7 +2964,7 @@ void bcs( lattice_ptr lattice)
                                                                           // }}}
 
   // Z E R O   C O N C   G R A D I E N T   S O U T H   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // zero conc gradient south
   //  -- Zero concentration gradient boundary on south side.
   if( lattice->param.zeroconcgrad_s)
@@ -3001,7 +3001,7 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.zerograd_s) */
                                                                           // }}}
   // Z E R O   C O N C   G R A D I E N T   N O R T H   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // zero conc gradient north
   //  -- Zero concentration gradient boundary on north side.
   if( lattice->param.zeroconcgrad_n)
@@ -3039,7 +3039,7 @@ void bcs( lattice_ptr lattice)
                                                                           // }}}
 
   // C O N S T   C O N C   E A S T   I N   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant conc east inflow
   //  -- Constant concentration boundary on east side using inflow value.
   if( lattice->param.constcon_e_in )
@@ -3073,7 +3073,7 @@ void bcs( lattice_ptr lattice)
       {
           rho = 6.*( c - ( ftemp[0] + ftemp[2] + ftemp[4]
                          + ftemp[1] + ftemp[5] + ftemp[8]));
-   
+
           ftemp[3] = (1./9.)*rho;
           ftemp[7] = (1./36.)*rho;
           ftemp[6] = (1./36.)*rho;
@@ -3089,7 +3089,7 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.constcon_e_in ) */
                                                                           // }}}
   // C O N S T   C O N C   W E S T   I N   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant conc west inflow
   //  -- Constant concentration boundary on west side using inflow value.
   if( lattice->param.constcon_w_in )
@@ -3097,7 +3097,7 @@ void bcs( lattice_ptr lattice)
     //printf("bcs() %s %d >> constcon_w_in\n", __FILE__, __LINE__);
     n = 0;
     ftemp     = lattice->pdf[subs][0].ftemp;
-    ftemp_end = 
+    ftemp_end =
       lattice->pdf[subs][(lattice->param.LY+1)*lattice->param.LX].ftemp;
     j = 0;
     while( ftemp < ftemp_end)
@@ -3196,7 +3196,7 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.constcon_w_in ) */
                                                                           // }}}
   // C O N S T   C O N C   E A S T   O U T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant conc east outflow
   //  -- Constant concentration boundary on east side using outflow value.
   if( lattice->param.constcon_e_out)
@@ -3255,7 +3255,7 @@ void bcs( lattice_ptr lattice)
       {
         rho = 6.*( c - ( ftemp[0] + ftemp[2] + ftemp[4]
                        + ftemp[1] + ftemp[5] + ftemp[8]));
-    
+
         ftemp[3] = (1./9.)*rho;
         ftemp[7] = (1./36.)*rho;
         ftemp[6] = (1./36.)*rho;
@@ -3271,14 +3271,14 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.constcon_e_out) */
                                                                           // }}}
   // C O N S T   C O N C   W E S T   O U T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant conc west outflow
   //  -- Constant concentration boundary on west side with outflow value.
   if( lattice->param.constcon_w_out)
   {
     //printf("bcs() %s %d >> constcon_w_out\n", __FILE__, __LINE__);
     ftemp     = lattice->pdf[subs][0].ftemp;
-    ftemp_end = 
+    ftemp_end =
       lattice->pdf[subs][(lattice->param.LY+1)*lattice->param.LX].ftemp;
     while( ftemp < ftemp_end)
     {
@@ -3302,7 +3302,7 @@ void bcs( lattice_ptr lattice)
       {
         rho = 6.*( c - ( ftemp[0] + ftemp[2] + ftemp[4]
                        + ftemp[3] + ftemp[6] + ftemp[7]));
-    
+
         ftemp[1] = (1./9.)*rho;
         ftemp[5] = (1./36.)*rho;
         ftemp[8] = (1./36.)*rho;
@@ -3316,7 +3316,7 @@ void bcs( lattice_ptr lattice)
                                                                           // }}}
 
   // C O N S T   F L U X   E A S T   I N   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant flux east inflow
   //  -- Constant flux boundary on east side with inflow value.
   if( lattice->param.constflx_e_in )
@@ -3345,7 +3345,7 @@ void bcs( lattice_ptr lattice)
       else
       {
         rho = 6.*( u + ftemp[1] + ftemp[5] + ftemp[8]);
-    
+
         ftemp[3] = (1./ 9.)*rho;
         ftemp[7] = (1./36.)*rho;
         ftemp[6] = (1./36.)*rho;
@@ -3358,7 +3358,7 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.constflx_e_in ) */
                                                                           // }}}
   // C O N S T   F L U X   W E S T   I N   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant flux west inflow
   //  -- Constant flux boundary on west side with inflow value.
   if( lattice->param.constflx_w_in )
@@ -3366,7 +3366,7 @@ void bcs( lattice_ptr lattice)
     //printf("bcs() %s %d >> constflx_w_in\n", __FILE__, __LINE__);
     n = 0;
     ftemp     = lattice->pdf[subs][0].ftemp;
-    ftemp_end = 
+    ftemp_end =
       lattice->pdf[subs][(lattice->param.LY+1)*lattice->param.LX].ftemp;
     while( ftemp < ftemp_end)
     {
@@ -3391,7 +3391,7 @@ void bcs( lattice_ptr lattice)
       else
       {
         rho = 6.*( u + ftemp[7] + ftemp[3] + ftemp[6]);
-    
+
         ftemp[1] = (1./9.)*rho;
         ftemp[5] = (1./36.)*rho;
         ftemp[8] = (1./36.)*rho;
@@ -3411,9 +3411,9 @@ void bcs( lattice_ptr lattice)
         c0 = 0.;
       }
 
-      rho = 6.*(        c0 - ftemp[0] - ftemp[2] - ftemp[4] 
+      rho = 6.*(        c0 - ftemp[0] - ftemp[2] - ftemp[4]
                - (1.-1./v)*( ftemp[3] + ftemp[6] + ftemp[7])) / (1.+1./v);
-    
+
       ftemp[1] = (1./9.)*rho;
       ftemp[5] = (1./36.)*rho;
       ftemp[8] = (1./36.)*rho;
@@ -3436,7 +3436,7 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.constflx_w_in ) */
                                                                           // }}}
   // C O N S T   F L U X   E A S T   O U T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant flux east outflow
   //  -- Constant flux boundary on east side with outflow value.
   if( lattice->param.constflx_e_out)
@@ -3465,7 +3465,7 @@ void bcs( lattice_ptr lattice)
       else
       {
         rho = 6.*( u + ftemp[1] + ftemp[5] + ftemp[8]);
-    
+
         ftemp[3] = (1./9.)*rho;
         ftemp[7] = (1./36.)*rho;
         ftemp[6] = (1./36.)*rho;
@@ -3478,14 +3478,14 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.constflx_e_out) */
                                                                           // }}}
   // C O N S T   F L U X   W E S T   O U T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant flux west outflow
   //  -- Constant flux boundary on west side with outflow value.
   if( lattice->param.constflx_w_out)
   {
     //printf("bcs() %s %d >> constflx_w_out\n", __FILE__, __LINE__);
     ftemp     = lattice->pdf[subs][0].ftemp;
-    ftemp_end = 
+    ftemp_end =
       lattice->pdf[subs][(lattice->param.LY+1)*lattice->param.LX].ftemp;
     while( ftemp < ftemp_end)
     {
@@ -3508,7 +3508,7 @@ void bcs( lattice_ptr lattice)
       else
       {
         rho = 6.*( u + ftemp[7] + ftemp[3] + ftemp[6]);
-    
+
         ftemp[1] = (1./9.)*rho;
         ftemp[5] = (1./36.)*rho;
         ftemp[8] = (1./36.)*rho;
@@ -3522,14 +3522,14 @@ void bcs( lattice_ptr lattice)
                                                                           // }}}
 
   // Z E R O   C O N C   G R A D I E N T   W E S T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // zero conc gradient west
   //  -- Zero concentration gradient boundary on west side.
   if( lattice->param.zeroconcgrad_w)
   {
     //printf("bcs() %s %d >> zeroconcgrad_w_out\n", __FILE__, __LINE__);
     ftemp     = lattice->pdf[subs][0].ftemp;
-    ftemp_end = 
+    ftemp_end =
       lattice->pdf[subs][(lattice->param.LY)*lattice->param.LX].ftemp;
     while( ftemp < ftemp_end)
     {
@@ -3569,7 +3569,7 @@ void bcs( lattice_ptr lattice)
   } /* if( lattice->param.zerograd_s) */
                                                                           // }}}
   // Z E R O   C O N C   G R A D I E N T   E A S T   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // zero conc gradient east
   //  -- Zero concentration gradient boundary on east side.
   if( lattice->param.zeroconcgrad_e)
@@ -3620,19 +3620,19 @@ void bcs( lattice_ptr lattice)
         // the domain.
         if( is_solid_node( lattice, subs, n-2)
             && is_not_solid_node( lattice, subs, n-1) )     {
-                  make_solid_node( lattice,/*subs*/0, n-1);  
+                  make_solid_node( lattice,/*subs*/0, n-1);
                   make_solid_node( lattice,/*subs*/1, n-1); }
         if( is_solid_node( lattice, subs, n-1)
             && is_not_solid_node( lattice, subs, n  ) )     {
-                  make_solid_node( lattice,/*subs*/0, n  );  
+                  make_solid_node( lattice,/*subs*/0, n  );
                   make_solid_node( lattice,/*subs*/1, n  ); }
         if( is_not_solid_node( lattice, subs, n-1)
             && is_solid_node( lattice, subs, n) )           {
-                  make_solid_node( lattice,/*subs*/0, n-1);  
+                  make_solid_node( lattice,/*subs*/0, n-1);
                   make_solid_node( lattice,/*subs*/1, n-1); }
         if( is_not_solid_node( lattice, subs, n-2)
             && is_solid_node( lattice, subs, n-1) )         {
-                  make_solid_node( lattice,/*subs*/0, n-2);  
+                  make_solid_node( lattice,/*subs*/0, n-2);
                   make_solid_node( lattice,/*subs*/1, n-2); }
       }
 
@@ -3648,12 +3648,12 @@ void bcs( lattice_ptr lattice)
   // C O R N E R S
   //############################################################################
   // S O U T H   W E S T   C O R N E R   B C  {{{
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // south west corner
   //  -- Average adjacent cells (east side and north side cells)
   //  -- This is only for when boundary conditions are applied on the
   //     adjecent sides, south and west, so that the corners overlap.
-  if( 
+  if(
       1 ||
     (
       (
@@ -3740,8 +3740,8 @@ void process_bcs( lattice_ptr lattice, int subs)
   //----------------------------------------------------------------------------
 
   // North
-  if(  lattice->param.pressure_n_in[subs]  
-    && (  lattice->param.velocity_n_in[subs]  
+  if(  lattice->param.pressure_n_in[subs]
+    && (  lattice->param.velocity_n_in[subs]
        || lattice->param.velocity_n_out[subs]))
   {
     printf("ERROR:  "
@@ -3751,8 +3751,8 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // South
-  if(  lattice->param.pressure_s_in[subs]  
-    && (  lattice->param.velocity_s_in[subs]  
+  if(  lattice->param.pressure_s_in[subs]
+    && (  lattice->param.velocity_s_in[subs]
        || lattice->param.velocity_s_out[subs]))
   {
     printf("ERROR:  "
@@ -3762,8 +3762,8 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // North
-  if(  lattice->param.pressure_n_out[subs] 
-    && (  lattice->param.velocity_n_out[subs] 
+  if(  lattice->param.pressure_n_out[subs]
+    && (  lattice->param.velocity_n_out[subs]
        || lattice->param.velocity_n_in[subs] ))
   {
     printf("ERROR:  "
@@ -3773,8 +3773,8 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // South
-  if(  lattice->param.pressure_s_out[subs] 
-    && (  lattice->param.velocity_s_out[subs] 
+  if(  lattice->param.pressure_s_out[subs]
+    && (  lattice->param.velocity_s_out[subs]
        || lattice->param.velocity_s_in[subs] ))
   {
     printf("ERROR:  "
@@ -3784,8 +3784,8 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // East
-  if(  lattice->param.pressure_e_in[subs]  
-    && (  lattice->param.velocity_e_in[subs]  
+  if(  lattice->param.pressure_e_in[subs]
+    && (  lattice->param.velocity_e_in[subs]
        || lattice->param.velocity_e_out[subs]))
   {
     printf("ERROR:  "
@@ -3795,8 +3795,8 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // West
-  if(  lattice->param.pressure_w_in[subs]  
-    && (  lattice->param.velocity_w_in[subs]  
+  if(  lattice->param.pressure_w_in[subs]
+    && (  lattice->param.velocity_w_in[subs]
        || lattice->param.velocity_w_out[subs]))
   {
     printf("ERROR:  "
@@ -3806,8 +3806,8 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // East
-  if(  lattice->param.pressure_e_out[subs] 
-    && (  lattice->param.velocity_e_out[subs] 
+  if(  lattice->param.pressure_e_out[subs]
+    && (  lattice->param.velocity_e_out[subs]
        || lattice->param.velocity_e_in[subs] ))
   {
     printf("ERROR:  "
@@ -3817,8 +3817,8 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // West
-  if(  lattice->param.pressure_w_out[subs] 
-    && (  lattice->param.velocity_w_out[subs] 
+  if(  lattice->param.pressure_w_out[subs]
+    && (  lattice->param.velocity_w_out[subs]
        || lattice->param.velocity_w_in[subs] ))
   {
     printf("ERROR:  "
@@ -3831,7 +3831,7 @@ void process_bcs( lattice_ptr lattice, int subs)
   //----------------------------------------------------------------------------
 
   // North
-  if(  lattice->param.pressure_n_in[subs] 
+  if(  lattice->param.pressure_n_in[subs]
     && lattice->param.pressure_n_out[subs])
   {
     printf("ERROR:  "
@@ -3841,7 +3841,7 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // South
-  if(  lattice->param.pressure_s_in[subs] 
+  if(  lattice->param.pressure_s_in[subs]
     && lattice->param.pressure_s_out[subs])
   {
     printf("ERROR:  "
@@ -3851,7 +3851,7 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // North
-  if(  lattice->param.velocity_n_in[subs] 
+  if(  lattice->param.velocity_n_in[subs]
     && lattice->param.velocity_n_out[subs])
   {
     printf("ERROR:  "
@@ -3861,7 +3861,7 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // South
-  if(  lattice->param.velocity_s_in[subs] 
+  if(  lattice->param.velocity_s_in[subs]
     && lattice->param.velocity_s_out[subs])
   {
     printf("ERROR:  "
@@ -3871,7 +3871,7 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // East
-  if(  lattice->param.pressure_e_in[subs] 
+  if(  lattice->param.pressure_e_in[subs]
     && lattice->param.pressure_e_out[subs])
   {
     printf("ERROR:  "
@@ -3881,7 +3881,7 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // West
-  if(  lattice->param.pressure_w_in[subs] 
+  if(  lattice->param.pressure_w_in[subs]
     && lattice->param.pressure_w_out[subs])
   {
     printf("ERROR:  "
@@ -3891,7 +3891,7 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // East
-  if(  lattice->param.velocity_e_in[subs] 
+  if(  lattice->param.velocity_e_in[subs]
     && lattice->param.velocity_e_out[subs])
   {
     printf("ERROR:  "
@@ -3901,7 +3901,7 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // West
-  if(  lattice->param.velocity_w_in[subs] 
+  if(  lattice->param.velocity_w_in[subs]
     && lattice->param.velocity_w_out[subs])
   {
     printf("ERROR:  "
@@ -3917,14 +3917,14 @@ void process_bcs( lattice_ptr lattice, int subs)
   //
 
   // North/South
-  if(   lattice->param.pressure_n_in[subs] 
-     || lattice->param.pressure_n_out[subs] 
-     || lattice->param.velocity_n_in[subs] 
+  if(   lattice->param.pressure_n_in[subs]
+     || lattice->param.pressure_n_out[subs]
+     || lattice->param.velocity_n_in[subs]
      || lattice->param.velocity_n_out[subs] )
   {
-    if( !(   lattice->param.pressure_s_in[subs] 
+    if( !(   lattice->param.pressure_s_in[subs]
           || lattice->param.pressure_s_out[subs]
-          || lattice->param.velocity_s_in[subs] 
+          || lattice->param.velocity_s_in[subs]
           || lattice->param.velocity_s_out[subs]))
     {
       // TODO: Need to prohibit flow boundaries on only one end of the domain?
@@ -3937,14 +3937,14 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // South/North
-  if(   lattice->param.pressure_s_in[subs] 
-     || lattice->param.pressure_s_out[subs] 
-     || lattice->param.velocity_s_in[subs] 
+  if(   lattice->param.pressure_s_in[subs]
+     || lattice->param.pressure_s_out[subs]
+     || lattice->param.velocity_s_in[subs]
      || lattice->param.velocity_s_out[subs] )
   {
-    if( !(   lattice->param.pressure_n_in[subs] 
+    if( !(   lattice->param.pressure_n_in[subs]
           || lattice->param.pressure_n_out[subs]
-          || lattice->param.velocity_n_in[subs] 
+          || lattice->param.velocity_n_in[subs]
           || lattice->param.velocity_n_out[subs]))
     {
       // TODO: Need to prohibit flow boundaries on only one end of the domain?
@@ -3957,14 +3957,14 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // East/West
-  if(   lattice->param.pressure_e_in[subs] 
-     || lattice->param.pressure_e_out[subs] 
-     || lattice->param.velocity_e_in[subs] 
+  if(   lattice->param.pressure_e_in[subs]
+     || lattice->param.pressure_e_out[subs]
+     || lattice->param.velocity_e_in[subs]
      || lattice->param.velocity_e_out[subs] )
   {
-    if( !(   lattice->param.pressure_w_in[subs] 
+    if( !(   lattice->param.pressure_w_in[subs]
           || lattice->param.pressure_w_out[subs]
-          || lattice->param.velocity_w_in[subs] 
+          || lattice->param.velocity_w_in[subs]
           || lattice->param.velocity_w_out[subs]))
     {
       // TODO: Need to prohibit flow boundaries on only one end of the domain?
@@ -3977,14 +3977,14 @@ void process_bcs( lattice_ptr lattice, int subs)
   }
 
   // West/East
-  if(   lattice->param.pressure_w_in[subs] 
-     || lattice->param.pressure_w_out[subs] 
-     || lattice->param.velocity_w_in[subs] 
+  if(   lattice->param.pressure_w_in[subs]
+     || lattice->param.pressure_w_out[subs]
+     || lattice->param.velocity_w_in[subs]
      || lattice->param.velocity_w_out[subs] )
   {
-    if( !(   lattice->param.pressure_e_in[subs] 
+    if( !(   lattice->param.pressure_e_in[subs]
           || lattice->param.pressure_e_out[subs]
-          || lattice->param.velocity_e_in[subs] 
+          || lattice->param.velocity_e_in[subs]
           || lattice->param.velocity_e_out[subs]))
     {
       // TODO: Need to prohibit flow boundaries on only one end of the domain?

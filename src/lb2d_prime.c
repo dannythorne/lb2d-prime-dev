@@ -39,7 +39,7 @@ int main( int argc, char **argv)
 //LBMPI #if PARALLEL
 //LBMPI   // Allocate the lbmpi structure.
 //LBMPI   lbmpi = ( struct lbmpi_struct*)malloc( sizeof(struct lbmpi_struct));
-//LBMPI 
+//LBMPI
 //LBMPI   // Give the lattice a pointer to the lbmpi structure.
 //LBMPI   lattice->lbmpi = lbmpi;
 //LBMPI #endif /* (PARALLEL) */

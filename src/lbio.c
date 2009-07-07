@@ -14,8 +14,8 @@
 // Some compilers, e.g., VC++, don't have the usual round() function
 // in their math library.  Alternatively, ROUND can be defined as
 // ceil or floor or some other rounding function.  It is used in
-// the below routines for converting the real number valued of 
-// quantities at a lattice node into integer RGB values for writing 
+// the below routines for converting the real number valued of
+// quantities at a lattice node into integer RGB values for writing
 // to BMP files.
 #define ROUND floor
 
@@ -44,7 +44,7 @@ void output_frame( lattice_ptr lattice)
       printf("\n");
       printf( "========================================"
               "========================================\n");
-      printf("Begin file I/O at time = %d, frame = %d.\n", 
+      printf("Begin file I/O at time = %d, frame = %d.\n",
           lattice->time, lattice->frame);
       printf("\n");
 #endif /* VERBOSITY_LEVEL > 0 */
@@ -59,8 +59,8 @@ void output_frame( lattice_ptr lattice)
       if( lattice->param.dump_u  ) { u2bmp( lattice, lattice->time);}
       if( lattice->param.dump_vor) { vor2bmp( lattice, lattice->time);}
 #if NON_LOCAL_FORCES
-      if( lattice->param.G != 0.) 
-      { 
+      if( lattice->param.G != 0.)
+      {
         if( lattice->param.dump_force) { force2bmp( lattice);}
       }
       if(    lattice->param.Gads[0] != 0.
@@ -225,18 +225,18 @@ void dump_frame_summary( struct lattice_struct *lattice)
 
   compute_flux( lattice, flux, subs);
 
-  fprintf( o, 
+  fprintf( o,
     "%12d "
     "%20.17f %20.17f %20.17f %20.17f %20.17f %20.17f %20.17f %20.17f %20.17f "
     "%20.17f %20.17f %20.17f %20.17f %20.17f %20.17f %20.17f %20.17f %20.17f "
-    "%20.17f %20.17f %20.17f %20.17f %20.17f %20.17f\n", 
-    lattice->time, 
-    flux [0], flux [1], flux [2], 
-    ave_u[0], ave_u[1], ave_u[2], ave_u[3], ave_u[4], 
-    min_u[0], min_u[1], min_u[2], min_u[3], min_u[4], 
-    max_u[0], max_u[1], max_u[2], max_u[3], max_u[4], 
-    (u_x_ratio<=9999.)?(u_x_ratio):(9999.), 
-    (u_y_ratio<=9999.)?(u_y_ratio):(9999.), 
+    "%20.17f %20.17f %20.17f %20.17f %20.17f %20.17f\n",
+    lattice->time,
+    flux [0], flux [1], flux [2],
+    ave_u[0], ave_u[1], ave_u[2], ave_u[3], ave_u[4],
+    min_u[0], min_u[1], min_u[2], min_u[3], min_u[4],
+    max_u[0], max_u[1], max_u[2], max_u[3], max_u[4],
+    (u_x_ratio<=9999.)?(u_x_ratio):(9999.),
+    (u_y_ratio<=9999.)?(u_y_ratio):(9999.),
     min_rho,
     max_rho,
     ave_rho,
@@ -249,7 +249,7 @@ void dump_frame_summary( struct lattice_struct *lattice)
 #endif /* VERBOSITY_LEVEL > 0 */
 
 #if VERBOSITY_LEVEL > 0
-  printf("dump_frame_info() -- frame = %d/%d = %d\n", 
+  printf("dump_frame_info() -- frame = %d/%d = %d\n",
       lattice->time,
       lattice->param.FrameRate,
       (int)((double)lattice->time/(double)lattice->param.FrameRate));
@@ -286,7 +286,7 @@ void dump_macro_vars( struct lattice_struct *lattice, int time)
  for( subs = 0; subs < NUM_FLUID_COMPONENTS; subs++)
  {
 
-  // W R I T E   R H O   A N D   U 
+  // W R I T E   R H O   A N D   U
   //
   //  - Write the density and velocity values at the active nodes to
   //    the rho and u dat files.
@@ -553,13 +553,13 @@ void read_macro_vars( struct lattice_struct *lattice, int time)
 
   frame = (int)((double)time/(double)lattice->param.FrameRate);
 #if VERBOSITY_LEVEL > 0
-  printf("read_macro_vars() -- frame = %d/%d = %d\n", 
+  printf("read_macro_vars() -- frame = %d/%d = %d\n",
       time,
       lattice->param.FrameRate,
       frame);
 #endif /* VERBOSITY_LEVEL > 0 */
 
-  // R E A D   R H O   A N D   U 
+  // R E A D   R H O   A N D   U
   //
   //  - Read the density and velocity values at the active nodes to
   //    the rho and u dat files.
@@ -605,7 +605,7 @@ void read_macro_vars( struct lattice_struct *lattice, int time)
       get_LX(lattice), get_LY(lattice), frame, subs, get_proc_id(lattice));
 #endif /* VERBOSITY_LEVEL > 0 */
   printf("read_macro_vars() -- Read file \"%s\"\n", filename);
-  
+
  } /* for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++) */
 
 } /* void read_macro_vars( struct lattice_struct *lattice, int time) */
@@ -622,12 +622,12 @@ void read_macro_vars( struct lattice_struct *lattice, int time)
 void dump_pdf( struct lattice_struct *lattice, int time)
 {
   char   filename[1024];
-  FILE   *o_feq, 
-         *o_f, 
+  FILE   *o_feq,
+         *o_f,
          *o_ftemp,
          *o_fdiff;
   double *fdiff;
-  double *fptr, 
+  double *fptr,
          *end_ptr;
   bc_ptr bc;
   int    frame;
@@ -700,7 +700,7 @@ void dump_pdf( struct lattice_struct *lattice, int time)
   {
     for( a=0; a<9; a++)
     {
-      fdiff[ 9*n + a] = 
+      fdiff[ 9*n + a] =
         fptr[ 27*n +  9 + a] // f
       - fptr[ 27*n + 18 + a] // ftemp
       ;
@@ -813,7 +813,7 @@ void dump_pdf( struct lattice_struct *lattice, int time)
   {
     for( a=0; a<9; a++)
     {
-      fdiff[ 9*n + a] = 
+      fdiff[ 9*n + a] =
         fptr[ 27*n +  9 + a] // f
       - fptr[ 27*n + 18 + a] // ftemp
       ;
@@ -931,20 +931,20 @@ fprintf(o_fdiff,"%.15f ", fdiff[9*n+6]                  );
 fprintf(o_fdiff,"%.15f ", fdiff[9*n+2]                  );
 fprintf(o_fdiff,"%.15f|", fdiff[9*n+5]                  );
 #endif
-    } /* for( i=0; i<get_LX(lattice); i++, n++) */                     
-                                                                       
-    fprintf( o_feq,  "\n");                                            
-    fprintf( o_f,    "\n");                                            
-    fprintf( o_ftemp,"\n");                                            
-    fprintf( o_fdiff,"\n");                                            
-                                                                       
-    n = j*get_LX(lattice);                                             
+    } /* for( i=0; i<get_LX(lattice); i++, n++) */
+
+    fprintf( o_feq,  "\n");
+    fprintf( o_f,    "\n");
+    fprintf( o_ftemp,"\n");
+    fprintf( o_fdiff,"\n");
+
+    n = j*get_LX(lattice);
     fprintf( o_feq  , "|");
     fprintf( o_f    , "|");
     fprintf( o_ftemp, "|");
     fprintf( o_fdiff, "|");
-    for( i=0; i<get_LX(lattice); i++, n++)                             
-    {                                                                  
+    for( i=0; i<get_LX(lattice); i++, n++)
+    {
 #if 0
 fprintf(o_feq,  "%3d ",X2N( lattice->pdf[subs][n].feq[3]  /max_feq1234  ,s));
 fprintf(o_feq,  "%3d ",X2N( lattice->pdf[subs][n].feq[0]  /max_feq0     ,s));
@@ -972,20 +972,20 @@ fprintf(o_fdiff,"%.15f ", fdiff[9*n+3]                  );
 fprintf(o_fdiff,"%.15f ", fdiff[9*n+0]                  );
 fprintf(o_fdiff,"%.15f|", fdiff[9*n+1]                  );
 #endif
-    } /* for( i=0; i<get_LX(lattice); i++, n++) */                     
-                                                                       
-    fprintf( o_feq,  "\n");                                            
-    fprintf( o_f,    "\n");                                            
-    fprintf( o_ftemp,"\n");                                            
-    fprintf( o_fdiff,"\n");                                            
-                                                                       
-    n = j*get_LX(lattice);                                             
+    } /* for( i=0; i<get_LX(lattice); i++, n++) */
+
+    fprintf( o_feq,  "\n");
+    fprintf( o_f,    "\n");
+    fprintf( o_ftemp,"\n");
+    fprintf( o_fdiff,"\n");
+
+    n = j*get_LX(lattice);
     fprintf( o_feq  , "|");
     fprintf( o_f    , "|");
     fprintf( o_ftemp, "|");
     fprintf( o_fdiff, "|");
-    for( i=0; i<get_LX(lattice); i++, n++)                             
-    {                                                                  
+    for( i=0; i<get_LX(lattice); i++, n++)
+    {
 #if 0
 fprintf(o_feq,  "%3d ",X2N(lattice->pdf[subs][n].feq[7]  /max_feq5678  ,s));
 fprintf(o_feq,  "%3d ",X2N(lattice->pdf[subs][n].feq[4]  /max_feq1234  ,s));
@@ -1081,7 +1081,7 @@ void dump_forces( struct lattice_struct *lattice)
  {
   frame = (int)((double)lattice->time/(double)lattice->param.FrameRate);
 #if VERBOSITY_LEVEL > 0
-  printf("dump_forces() -- frame = %d/%d = %d\n", 
+  printf("dump_forces() -- frame = %d/%d = %d\n",
       lattice->time,
       lattice->param.FrameRate,
       frame);
@@ -1268,7 +1268,7 @@ void spy_bmp( char *filename, lattice_ptr lattice, int **matrix)
   if( !( in = fopen( filename, "r")))
   {
 #if 1
-    printf("%s %d >> spy_bmp() -- Error opening file \"%s\".\n", 
+    printf("%s %d >> spy_bmp() -- Error opening file \"%s\".\n",
       __FILE__, __LINE__, filename);
     process_exit(1);
 #else
@@ -1278,7 +1278,7 @@ void spy_bmp( char *filename, lattice_ptr lattice, int **matrix)
     {
       // TODO: Write blank bmp file.
     }
-    printf(" %s::spy_bmp() %d >> Wrote a blank \"%s\" file.\n", 
+    printf(" %s::spy_bmp() %d >> Wrote a blank \"%s\" file.\n",
         __FILE__, __LINE__, filename);
     printf(" %s::spy_bmp() %d >> Returning all zeros!\n", __FILE__, __LINE__);
     fclose( o);
@@ -1300,9 +1300,9 @@ void spy_bmp( char *filename, lattice_ptr lattice, int **matrix)
 #if 0
 printf("%s %d >> sizeof(int) = %d \n", __FILE__, __LINE__, sizeof(int));
 printf("%s %d >> biWidth = %d \n", __FILE__, __LINE__, (int)*(int*)bmih.biWidth);
-printf("%s %d >> biWidth = [ '%c' '%c' '%c' '%c'] \n", __FILE__, __LINE__, 
+printf("%s %d >> biWidth = [ '%c' '%c' '%c' '%c'] \n", __FILE__, __LINE__,
     bmih.biWidth[0], bmih.biWidth[1], bmih.biWidth[2], bmih.biWidth[3] );
-printf("%s %d >> biWidth = [ '%d' '%d' '%d' '%d'] \n", __FILE__, __LINE__, 
+printf("%s %d >> biWidth = [ '%d' '%d' '%d' '%d'] \n", __FILE__, __LINE__,
     bmih.biWidth[0], bmih.biWidth[1], bmih.biWidth[2], bmih.biWidth[3] );
 ctemp = bmih.biWidth[0];
 bmih.biWidth[0] = bmih.biWidth[3];
@@ -1312,27 +1312,27 @@ bmih.biWidth[1] = bmih.biWidth[2];
 bmih.biWidth[2] = ctemp;
    itemp = 0xaabbccdd;//(int)*(int*)bmih.biWidth;
 printf("%s %d >> itemp = %d\n",__FILE__,__LINE__, itemp);
-printf("%s %d >> itemp = [ '%d' '%d' '%d' '%d'] \n", __FILE__, __LINE__, 
+printf("%s %d >> itemp = [ '%d' '%d' '%d' '%d'] \n", __FILE__, __LINE__,
    (itemp&0xff000000)>>24,
    (itemp&0x00ff0000)>>16,
    (itemp&0x0000ff00)>> 8,
    (itemp&0x000000ff)>> 0 );
   itemp = ENDIAN4(itemp);
 printf("%s %d >> itemp = %d\n",__FILE__,__LINE__, itemp);
-printf("%s %d >> itemp = [ '%d' '%d' '%d' '%d'] \n", __FILE__, __LINE__, 
+printf("%s %d >> itemp = [ '%d' '%d' '%d' '%d'] \n", __FILE__, __LINE__,
    (itemp&0xff000000)>>24,
    (itemp&0x00ff0000)>>16,
    (itemp&0x0000ff00)>> 8,
    (itemp&0x000000ff)>> 0 );
-printf("%s %d >> biWidth = [ '%d' '%d' '%d' '%d'] \n", __FILE__, __LINE__, 
+printf("%s %d >> biWidth = [ '%d' '%d' '%d' '%d'] \n", __FILE__, __LINE__,
     bmih.biWidth[0], bmih.biWidth[1], bmih.biWidth[2], bmih.biWidth[3] );
 printf("%s %d >> biWidth = %d \n", __FILE__, __LINE__, (int)*(int*)bmih.biWidth);
 
 printf("%s %d >> sizeof(int) = %d \n", __FILE__, __LINE__, sizeof(int));
 printf("%s %d >> biHeight = %d \n", __FILE__, __LINE__, (int)*(int*)bmih.biHeight);
-printf("%s %d >> biHeight = [ '%c' '%c' '%c' '%c'] \n", __FILE__, __LINE__, 
+printf("%s %d >> biHeight = [ '%c' '%c' '%c' '%c'] \n", __FILE__, __LINE__,
     bmih.biHeight[0], bmih.biHeight[1], bmih.biHeight[2], bmih.biHeight[3] );
-printf("%s %d >> biHeight = [ '%d' '%d' '%d' '%d'] \n", __FILE__, __LINE__, 
+printf("%s %d >> biHeight = [ '%d' '%d' '%d' '%d'] \n", __FILE__, __LINE__,
     bmih.biHeight[0], bmih.biHeight[1], bmih.biHeight[2], bmih.biHeight[3] );
 ctemp = bmih.biHeight[0];
 bmih.biHeight[0] = bmih.biHeight[3];
@@ -1340,7 +1340,7 @@ bmih.biHeight[3] = ctemp;
 ctemp = bmih.biHeight[1];
 bmih.biHeight[1] = bmih.biHeight[2];
 bmih.biHeight[2] = ctemp;
-printf("%s %d >> biHeight = [ '%d' '%d' '%d' '%d'] \n", __FILE__, __LINE__, 
+printf("%s %d >> biHeight = [ '%d' '%d' '%d' '%d'] \n", __FILE__, __LINE__,
     bmih.biHeight[0], bmih.biHeight[1], bmih.biHeight[2], bmih.biHeight[3] );
 printf("%s %d >> biHeight = %d \n", __FILE__, __LINE__, (int)*(int*)bmih.biHeight);
 
@@ -1370,7 +1370,7 @@ bmih.biBitCount[1] = ctemp;
 //LBMPI   if( *width_ptr != lattice->lbmpi->GLX)
 //LBMPI   {
 //LBMPI     printf("%s %d >> ERROR: GLX %d does not match the "
-//LBMPI         "width %d of the BMP file. Exiting!\n", 
+//LBMPI         "width %d of the BMP file. Exiting!\n",
 //LBMPI         __FILE__, __LINE__, lattice->lbmpi->GLX, *width_ptr);
 //LBMPI     process_exit(1);
 //LBMPI   }
@@ -1381,7 +1381,7 @@ bmih.biBitCount[1] = ctemp;
         "width %d of the BMP file. Exiting!\n"
         "Note that, if the width stated here seems absurd, you\n"
         "might need to recompile with the SWAP_BYTE_ORDER flag.\n"
-        "This can be done by \"make swap\".\n", 
+        "This can be done by \"make swap\".\n",
         __FILE__, __LINE__, get_g_LX(lattice), *width_ptr);
     process_exit(1);
   }
@@ -1393,7 +1393,7 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
 //LBMPI   if( *height_ptr != lattice->lbmpi->GLY)
 //LBMPI   {
 //LBMPI     printf("%s %d >> ERROR: GLY %d does not match the "
-//LBMPI         "height %d of the BMP file. Exiting!\n", 
+//LBMPI         "height %d of the BMP file. Exiting!\n",
 //LBMPI         __FILE__, __LINE__, lattice->lbmpi->GLY, *height_ptr);
 //LBMPI     process_exit(1);
 //LBMPI   }
@@ -1401,7 +1401,7 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
   if( *height_ptr != get_g_LY(lattice))
   {
     printf("%s %d >> ERROR: LY %d does not match the "
-        "height %d of the BMP file. Exiting!\n", 
+        "height %d of the BMP file. Exiting!\n",
         __FILE__, __LINE__, get_g_LY(lattice), *height_ptr);
     process_exit(1);
   }
@@ -1422,7 +1422,7 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
   }
 
   // Bytes per row of the bitmap.
-  bytes_per_row = 
+  bytes_per_row =
     ((int)ceil(( (((double)(*width_ptr))*((double)((*bitcount_ptr))))/8.)));
 
   // Bitmaps pad rows to preserve 4-byte boundaries.
@@ -1445,19 +1445,19 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
         process_exit(1);
 
         if( i < *width_ptr) { (spy)[j][i] = ( (b & 0x80) == 0); }
-        i++;     
+        i++;
         if( i < *width_ptr) { (spy)[j][i] = ( (b & 0x40) == 0); }
-        i++;     
+        i++;
         if( i < *width_ptr) { (spy)[j][i] = ( (b & 0x20) == 0); }
-        i++;     
+        i++;
         if( i < *width_ptr) { (spy)[j][i] = ( (b & 0x10) == 0); }
-        i++;     
+        i++;
         if( i < *width_ptr) { (spy)[j][i] = ( (b & 0x08) == 0); }
-        i++;     
+        i++;
         if( i < *width_ptr) { (spy)[j][i] = ( (b & 0x04) == 0); }
-        i++;     
+        i++;
         if( i < *width_ptr) { (spy)[j][i] = ( (b & 0x02) == 0); }
-        i++;     
+        i++;
         if( i < *width_ptr) { (spy)[j][i] = ( (b & 0x01) == 0); }
         i++;
         break;
@@ -1485,8 +1485,8 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
         break;
 
       case 24: // 24-bit colors.
-        if( i < 3*(*width_ptr)) 
-        { 
+        if( i < 3*(*width_ptr))
+        {
           i++; n+=( k = fread( &g, 1, 1, in ));
           i++; n+=( k = fread( &r, 1, 1, in ));
 
@@ -1499,7 +1499,7 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
           if( ( (b&0xff) == 0) &&( (g&0xff) == 0) &&( (r&0xff) == 255) )
           {
             // Red ==> Inflow, Pressure boundaries.
-            if(    (int)floor((double)i/3.) == 0 
+            if(    (int)floor((double)i/3.) == 0
                 || (int)floor((double)i/3.) == get_g_LX(lattice)-1 )
             {
               if( !( j==0 || j == get_g_LY(lattice)-1))
@@ -1507,10 +1507,10 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
                 lattice->periodic_x[subs] = 0;
               }
             }
-            if(    j == 0 
+            if(    j == 0
                 || j == get_g_LY(lattice)-1 )
             {
-              if( !(   (int)floor((double)i/3.) == 0 
+              if( !(   (int)floor((double)i/3.) == 0
                     || (int)floor((double)i/3.) == get_g_LX(lattice)-1))
               {
                 lattice->periodic_y[subs] = 0;
@@ -1521,7 +1521,7 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
           if( ( (b&0xff) == 0) &&( (g&0xff) == 255) &&( (r&0xff) == 0) )
           {
             // Green ==> Outflow, Pressure boundaries.
-            if(    (int)floor((double)i/3.) == 0 
+            if(    (int)floor((double)i/3.) == 0
                 || (int)floor((double)i/3.) == get_g_LX(lattice)-1 )
             {
               if( !( j==0 || j == get_g_LY(lattice)-1))
@@ -1529,10 +1529,10 @@ printf("%s %d >> width_ptr = %d \n", __FILE__, __LINE__, (int)*width_ptr);
                 lattice->periodic_x[subs] = 0;
               }
             }
-            if(    j == 0 
+            if(    j == 0
                 || j == get_g_LY(lattice)-1 )
             {
-              if( !(   (int)floor((double)i/3.) == 0 
+              if( !(   (int)floor((double)i/3.) == 0
                     || (int)floor((double)i/3.) == get_g_LX(lattice)-1))
               {
                 lattice->periodic_y[subs] = 0;
@@ -1632,7 +1632,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
   sprintf( filename, "./in/%dx%dbc_subs%02d_proc%04d.bmp",
       get_LX(lattice), get_LY(lattice), subs); if( !( in = fopen( filename, "r"), get_proc_id(lattice)))
   {
-    printf("%s %d >> read_bcs() -- Error opening file \"%s\".\n", 
+    printf("%s %d >> read_bcs() -- Error opening file \"%s\".\n",
       __FILE__,__LINE__,filename);
     process_exit(1);
   }
@@ -1671,7 +1671,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
   if( ENDIAN4(*width_ptr) != get_LX(lattice))
   {
     printf("ERROR: Lattice width does not match "
-        "soil matrix data \"%s\".  (%d!=%d)  Exiting!\n", 
+        "soil matrix data \"%s\".  (%d!=%d)  Exiting!\n",
         filename,
         get_LX(lattice), ENDIAN4(*width_ptr) );
     printf("\n");
@@ -1694,7 +1694,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
   }
 
   // Bytes per row of the bitmap.
-  bytes_per_row = 
+  bytes_per_row =
     ((int)ceil(( (((double)(ENDIAN4(*width_ptr)))*((double)(ENDIAN2(*bitcount_ptr))))/8.)));
 
   // Bitmaps pad rows to preserve 4-byte boundaries.
@@ -1718,19 +1718,19 @@ void read_bcs( lattice_ptr lattice, int **bcs)
         process_exit(1);
 
         if( i < ENDIAN4(*width_ptr)) { (bcs)[j][i] = ( (b & 0x80) == 0); }
-        i++;     
+        i++;
         if( i < ENDIAN4(*width_ptr)) { (bcs)[j][i] = ( (b & 0x40) == 0); }
-        i++;     
+        i++;
         if( i < ENDIAN4(*width_ptr)) { (bcs)[j][i] = ( (b & 0x20) == 0); }
-        i++;     
+        i++;
         if( i < ENDIAN4(*width_ptr)) { (bcs)[j][i] = ( (b & 0x10) == 0); }
-        i++;     
+        i++;
         if( i < ENDIAN4(*width_ptr)) { (bcs)[j][i] = ( (b & 0x08) == 0); }
-        i++;     
+        i++;
         if( i < ENDIAN4(*width_ptr)) { (bcs)[j][i] = ( (b & 0x04) == 0); }
-        i++;     
+        i++;
         if( i < ENDIAN4(*width_ptr)) { (bcs)[j][i] = ( (b & 0x02) == 0); }
-        i++;     
+        i++;
         if( i < ENDIAN4(*width_ptr)) { (bcs)[j][i] = ( (b & 0x01) == 0); }
         i++;
         break;
@@ -1758,8 +1758,8 @@ void read_bcs( lattice_ptr lattice, int **bcs)
         break;
 
       case 24: // 24-bit colors.
-        if( i < 3*(ENDIAN4(*width_ptr))) 
-        { 
+        if( i < 3*(ENDIAN4(*width_ptr)))
+        {
           i++; n+=( k = fread( &g, 1, 1, in ));
           i++; n+=( k = fread( &r, 1, 1, in ));
           if( ( (b&0xff) == 0) &&( (g&0xff) == 0) &&( (r&0xff) == 255) )
@@ -1844,7 +1844,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
           {
             // Unhandled case.
             printf("read_bcs() -- Unhandled case: "
-                "bcs[ %d][ %d] = %d .  Exiting!\n", 
+                "bcs[ %d][ %d] = %d .  Exiting!\n",
                 i, j, bcs[j][i]);
             process_exit(1);
           }
@@ -1869,13 +1869,13 @@ void read_bcs( lattice_ptr lattice, int **bcs)
           {
             // Unhandled case.
             printf("read_bcs() -- Unhandled case: "
-                "bcs[ %d][ %d] = %d .  Exiting!\n", 
+                "bcs[ %d][ %d] = %d .  Exiting!\n",
                 i, j, bcs[j][i]);
             process_exit(1);
           }
 
         }
-        else 
+        else
 #endif
         if( j==0)
         {
@@ -1897,7 +1897,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
           {
             // Unhandled case.
             printf("read_bcs() -- Unhandled case: "
-                "bcs[ %d][ %d] = %d .  Exiting!\n", 
+                "bcs[ %d][ %d] = %d .  Exiting!\n",
                 i, j, bcs[j][i]);
             process_exit(1);
           }
@@ -1923,7 +1923,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
           {
             // Unhandled case.
             printf("read_bcs() -- Unhandled case: "
-                "bcs[ %d][ %d] = %d .  Exiting!\n", 
+                "bcs[ %d][ %d] = %d .  Exiting!\n",
                 i, j, bcs[j][i]);
             process_exit(1);
           }
@@ -1959,11 +1959,11 @@ void read_bcs( lattice_ptr lattice, int **bcs)
 //
 void rho2bmp( lattice_ptr lattice, int time)
 {
-  FILE   *in, 
+  FILE   *in,
          *o;
-  int    i, j, 
+  int    i, j,
          n, m;
-  int    pad, 
+  int    pad,
          bytes_per_row;
   int    frame;
   char   k;
@@ -1977,9 +1977,9 @@ void rho2bmp( lattice_ptr lattice, int time)
   int    *height_ptr;
   short  int *bitcount_ptr;
   char   filename[1024];
-  char   red_val, 
-         green_val, 
-         blue_val, 
+  char   red_val,
+         green_val,
+         blue_val,
          val;
   double fval;
   double min_rho, max_rho;
@@ -2082,7 +2082,7 @@ void rho2bmp( lattice_ptr lattice, int time)
 #endif
 
   // Bytes per row of the bitmap.
-  bytes_per_row = 
+  bytes_per_row =
     ((int)ceil(( (((double)(ENDIAN4(*width_ptr)))*((double)(ENDIAN2(*bitcount_ptr))))/8.)));
 
   // Bitmaps pad rows to preserve 4-byte boundaries.
@@ -2092,9 +2092,9 @@ void rho2bmp( lattice_ptr lattice, int time)
   compute_min_rho( lattice, &min_rho, subs);
   compute_max_rho( lattice, &max_rho, subs);
 
-  sprintf( filename, "%s/rho%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice), 
-      get_LX(lattice), 
-      get_LY(lattice), 
+  sprintf( filename, "%s/rho%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
+      get_LX(lattice),
+      get_LY(lattice),
       frame, subs, get_proc_id(lattice));
   if( !( o = fopen( filename, "w+")))
   {
@@ -2161,7 +2161,7 @@ void rho2bmp( lattice_ptr lattice, int time)
             {
               if( max_rho!=min_rho)
               {
-                fval = ROUND( 255.*( lattice->macro_vars[subs][ n].rho 
+                fval = ROUND( 255.*( lattice->macro_vars[subs][ n].rho
                                    - min_rho)
                                   /( max_rho-min_rho));
               }
@@ -2208,7 +2208,7 @@ void rho2bmp( lattice_ptr lattice, int time)
             {
               if( max_rho!=min_rho)
               {
-                fval = ROUND( 255.*( lattice->macro_vars[subs][ n].rho 
+                fval = ROUND( 255.*( lattice->macro_vars[subs][ n].rho
                                         - min_rho)
                                        /( max_rho-min_rho));
               }
@@ -2300,7 +2300,7 @@ void rho2bmp( lattice_ptr lattice, int time)
       //printf("BING %d %d\n", i, j);
       if( fwrite( &red_val, 1, 1, o) != 1) { printf("BOOM!\n"); process_exit(1);}
       //printf("BING %d %d\n", i, j);
-     
+
     } /* for( i=0; i<get_LX(lattice); i++) */
 
     // Pad for 4-byte boundaries.
@@ -2339,11 +2339,11 @@ void rho2bmp( lattice_ptr lattice, int time)
 //
 void rho2bmp( lattice_ptr lattice, int time)
 {
-  FILE   *in, 
+  FILE   *in,
          *o;
-  int    i, j, 
+  int    i, j,
          n, m;
-  int    pad, 
+  int    pad,
          bytes_per_row;
   int    frame;
   char   k;
@@ -2357,9 +2357,9 @@ void rho2bmp( lattice_ptr lattice, int time)
   int    *height_ptr;
   short  int *bitcount_ptr;
   char   filename[1024];
-  char   red_val, 
-         green_val, 
-         blue_val, 
+  char   red_val,
+         green_val,
+         blue_val,
          val;
   double min_rho, max_rho;
   int    subs;
@@ -2425,16 +2425,16 @@ void rho2bmp( lattice_ptr lattice, int time)
   fclose(in);
 
   // Bytes per row of the bitmap.
-  bytes_per_row = 
+  bytes_per_row =
     ((int)ceil(( (((double)(ENDIAN4(*width_ptr)))*((double)(ENDIAN2(*bitcount_ptr))))/8.)));
 
   // Bitmaps pad rows to preserve 4-byte boundaries.
   // The length of a row in the file will be bytes_per_row + pad .
   pad = ((4) - bytes_per_row%4)%4;
 
-  sprintf( filename, "%s/rho%dx%d_frame%04d_subs%02d.bmp", get_out_path(lattice), 
-      get_LX(lattice), 
-      get_LY(lattice), 
+  sprintf( filename, "%s/rho%dx%d_frame%04d_subs%02d.bmp", get_out_path(lattice),
+      get_LX(lattice),
+      get_LY(lattice),
       frame, subs);
   if( !( o = fopen( filename, "w+")))
   {
@@ -2456,7 +2456,7 @@ void rho2bmp( lattice_ptr lattice, int time)
         red_val = (char)0;
         green_val = (char)0;
 
-        red_val = 
+        red_val =
 (char)ROUND( 255.*(lattice->macro_vars[subs][ n].rho - min_rho)/(max_rho-min_rho));
         blue_val = (char)255-red_val;
 
@@ -2504,7 +2504,7 @@ void rho2bmp( lattice_ptr lattice, int time)
       //printf("BING %d %d\n", i, j);
       if( fwrite( &red_val, 1, 1, o) != 1) { printf("BOOM!\n"); process_exit(1);}
       //printf("BING %d %d\n", i, j);
-     
+
     } /* for( i=0; i<get_LX(lattice); i++) */
 
     // Pad for 4-byte boundaries.
@@ -2538,13 +2538,13 @@ void rho2bmp( lattice_ptr lattice, int time)
 //
 void u2bmp( lattice_ptr lattice, int time)
 {
-  FILE   *in, 
+  FILE   *in,
          *o_u,
          *o_ux,
          *o_uy;
-  int    i, j, 
+  int    i, j,
          n, m;
-  int    pad, 
+  int    pad,
          bytes_per_row;
   int    frame;
   char   k;
@@ -2558,9 +2558,9 @@ void u2bmp( lattice_ptr lattice, int time)
   int    *height_ptr;
   short  int *bitcount_ptr;
   char   filename[1024];
-  char   red_val, 
-         green_val, 
-         blue_val, 
+  char   red_val,
+         green_val,
+         blue_val,
          val;
   double max_u[2], maxu;
   double u_x, u_y, u;
@@ -2664,7 +2664,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
 #endif
 
   // Bytes per row of the bitmap.
-  bytes_per_row = 
+  bytes_per_row =
     ((int)ceil(( (((double)(ENDIAN4(*width_ptr)))*((double)(ENDIAN2(*bitcount_ptr))))/8.)));
 
   // Bitmaps pad rows to preserve 4-byte boundaries.
@@ -2673,9 +2673,9 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
 
   compute_max_u( lattice, max_u, subs);
 
-  sprintf( filename, "%s/u%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice), 
-      get_LX(lattice), 
-      get_LY(lattice), 
+  sprintf( filename, "%s/u%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
+      get_LX(lattice),
+      get_LY(lattice),
       frame, subs, get_proc_id(lattice));
   if( !( o_u = fopen( filename, "w+")))
   {
@@ -2683,9 +2683,9 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
     process_exit(1);
   }
 
-  sprintf( filename, "%s/u_x%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice), 
-      get_LX(lattice), 
-      get_LY(lattice), 
+  sprintf( filename, "%s/u_x%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
+      get_LX(lattice),
+      get_LY(lattice),
       frame, subs, get_proc_id(lattice));
   if( !( o_ux = fopen( filename, "w+")))
   {
@@ -2693,9 +2693,9 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
     process_exit(1);
   }
 
-  sprintf( filename, "%s/u_y%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice), 
-      get_LX(lattice), 
-      get_LY(lattice), 
+  sprintf( filename, "%s/u_y%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
+      get_LX(lattice),
+      get_LY(lattice),
       frame, subs, get_proc_id(lattice));
   if( !( o_uy = fopen( filename, "w+")))
   {
@@ -3010,7 +3010,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
       if( fwrite( &blue_val,  1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
       if( fwrite( &green_val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
       if( fwrite( &red_val,   1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
-     
+
     } /* for( i=0; i<get_LY(lattice); i++) */
 
     // Pad for 4-byte boundaries.
@@ -3029,21 +3029,21 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
   fclose(o_uy);
 
 #if VERBOSITY_LEVEL > 0
-  sprintf( filename, "%s/u%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice), 
-      get_LX(lattice), 
-      get_LY(lattice), 
+  sprintf( filename, "%s/u%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
+      get_LX(lattice),
+      get_LY(lattice),
       frame, subs, get_proc_id(lattice));
   printf("u2bmp()   -- Wrote file \"%s\".\n", filename);
 
-  sprintf( filename, "%s/u_x%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice), 
-      get_LX(lattice), 
-      get_LY(lattice), 
+  sprintf( filename, "%s/u_x%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
+      get_LX(lattice),
+      get_LY(lattice),
       frame, subs, get_proc_id(lattice));
   printf("u2bmp()   -- Wrote file \"%s\".\n", filename);
 
-  sprintf( filename, "%s/u_y%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice), 
-      get_LX(lattice), 
-      get_LY(lattice), 
+  sprintf( filename, "%s/u_y%dx%d_frame%04d_subs%02d_proc%04d.bmp", get_out_path(lattice),
+      get_LX(lattice),
+      get_LY(lattice),
       frame, subs, get_proc_id(lattice));
   printf("u2bmp()   -- Wrote file \"%s\".\n", filename);
 #endif /* VERBOSITY_LEVEL > 0 */
@@ -3103,7 +3103,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
   fclose(in);
 
   // Bytes per row of the bitmap.
-  bytes_per_row = 
+  bytes_per_row =
     ((int)ceil(( (((double)(ENDIAN4(*width_ptr)))*((double)(ENDIAN2(*bitcount_ptr))))/8.)));
 
   // Bitmaps pad rows to preserve 4-byte boundaries.
@@ -3112,9 +3112,9 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
 
   compute_max_upr( lattice, max_u);
 
-  sprintf( filename, "%s/upr%dx%d_frame%04d_proc%04d.bmp", get_out_path(lattice), 
-      get_LX(lattice), 
-      get_LY(lattice), 
+  sprintf( filename, "%s/upr%dx%d_frame%04d_proc%04d.bmp", get_out_path(lattice),
+      get_LX(lattice),
+      get_LY(lattice),
       frame, get_proc_id(lattice));
   if( !( o_u = fopen( filename, "w+")))
   {
@@ -3122,9 +3122,9 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
     process_exit(1);
   }
 
-  sprintf( filename, "%s/upr_x%dx%d_frame%04d_proc%04d.bmp", get_out_path(lattice), 
-      get_LX(lattice), 
-      get_LY(lattice), 
+  sprintf( filename, "%s/upr_x%dx%d_frame%04d_proc%04d.bmp", get_out_path(lattice),
+      get_LX(lattice),
+      get_LY(lattice),
       frame, get_proc_id(lattice));
   if( !( o_ux = fopen( filename, "w+")))
   {
@@ -3132,9 +3132,9 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
     process_exit(1);
   }
 
-  sprintf( filename, "%s/upr_y%dx%d_frame%04d_proc%04d.bmp", get_out_path(lattice), 
-      get_LX(lattice), 
-      get_LY(lattice), 
+  sprintf( filename, "%s/upr_y%dx%d_frame%04d_proc%04d.bmp", get_out_path(lattice),
+      get_LX(lattice),
+      get_LY(lattice),
       frame, get_proc_id(lattice));
   if( !( o_uy = fopen( filename, "w+")))
   {
@@ -3443,7 +3443,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
       if( fwrite( &blue_val,  1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
       if( fwrite( &green_val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
       if( fwrite( &red_val,   1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
-     
+
     } /* for( i=0; i<get_LY(lattice); i++) */
 
     // Pad for 4-byte boundaries.
@@ -3490,11 +3490,11 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
 //
 void vor2bmp( lattice_ptr lattice, int time)
 {
-  FILE   *in, 
+  FILE   *in,
          *o_vor;
-  int    i, j, 
+  int    i, j,
          n, m;
-  int    pad, 
+  int    pad,
          bytes_per_row;
   int    frame;
   char   k;
@@ -3508,9 +3508,9 @@ void vor2bmp( lattice_ptr lattice, int time)
   int    *height_ptr;
   short  int *bitcount_ptr;
   char   filename[1024];
-  char   red_val, 
-         green_val, 
-         blue_val, 
+  char   red_val,
+         green_val,
+         blue_val,
          val;
   double max_vor_p, max_vor_n;
   double ave_vor_p, ave_vor_n;
@@ -3604,7 +3604,7 @@ void vor2bmp( lattice_ptr lattice, int time)
 #endif
 
   // Bytes per row of the bitmap.
-  bytes_per_row = 
+  bytes_per_row =
     ((int)ceil(( (((double)(ENDIAN4(*width_ptr)))*((double)(ENDIAN2(*bitcount_ptr))))/8.)));
 
   // Bitmaps pad rows to preserve 4-byte boundaries.
@@ -3691,7 +3691,7 @@ blue_val = (char)ROUND( 255.*( 1. - 10000.*(vor/ave_vor_n)*(vor/ave_vor_n)));
         green_val = (char)0;
         red_val   = (char)0;
 
-//        blue_val = 
+//        blue_val =
 //(char)ROUND( 255.*(vor - max_vor_n)/(max_vor_p-max_vor_n));
         if( vor >= 0.)
         {
@@ -3800,13 +3800,13 @@ blue_val = (char)ROUND( 255.*( 1. - 10000.*(vor/ave_vor_n)*(vor/ave_vor_n)));
 //
 void force2bmp( lattice_ptr lattice)
 {
-  FILE   *in, 
+  FILE   *in,
          *o_u,
          *o_ux,
          *o_uy;
-  int    i, j, 
+  int    i, j,
          n, m;
-  int    pad, 
+  int    pad,
          bytes_per_row;
   int    frame;
   char   k;
@@ -3820,9 +3820,9 @@ void force2bmp( lattice_ptr lattice)
   int    *height_ptr;
   short  int *bitcount_ptr;
   char   filename[1024];
-  char   red_val, 
-         green_val, 
-         blue_val, 
+  char   red_val,
+         green_val,
+         blue_val,
          val;
   double max_force[2], maxforce;
   double u_x, u_y, u;
@@ -3915,7 +3915,7 @@ void force2bmp( lattice_ptr lattice)
 #endif
 
   // Bytes per row of the bitmap.
-  bytes_per_row = 
+  bytes_per_row =
     ((int)ceil(( (((double)(ENDIAN4(*width_ptr)))*((double)(ENDIAN2(*bitcount_ptr))))/8.)));
 
   // Bitmaps pad rows to preserve 4-byte boundaries.
@@ -4250,7 +4250,7 @@ void force2bmp( lattice_ptr lattice)
       if( fwrite( &blue_val,  1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
       if( fwrite( &green_val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
       if( fwrite( &red_val,   1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
-     
+
     } /* for( i=0; i<get_LY(lattice); i++) */
 
     // Pad for 4-byte boundaries.
@@ -4297,13 +4297,13 @@ void force2bmp( lattice_ptr lattice)
 //
 void sforce2bmp( lattice_ptr lattice)
 {
-  FILE   *in, 
+  FILE   *in,
          *o_u,
          *o_ux,
          *o_uy;
-  int    i, j, 
+  int    i, j,
          n, m;
-  int    pad, 
+  int    pad,
          bytes_per_row;
   int    frame;
   char   k;
@@ -4317,9 +4317,9 @@ void sforce2bmp( lattice_ptr lattice)
   int    *height_ptr;
   short  int *bitcount_ptr;
   char   filename[1024];
-  char   red_val, 
-         green_val, 
-         blue_val, 
+  char   red_val,
+         green_val,
+         blue_val,
          val;
   double max_sforce[2], maxsforce;
   double u_x, u_y, u;
@@ -4412,7 +4412,7 @@ void sforce2bmp( lattice_ptr lattice)
 #endif
 
   // Bytes per row of the bitmap.
-  bytes_per_row = 
+  bytes_per_row =
     ((int)ceil(( (((double)(ENDIAN4(*width_ptr)))*((double)(ENDIAN2(*bitcount_ptr))))/8.)));
 
   // Bitmaps pad rows to preserve 4-byte boundaries.
@@ -4748,7 +4748,7 @@ void sforce2bmp( lattice_ptr lattice)
       if( fwrite( &blue_val,  1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
       if( fwrite( &green_val, 1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
       if( fwrite( &red_val,   1, 1, o_uy) != 1) { printf("BOOM!\n"); process_exit(1);}
-     
+
     } /* for( i=0; i<get_LY(lattice); i++) */
 
     // Pad for 4-byte boundaries.
@@ -4796,11 +4796,11 @@ void sforce2bmp( lattice_ptr lattice)
 //
 void pdf2bmp( lattice_ptr lattice, int time)
 {
-  FILE   *in, 
+  FILE   *in,
          *o;
-  int    i, j, 
+  int    i, j,
          n, m;
-  int    pad, 
+  int    pad,
          bytes_per_row;
   int    frame;
   char   k;
@@ -4814,9 +4814,9 @@ void pdf2bmp( lattice_ptr lattice, int time)
   int    *height_ptr;
   short  int *bitcount_ptr;
   char   filename[1024];
-  char   red_val, 
-         green_val, 
-         blue_val, 
+  char   red_val,
+         green_val,
+         blue_val,
          val;
   double fval;
   double min_rho, max_rho;
@@ -4832,7 +4832,7 @@ void pdf2bmp( lattice_ptr lattice, int time)
 
   // TODO: Implement pdf2bmp()
 
-  printf("%s (%d) >> pdf2bmp() is not yet implemented. Exiting!\n", 
+  printf("%s (%d) >> pdf2bmp() is not yet implemented. Exiting!\n",
     __FILE__, __LINE__);
   process_exit(1);
 
@@ -4893,14 +4893,14 @@ printf("%s %d >> Using slice.in file.\n",__FILE__,__LINE__);
   {
     if( get_slice_x( lattice) >= 0)
     {
-      private_slice( lattice, "slice_x", 
-          get_slice_x( lattice), 0, 
+      private_slice( lattice, "slice_x",
+          get_slice_x( lattice), 0,
           get_slice_x( lattice), get_LY( lattice)-1 );
     }
 
     if( get_slice_y( lattice) >= 0)
     {
-      private_slice( lattice, "slice_y", 
+      private_slice( lattice, "slice_y",
           0,                get_slice_y( lattice),
           get_LX( lattice)-1, get_slice_y( lattice) );
     }
@@ -4916,9 +4916,9 @@ printf("%s %d >> Using slice.in file.\n",__FILE__,__LINE__);
 //
 // - Write to matlab scripts for easy processing.
 //
-void private_slice( 
-       lattice_ptr lattice, 
-       char *root_word, 
+void private_slice(
+       lattice_ptr lattice,
+       char *root_word,
        int i0, int j0, int i1, int j1)
 {
   int    i, j, k, n;
@@ -4939,9 +4939,9 @@ void private_slice(
   FILE   *in, *o;
   double ave_rho;
   int    subs;
-  char   plot_specs[2][4] = 
-         { 
-           { '\'', 'b', '\'', '\x0'}, 
+  char   plot_specs[2][4] =
+         {
+           { '\'', 'b', '\'', '\x0'},
            { '\'', 'r', '\'', '\x0'}
          };
 
@@ -4979,7 +4979,7 @@ void private_slice(
 #endif /* (STORE_U_COMPOSITE) */
 
     // Generate matlab script to plot the slices.
-    sprintf( filename, "%s/%s%dx%d_frame%04d.m", get_out_path(lattice), 
+    sprintf( filename, "%s/%s%dx%d_frame%04d.m", get_out_path(lattice),
              root_word,
              get_LX(lattice), get_LY(lattice),
              lattice->time/lattice->param.FrameRate);
@@ -4989,14 +4989,14 @@ void private_slice(
       process_exit(1);
     }
 
-    fprintf( 
-      o, 
+    fprintf(
+      o,
       "%% function [ slice_data] = %s%dx%d_frame%04d( plot_stuff)\n",
       root_word,
       get_LX(lattice), get_LY(lattice),
       lattice->time/lattice->param.FrameRate);
-    fprintf( 
-      o, 
+    fprintf(
+      o,
       "function [ slice_data] = %s%dx%d_frame%04d( plot_stuff)\n\n",
       root_word,
       get_LX(lattice), get_LY(lattice),
@@ -5038,18 +5038,18 @@ void private_slice(
           {
   if( !( lattice->bc[subs][ j*get_LX(lattice) + i].bc_type & BC_SOLID_NODE))
   {
-            rho_ave[ len] += 
+            rho_ave[ len] +=
               lattice->macro_vars[subs][ j*get_LX(lattice)+i].rho;
-            u_x_ave[ len] += 
+            u_x_ave[ len] +=
               lattice->macro_vars[subs][ j*get_LX(lattice)+i].u[0];
-            u_y_ave[ len] += 
+            u_y_ave[ len] +=
               lattice->macro_vars[subs][ j*get_LX(lattice)+i].u[1];
 #if STORE_U_COMPOSITE
           if(subs==0)
           {
-            upr_x_ave[ len] += 
+            upr_x_ave[ len] +=
               lattice->upr[ j*get_LX(lattice)+i].u[0];
-            upr_y_ave[ len] += 
+            upr_y_ave[ len] +=
               lattice->upr[ j*get_LX(lattice)+i].u[1];
           }
 #endif /* (STORE_U_COMPOSITE) */
@@ -5070,7 +5070,7 @@ void private_slice(
           len++;
         }
       }
-    
+
       fprintf( o, "rho_slice%02d = [ ", subs);
       for( n=0; n<len; n++)
       {
@@ -5084,28 +5084,28 @@ void private_slice(
         fprintf( o, " %20.17f ", rho_ave[ n]);
       }
       fprintf( o, "];\n");
-    
+
       fprintf( o, "u_x_slice%02d = [ ", subs);
       for( n=0; n<len; n++)
       {
         fprintf( o, " %20.17f ", u_x_slice[ n]);
       }
       fprintf( o, "];\n");
-    
+
       fprintf( o, "u_x_ave%02d = [ ", subs);
       for( n=0; n<len; n++)
       {
         fprintf( o, " %20.17f ", u_x_ave[ n]);
       }
       fprintf( o, "];\n");
-    
+
       fprintf( o, "u_y_slice%02d = [ ", subs);
       for( n=0; n<len; n++)
       {
         fprintf( o, " %20.17f ", u_y_slice[ n]);
       }
       fprintf( o, "];\n");
-    
+
       fprintf( o, "u_y_ave%02d = [ ", subs);
       for( n=0; n<len; n++)
       {
@@ -5122,21 +5122,21 @@ void private_slice(
         fprintf( o, " %20.17f ", upr_x_slice[ n]);
       }
       fprintf( o, "];\n");
-    
+
       fprintf( o, "upr_x_ave= [ ");
       for( n=0; n<len; n++)
       {
         fprintf( o, " %20.17f ", upr_x_ave[ n]);
       }
       fprintf( o, "];\n");
-    
+
       fprintf( o, "upr_y_slice= [ ");
       for( n=0; n<len; n++)
       {
         fprintf( o, " %20.17f ", upr_y_slice[ n]);
       }
       fprintf( o, "];\n");
-    
+
       fprintf( o, "upr_y_ave= [ ");
       for( n=0; n<len; n++)
       {
@@ -5146,7 +5146,7 @@ void private_slice(
 
           }
 #endif /* (STORE_U_COMPOSITE) */
-    
+
     } /* for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++) */
 
     if( make_octave_scripts(lattice))
@@ -5155,7 +5155,7 @@ void private_slice(
 
     else // make Matlab scripts
     {
-    fprintf( o, "slice_data = zeros(%d,%d,%d);\n", 
+    fprintf( o, "slice_data = zeros(%d,%d,%d);\n",
              len, 10, NUM_FLUID_COMPONENTS);
     for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
     {
@@ -5228,9 +5228,9 @@ void private_slice(
 #endif /* (STORE_U_COMPOSITE) */
 
     // Generate matlab script to plot the slices.
-    sprintf( filename, "%s/%s%dx%d_frame%04d.m", get_out_path(lattice), 
+    sprintf( filename, "%s/%s%dx%d_frame%04d.m", get_out_path(lattice),
              root_word,
-             get_LX(lattice), 
+             get_LX(lattice),
              get_LY(lattice),
              lattice->time/lattice->param.FrameRate);
     if( !( o = fopen( filename, "w+")))
@@ -5239,14 +5239,14 @@ void private_slice(
       process_exit(1);
     }
 
-    fprintf( 
-      o, 
+    fprintf(
+      o,
       "%% function [ slice_data] = %s%dx%d_frame%04d( plot_stuff)\n",
       root_word,
       get_LX(lattice), get_LY(lattice),
       lattice->time/lattice->param.FrameRate);
-    fprintf( 
-      o, 
+    fprintf(
+      o,
       "function [ slice_data] = %s%dx%d_frame%04d( plot_stuff)\n\n",
       root_word,
       get_LX(lattice), get_LY(lattice),
@@ -5288,18 +5288,18 @@ void private_slice(
           {
   if( !( lattice->bc[subs][ j*get_LX(lattice) + i].bc_type & BC_SOLID_NODE))
   {
-            rho_ave[ len] += 
+            rho_ave[ len] +=
               lattice->macro_vars[subs][ j*get_LX(lattice)+i].rho;
-            u_x_ave[ len] += 
+            u_x_ave[ len] +=
               lattice->macro_vars[subs][ j*get_LX(lattice)+i].u[0];
-            u_y_ave[ len] += 
+            u_y_ave[ len] +=
               lattice->macro_vars[subs][ j*get_LX(lattice)+i].u[1];
 #if STORE_U_COMPOSITE
           if(subs==0)
           {
-            upr_x_ave[ len] += 
+            upr_x_ave[ len] +=
               lattice->upr[ j*get_LX(lattice)+i].u[0];
-            upr_y_ave[ len] += 
+            upr_y_ave[ len] +=
               lattice->upr[ j*get_LX(lattice)+i].u[1];
           }
 #endif /* (STORE_U_COMPOSITE) */
@@ -5320,7 +5320,7 @@ void private_slice(
           len++;
         }
       }
-    
+
       fprintf( o, "rho_slice%02d = [ ", subs);
       for( n=0; n<len; n++)
       {
@@ -5334,7 +5334,7 @@ void private_slice(
         fprintf( o, " %20.17f ", rho_ave[ n]);
       }
       fprintf( o, "];\n");
-    
+
       fprintf( o, "u_x_slice%02d = [ ", subs);
       for( n=0; n<len; n++)
       {
@@ -5348,7 +5348,7 @@ void private_slice(
         fprintf( o, " %20.17f ", u_x_ave[ n]);
       }
       fprintf( o, "];\n");
-    
+
       if(1)
       {
         fprintf( o, "u_y_slice%02d = [ ", subs);
@@ -5368,8 +5368,8 @@ void private_slice(
 //        n = j0*get_LX(lattice) + i;
 //        if( i>=0 && i<get_LX(lattice))
 //        {
-//          for( j=1; 
-//               j<get_LY(lattice)-1; 
+//          for( j=1;
+//               j<get_LY(lattice)-1;
 //               j+=(int)floor(((double)get_LY(lattice)/10.)) )
 //          {
 //              fprintf( o, " %20.17f ", lattice->macro_vars[subs][ n].u[1]);
@@ -5401,7 +5401,7 @@ void private_slice(
         fprintf( o, " %20.17f ", upr_x_ave[ n]);
       }
       fprintf( o, "];\n");
-    
+
       fprintf( o, "upr_y_slice= [ ");
       for( n=0; n<len; n++)
       {
@@ -5417,7 +5417,7 @@ void private_slice(
       fprintf( o, "];\n");
           }
 #endif /* (STORE_U_COMPOSITE) */
-    
+
     } /* for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++) */
 
     if( make_octave_scripts(lattice))
@@ -5426,7 +5426,7 @@ void private_slice(
 
     else // make Matlab scripts
     {
-    fprintf( o, "slice_data = zeros(%d,%d,%d);\n", 
+    fprintf( o, "slice_data = zeros(%d,%d,%d);\n",
              len, 10, NUM_FLUID_COMPONENTS);
     for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
     {
@@ -5499,9 +5499,9 @@ void private_slice(
 #endif /* (STORE_U_COMPOSITE) */
 
     // Generate matlab script to plot the slices.
-    sprintf( filename, "%s/%s%dx%d_frame%04d.m", get_out_path(lattice), 
+    sprintf( filename, "%s/%s%dx%d_frame%04d.m", get_out_path(lattice),
              root_word,
-             get_LX(lattice), 
+             get_LX(lattice),
              get_LY(lattice),
              lattice->time/lattice->param.FrameRate);
     if( !( o = fopen( filename, "w+")))
@@ -5519,7 +5519,7 @@ void private_slice(
         if( i>=0 && i<get_LX(lattice))
         {
           j = j0 + (i-i0)*((j1-j0)/(i1-i0));
-    
+
           if( j>=0 && j<get_LY(lattice))
           {
             n = j*get_LX(lattice) + i;
@@ -5551,18 +5551,18 @@ void private_slice(
               {
   if( !( lattice->bc[subs][ j*get_LX(lattice) + i].bc_type & BC_SOLID_NODE))
   {
-                rho_ave[ len] += 
+                rho_ave[ len] +=
                   lattice->macro_vars[subs][ k*get_LX(lattice)+i].rho;
-                u_x_ave[ len] += 
+                u_x_ave[ len] +=
                   lattice->macro_vars[subs][ k*get_LX(lattice)+i].u[0];
-                u_y_ave[ len] += 
+                u_y_ave[ len] +=
                   lattice->macro_vars[subs][ k*get_LX(lattice)+i].u[1];
 #if STORE_U_COMPOSITE
           if(subs==0)
           {
-                upr_x_ave[ len] += 
+                upr_x_ave[ len] +=
                   lattice->upr[ k*get_LX(lattice)+i].u[0];
-                upr_y_ave[ len] += 
+                upr_y_ave[ len] +=
                   lattice->upr[ k*get_LX(lattice)+i].u[1];
           }
 #endif /* (STORE_U_COMPOSITE) */
@@ -5603,7 +5603,7 @@ void private_slice(
           }
         }
       }
-    
+
       fprintf( o, "rho_slice%02d = [ ", subs);
       for( n=0; n<len; n++)
       {
@@ -5617,7 +5617,7 @@ void private_slice(
         fprintf( o, " %20.17f ", rho_ave[ n]);
       }
       fprintf( o, "];\n");
-    
+
       fprintf( o, "u_x_slice%02d = [ ", subs);
       for( n=0; n<len; n++)
       {
@@ -5631,7 +5631,7 @@ void private_slice(
         fprintf( o, " %20.17f ", u_x_ave[ n]);
       }
       fprintf( o, "];\n");
-    
+
       fprintf( o, "u_y_slice%02d = [ ", subs);
       for( n=0; n<len; n++)
       {
@@ -5661,7 +5661,7 @@ void private_slice(
         fprintf( o, " %20.17f ", upr_x_ave[ n]);
       }
       fprintf( o, "];\n");
-    
+
       fprintf( o, "upr_y_slice= [ ");
       for( n=0; n<len; n++)
       {
@@ -5677,7 +5677,7 @@ void private_slice(
       fprintf( o, "];\n");
           }
 #endif /* (STORE_U_COMPOSITE) */
-    
+
     } /* for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++) */
 
   } /* if( i0 == i1) else if( j0 == j1) else */
@@ -5725,7 +5725,7 @@ void private_slice(
       fprintf( o, "title('u_x slice (%d,%d)..(%d,%d)');", i0, j0, i1, j1);
       fprintf( o, "hold off;");
       fprintf( o, "\n");
-     
+
       // Plot y velocity.
       fprintf( o, "figure;");
       fprintf( o, "hold on;");
@@ -5744,7 +5744,7 @@ void private_slice(
       {
        fprintf( o, "figure;");
        fprintf( o, "plot( rho_slice%02d, %s);", subs, plot_specs[subs]);
-       fprintf( o, "title('\\rho slice (%d,%d)..(%d,%d), subs %d');\n", 
+       fprintf( o, "title('\\rho slice (%d,%d)..(%d,%d), subs %d');\n",
            i0, j0, i1, j1, subs);
       }
 
@@ -5753,7 +5753,7 @@ void private_slice(
       {
        fprintf( o, "figure;");
        fprintf( o, "plot( u_x_slice%02d, %s);", subs, plot_specs[subs]);
-       fprintf( o, "title('u_x slice (%d,%d)..(%d,%d), subs %d');\n", 
+       fprintf( o, "title('u_x slice (%d,%d)..(%d,%d), subs %d');\n",
            i0, j0, i1, j1, subs);
       }
 
@@ -5762,7 +5762,7 @@ void private_slice(
       {
        fprintf( o, "figure;");
        fprintf( o, "plot( u_y_slice%02d, %s);", subs, plot_specs[subs]);
-       fprintf( o, "title('u_y slice (%d,%d)..(%d,%d), subs %d');\n", 
+       fprintf( o, "title('u_y slice (%d,%d)..(%d,%d), subs %d');\n",
            i0, j0, i1, j1, subs);
       }
 
@@ -5788,7 +5788,7 @@ void private_slice(
   fprintf( o, "figure;");
   fprintf( o, "plot( rho_slice%02d, %s);", subs, plot_specs[subs]);
   fprintf( o, "warning off;");
-  fprintf( o, "title('\\rho slice (%d,%d)..(%d,%d), subs %d');\n", 
+  fprintf( o, "title('\\rho slice (%d,%d)..(%d,%d), subs %d');\n",
       i0, j0, i1, j1, subs);
   fprintf( o, "warning on;");
  }
@@ -5809,7 +5809,7 @@ void private_slice(
   fprintf( o, "figure;");
   fprintf( o, "plot( rho_ave%02d, %s);", subs, plot_specs[subs]);
   fprintf( o, "warning off;");
-  fprintf( o, "title('\\rho_{ave} slice (%d,%d)..(%d,%d), subs %d');\n", 
+  fprintf( o, "title('\\rho_{ave} slice (%d,%d)..(%d,%d), subs %d');\n",
       i0, j0, i1, j1, subs);
   fprintf( o, "warning on;");
  }
@@ -5830,7 +5830,7 @@ void private_slice(
   fprintf( o, "figure;");
   fprintf( o, "plot( u_x_slice%02d, %s);", subs, plot_specs[subs]);
   fprintf( o, "warning off;");
-  fprintf( o, "title('u_x slice (%d,%d)..(%d,%d), subs %d');\n", 
+  fprintf( o, "title('u_x slice (%d,%d)..(%d,%d), subs %d');\n",
       i0, j0, i1, j1, subs);
   fprintf( o, "warning on;");
  }
@@ -5851,7 +5851,7 @@ void private_slice(
   fprintf( o, "figure;");
   fprintf( o, "plot( u_x_ave%02d, %s);", subs, plot_specs[subs]);
   fprintf( o, "warning off;");
-  fprintf( o, "title('ux_{ave} slice (%d,%d)..(%d,%d), subs %d');\n", 
+  fprintf( o, "title('ux_{ave} slice (%d,%d)..(%d,%d), subs %d');\n",
       i0, j0, i1, j1, subs);
   fprintf( o, "warning on;");
  }
@@ -5872,7 +5872,7 @@ void private_slice(
   fprintf( o, "figure;");
   fprintf( o, "plot( u_y_slice%02d, %s);", subs, plot_specs[subs]);
   fprintf( o, "warning off;");
-  fprintf( o, "title('u_y slice (%d,%d)..(%d,%d), subs %d');\n", 
+  fprintf( o, "title('u_y slice (%d,%d)..(%d,%d), subs %d');\n",
       i0, j0, i1, j1, subs);
   fprintf( o, "warning on;");
  }
@@ -5893,7 +5893,7 @@ void private_slice(
   fprintf( o, "figure;");
   fprintf( o, "plot( u_y_ave%02d, %s);", subs, plot_specs[subs]);
   fprintf( o, "warning off;");
-  fprintf( o, "title('uy_{ave} slice (%d,%d)..(%d,%d), subs %d');\n", 
+  fprintf( o, "title('uy_{ave} slice (%d,%d)..(%d,%d), subs %d');\n",
       i0, j0, i1, j1, subs);
   fprintf( o, "warning on;");
  }
@@ -5910,7 +5910,7 @@ void private_slice(
   fprintf( o, "figure;");
   fprintf( o, "plot( upr_x_slice, %s);", plot_specs[0]);
   fprintf( o, "warning off;");
-  fprintf( o, "title('upr_x slice (%d,%d)..(%d,%d)');\n", 
+  fprintf( o, "title('upr_x slice (%d,%d)..(%d,%d)');\n",
       i0, j0, i1, j1);
   fprintf( o, "warning on;");
 
@@ -5925,7 +5925,7 @@ void private_slice(
   fprintf( o, "figure;");
   fprintf( o, "plot( upr_x_ave, %s);", plot_specs[0]);
   fprintf( o, "warning off;");
-  fprintf( o, "title('uprx_{ave} slice (%d,%d)..(%d,%d)');\n", 
+  fprintf( o, "title('uprx_{ave} slice (%d,%d)..(%d,%d)');\n",
       i0, j0, i1, j1);
   fprintf( o, "warning on;");
 
@@ -5940,7 +5940,7 @@ void private_slice(
   fprintf( o, "figure;");
   fprintf( o, "plot( upr_y_slice, %s);", plot_specs[0]);
   fprintf( o, "warning off;");
-  fprintf( o, "title('upr_y slice (%d,%d)..(%d,%d)');\n", 
+  fprintf( o, "title('upr_y slice (%d,%d)..(%d,%d)');\n",
       i0, j0, i1, j1);
   fprintf( o, "warning on;");
 
@@ -5955,7 +5955,7 @@ void private_slice(
   fprintf( o, "figure;");
   fprintf( o, "plot( upr_y_ave, %s);", plot_specs[0]);
   fprintf( o, "warning off;");
-  fprintf( o, "title('upry_{ave} slice (%d,%d)..(%d,%d)');\n", 
+  fprintf( o, "title('upry_{ave} slice (%d,%d)..(%d,%d)');\n",
       i0, j0, i1, j1);
   fprintf( o, "warning on;");
 
@@ -5965,7 +5965,7 @@ void private_slice(
   // Compare with analytical poiseuille flow profile.
  for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
  {
-  if(    lattice->param.gval[subs][0] == 0 
+  if(    lattice->param.gval[subs][0] == 0
       && lattice->param.gval[subs][1] != 0 )
   {
     // Poiseuille in y direction.
@@ -5986,14 +5986,14 @@ void private_slice(
     fprintf( o, "disp(sprintf('  rho_ave    = %%20.17f', rho_ave));\n");
     //fprintf( o, "mu = nu*%20.17f;\n", ave_rho);
     //fprintf( o, "disp(sprintf('  mu         = %%20.17f', mu));\n");
-    fprintf( o, "gvalval = %20.17f;\n", 
+    fprintf( o, "gvalval = %20.17f;\n",
       lattice->param.gval[subs][1]/lattice->param.tau[subs]);
     fprintf( o, "disp(sprintf('  gvalval  = %%20.17f', gvalval));\n");
-    fprintf( o, 
+    fprintf( o,
       "i = [i0:1:i1];\n"
       "ucalc = "
       "( gvalval / (2*nu)) * "
-      "( R^2 - ( abs( i - (i1+i0)/2 ).^2));\n" 
+      "( R^2 - ( abs( i - (i1+i0)/2 ).^2));\n"
       );
     fprintf( o, "disp(sprintf('  size(ucalc) = %%dx%%d\\n',size(ucalc,1),size(ucalc,2)));\n");
     fprintf( o, "plot( i, ucalc, 'k');");
@@ -6007,7 +6007,7 @@ void private_slice(
     fprintf( o, "hold off;\n");
   } /* if( lattice->param.gval[subs][0] == 0 && lattice->param.gval... */
 
-  else if(    lattice->param.gval[subs][1] == 0 
+  else if(    lattice->param.gval[subs][1] == 0
            && lattice->param.gval[subs][0] != 0 )
   {
     // Poiseuille in x direction.
@@ -6027,14 +6027,14 @@ void private_slice(
     fprintf( o, "disp(sprintf('  rho_ave    = %%20.17f', rho_ave));\n");
     //fprintf( o, "mu = nu*%20.17f;\n", ave_rho);
     //fprintf( o, "disp(sprintf('  mu         = %%20.17f', mu));\n");
-    fprintf( o, "gvalval = %20.17f;\n", 
+    fprintf( o, "gvalval = %20.17f;\n",
       lattice->param.gval[subs][0]/lattice->param.tau[subs]);
     fprintf( o, "disp(sprintf('  gvalval  = %%20.17f', gvalval));\n");
-    fprintf( o, 
+    fprintf( o,
       "j = [j0:1:j1];"
       "ucalc = "
       "( gvalval / (2*nu)) * "
-      "( R^2 - ( abs( j - (j1+j0)/2 ).^2));\n" 
+      "( R^2 - ( abs( j - (j1+j0)/2 ).^2));\n"
       );
     fprintf( o, "disp(sprintf('  size(ucalc) = %%dx%%d\\n',"
                 "size(ucalc,1),size(ucalc,2)));\n");
@@ -6057,7 +6057,7 @@ void private_slice(
   // Slice key.  (Shows where in the domain the slice cuts.)
   fprintf( o, "figure; plot( [ %d %d], [ %d %d], 'r-.');", i0, i1, j0, j1);
   fprintf( o, "axis equal;");
-  fprintf( o, "axis([ %d %d %d %d]);", 
+  fprintf( o, "axis([ %d %d %d %d]);",
     0, get_LX(lattice)-1, 0, get_LY(lattice)-1);
   fprintf( o, "title('Slice key.');\n");
 
@@ -6073,11 +6073,11 @@ void private_slice(
 
  for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
  {
-  fprintf( o, 
-      "disp(sprintf('q_x = %%f',rho_slice%02d*u_x_slice%02d'/max(size(rho_slice%02d))'));\n", 
+  fprintf( o,
+      "disp(sprintf('q_x = %%f',rho_slice%02d*u_x_slice%02d'/max(size(rho_slice%02d))'));\n",
       subs, subs, subs);
-  fprintf( o, 
-      "disp(sprintf('q_y = %%f',rho_slice%02d*u_y_slice%02d'/max(size(rho_slice%02d))'));\n", 
+  fprintf( o,
+      "disp(sprintf('q_y = %%f',rho_slice%02d*u_y_slice%02d'/max(size(rho_slice%02d))'));\n",
       subs, subs, subs);
  }
 
@@ -6101,7 +6101,7 @@ void dump_sigma_btc( lattice_ptr lattice)
     return;
   }
 
-  btc_spot = 
+  btc_spot =
     (lattice->param.sigma_btc_spot >= 0)
     ?
     (lattice->param.sigma_btc_spot-0)
@@ -6162,7 +6162,7 @@ void dump_sigma_btc( lattice_ptr lattice)
   fprintf( o, "dcdx = [\n");
   for( n=1; n<lattice->SizeBTC; n++)
   {
-    fprintf( o, "%20.17f\n", 
+    fprintf( o, "%20.17f\n",
     .5*( lattice->param.sigma_btc[5*n+3]
        - lattice->param.sigma_btc[5*n+1]) );
   }
@@ -6172,7 +6172,7 @@ void dump_sigma_btc( lattice_ptr lattice)
   fprintf( o, "Cv = [\n");
   for( n=1; n<lattice->SizeBTC; n++)
   {
-    fprintf( o, "%20.17f\n", 
+    fprintf( o, "%20.17f\n",
       //lattice->param.sigma_btc[4*n+1]*lattice->param.sigma_btc[4*n+3] );
       ( lattice->param.sigma_btc[5*n+2]*lattice->param.sigma_btc[5*n+4]) );
   }
@@ -6183,7 +6183,7 @@ void dump_sigma_btc( lattice_ptr lattice)
   fprintf( o, "Cf = [\n");
   for( n=1; n<lattice->SizeBTC; n++)
   {
-    fprintf( o, "%20.17f\n", 
+    fprintf( o, "%20.17f\n",
       (
         ( lattice->param.sigma_btc[5*n+2]*lattice->param.sigma_btc[5*n+4])
       -
@@ -6200,9 +6200,9 @@ void dump_sigma_btc( lattice_ptr lattice)
 
   // Plot btc01.
   //fprintf( o, "figure; plot(btc01);\n");
-  //fprintf( o, "axis([ %d %d 0 max(max(btc01),%20.17f)])\n", 
+  //fprintf( o, "axis([ %d %d 0 max(max(btc01),%20.17f)])\n",
   //    1, lattice->SizeBTC+1, lattice->param.rho_sigma);
-  //fprintf( o, "title('BTC at L=%d, t=%d:%d:%d');\n", 
+  //fprintf( o, "title('BTC at L=%d, t=%d:%d:%d');\n",
   //  btc_spot-1, start_time,
   //  lattice->param.sigma_btc_rate,
   //  lattice->NumTimeSteps          );
@@ -6241,12 +6241,12 @@ void dump_sigma_btc( lattice_ptr lattice)
     fprintf( o, "hold on; plot(btc02);\n");
     fprintf( o, "set(gca,'Xlim',[ 0 size(btc02,1)])\n");
   }
-  //fprintf( o, "axis([ %d %d 0 max(max(btc02),%20.17f)])\n", 
+  //fprintf( o, "axis([ %d %d 0 max(max(btc02),%20.17f)])\n",
   //    1, lattice->SizeBTC+1, lattice->param.rho_sigma);
-  fprintf( o, "title('BTC at L\\in\\{%d,%d,%d\\}, t=%d:%d:%d');\n", 
-    btc_spot-1, 
-    btc_spot, 
-    btc_spot+1, 
+  fprintf( o, "title('BTC at L\\in\\{%d,%d,%d\\}, t=%d:%d:%d');\n",
+    btc_spot-1,
+    btc_spot,
+    btc_spot+1,
     start_time,
     lattice->param.sigma_btc_rate,
     lattice->NumTimeSteps          );
@@ -6255,9 +6255,9 @@ void dump_sigma_btc( lattice_ptr lattice)
 
   // Plot btc03.
   //fprintf( o, "figure; plot(btc03);\n");
-  //fprintf( o, "axis([ %d %d 0 max(max(btc03),%20.17f)])\n", 
+  //fprintf( o, "axis([ %d %d 0 max(max(btc03),%20.17f)])\n",
   //    1, lattice->SizeBTC+1, lattice->param.rho_sigma);
-  //fprintf( o, "title('BTC at L=%d, t=%d:%d:%d');\n", 
+  //fprintf( o, "title('BTC at L=%d, t=%d:%d:%d');\n",
   //  btc_spot+1, start_time,
   //  lattice->param.sigma_btc_rate,
   //  lattice->NumTimeSteps          );
@@ -6273,7 +6273,7 @@ void dump_sigma_btc( lattice_ptr lattice)
     fprintf( o, "plot(Cv);\n");
     fprintf( o, "set(gca,'Xlim',[ 0 size(btc02,1)]);\n");
   }
-  fprintf( o, "title('C*v at L=%d, t=%d:%d:%d');\n", 
+  fprintf( o, "title('C*v at L=%d, t=%d:%d:%d');\n",
     btc_spot, start_time,
     lattice->param.sigma_btc_rate,
     lattice->NumTimeSteps          );
@@ -6289,7 +6289,7 @@ void dump_sigma_btc( lattice_ptr lattice)
     fprintf( o, "plot(dcdx);\n");
     fprintf( o, "set(gca,'Xlim',[ 0 size(btc02,1)]);\n");
   }
-  fprintf( o, "title('dc/dx at L=%d, t=%d:%d:%d');\n", 
+  fprintf( o, "title('dc/dx at L=%d, t=%d:%d:%d');\n",
     btc_spot, start_time,
     lattice->param.sigma_btc_rate,
     lattice->NumTimeSteps          );
@@ -6305,7 +6305,7 @@ void dump_sigma_btc( lattice_ptr lattice)
     fprintf( o, "plot(Cf);\n");
     fprintf( o, "set(gca,'Xlim',[ 0 size(btc02,1)]);\n");
   }
-  fprintf( o, "title('Cf=(C*v-D*(dC/dx))/v at L=%d, t=%d:%d:%d');\n", 
+  fprintf( o, "title('Cf=(C*v-D*(dC/dx))/v at L=%d, t=%d:%d:%d');\n",
     btc_spot, start_time,
     lattice->param.sigma_btc_rate,
     lattice->NumTimeSteps          );
@@ -6343,7 +6343,7 @@ void dump_sigma_btc( lattice_ptr lattice)
   else
   {
     // Give figure a name (shows up in title bar).
-    fprintf( o, 
+    fprintf( o,
       "set(gcf,'Name','Resident C_r and flux averaged C_f concentrations "
       "at t=%d:%d:%d');\n",
       start_time,
@@ -6378,7 +6378,7 @@ void count_colormap( int *num_colors)
   sprintf( filename, "%s", "./in/colormap.rgb");
   if( !( in = fopen( filename, "r+")))
   {
-    printf("%s %d >> Error opening file \"%s\" for reading.  Exiting!\n", 
+    printf("%s %d >> Error opening file \"%s\" for reading.  Exiting!\n",
       __FILE__,__LINE__,filename);
     process_exit(1);
   }
@@ -6434,7 +6434,7 @@ void read_colormap( double **colormap, int num_colors)
   sprintf( filename, "%s", "./in/colormap.rgb");
   if( !( in = fopen( filename, "r+")))
   {
-    printf("%s %d >> Error opening file \"%s\" for reading.  Exiting!\n", 
+    printf("%s %d >> Error opening file \"%s\" for reading.  Exiting!\n",
       __FILE__,__LINE__,filename);
     process_exit(1);
   }
@@ -6474,7 +6474,7 @@ void deallocate_colormap( double ***colormap, int num_colors)
 void get_color(
        double **colormap, int num_colors, double c, char *r, char *g, char *b)
 {
-  int n; 
+  int n;
   double n1, n2;
   double w1, w2;
 
@@ -6492,11 +6492,11 @@ void get_color(
     n2 = ceil( c*((double)num_colors-1.));
     w1 = c-n1;
     w2 = n2-c;
-    *r = 
+    *r =
       (char)ROUND(255.* ( w1*colormap[ (int)n1][0] + w2*colormap[ (int)n2][0]));
-    *g = 
+    *g =
       (char)ROUND(255.* ( w1*colormap[ (int)n1][1] + w2*colormap[ (int)n2][1]));
-    *b = 
+    *b =
       (char)ROUND(255.* ( w1*colormap[ (int)n1][2] + w2*colormap[ (int)n2][2]));
 #endif
   }
@@ -6516,16 +6516,16 @@ void chen_output( lattice_ptr lattice)
 {
   int    x, y;
 
-  int    LX = get_LX(lattice), 
-  
+  int    LX = get_LX(lattice),
+
          LY = get_LY(lattice);
 
   double *u, *rho[NUM_FLUID_COMPONENTS];
-  
-  double ux_sum, uy_sum,  
+
+  double ux_sum, uy_sum,
 
          rho_in, rho_out;
-  
+
   FILE   *app7, *app8, *app9;
 
   char   filename[1024];
@@ -6535,7 +6535,7 @@ void chen_output( lattice_ptr lattice)
   int    subs;
 
 printf("\n\nWARNING: chen_output() function is deprecated!\n\n");
-  
+
   ux_sum = 0.;
   uy_sum = 0.;
 
@@ -6562,7 +6562,7 @@ printf("\n\nWARNING: chen_output() function is deprecated!\n\n");
     printf("Error opening \"%s\" for reading.  Exiting!\n", filename);
     process_exit(1);
   }
-  
+
 #if STORE_U_COMPOSITE
   u = lattice->upr[0].u;
 #else /* !( STORE_U_COMPOSITE) */
@@ -6587,12 +6587,12 @@ printf("\n\nWARNING: chen_output() function is deprecated!\n\n");
       {
         ux_sum = ux_sum + *u;
         uy_sum = uy_sum + *(u+1);
-      
+
         for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
         {
           sum_mass[subs] = sum_mass[subs] + *rho[subs];
         }
-      
+
       } /* if( !obst[y][x]) */
 
 #if STORE_U_COMPOSITE
@@ -6607,15 +6607,15 @@ printf("\n\nWARNING: chen_output() function is deprecated!\n\n");
 
     } /* for( x = 1; x <= LX; x++) */
   } /* for( y = 1; y <= LY; y++) */
-  
-  
+
+
   fprintf( app9, "%10d %15.7f %15.7f ", lattice->time, ux_sum, uy_sum);
   for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
   {
     fprintf( app9, "%15.7f ", sum_mass[subs]);
   }
   fprintf( app9, "\n");
-  
+
   for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
   {
     rho[subs] = &( lattice->macro_vars[subs][0].rho);
@@ -6646,11 +6646,11 @@ printf("\n\nWARNING: chen_output() function is deprecated!\n\n");
       {
         rho[subs]+=3;
       }
-    
+
     } /* for( x = 1; x <= LX; x++) */
   } /* for( y = 1; y <= LY; y++) */
-  
-  
+
+
   fclose( app7);
   fclose( app8);
   fclose( app9);
@@ -6663,7 +6663,7 @@ printf("\n\nWARNING: chen_output() function is deprecated!\n\n");
   sprintf( filename, "%s", "%s/chen_time.dat", get_out_path(lattice));
   printf("chen_output() -- Wrote file \"%s\".\n", filename);
 #endif /* VERBOSITY_LEVEL > 0 */
-  
+
 } /* void chen_output( lattice_ptr lattice) */
                                                                         // }}}
 #endif /* WRITE_CHEN_DAT_FILES */
@@ -6728,7 +6728,7 @@ printf("%s %d >> biWidth = %d\n", __FILE__, __LINE__, *((int*)bmih->biWidth));
   }
 
   // Bytes per row of the bitmap.
-  bytes_per_row = 
+  bytes_per_row =
     ((int)ceil(( (((double)(ENDIAN4(*width_ptr)))*((double)(ENDIAN2(*bitcount_ptr))))/8.)));
 
   // Bitmaps pad rows to preserve 4-byte boundaries.
@@ -6750,9 +6750,9 @@ printf("%s %d >> biWidth = %d\n", __FILE__, __LINE__, *((int*)bmih->biWidth));
 // not be reset and subsequent attempts to read BMP files will be
 // screwed up.
 //
-void bmp_read_entry( 
-  FILE *in, 
-  struct bitmap_info_header *bmih, 
+void bmp_read_entry(
+  FILE *in,
+  struct bitmap_info_header *bmih,
   char *r, char *g, char *b)
 {
   char   filename[1024];
@@ -6775,7 +6775,7 @@ void bmp_read_entry(
   bitcount_ptr = (short int*)bmih->biBitCount;
 
   // Bytes per row of the bitmap.
-  bytes_per_row = 
+  bytes_per_row =
     ((int)ceil(( (((double)(ENDIAN4(*width_ptr)))*((double)(ENDIAN2(*bitcount_ptr))))/8.)));
 
   // Bitmaps pad rows to preserve 4-byte boundaries.
@@ -6813,7 +6813,7 @@ void bmp_read_entry(
 
   } /* switch(*(bmih->biBitCount)) */
 
-  if( (n%(bytes_per_row+pad)) == 3*(*width_ptr)) 
+  if( (n%(bytes_per_row+pad)) == 3*(*width_ptr))
   {
     // Read pad bytes first.
     for( i=1; i<=pad; i++)
@@ -6832,7 +6832,7 @@ void bmp_read_entry(
   }
 
   // If all the entries have been read, reset the counter.
-  if( n == (bytes_per_row+pad)*(*height_ptr) ) 
+  if( n == (bytes_per_row+pad)*(*height_ptr) )
   {
     n = 0;
   }
@@ -6843,11 +6843,11 @@ void bmp_read_entry(
 //##############################################################################
 //void bmp_write_header( FILE *in)
 //
-void bmp_write_header( 
-       FILE *out, 
-       bmp_hdr_ptr bmp_hdr, 
-       int ni, 
-       int nj, 
+void bmp_write_header(
+       FILE *out,
+       bmp_hdr_ptr bmp_hdr,
+       int ni,
+       int nj,
        int bits)
 {
   int bytes_per_row;
@@ -6939,7 +6939,7 @@ printf("%s %d >> biWidth = %d\n", __FILE__, __LINE__, *((int*)bmih->biWidth));
   }
 
   // Bytes per row of the bitmap.
-  bytes_per_row = 
+  bytes_per_row =
     ((int)ceil(( (((double)(ENDIAN4(*width_ptr)))*((double)(ENDIAN2(*bitcount_ptr))))/8.)));
 
   // Bitmaps pad rows to preserve 4-byte boundaries.
@@ -6957,9 +6957,9 @@ printf("%s %d >> biWidth = %d\n", __FILE__, __LINE__, *((int*)bmih->biWidth));
 // The RGB values are passed in the 'r', 'g', and 'b' char arguments.
 //
 //
-void bmp_write_entry( 
-  FILE *out, 
-  bmp_hdr_ptr bmp_hdr, 
+void bmp_write_entry(
+  FILE *out,
+  bmp_hdr_ptr bmp_hdr,
   int n,
   char r, char g, char b)
 {
@@ -6970,7 +6970,7 @@ void bmp_write_entry(
   int i;
 
   // Bytes per row of the bitmap.
-  bytes_per_row = 
+  bytes_per_row =
     ((int)ceil((( ((double)*(bmp_hdr->width))
                 * ((double)*(bmp_hdr->depth)) )/8.)));
 
@@ -6978,7 +6978,7 @@ void bmp_write_entry(
   // The length of a row in the file will be bytes_per_row + pad .
   pad = ((4) - bytes_per_row%4)%4;
 
- 
+
   k = fwrite( &b, 1, 1, out);
   printf("k %d, b %d\n", k, (int)b);
   k = fwrite( &g, 1, 1, out);
@@ -7019,7 +7019,7 @@ void bmp_write_entry(
   bitcount_ptr = (short int*)bmih->biBitCount;
 
   // Bytes per row of the bitmap.
-  bytes_per_row = 
+  bytes_per_row =
     ((int)ceil(( (((double)(ENDIAN4(*width_ptr)))*((double)(ENDIAN2(*bitcount_ptr))))/8.)));
 
   // Bitmaps pad rows to preserve 4-byte boundaries.
@@ -7057,7 +7057,7 @@ void bmp_write_entry(
 
   } /* switch(*(bmih->biBitCount)) */
 
-  if( (n%(bytes_per_row+pad)) == 3*(*width_ptr)) 
+  if( (n%(bytes_per_row+pad)) == 3*(*width_ptr))
   {
     // Read pad bytes first.
     for( i=1; i<=pad; i++)
@@ -7076,7 +7076,7 @@ void bmp_write_entry(
   }
 
   // If all the entries have been write, reset the counter.
-  if( n == (bytes_per_row+pad)*(*height_ptr) ) 
+  if( n == (bytes_per_row+pad)*(*height_ptr) )
   {
     n = 0;
   }
@@ -7100,7 +7100,7 @@ void report_open( report_ptr report, char *name)
 
   if( !( report->file = fopen( report->name, "w+")))
   {
-    printf("%s %d: ERROR: fopen( %s, \"w+\") = %x\n", 
+    printf("%s %d: ERROR: fopen( %s, \"w+\") = %x\n",
       __FILE__, __LINE__, report->name, (report->file));
   }
   else

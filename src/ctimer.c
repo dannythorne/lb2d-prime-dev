@@ -19,7 +19,7 @@ main()
   printf("t1 = %d\n", t1);
 
   printf(" t1- t0 = %f seconds\n", difftime( t1, t0));
-  printf("(ct1-ct0 = %f)/CLK_TCK = %f seconds\n", 
-    ((double)ct1 - (double)ct0), 
+  printf("(ct1-ct0 = %f)/CLK_TCK = %f seconds\n",
+    ((double)ct1 - (double)ct0),
     ((double)ct1 - (double)ct0)/(double)CLK_TCK);
 }

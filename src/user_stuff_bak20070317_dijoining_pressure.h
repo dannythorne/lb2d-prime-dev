@@ -9,7 +9,7 @@
 //  - This file also has forward declarations for the user_stuff functions.
 //    These functions are defined in user_stuff.c. The user should put in
 //    them whatever they want. See user_stuff.c for more information.
-//  
+//
 //
 
 struct user_stuff_struct

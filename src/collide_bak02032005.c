@@ -23,9 +23,9 @@ void collide( lattice_ptr lattice)
   double *ftemp;
 
   int    i,  j;
-  int    ip, jp, 
+  int    ip, jp,
          in, jn;
-  int    ni = lattice->param.LX,  
+  int    ni = lattice->param.LX,
          nj = lattice->param.LY;
 
 #if SAY_HI
@@ -47,7 +47,7 @@ void collide( lattice_ptr lattice)
     {
    // if( *bc_type == 0)
    // {
-        // C O L L I D E 
+        // C O L L I D E
 
         for( a=0; a<=8; a++, f++)
         {
@@ -83,8 +83,8 @@ void collide( lattice_ptr lattice)
               "collide() -- Node %d (%d,%d), subs %d, "
               "has negative density %20.17f "
               "in direction %d "
-              "at timestep %d. Exiting!\n", 
-              n, n%lattice->param.LX, 
+              "at timestep %d. Exiting!\n",
+              n, n%lattice->param.LX,
                  n/lattice->param.LX,
                  subs,
                  *f, a,
@@ -118,7 +118,7 @@ void collide( lattice_ptr lattice)
 
     else // *bc_type++ & BC_SOLID_NODE
     {
-      // B O U N C E B A C K 
+      // B O U N C E B A C K
 
       f++; // Skip rest particle.
 
@@ -161,21 +161,21 @@ void collide( lattice_ptr lattice)
 
   /* 0 */ ftemp++;
 
-  /* 1 */ *ftemp++ = ns*( lattice->pdf[subs][ j *ni + ip].f[3] 
+  /* 1 */ *ftemp++ = ns*( lattice->pdf[subs][ j *ni + ip].f[3]
                         - lattice->pdf[subs][ j *ni + i ].f[1]);
-  /* 2 */ *ftemp++ = ns*( lattice->pdf[subs][ jp*ni + i ].f[4] 
+  /* 2 */ *ftemp++ = ns*( lattice->pdf[subs][ jp*ni + i ].f[4]
                         - lattice->pdf[subs][ j *ni + i ].f[2]);
-  /* 3 */ *ftemp++ = ns*( lattice->pdf[subs][ j *ni + in].f[1] 
+  /* 3 */ *ftemp++ = ns*( lattice->pdf[subs][ j *ni + in].f[1]
                         - lattice->pdf[subs][ j *ni + i ].f[3]);
-  /* 4 */ *ftemp++ = ns*( lattice->pdf[subs][ jn*ni + i ].f[2] 
+  /* 4 */ *ftemp++ = ns*( lattice->pdf[subs][ jn*ni + i ].f[2]
                         - lattice->pdf[subs][ j *ni + i ].f[4]);
-  /* 5 */ *ftemp++ = ns*( lattice->pdf[subs][ jp*ni + ip].f[7] 
+  /* 5 */ *ftemp++ = ns*( lattice->pdf[subs][ jp*ni + ip].f[7]
                         - lattice->pdf[subs][ j *ni + i ].f[5]);
-  /* 6 */ *ftemp++ = ns*( lattice->pdf[subs][ jp*ni + in].f[8] 
+  /* 6 */ *ftemp++ = ns*( lattice->pdf[subs][ jp*ni + in].f[8]
                         - lattice->pdf[subs][ j *ni + i ].f[6]);
-  /* 7 */ *ftemp++ = ns*( lattice->pdf[subs][ jn*ni + in].f[5] 
+  /* 7 */ *ftemp++ = ns*( lattice->pdf[subs][ jn*ni + in].f[5]
                         - lattice->pdf[subs][ j *ni + i ].f[7]);
-  /* 8 */ *ftemp++ = ns*( lattice->pdf[subs][ jn*ni + ip].f[6] 
+  /* 8 */ *ftemp++ = ns*( lattice->pdf[subs][ jn*ni + ip].f[6]
                         - lattice->pdf[subs][ j *ni + i ].f[8]);
         }
         else
@@ -255,7 +255,7 @@ void collide( lattice_ptr lattice)
 
     if( !( bc_type & BC_SOLID_NODE))
     {
-        // C O L L I D E 
+        // C O L L I D E
 
         // f = ftemp - (1/tau[subs])( ftemp - feq)
         for( a=0; a<=8; a++)
@@ -305,8 +305,8 @@ void collide( lattice_ptr lattice)
               "collide() -- Node %d (%d,%d), subs %d, "
               "has negative density %20.17f "
               "in direction %d "
-              "at timestep %d. Exiting!\n", 
-              n, n%lattice->param.LX, 
+              "at timestep %d. Exiting!\n",
+              n, n%lattice->param.LX,
                  n/lattice->param.LX,
                  subs,
                  f[a], a,
@@ -321,17 +321,17 @@ void collide( lattice_ptr lattice)
 
     else // bc_type & BC_SOLID_NODE
     {
-      // B O U N C E B A C K 
+      // B O U N C E B A C K
 
       if(   lattice->param.bc_slip_north
          && n >= lattice->NumNodes - lattice->param.LX)
       {
         // Slip condition on north boundary.
         /*
-        //   A B C               
-        //    \|/           \|/  
-        //   D-o-E   -->   D-o-E 
-        //    /|\           /|\  
+        //   A B C
+        //    \|/           \|/
+        //   D-o-E   -->   D-o-E
+        //    /|\           /|\
         //                 A B C
         */
         f[1] = ftemp[1];
@@ -351,10 +351,10 @@ void collide( lattice_ptr lattice)
         {
           // Usual non-slip bounce-back condition.
           /*
-          //   A B C         H G F 
-          //    \|/           \|/  
-          //   D-o-E   -->   E-o-D 
-          //    /|\           /|\  
+          //   A B C         H G F
+          //    \|/           \|/
+          //   D-o-E   -->   E-o-D
+          //    /|\           /|\
           //   F G H         C B A
           */
           f[1] = ftemp[3];
@@ -385,10 +385,10 @@ void collide( lattice_ptr lattice)
               {
                 // Slip condition on east/west boundary.
                 /*
-                //   A B C         C B A 
-                //    \|/           \|/  
-                //   D-o-E   -->   E-o-D 
-                //    /|\           /|\  
+                //   A B C         C B A
+                //    \|/           \|/
+                //   D-o-E   -->   E-o-D
+                //    /|\           /|\
                 //   F G H         H G F
                 */
                 f[1] = ftemp[3];
@@ -409,10 +409,10 @@ void collide( lattice_ptr lattice)
               {
                 // Slip condition on north/south boundary.
                 /*
-                //   A B C         F G H 
-                //    \|/           \|/  
-                //   D-o-E   -->   D-o-E 
-                //    /|\           /|\  
+                //   A B C         F G H
+                //    \|/           \|/
+                //   D-o-E   -->   D-o-E
+                //    /|\           /|\
                 //   F G H         A B C
                 */
                 f[1] = ftemp[1];
@@ -454,10 +454,10 @@ void collide( lattice_ptr lattice)
 #endif /* INAMURO_SIGMA_COMPONENT */
             // Usual non-slip bounce-back condition.
             /*
-            //   A B C         H G F 
-            //    \|/           \|/  
-            //   D-o-E   -->   E-o-D 
-            //    /|\           /|\  
+            //   A B C         H G F
+            //    \|/           \|/
+            //   D-o-E   -->   E-o-D
+            //    /|\           /|\
             //   F G H         C B A
             */
             f[1] = ftemp[3];

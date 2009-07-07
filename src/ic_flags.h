@@ -10,8 +10,8 @@
 #ifndef IC_FLAGS_H
 #define IC_FLAGS_H
 
-// IC_* flags are for initial conditions.  Used in switch statement in 
-// init_problem() in latmat.c .  Set the initial_condition parameter 
+// IC_* flags are for initial conditions.  Used in switch statement in
+// init_problem() in latmat.c .  Set the initial_condition parameter
 // in params.in .
 #define IC_UNIFORM_RHO_A          1
 #define IC_UNIFORM_RHO_B          2

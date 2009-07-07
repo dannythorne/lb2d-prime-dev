@@ -7,7 +7,7 @@
 //  - Routines for reading and writing params.
 //
 //  - Reads from params.in
-//  
+//
 //  - Writes to params.dat
 //
 
@@ -167,7 +167,7 @@ void assign_default_param_vals( lattice_ptr lattice)
 // void skip_label( FILE *in)
 //##############################################################################
 //
-// S K I P   L A B E L 
+// S K I P   L A B E L
 //
 void skip_label( FILE *in)
 {
@@ -209,7 +209,7 @@ void get_rest_of_line_as_string( FILE *in, char **str, int maxstrlen)
 // void skip_rest_of_line( FILE *in)
 //##############################################################################
 //
-// S K I P   R E S T   O F   L I N E 
+// S K I P   R E S T   O F   L I N E
 //
 void skip_rest_of_line( FILE *in)
 {
@@ -224,7 +224,7 @@ void skip_rest_of_line( FILE *in)
 // void read_param_label( const char *infile, char *param_label, int max_length)
 //##############################################################################
 //
-// R E A D   P A R A M   L A B E L 
+// R E A D   P A R A M   L A B E L
 //
 //  - Read parameter label from parameter input file.
 //
@@ -302,7 +302,7 @@ int read_param_label( FILE *in, char *param_label, int max_length)
 // void read_params( struct lattice_struct *lattice)
 //##############################################################################
 //
-// R E A D   P A R A M S 
+// R E A D   P A R A M S
 //
 //  - Read the problem parameters from a file.
 //
@@ -366,43 +366,43 @@ void read_params( lattice_ptr lattice, const char *infile)
     else if( !strncmp(param_label,"characteristic_length",80))
     {
       fscanf( in, "%d\n", &(lattice->param.length_scale));
-      printf("%s %d >> characteristic_length = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> characteristic_length = %d\n",__FILE__,__LINE__,
          lattice->param.length_scale);
     }
     else if( !strncmp(param_label,"NumFrames",80))
     {
       fscanf( in, "%d\n", &(lattice->param.NumFrames));
-      printf("%s %d >> NumFrames = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> NumFrames = %d\n",__FILE__,__LINE__,
          lattice->param.NumFrames);
     }
     else if( !strncmp(param_label,"FrameRate",80))
     {
       fscanf( in, "%d\n", &(lattice->param.FrameRate));
-      printf("%s %d >> FrameRate = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> FrameRate = %d\n",__FILE__,__LINE__,
          lattice->param.FrameRate);
     }
     else if( !strncmp(param_label,"tau[0]",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.tau[0]));
-      printf("%s %d >> tau[0] = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> tau[0] = %f\n",__FILE__,__LINE__,
          lattice->param.tau[0]);
     }
     else if( !strncmp(param_label,"gval_x[0]",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.gval[0][0]));
-      printf("%s %d >> gval_x[0] = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> gval_x[0] = %f\n",__FILE__,__LINE__,
          lattice->param.gval[0][0]);
     }
     else if( !strncmp(param_label,"gval_y[0]",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.gval[0][1]));
-      printf("%s %d >> gval_y[0] = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> gval_y[0] = %f\n",__FILE__,__LINE__,
          lattice->param.gval[0][1]);
     }
     else if( !strncmp(param_label,"end_grav[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.end_grav[0]));
-      printf("%s %d >> end_grav[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> end_grav[0] = %d\n",__FILE__,__LINE__,
          lattice->param.end_grav[0]);
     }
     else if( !strncmp(param_label,"tau[1]",80))
@@ -410,7 +410,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%lf\n", &(lattice->param.tau[1]));
-        printf("%s %d >> tau[1] = %f\n",__FILE__,__LINE__, 
+        printf("%s %d >> tau[1] = %f\n",__FILE__,__LINE__,
            lattice->param.tau[1]);
       }
       else
@@ -424,7 +424,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%lf\n", &(lattice->param.gval[1][0]));
-        printf("%s %d >> gval_x[1] = %f\n",__FILE__,__LINE__, 
+        printf("%s %d >> gval_x[1] = %f\n",__FILE__,__LINE__,
            lattice->param.gval[1][0]);
       }
       else
@@ -438,7 +438,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%lf\n", &(lattice->param.gval[1][1]));
-        printf("%s %d >> gval_y[1] = %f\n",__FILE__,__LINE__, 
+        printf("%s %d >> gval_y[1] = %f\n",__FILE__,__LINE__,
            lattice->param.gval[1][1]);
       }
       else
@@ -452,7 +452,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.end_grav[1]));
-        printf("%s %d >> end_grav[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> end_grav[1] = %d\n",__FILE__,__LINE__,
            lattice->param.end_grav[1]);
       }
       else
@@ -464,44 +464,44 @@ void read_params( lattice_ptr lattice, const char *infile)
     else if( !strncmp(param_label,"buoyancy",80))
     {
       fscanf( in, "%d\n", &(lattice->param.buoyancy));
-      printf("%s %d >> buoyancy = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> buoyancy = %d\n",__FILE__,__LINE__,
          lattice->param.buoyancy);
     }
     else if( !strncmp(param_label,"buoy_subs",80))
     {
       fscanf( in, "%d\n", &(lattice->param.buoy_subs));
-      printf("%s %d >> buoy_subs = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> buoy_subs = %d\n",__FILE__,__LINE__,
          lattice->param.buoy_subs);
     }
     else if( !strncmp(param_label,"incompressible",80))
     {
       fscanf( in, "%d\n", &(lattice->param.incompressible));
-      printf("%s %d >> incompressible = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> incompressible = %d\n",__FILE__,__LINE__,
          lattice->param.incompressible);
     }
     else if( !strncmp(param_label,"simple_diffusion",80))
     {
       fscanf( in, "%d\n", &(lattice->param.simple_diffusion));
-      printf("%s %d >> simple_diffusion = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> simple_diffusion = %d\n",__FILE__,__LINE__,
          lattice->param.simple_diffusion);
     }
     else if( !strncmp(param_label,"rho_A",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.rho_A[0]));
-      printf("%s %d >> rho_A = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> rho_A = %f\n",__FILE__,__LINE__,
          lattice->param.rho_A[0]);
     }
     else if( !strncmp(param_label,"rho_B",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.rho_B[0]));
-      printf("%s %d >> rho_B = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> rho_B = %f\n",__FILE__,__LINE__,
          lattice->param.rho_B[0]);
     }
     else if( !strncmp(param_label,"rho_sigma",80))
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%lf\n", &(lattice->param.rho_sigma));
-      printf("%s %d >> rho_sigma = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> rho_sigma = %f\n",__FILE__,__LINE__,
          lattice->param.rho_sigma);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%lf\n", &(dblank));
@@ -514,7 +514,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%lf\n", &(lattice->param.beta));
-      printf("%s %d >> beta = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> beta = %f\n",__FILE__,__LINE__,
          lattice->param.beta);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%lf\n", &(dblank));
@@ -527,7 +527,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%lf\n", &(lattice->param.C0));
-      printf("%s %d >> C0 = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> C0 = %f\n",__FILE__,__LINE__,
          lattice->param.C0);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%lf\n", &(dblank));
@@ -540,7 +540,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%lf\n", &(lattice->param.rho0));
-      printf("%s %d >> rho0 = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> rho0 = %f\n",__FILE__,__LINE__,
          lattice->param.rho0);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%lf\n", &(dblank));
@@ -553,7 +553,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%lf\n", &(lattice->param.drhodC));
-      printf("%s %d >> drhodC = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> drhodC = %f\n",__FILE__,__LINE__,
          lattice->param.drhodC);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%lf\n", &(dblank));
@@ -566,7 +566,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%lf\n", &(lattice->param.rho_sigma_in));
-      printf("%s %d >> rho_sigma_in = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> rho_sigma_in = %f\n",__FILE__,__LINE__,
          lattice->param.rho_sigma_in);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%lf\n", &(dblank));
@@ -579,7 +579,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%lf\n", &(lattice->param.C_in));
-      printf("%s %d >> C_in = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> C_in = %f\n",__FILE__,__LINE__,
          lattice->param.C_in);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%lf\n", &(dblank));
@@ -592,7 +592,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%lf\n", &(lattice->param.rho_sigma_out));
-      printf("%s %d >> rho_sigma_out = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> rho_sigma_out = %f\n",__FILE__,__LINE__,
          lattice->param.rho_sigma_out);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%lf\n", &(dblank));
@@ -605,7 +605,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%lf\n", &(lattice->param.C_out));
-      printf("%s %d >> C_out = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> C_out = %f\n",__FILE__,__LINE__,
          lattice->param.C_out);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%lf\n", &(dblank));
@@ -618,7 +618,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%lf\n", &(lattice->param.u_sigma));
-      printf("%s %d >> u_sigma = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> u_sigma = %f\n",__FILE__,__LINE__,
          lattice->param.u_sigma);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%lf\n", &(dblank));
@@ -631,7 +631,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%lf\n", &(lattice->param.u_sigma_in));
-      printf("%s %d >> u_sigma_in = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> u_sigma_in = %f\n",__FILE__,__LINE__,
          lattice->param.u_sigma_in);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%lf\n", &(dblank));
@@ -644,7 +644,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%lf\n", &(lattice->param.u_sigma_out));
-      printf("%s %d >> u_sigma_out = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> u_sigma_out = %f\n",__FILE__,__LINE__,
          lattice->param.u_sigma_out);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%lf\n", &(dblank));
@@ -657,7 +657,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%d\n", &(lattice->param.sigma_start));
-      printf("%s %d >> sigma_start = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> sigma_start = %d\n",__FILE__,__LINE__,
          lattice->param.sigma_start);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -670,7 +670,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%d\n", &(lattice->param.sigma_stop));
-      printf("%s %d >> sigma_stop = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> sigma_stop = %d\n",__FILE__,__LINE__,
          lattice->param.sigma_stop);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -683,7 +683,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%d\n", &(lattice->param.sigma_btc_rate));
-      printf("%s %d >> sigma_btc_rate = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> sigma_btc_rate = %d\n",__FILE__,__LINE__,
          lattice->param.sigma_btc_rate);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -696,7 +696,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%d\n", &(lattice->param.sigma_btc_spot));
-      printf("%s %d >> sigma_btc_spot = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> sigma_btc_spot = %d\n",__FILE__,__LINE__,
          lattice->param.sigma_btc_spot);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -708,49 +708,49 @@ void read_params( lattice_ptr lattice, const char *infile)
     else if( !strncmp(param_label,"rho_in",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.rho_in));
-      printf("%s %d >> rho_in = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> rho_in = %f\n",__FILE__,__LINE__,
          lattice->param.rho_in);
     }
     else if( !strncmp(param_label,"rho_out",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.rho_out));
-      printf("%s %d >> rho_out = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> rho_out = %f\n",__FILE__,__LINE__,
          lattice->param.rho_out);
     }
     else if( !strncmp(param_label,"ux_in",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.ux_in));
-      printf("%s %d >> ux_in = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> ux_in = %f\n",__FILE__,__LINE__,
          lattice->param.ux_in);
     }
     else if( !strncmp(param_label,"ux_out",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.ux_out));
-      printf("%s %d >> ux_out = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> ux_out = %f\n",__FILE__,__LINE__,
          lattice->param.ux_out);
     }
     else if( !strncmp(param_label,"uy_in",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.uy_in));
-      printf("%s %d >> uy_in = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> uy_in = %f\n",__FILE__,__LINE__,
          lattice->param.uy_in);
     }
     else if( !strncmp(param_label,"uy_out",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.uy_out));
-      printf("%s %d >> uy_out = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> uy_out = %f\n",__FILE__,__LINE__,
          lattice->param.uy_out);
     }
     else if( !strncmp(param_label,"G",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.G));
-      printf("%s %d >> G = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> G = %f\n",__FILE__,__LINE__,
          lattice->param.G);
     }
     else if( !strncmp(param_label,"Gads[0]",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.Gads[0]));
-      printf("%s %d >> Gads[0] = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> Gads[0] = %f\n",__FILE__,__LINE__,
          lattice->param.Gads[0]);
     }
     else if( !strncmp(param_label,"Gads[1]",80))
@@ -758,7 +758,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%lf\n", &(lattice->param.Gads[1]));
-        printf("%s %d >> Gads[1] = %f\n",__FILE__,__LINE__, 
+        printf("%s %d >> Gads[1] = %f\n",__FILE__,__LINE__,
            lattice->param.Gads[1]);
       }
       else
@@ -770,64 +770,64 @@ void read_params( lattice_ptr lattice, const char *infile)
     else if( !strncmp(param_label,"ns_flag",80))
     {
       fscanf( in, "%d\n", &(lattice->param.ns_flag));
-      printf("%s %d >> ns_flag = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> ns_flag = %d\n",__FILE__,__LINE__,
         lattice->param.ns_flag);
     }
     else if( !strncmp(param_label,"ns",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.ns));
-      printf("%s %d >> ns = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> ns = %f\n",__FILE__,__LINE__,
          lattice->param.ns);
     }
     else if( !strncmp(param_label,"slice_x",80))
     {
       fscanf( in, "%d\n", &(lattice->param.slice_x));
-      printf("%s %d >> slice_x = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> slice_x = %d\n",__FILE__,__LINE__,
         lattice->param.slice_x);
     }
     else if( !strncmp(param_label,"slice_y",80))
     {
       fscanf( in, "%d\n", &(lattice->param.slice_y));
-      printf("%s %d >> slice_y = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> slice_y = %d\n",__FILE__,__LINE__,
         lattice->param.slice_y);
     }
     else if( !strncmp(param_label,"ic_poiseuille",80))
     {
       fscanf( in, "%d\n", &(lattice->param.ic_poiseuille));
-      printf("%s %d >> ic_poiseuille = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> ic_poiseuille = %d\n",__FILE__,__LINE__,
         lattice->param.ic_poiseuille);
     }
     // Including mispelling for backward compatibility.
     else if( !strncmp(param_label,"ic_poisseuille",80))
     {
       fscanf( in, "%d\n", &(lattice->param.ic_poiseuille));
-      printf("%s %d >> ic_poiseuille = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> ic_poiseuille = %d\n",__FILE__,__LINE__,
         lattice->param.ic_poiseuille);
     }
     else if( !strncmp(param_label,"bc_poiseuille",80))
     {
       fscanf( in, "%d\n", &(lattice->param.bc_poiseuille));
-      printf("%s %d >> bc_poiseuille = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> bc_poiseuille = %d\n",__FILE__,__LINE__,
         lattice->param.bc_poiseuille);
     }
     // Including mispelling for backward compatibility.
     else if( !strncmp(param_label,"bc_poisseuille",80))
     {
       fscanf( in, "%d\n", &(lattice->param.bc_poiseuille));
-      printf("%s %d >> bc_poiseuille = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> bc_poiseuille = %d\n",__FILE__,__LINE__,
         lattice->param.bc_poiseuille);
     }
     else if( !strncmp(param_label,"bc_slip_north",80))
     {
       fscanf( in, "%d\n", &(lattice->param.bc_slip_north));
-      printf("%s %d >> bc_slip_north = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> bc_slip_north = %d\n",__FILE__,__LINE__,
         lattice->param.bc_slip_north);
     }
     else if( !strncmp(param_label,"bc_sigma_slip",80))
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%d\n", &(lattice->param.bc_sigma_slip));
-      printf("%s %d >> bc_sigma_slip = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> bc_sigma_slip = %d\n",__FILE__,__LINE__,
         lattice->param.bc_sigma_slip);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -840,7 +840,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
       fscanf( in, "%d\n", &(lattice->param.bc_sigma_walls));
-      printf("%s %d >> bc_sigma_walls = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> bc_sigma_walls = %d\n",__FILE__,__LINE__,
         lattice->param.bc_sigma_walls);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -853,7 +853,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if TAU_ZHANG_ANISOTROPIC_DISPERSION
       fscanf( in, "%f\n", &(lattice->param.Dl));
-      printf("%s %d >> Dl = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> Dl = %f\n",__FILE__,__LINE__,
         lattice->param.Dl);
 #else
       fscanf( in, "%f\n", &(dblank));
@@ -866,7 +866,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if TAU_ZHANG_ANISOTROPIC_DISPERSION
       fscanf( in, "%f\n", &(lattice->param.Dt));
-      printf("%s %d >> Dt = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> Dt = %f\n",__FILE__,__LINE__,
         lattice->param.Dt);
 #else
       fscanf( in, "%f\n", &(dblank));
@@ -878,97 +878,97 @@ void read_params( lattice_ptr lattice, const char *infile)
     else if( !strncmp(param_label,"pressure_n_in[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.pressure_n_in[0]));
-      printf("%s %d >> pressure_n_in[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> pressure_n_in[0] = %d\n",__FILE__,__LINE__,
         lattice->param.pressure_n_in[0]);
     }
     else if( !strncmp(param_label,"pressure_s_in[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.pressure_s_in[0]));
-      printf("%s %d >> pressure_s_in[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> pressure_s_in[0] = %d\n",__FILE__,__LINE__,
         lattice->param.pressure_s_in[0]);
     }
     else if( !strncmp(param_label,"pressure_n_out[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.pressure_n_out[0]));
-      printf("%s %d >> pressure_n_out[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> pressure_n_out[0] = %d\n",__FILE__,__LINE__,
         lattice->param.pressure_n_out[0]);
     }
     else if( !strncmp(param_label,"pressure_s_out[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.pressure_s_out[0]));
-      printf("%s %d >> pressure_s_out[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> pressure_s_out[0] = %d\n",__FILE__,__LINE__,
         lattice->param.pressure_s_out[0]);
     }
     else if( !strncmp(param_label,"velocity_n_in[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.velocity_n_in[0]));
-      printf("%s %d >> velocity_n_in[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> velocity_n_in[0] = %d\n",__FILE__,__LINE__,
         lattice->param.velocity_n_in[0]);
     }
     else if( !strncmp(param_label,"velocity_s_in[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.velocity_s_in[0]));
-      printf("%s %d >> velocity_s_in[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> velocity_s_in[0] = %d\n",__FILE__,__LINE__,
         lattice->param.velocity_s_in[0]);
     }
     else if( !strncmp(param_label,"velocity_n_out[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.velocity_n_out[0]));
-      printf("%s %d >> velocity_n_out[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> velocity_n_out[0] = %d\n",__FILE__,__LINE__,
         lattice->param.velocity_n_out[0]);
     }
     else if( !strncmp(param_label,"velocity_s_out[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.velocity_s_out[0]));
-      printf("%s %d >> velocity_s_out[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> velocity_s_out[0] = %d\n",__FILE__,__LINE__,
         lattice->param.velocity_s_out[0]);
     }
     else if( !strncmp(param_label,"pressure_e_in[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.pressure_e_in[0]));
-      printf("%s %d >> pressure_e_in[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> pressure_e_in[0] = %d\n",__FILE__,__LINE__,
         lattice->param.pressure_e_in[0]);
     }
     else if( !strncmp(param_label,"pressure_w_in[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.pressure_w_in[0]));
-      printf("%s %d >> pressure_w_in[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> pressure_w_in[0] = %d\n",__FILE__,__LINE__,
         lattice->param.pressure_w_in[0]);
     }
     else if( !strncmp(param_label,"pressure_e_out[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.pressure_e_out[0]));
-      printf("%s %d >> pressure_e_out[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> pressure_e_out[0] = %d\n",__FILE__,__LINE__,
         lattice->param.pressure_e_out[0]);
     }
     else if( !strncmp(param_label,"pressure_w_out[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.pressure_w_out[0]));
-      printf("%s %d >> pressure_w_out[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> pressure_w_out[0] = %d\n",__FILE__,__LINE__,
         lattice->param.pressure_w_out[0]);
     }
     else if( !strncmp(param_label,"velocity_e_in[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.velocity_e_in[0]));
-      printf("%s %d >> velocity_e_in[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> velocity_e_in[0] = %d\n",__FILE__,__LINE__,
         lattice->param.velocity_e_in[0]);
     }
     else if( !strncmp(param_label,"velocity_w_in[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.velocity_w_in[0]));
-      printf("%s %d >> velocity_w_in[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> velocity_w_in[0] = %d\n",__FILE__,__LINE__,
         lattice->param.velocity_w_in[0]);
     }
     else if( !strncmp(param_label,"velocity_e_out[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.velocity_e_out[0]));
-      printf("%s %d >> velocity_e_out[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> velocity_e_out[0] = %d\n",__FILE__,__LINE__,
         lattice->param.velocity_e_out[0]);
     }
     else if( !strncmp(param_label,"velocity_w_out[0]",80))
     {
       fscanf( in, "%d\n", &(lattice->param.velocity_w_out[0]));
-      printf("%s %d >> velocity_w_out[0] = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> velocity_w_out[0] = %d\n",__FILE__,__LINE__,
         lattice->param.velocity_w_out[0]);
     }
     else if( !strncmp(param_label,"pressure_n_in[1]",80))
@@ -976,7 +976,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.pressure_n_in[1]));
-        printf("%s %d >> pressure_n_in[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> pressure_n_in[1] = %d\n",__FILE__,__LINE__,
           lattice->param.pressure_n_in[1]);
       }
       else
@@ -990,7 +990,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.pressure_s_in[1]));
-        printf("%s %d >> pressure_s_in[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> pressure_s_in[1] = %d\n",__FILE__,__LINE__,
           lattice->param.pressure_s_in[1]);
       }
       else
@@ -1004,7 +1004,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.pressure_n_out[1]));
-        printf("%s %d >> pressure_n_out[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> pressure_n_out[1] = %d\n",__FILE__,__LINE__,
           lattice->param.pressure_n_out[1]);
       }
       else
@@ -1018,7 +1018,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.pressure_s_out[1]));
-        printf("%s %d >> pressure_s_out[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> pressure_s_out[1] = %d\n",__FILE__,__LINE__,
           lattice->param.pressure_s_out[1]);
       }
       else
@@ -1032,7 +1032,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.velocity_n_in[1]));
-        printf("%s %d >> velocity_n_in[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> velocity_n_in[1] = %d\n",__FILE__,__LINE__,
           lattice->param.velocity_n_in[1]);
       }
       else
@@ -1046,7 +1046,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.velocity_s_in[1]));
-        printf("%s %d >> velocity_s_in[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> velocity_s_in[1] = %d\n",__FILE__,__LINE__,
           lattice->param.velocity_s_in[1]);
       }
       else
@@ -1060,7 +1060,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.velocity_n_out[1]));
-        printf("%s %d >> velocity_n_out[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> velocity_n_out[1] = %d\n",__FILE__,__LINE__,
           lattice->param.velocity_n_out[1]);
       }
       else
@@ -1074,7 +1074,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.velocity_s_out[1]));
-        printf("%s %d >> velocity_s_out[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> velocity_s_out[1] = %d\n",__FILE__,__LINE__,
           lattice->param.velocity_s_out[1]);
       }
       else
@@ -1088,7 +1088,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.pressure_e_in[1]));
-        printf("%s %d >> pressure_e_in[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> pressure_e_in[1] = %d\n",__FILE__,__LINE__,
           lattice->param.pressure_e_in[1]);
       }
       else
@@ -1102,7 +1102,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.pressure_w_in[1]));
-        printf("%s %d >> pressure_w_in[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> pressure_w_in[1] = %d\n",__FILE__,__LINE__,
           lattice->param.pressure_w_in[1]);
       }
       else
@@ -1116,7 +1116,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.pressure_e_out[1]));
-        printf("%s %d >> pressure_e_out[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> pressure_e_out[1] = %d\n",__FILE__,__LINE__,
           lattice->param.pressure_e_out[1]);
       }
       else
@@ -1130,7 +1130,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.pressure_w_out[1]));
-        printf("%s %d >> pressure_w_out[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> pressure_w_out[1] = %d\n",__FILE__,__LINE__,
           lattice->param.pressure_w_out[1]);
       }
       else
@@ -1144,7 +1144,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.velocity_e_in[1]));
-        printf("%s %d >> velocity_e_in[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> velocity_e_in[1] = %d\n",__FILE__,__LINE__,
           lattice->param.velocity_e_in[1]);
       }
       else
@@ -1158,7 +1158,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.velocity_w_in[1]));
-        printf("%s %d >> velocity_w_in[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> velocity_w_in[1] = %d\n",__FILE__,__LINE__,
           lattice->param.velocity_w_in[1]);
       }
       else
@@ -1172,7 +1172,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.velocity_e_out[1]));
-        printf("%s %d >> velocity_e_out[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> velocity_e_out[1] = %d\n",__FILE__,__LINE__,
           lattice->param.velocity_e_out[1]);
       }
       else
@@ -1186,7 +1186,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       if( NUM_FLUID_COMPONENTS==2)
       {
         fscanf( in, "%d\n", &(lattice->param.velocity_w_out[1]));
-        printf("%s %d >> velocity_w_out[1] = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> velocity_w_out[1] = %d\n",__FILE__,__LINE__,
           lattice->param.velocity_w_out[1]);
       }
       else
@@ -1199,7 +1199,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.constcon_n_in));
-        printf("%s %d >> constcon_n_in = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> constcon_n_in = %d\n",__FILE__,__LINE__,
           lattice->param.constcon_n_in);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1210,7 +1210,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.constcon_s_in));
-        printf("%s %d >> constcon_s_in = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> constcon_s_in = %d\n",__FILE__,__LINE__,
           lattice->param.constcon_s_in);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1221,7 +1221,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.constcon_n_out));
-        printf("%s %d >> constcon_n_out = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> constcon_n_out = %d\n",__FILE__,__LINE__,
           lattice->param.constcon_n_out);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1232,7 +1232,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.constcon_s_out));
-        printf("%s %d >> constcon_s_out = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> constcon_s_out = %d\n",__FILE__,__LINE__,
           lattice->param.constcon_s_out);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1243,7 +1243,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.constflx_n_in));
-        printf("%s %d >> constflx_n_in = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> constflx_n_in = %d\n",__FILE__,__LINE__,
           lattice->param.constflx_n_in);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1254,7 +1254,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.constflx_s_in));
-        printf("%s %d >> constflx_s_in = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> constflx_s_in = %d\n",__FILE__,__LINE__,
           lattice->param.constflx_s_in);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1265,7 +1265,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.constflx_n_out));
-        printf("%s %d >> constflx_n_out = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> constflx_n_out = %d\n",__FILE__,__LINE__,
           lattice->param.constflx_n_out);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1276,7 +1276,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.constflx_s_out));
-        printf("%s %d >> constflx_s_out = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> constflx_s_out = %d\n",__FILE__,__LINE__,
           lattice->param.constflx_s_out);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1287,7 +1287,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.constcon_e_in));
-        printf("%s %d >> constcon_e_in = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> constcon_e_in = %d\n",__FILE__,__LINE__,
           lattice->param.constcon_e_in);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1298,7 +1298,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.constcon_w_in));
-        printf("%s %d >> constcon_w_in = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> constcon_w_in = %d\n",__FILE__,__LINE__,
           lattice->param.constcon_w_in);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1309,7 +1309,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.constcon_e_out));
-        printf("%s %d >> constcon_e_out = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> constcon_e_out = %d\n",__FILE__,__LINE__,
           lattice->param.constcon_e_out);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1320,7 +1320,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.constcon_w_out));
-        printf("%s %d >> constcon_w_out = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> constcon_w_out = %d\n",__FILE__,__LINE__,
           lattice->param.constcon_w_out);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1331,7 +1331,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.constflx_e_in));
-        printf("%s %d >> constflx_e_in = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> constflx_e_in = %d\n",__FILE__,__LINE__,
           lattice->param.constflx_e_in);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1342,7 +1342,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.constflx_w_in));
-        printf("%s %d >> constflx_w_in = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> constflx_w_in = %d\n",__FILE__,__LINE__,
           lattice->param.constflx_w_in);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1353,7 +1353,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.constflx_e_out));
-        printf("%s %d >> constflx_e_out = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> constflx_e_out = %d\n",__FILE__,__LINE__,
           lattice->param.constflx_e_out);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1364,7 +1364,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.constflx_w_out));
-        printf("%s %d >> constflx_w_out = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> constflx_w_out = %d\n",__FILE__,__LINE__,
           lattice->param.constflx_w_out);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1375,7 +1375,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.zeroconcgrad_n));
-        printf("%s %d >> zeroconcgrad_n = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> zeroconcgrad_n = %d\n",__FILE__,__LINE__,
           lattice->param.zeroconcgrad_n);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1386,7 +1386,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.zeroconcgrad_s));
-        printf("%s %d >> zeroconcgrad_s = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> zeroconcgrad_s = %d\n",__FILE__,__LINE__,
           lattice->param.zeroconcgrad_s);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1397,7 +1397,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.zeroconcgrad_e));
-        printf("%s %d >> zeroconcgrad_e = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> zeroconcgrad_e = %d\n",__FILE__,__LINE__,
           lattice->param.zeroconcgrad_e);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1408,7 +1408,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.zeroconcgrad_w));
-        printf("%s %d >> zeroconcgrad_w = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> zeroconcgrad_w = %d\n",__FILE__,__LINE__,
           lattice->param.zeroconcgrad_w);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1419,7 +1419,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     {
 #if INAMURO_SIGMA_COMPONENT
         fscanf( in, "%d\n", &(lattice->param.zeroconcgrad_full));
-        printf("%s %d >> zeroconcgrad_full = %d\n",__FILE__,__LINE__, 
+        printf("%s %d >> zeroconcgrad_full = %d\n",__FILE__,__LINE__,
           lattice->param.zeroconcgrad_full);
 #else /* !(INAMURO_SIGMA_COMPONENT) */
       fscanf( in, "%d\n", &(blank));
@@ -1429,121 +1429,121 @@ void read_params( lattice_ptr lattice, const char *infile)
     else if( !strncmp(param_label,"plot_scale_dynamic",80))
     {
       fscanf( in, "%d\n", &(lattice->param.plot_scale_dynamic));
-      printf("%s %d >> plot_scale_dynamic = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> plot_scale_dynamic = %d\n",__FILE__,__LINE__,
         lattice->param.plot_scale_dynamic);
     }
     else if( !strncmp(param_label,"use_colormap",80))
     {
       fscanf( in, "%d\n", &(lattice->param.use_colormap));
-      printf("%s %d >> use_colormap = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> use_colormap = %d\n",__FILE__,__LINE__,
         lattice->param.use_colormap);
     }
     else if( !strncmp(param_label,"initial_condition",80))
     {
       fscanf( in, "%d\n", &(lattice->param.initial_condition));
-      printf("%s %d >> initial_condition = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> initial_condition = %d\n",__FILE__,__LINE__,
         lattice->param.initial_condition);
     }
     else if( !strncmp(param_label,"x0",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.x0));
-      printf("%s %d >> x0 = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> x0 = %f\n",__FILE__,__LINE__,
          lattice->param.x0);
     }
     else if( !strncmp(param_label,"y0",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.y0));
-      printf("%s %d >> y0 = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> y0 = %f\n",__FILE__,__LINE__,
          lattice->param.y0);
     }
     else if( !strncmp(param_label,"r0",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.r0));
-      printf("%s %d >> r0 = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> r0 = %f\n",__FILE__,__LINE__,
          lattice->param.r0);
     }
     else if( !strncmp(param_label,"cut",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.cut));
-      printf("%s %d >> cut = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> cut = %f\n",__FILE__,__LINE__,
          lattice->param.cut);
     }
     else if( !strncmp(param_label,"x1",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.x1));
-      printf("%s %d >> x1 = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> x1 = %f\n",__FILE__,__LINE__,
          lattice->param.x1);
     }
     else if( !strncmp(param_label,"x2",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.x2));
-      printf("%s %d >> x2 = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> x2 = %f\n",__FILE__,__LINE__,
          lattice->param.x2);
     }
     else if( !strncmp(param_label,"y1",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.y1));
-      printf("%s %d >> y1 = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> y1 = %f\n",__FILE__,__LINE__,
          lattice->param.y1);
     }
     else if( !strncmp(param_label,"y2",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.y2));
-      printf("%s %d >> y2 = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> y2 = %f\n",__FILE__,__LINE__,
          lattice->param.y2);
     }
     else if( !strncmp(param_label,"rel_x1",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.rel_x1));
-      printf("%s %d >> rel_x1 = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> rel_x1 = %f\n",__FILE__,__LINE__,
          lattice->param.rel_x1);
     }
     else if( !strncmp(param_label,"rel_x2",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.rel_x2));
-      printf("%s %d >> rel_x2 = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> rel_x2 = %f\n",__FILE__,__LINE__,
          lattice->param.rel_x2);
     }
     else if( !strncmp(param_label,"rel_y1",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.rel_y1));
-      printf("%s %d >> rel_y1 = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> rel_y1 = %f\n",__FILE__,__LINE__,
          lattice->param.rel_y1);
     }
     else if( !strncmp(param_label,"rel_y2",80))
     {
       fscanf( in, "%lf\n", &(lattice->param.rel_y2));
-      printf("%s %d >> rel_y2 = %f\n",__FILE__,__LINE__, 
+      printf("%s %d >> rel_y2 = %f\n",__FILE__,__LINE__,
          lattice->param.rel_y2);
     }
     else if( !strncmp(param_label,"dump_rho",80))
     {
       fscanf( in, "%d\n", &(lattice->param.dump_rho));
-      printf("%s %d >> dump_rho = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> dump_rho = %d\n",__FILE__,__LINE__,
         lattice->param.dump_rho);
     }
     else if( !strncmp(param_label,"dump_u",80))
     {
       fscanf( in, "%d\n", &(lattice->param.dump_u));
-      printf("%s %d >> dump_u = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> dump_u = %d\n",__FILE__,__LINE__,
         lattice->param.dump_u);
     }
     else if( !strncmp(param_label,"dump_force",80))
     {
       fscanf( in, "%d\n", &(lattice->param.dump_force));
-      printf("%s %d >> dump_force = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> dump_force = %d\n",__FILE__,__LINE__,
         lattice->param.dump_force);
     }
     else if( !strncmp(param_label,"dump_vor",80))
     {
       fscanf( in, "%d\n", &(lattice->param.dump_vor));
-      printf("%s %d >> dump_vor = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> dump_vor = %d\n",__FILE__,__LINE__,
         lattice->param.dump_vor);
     }
     else if( !strncmp(param_label,"do_user_stuff",80))
     {
       fscanf( in, "%d\n", &(lattice->param.do_user_stuff));
-      printf("%s %d >> do_user_stuff = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> do_user_stuff = %d\n",__FILE__,__LINE__,
         lattice->param.do_user_stuff);
     }
     else if( !strncmp(param_label,"out_path",80))
@@ -1554,13 +1554,13 @@ void read_params( lattice_ptr lattice, const char *infile)
       get_rest_of_line_as_string( in, &str, 1024);
       strncpy( lattice->param.out_path, str, 1024);
       free(str);
-      printf("%s %d >> out_path = %s\n",__FILE__,__LINE__, 
+      printf("%s %d >> out_path = %s\n",__FILE__,__LINE__,
         lattice->param.out_path);
     }
     else if( !strncmp(param_label,"make_octave_scripts",80))
     {
       fscanf( in, "%d\n", &(lattice->param.make_octave_scripts));
-      printf("%s %d >> make_octave_scripts = %d\n",__FILE__,__LINE__, 
+      printf("%s %d >> make_octave_scripts = %d\n",__FILE__,__LINE__,
         lattice->param.make_octave_scripts);
     }
     else
@@ -1601,7 +1601,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       "read_params() -- "
       "Unhandled case "
       "NUM_FLUID_COMPONENTS = %d .  "
-      "Exiting!\n", 
+      "Exiting!\n",
       NUM_FLUID_COMPONENTS);
     process_exit(1);
   }
@@ -1664,7 +1664,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       "read_params() -- "
       "Unhandled case "
       "NUM_FLUID_COMPONENTS = %d .  "
-      "Exiting!\n", 
+      "Exiting!\n",
       NUM_FLUID_COMPONENTS);
     process_exit(1);
   }
@@ -1750,7 +1750,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       "read_params() -- "
       "Unhandled case "
       "NUM_FLUID_COMPONENTS = %d .  "
-      "Exiting!\n", 
+      "Exiting!\n",
       NUM_FLUID_COMPONENTS);
     process_exit(1);
   }
@@ -1838,13 +1838,13 @@ void read_params( lattice_ptr lattice, const char *infile)
 //LBMPI     __FILE__,__LINE__,
 //LBMPI     get_LX(lattice),
 //LBMPI     get_LY(lattice));
-//LBMPI 
+//LBMPI
 //LBMPI   // Determine global coordinates of local domain.
 //LBMPI   compute_global_coords( lattice);
-//LBMPI 
+//LBMPI
 //LBMPI #endif /* (PARALLEL) */
 
-  lattice->NumTimeSteps = 
+  lattice->NumTimeSteps =
     lattice->param.NumFrames * lattice->param.FrameRate;
 
 #if 0
@@ -1870,7 +1870,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       printf("%s (%d) -- ERROR: "
           "Support for incompressible flow with "
           "two fluid components (as opposed to Inamuro solute component) "
-          "is pending.  (Exiting!)\n", 
+          "is pending.  (Exiting!)\n",
           __FILE__, __LINE__);
       printf("\n");
       printf("\n");
@@ -1887,7 +1887,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       printf("%s (%d) -- ERROR: "
           "Support for simplified diffusion with "
           "two fluid components (as opposed to Inamuro solute component) "
-          "is pending.  (Exiting!)\n", 
+          "is pending.  (Exiting!)\n",
           __FILE__, __LINE__);
       printf("\n");
       printf("\n");
@@ -2023,7 +2023,7 @@ void read_params( lattice_ptr lattice, const char *infile)
 // void dump_params( struct lattice_struct *lattice)
 //##############################################################################
 //
-// D U M P   P A R A M S 
+// D U M P   P A R A M S
 //
 //  - Output the problem parameters to a file.
 //
@@ -2040,9 +2040,9 @@ void dump_params( struct lattice_struct *lattice)
 
   if( !( o = fopen(filename,"w+")))
   {
-    printf("\n%s %d >> ERROR: fopen(\"%s\",\"w+\") = NULL.\n", 
+    printf("\n%s %d >> ERROR: fopen(\"%s\",\"w+\") = NULL.\n",
         __FILE__, __LINE__, filename);
-    printf("\n%s %d >> NOTE: You might need to create directory \"%s\"\n", 
+    printf("\n%s %d >> NOTE: You might need to create directory \"%s\"\n",
         __FILE__, __LINE__, get_out_path(lattice));
     printf("%s %d >> "
        "If the directory just shown is not \"./out\" and does not\n"
@@ -2085,7 +2085,7 @@ void dump_params( struct lattice_struct *lattice)
       "read_params() -- "
       "Unhandled case "
       "NUM_FLUID_COMPONENTS = %d .  "
-      "Exiting!\n", 
+      "Exiting!\n",
       NUM_FLUID_COMPONENTS);
     process_exit(1);
   }
@@ -2111,7 +2111,7 @@ void dump_params( struct lattice_struct *lattice)
       "read_params() -- "
       "Unhandled case "
       "NUM_FLUID_COMPONENTS = %d .  "
-      "Exiting!\n", 
+      "Exiting!\n",
       NUM_FLUID_COMPONENTS);
     process_exit(1);
   }
@@ -2172,7 +2172,7 @@ void dump_params( struct lattice_struct *lattice)
       "read_params() -- "
       "Unhandled case "
       "NUM_FLUID_COMPONENTS = %d .  "
-      "Exiting!\n", 
+      "Exiting!\n",
       NUM_FLUID_COMPONENTS);
     process_exit(1);
   }
@@ -2194,7 +2194,7 @@ void dump_params( struct lattice_struct *lattice)
       "read_params() -- "
       "Unhandled case "
       "NUM_FLUID_COMPONENTS = %d .  "
-      "Exiting!\n", 
+      "Exiting!\n",
       NUM_FLUID_COMPONENTS);
     process_exit(1);
   }
@@ -2272,7 +2272,7 @@ void dump_params( struct lattice_struct *lattice)
       "read_params() -- "
       "Unhandled case "
       "NUM_FLUID_COMPONENTS = %d .  "
-      "Exiting!\n", 
+      "Exiting!\n",
       NUM_FLUID_COMPONENTS);
     process_exit(1);
   }

@@ -48,7 +48,7 @@ void dump_checkpoint( struct lattice_struct *lattice, int time, char *fn);
 void read_checkpoint( struct lattice_struct *lattice);
 void stream( struct lattice_struct *lattice);
 void slice( lattice_ptr lattice);
-void private_slice( lattice_ptr lattice, 
+void private_slice( lattice_ptr lattice,
      char *root_word, int i0, int j0, int i1, int j1);
 #if NON_LOCAL_FORCES
 void compute_phase_force( lattice_ptr lattice, int subs);
@@ -66,8 +66,8 @@ void count_colormap( int *num_colors);
 void allocate_colormap( double ***colormap, int num_colors);
 void read_colormap( double **colormap, int num_colors);
 void deallocate_colormap( double ***colormap, int num_colors);
-void get_color( 
-       double **colormap, int num_colors, 
+void get_color(
+       double **colormap, int num_colors,
        double c, char *r, char *g, char *b);
 #if WRITE_CHEN_DAT_FILES
 void chen_output( lattice_ptr lattice);
@@ -83,21 +83,21 @@ int do_check_point_save( lattice_ptr lattice);
 int do_check_point_load( lattice_ptr lattice);
 
 void bmp_read_header( FILE *in, struct bitmap_info_header *bmih);
-void bmp_read_entry( 
-  FILE *in, 
-  struct bitmap_info_header *bmih, 
+void bmp_read_entry(
+  FILE *in,
+  struct bitmap_info_header *bmih,
   char *r, char *g, char *b);
 void bmp_write_header( FILE *out, bmp_hdr_ptr bmp_hdr, int ni, int nj, int bits);
-void bmp_write_entry( 
-  FILE *out, 
-  bmp_hdr_ptr bmp_hdr, 
+void bmp_write_entry(
+  FILE *out,
+  bmp_hdr_ptr bmp_hdr,
   int n,
   char r, char g, char b);
 
 void report_open( report_ptr report, char *name);
-void report_integer_entry( 
+void report_integer_entry(
        report_ptr report, char *label, int value, char *units);
-void report_ratio_entry( 
+void report_ratio_entry(
        report_ptr report, char *label, double num, double den, char *units);
 void report_entry( report_ptr report, char *entry_left, char *entry_right);
 void report_close( report_ptr report);

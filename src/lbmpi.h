@@ -14,7 +14,7 @@ struct lbmpi_struct
 {
   //############################################################################
   //
-  // P A R A L L E L   V A R I A B L E S 
+  // P A R A L L E L   V A R I A B L E S
   //
   //                  1       ...     PX
   //                -------------------------
@@ -45,7 +45,7 @@ struct lbmpi_struct
   // Param: NPY
   // Type: int
   // Comments: NPX is the number of processes in the x-direction. NPY is the
-  // number of processes in the y-direction. 
+  // number of processes in the y-direction.
   //
   int    NPX,
          NPY;
@@ -55,8 +55,8 @@ struct lbmpi_struct
   // Type: int
   // Comments: Coordinates of process' subdomain in the 2D array of subdomains.
   //
-  int    PX, 
-         PY; 
+  int    PX,
+         PY;
 
   // Param: GLX
   // Param: GLY
@@ -95,10 +95,10 @@ double tic, toc;
 // Need a string for accumulating output to send through printf...
 // Outputting elements of an array (e.g. IndicesEW) individually
 // will result in a mess under MPI.  Better to output them to a
-// string first and then dump the string all at once...  Note that 
+// string first and then dump the string all at once...  Note that
 // this is just for small scale debugging.  For visualizing
 // contents of larger arrays, write to a file...
-char iobuf[1024]; 
+char iobuf[1024];
 
 double sendtmp, recvtmp; // For debugging...
 

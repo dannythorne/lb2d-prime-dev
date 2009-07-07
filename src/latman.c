@@ -26,7 +26,7 @@
 // void process_matrix( struct lattice_struct *lattice, int **matrix)
 //##############################################################################
 //
-// P R O C E S S   M A T R I X 
+// P R O C E S S   M A T R I X
 //
 //  - Process the soil matrix.
 //
@@ -68,8 +68,8 @@ void process_matrix( struct lattice_struct *lattice, int **matrix, int subs)
         ip = ( i<ei) ? ( i+1) : ( 0 );
         in = ( i>0 ) ? ( i-1) : ( ei);
 
-        if( matrix[j ][i ] == 0) 
-        { 
+        if( matrix[j ][i ] == 0)
+        {
           NumActiveNodes++;
 
           if( matrix[j ][ip] == 1) { matrix[j ][ip] = 2; NumActiveNodes++;}
@@ -96,8 +96,8 @@ void process_matrix( struct lattice_struct *lattice, int **matrix, int subs)
       ip = ( i<ei) ? ( i+1) : ( 0 );
       in = ( i>0 ) ? ( i-1) : ( ei);
 
-      if( matrix[j ][i ] == 0) 
-      { 
+      if( matrix[j ][i ] == 0)
+      {
         NumActiveNodes++;
 
         if( matrix[j ][ip] == 1) { matrix[j ][ip] = 2; NumActiveNodes++;}
@@ -124,8 +124,8 @@ void process_matrix( struct lattice_struct *lattice, int **matrix, int subs)
         ip = ( i<ei) ? ( i+1) : ( 0 );
         in = ( i>0 ) ? ( i-1) : ( ei);
 
-        if( matrix[j ][i ] == 0) 
-        { 
+        if( matrix[j ][i ] == 0)
+        {
           NumActiveNodes++;
 
           if( matrix[j ][ip] == 1) { matrix[j ][ip] = 2; NumActiveNodes++;}
@@ -149,8 +149,8 @@ void process_matrix( struct lattice_struct *lattice, int **matrix, int subs)
       ip = ( i<ei) ? ( i+1) : ( 0 );
       in = ( i>0 ) ? ( i-1) : ( ei);
 
-      if( matrix[j ][i ] == 0) 
-      { 
+      if( matrix[j ][i ] == 0)
+      {
         NumActiveNodes++;
 
         if( matrix[j ][ip] == 1) { matrix[j ][ip] = 2; NumActiveNodes++;}
@@ -169,7 +169,7 @@ void process_matrix( struct lattice_struct *lattice, int **matrix, int subs)
   } /* if( lattice->periodic_y[subs]) else */
 
 #if VERBOSITY_LEVEL > 0
-  printf( "[%s,%d] process_matrix() -- NumActiveNodes = %d\n", 
+  printf( "[%s,%d] process_matrix() -- NumActiveNodes = %d\n",
     __FILE__, __LINE__, NumActiveNodes);
 #endif /* VERBOSITY_LEVEL > 0 */
 
@@ -191,12 +191,12 @@ void process_matrix( struct lattice_struct *lattice, int **matrix, int subs)
   lattice->NumNodes = get_LX(lattice) * get_LY(lattice);
 
 #if VERBOSITY_LEVEL > 0
-  printf("[%s,%d] process_matrix() -- NumNodes = %d\n", 
+  printf("[%s,%d] process_matrix() -- NumNodes = %d\n",
     __FILE__,__LINE__, lattice->NumNodes);
 #endif /* VERBOSITY_LEVEL > 0 */
 
   // Allocate memory for lattice->NumNodes boundary conditions.
-  lattice->bc[subs]= 
+  lattice->bc[subs]=
     ( struct bc_struct*)malloc( lattice->NumNodes*sizeof( struct bc_struct));
   assert( lattice->bc[subs]!=NULL);
 
@@ -240,10 +240,10 @@ void process_matrix( struct lattice_struct *lattice, int **matrix, int subs)
 #if 0 // Dump BCs to screen.
   for( n=0; n<lattice->NumNodes; n++)
   {
-    printf("%d (%d,%d), %d\n", 
-      n, 
-      n%get_LX(lattice), 
-      n/get_LX(lattice), 
+    printf("%d (%d,%d), %d\n",
+      n,
+      n%get_LX(lattice),
+      n/get_LX(lattice),
       lattice->bc[subs][n].bc_type);
   }
   printf("\n");
@@ -262,7 +262,7 @@ void process_matrix( struct lattice_struct *lattice, int **matrix, int subs)
 // void construct_lattice( struct lattice_struct *lattice)
 //##############################################################################
 //
-// C O N S T R U C T   L A T T I C E 
+// C O N S T R U C T   L A T T I C E
 //
 //  - Construct lattice.
 //
@@ -270,11 +270,11 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
 {
   // Variable declarations
   int    **matrix;
-  int    i, 
+  int    i,
          j;
   int    n;
   int    subs;
-  int    width, 
+  int    width,
          height;
   char   filename[1024];
 #if POROUS_MEDIA || FREED_POROUS_MEDIA
@@ -327,7 +327,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
 
  for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
  {
-  // Default periodicity. This will be adjusted in read_bcs() 
+  // Default periodicity. This will be adjusted in read_bcs()
   // or process_bcs() depending on flow boundaries.
   (*lattice)->periodic_x[subs] = 1;
   (*lattice)->periodic_y[subs] = 1;
@@ -342,7 +342,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
 
 #if 0
   // Read boundary conditions from BMP files.
-  // Eventually this mechanism will be very general to handle 
+  // Eventually this mechanism will be very general to handle
   // (somewhat?) arbitrary arrangements of boundary conditions.
   read_bcs( *lattice, matrix);
 #else
@@ -370,8 +370,8 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
  for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
  {
   // Allocate NumNodes particle distribution functions.
-  (*lattice)->pdf[subs] = 
-    ( struct pdf_struct*)malloc( 
+  (*lattice)->pdf[subs] =
+    ( struct pdf_struct*)malloc(
         (*lattice)->NumNodes*sizeof( struct pdf_struct));
   if( (*lattice)->pdf[subs] == NULL)
   {
@@ -385,8 +385,8 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
   }
 
   // Allocate NumNodes macroscopic variables.
-  (*lattice)->macro_vars[subs] = 
-    ( struct macro_vars_struct*)malloc( 
+  (*lattice)->macro_vars[subs] =
+    ( struct macro_vars_struct*)malloc(
         (*lattice)->NumNodes*sizeof( struct macro_vars_struct));
   if( (*lattice)->macro_vars[subs]==NULL)
   {
@@ -401,8 +401,8 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
 
 #if NON_LOCAL_FORCES
   // Allocate NumNodes elements for force.
-  (*lattice)->force[subs] = 
-    ( struct force_struct*)malloc( 
+  (*lattice)->force[subs] =
+    ( struct force_struct*)malloc(
         (*lattice)->NumNodes*sizeof( struct force_struct));
   if( (*lattice)->force[subs]==NULL)
   {
@@ -419,8 +419,8 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
 
 #if STORE_U_COMPOSITE
   // Allocate NumNodes elements for upr.
-  (*lattice)->upr = 
-    ( struct upr_struct*)malloc( 
+  (*lattice)->upr =
+    ( struct upr_struct*)malloc(
         (*lattice)->NumNodes*sizeof( struct upr_struct));
   if( (*lattice)->upr==NULL)
   {
@@ -460,7 +460,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
     case 1:
     {
     // Allocate space for ns values.
-    (*lattice)->ns = 
+    (*lattice)->ns =
       (struct ns_struct*)malloc( (*lattice)->NumNodes*sizeof(struct ns_struct));
     if( (*lattice)->ns==NULL)
     {
@@ -474,8 +474,8 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
     }
 
     // Try to read ns<LX>x<LY>.bmp file.
-    sprintf( filename, "./in/ns%dx%d.bmp", 
-           get_LX(*lattice), 
+    sprintf( filename, "./in/ns%dx%d.bmp",
+           get_LX(*lattice),
            get_LY(*lattice));
     if( in = fopen( filename, "r+"))
     {
@@ -486,8 +486,8 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
         bmp_read_entry( in, &bmih, &r, &g, &b);
 
         // Verify grayscale.
-        if(    (double)r != (double)g 
-            || (double)g != (double)b 
+        if(    (double)r != (double)g
+            || (double)g != (double)b
             || (double)r != (double)b)
         {
           printf(
@@ -504,7 +504,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
         // Assign ns value.
         (*lattice)->ns[n].ns = ((double)((unsigned int)r%256))/255.;
 #if 0 && VERBOSITY_LEVEL>0
-        printf("%s %d >> n=%d, ns=%f\n", 
+        printf("%s %d >> n=%d, ns=%f\n",
             __FILE__, __LINE__, n, (*lattice)->ns[n].ns);
 #endif /* 1 && VERBOSITY_LEVEL>0 */
 
@@ -528,7 +528,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
     case 2:
     {
     // Allocate space for ns values.
-    (*lattice)->ns = 
+    (*lattice)->ns =
       (struct ns_struct*)malloc( (*lattice)->NumNodes*sizeof(struct ns_struct));
     if( (*lattice)->ns==NULL)
     {
@@ -542,8 +542,8 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
     }
 
     // Try to read ns<LX>x<LY>.bmp file.
-    sprintf( filename, "./in/ns%dx%d.bmp", 
-           get_LX(*lattice), 
+    sprintf( filename, "./in/ns%dx%d.bmp",
+           get_LX(*lattice),
            get_LY(*lattice));
     if( in = fopen( filename, "r+"))
     {
@@ -554,8 +554,8 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
         bmp_read_entry( in, &bmih, &r, &g, &b);
 
         // Verify grayscale.
-        if(    (double)r != (double)g 
-            || (double)g != (double)b 
+        if(    (double)r != (double)g
+            || (double)g != (double)b
             || (double)r != (double)b)
         {
           printf(
@@ -588,7 +588,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
           (*lattice)->ns[n].ns = 0.;
         }
 #if 0 && VERBOSITY_LEVEL>0
-        printf("%s %d >> n=%d, ns=%f\n", 
+        printf("%s %d >> n=%d, ns=%f\n",
             __FILE__, __LINE__, n, (*lattice)->ns[n].ns);
 #endif /* 1 && VERBOSITY_LEVEL>0 */
 
@@ -621,7 +621,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
 
 #if INAMURO_SIGMA_COMPONENT && DETERMINE_FLOW_DIRECTION
   //
-  // Try to determine the direction of flow.  
+  // Try to determine the direction of flow.
   //
   // NOTE: This determination informs the breakthrough curve mechanism which
   // should be used in a simple situation with either pressure/velocity
@@ -658,7 +658,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
     (*lattice)->FlowDir = /*Vertical*/2;
   }
   else if( // Pressure/Velocity boundaries moving the flow horizontally.
-!( 
+!(
     ( (*lattice)->param.pressure_n_in[0] && (*lattice)->param.pressure_s_out[0])
   ||
     ( (*lattice)->param.pressure_n_out[0] && (*lattice)->param.pressure_s_in[0])
@@ -716,15 +716,15 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
   {
     // Compute "size" of break through curve: number of readings
     // to store.
-    (*lattice)->SizeBTC = 
+    (*lattice)->SizeBTC =
       (int)ceil((double)(
                          (
         (*lattice)->NumTimeSteps
       -
         (((*lattice)->param.sigma_start>0)
         ?((*lattice)->param.sigma_start)
-        :(0))                            
-                         ) 
+        :(0))
+                         )
        / (*lattice)->param.sigma_btc_rate))+1;
 
     //
@@ -754,7 +754,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
 
   if( do_user_stuff((*lattice)))
   {
-    (*lattice)->user_stuff = 
+    (*lattice)->user_stuff =
       (user_stuff_ptr)malloc( sizeof(struct user_stuff_struct));
   }
 
@@ -765,7 +765,7 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
 // void init_problem( struct lattice_struct *lattice)
 //##############################################################################
 //
-// I N I T   P R O B L E M 
+// I N I T   P R O B L E M
 //
 //  - Initialize the problem on the lattice.
 //
@@ -842,7 +842,7 @@ void init_problem( struct lattice_struct *lattice)
     process_exit(1);
   }
   fclose( o);
- 
+
 #endif /* WRITE_CHEN_DAT_FILES */
 
 #if 0 // Want to allow mix of velocity and pressure boundaries.
@@ -929,11 +929,11 @@ void init_problem( struct lattice_struct *lattice)
         // u_max = (3/2)ux_in
         u_max = 1.5*(lattice->param.ux_in);
 
-        // a = .5*(LY-2) .  
+        // a = .5*(LY-2) .
         a     = .5*(get_LY(lattice)-2);
 
-        //     u(y) = K(a^2-y^2) 
-        // ==> u_max = Ka^2 
+        //     u(y) = K(a^2-y^2)
+        // ==> u_max = Ka^2
         // ==> K = u_max/a^2
         K     = u_max/(a*a);
 
@@ -952,15 +952,15 @@ void init_problem( struct lattice_struct *lattice)
 
         m = drho/(get_LX(lattice)-1);
 
-        *macro_var_ptr++ = 
+        *macro_var_ptr++ =
           ( lattice->param.rho_A[subs] + drho/2.) - m*i;
 
 #if 0
         ( 1.5*( lattice->param.ux_in)
              /( .25*(get_LY(lattice)-2)*(get_LY(lattice)-2)) )
-             *( 
-                .25*( get_LY(lattice)-2)*( get_LY(lattice)-2) 
-              - 
+             *(
+                .25*( get_LY(lattice)-2)*( get_LY(lattice)-2)
+              -
                 (i-.5*( get_LY(lattice)-2)-.5)
                *(i-.5*( get_LY(lattice)-2)-.5)
               )
@@ -986,11 +986,11 @@ void init_problem( struct lattice_struct *lattice)
         // u_max = (3/2)uy_in
         u_max = 1.5*(lattice->param.uy_in);
 
-        // a = .5*(LX-2) .  
+        // a = .5*(LX-2) .
         a     = .5*(get_LX(lattice)-2);
 
-        //     u(x) = K(a^2-x^2) 
-        // ==> u_max = Ka^2 
+        //     u(x) = K(a^2-x^2)
+        // ==> u_max = Ka^2
         // ==> K = u_max/a^2
         K     = u_max/(a*a);
 
@@ -1009,15 +1009,15 @@ void init_problem( struct lattice_struct *lattice)
 
         m = drho/(get_LY(lattice)-1);
 
-        *macro_var_ptr++ = 
+        *macro_var_ptr++ =
           ( lattice->param.rho_A[subs] + drho/2.) - m*j;
 
 #if 0
         ( 1.5*( lattice->param.uy_in)
              /( .25*(get_LX(lattice)-2)*(get_LX(lattice)-2)) )
-             *( 
-                .25*( get_LX(lattice)-2)*( get_LX(lattice)-2) 
-              - 
+             *(
+                .25*( get_LX(lattice)-2)*( get_LX(lattice)-2)
+              -
                 (i-.5*( get_LX(lattice)-2)-.5)
                *(i-.5*( get_LX(lattice)-2)-.5)
               )
@@ -1234,11 +1234,11 @@ void init_problem( struct lattice_struct *lattice)
         // u_max = (3/2)ux_in
         u_max = 1.5*(lattice->param.ux_in);
 
-        // a = .5*(LY-2) .  
+        // a = .5*(LY-2) .
         a     = .5*(get_LY(lattice)-2);
 
-        //     u(y) = K(a^2-y^2) 
-        // ==> u_max = Ka^2 
+        //     u(y) = K(a^2-y^2)
+        // ==> u_max = Ka^2
         // ==> K = u_max/a^2
         K     = u_max/(a*a);
 
@@ -1257,15 +1257,15 @@ void init_problem( struct lattice_struct *lattice)
 
         m = drho/(get_LX(lattice)-1);
 
-        *macro_var_ptr++ = 
+        *macro_var_ptr++ =
           ( lattice->param.rho_B[subs] + drho/2.) - m*i;
 
 #if 0
         ( 1.5*( lattice->param.ux_in)
              /( .25*(get_LY(lattice)-2)*(get_LY(lattice)-2)) )
-             *( 
-                .25*( get_LY(lattice)-2)*( get_LY(lattice)-2) 
-              - 
+             *(
+                .25*( get_LY(lattice)-2)*( get_LY(lattice)-2)
+              -
                 (i-.5*( get_LY(lattice)-2)-.5)
                *(i-.5*( get_LY(lattice)-2)-.5)
               )
@@ -1291,11 +1291,11 @@ void init_problem( struct lattice_struct *lattice)
         // u_max = (3/2)uy_in
         u_max = 1.5*(lattice->param.uy_in);
 
-        // a = .5*(LX-2) .  
+        // a = .5*(LX-2) .
         a     = .5*(get_LX(lattice)-2);
 
-        //     u(x) = K(a^2-x^2) 
-        // ==> u_max = Ka^2 
+        //     u(x) = K(a^2-x^2)
+        // ==> u_max = Ka^2
         // ==> K = u_max/a^2
         K     = u_max/(a*a);
 
@@ -1315,23 +1315,23 @@ void init_problem( struct lattice_struct *lattice)
 
         m = drho/(get_LY(lattice)-1);
 
-        *macro_var_ptr++ = 
+        *macro_var_ptr++ =
           ( lattice->param.rho_B[subs] + drho/2.) - m*j;
 
         if(    lattice->param.pressure_n_out[0] == 1
             && lattice->param.velocity_s_in[0]  == 1)
         {
-          lattice->param.rho_out = 
-              ( lattice->param.rho_B[subs] + drho/2.) 
+          lattice->param.rho_out =
+              ( lattice->param.rho_B[subs] + drho/2.)
           - m*( get_LY(lattice)-1);
         }
 
 #if 0
         ( 1.5*( lattice->param.uy_in)
              /( .25*(get_LX(lattice)-2)*(get_LX(lattice)-2)) )
-             *( 
-                .25*( get_LX(lattice)-2)*( get_LX(lattice)-2) 
-              - 
+             *(
+                .25*( get_LX(lattice)-2)*( get_LX(lattice)-2)
+              -
                 (i-.5*( get_LX(lattice)-2)-.5)
                *(i-.5*( get_LX(lattice)-2)-.5)
               )
@@ -1354,10 +1354,10 @@ void init_problem( struct lattice_struct *lattice)
 #else
        if( 0)//i<get_LX(lattice)-1)
        {
-        *macro_var_ptr++ = 
+        *macro_var_ptr++ =
         (
           lattice->param.rho_B[subs]
-			  * ( 1. 
+			  * ( 1.
           - 3.
            *((get_LY(lattice)-2. + 1.*((get_LY(lattice)%2)?(-1.):(1.)))/2.+1.-j)
            *lattice->param.gval[0][1]
@@ -1366,10 +1366,10 @@ void init_problem( struct lattice_struct *lattice)
        }
        else
        {
-        *macro_var_ptr++ = 
+        *macro_var_ptr++ =
         (
           lattice->param.rho_B[subs]
-			  * ( 1. 
+			  * ( 1.
           - 3.
            *((get_LY(lattice)-2. + 1.*((get_LY(lattice)%2)?(-1.):(1.)) )/2.+1.-j)
            *(1.+lattice->param.rho_sigma_out)
@@ -1400,7 +1400,7 @@ void init_problem( struct lattice_struct *lattice)
             *macro_var_ptr++ =
             (
               lattice->param.rho_B[subs]
-			      * ( 1. 
+			      * ( 1.
               - 3.
                *((get_LY(lattice)-2. + 1.*((get_LY(lattice)%2)?(-1.):(1.)) )/2.+1.-j)
                *lattice->param.gval[0][1]
@@ -1439,8 +1439,8 @@ void init_problem( struct lattice_struct *lattice)
           }
           else
           {
-            if( (i-lattice->param.x0)*(i-lattice->param.x0) 
-              + (j-lattice->param.y0)*(j-lattice->param.y0) 
+            if( (i-lattice->param.x0)*(i-lattice->param.x0)
+              + (j-lattice->param.y0)*(j-lattice->param.y0)
               < lattice->param.r0*lattice->param.r0)
             {
               *macro_var_ptr++ = lattice->param.rho_sigma;
@@ -1451,8 +1451,8 @@ void init_problem( struct lattice_struct *lattice)
             }
           }
 #else /* !( INAMURO_SIGMA_COMPONENT) */
-          if( (i-lattice->param.x0)*(i-lattice->param.x0) 
-            + (j-lattice->param.y0)*(j-lattice->param.y0) 
+          if( (i-lattice->param.x0)*(i-lattice->param.x0)
+            + (j-lattice->param.y0)*(j-lattice->param.y0)
             < lattice->param.r0*lattice->param.r0)
           {
             *macro_var_ptr++ = lattice->param.rho_A[subs];
@@ -1468,8 +1468,8 @@ void init_problem( struct lattice_struct *lattice)
         {
           if( i < get_LX(lattice)/2)
           {
-            if( (i-lattice->param.x0/2.)*(i-lattice->param.x0/2.) 
-              + (j-lattice->param.y0)*(j-lattice->param.y0) 
+            if( (i-lattice->param.x0/2.)*(i-lattice->param.x0/2.)
+              + (j-lattice->param.y0)*(j-lattice->param.y0)
               < lattice->param.r0*lattice->param.r0/4.)
             {
               *macro_var_ptr++ = lattice->param.rho_A[subs];
@@ -1481,8 +1481,8 @@ void init_problem( struct lattice_struct *lattice)
           }
           else
           {
-            if( (i-3.*lattice->param.x0/2.)*(i-3.*lattice->param.x0/2.) 
-              + (j-lattice->param.y0)*(j-lattice->param.y0) 
+            if( (i-3.*lattice->param.x0/2.)*(i-3.*lattice->param.x0/2.)
+              + (j-lattice->param.y0)*(j-lattice->param.y0)
               < lattice->param.r0*lattice->param.r0/4.)
             {
               *macro_var_ptr++ = lattice->param.rho_B[subs];
@@ -1646,7 +1646,7 @@ void init_problem( struct lattice_struct *lattice)
 #if INAMURO_SIGMA_COMPONENT
           if( subs==0)
           {
-            *macro_var_ptr++ = 
+            *macro_var_ptr++ =
               lattice->param.rho_A[subs]
             -
             j*( lattice->param.rho_A[subs]
@@ -1674,14 +1674,14 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
           if( NUM_FLUID_COMPONENTS==1)
           {
             // Verify grayscale.
-            if(    (double)r != (double)g 
-                || (double)g != (double)b 
+            if(    (double)r != (double)g
+                || (double)g != (double)b
                 || (double)r != (double)b)
             {
               //printf(
               //  "%s %d >> latman.c: construct_lattice() -- "
               //  "n=%d:  [ r g b] = [ %3u %3u %3u]\n",__FILE__,__LINE__,
-              //  n, (unsigned int)r%256, 
+              //  n, (unsigned int)r%256,
               //  (unsigned int)g%256, (unsigned int)b%256);
             //printf(
             //  "%s %d >> latman.c: construct_lattice() -- "
@@ -1690,7 +1690,7 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
             //  __FILE__,__LINE__, ic_filename);
             }
 
-            *macro_var_ptr++ = 
+            *macro_var_ptr++ =
               get_rho_A(lattice,subs)*((double)((unsigned int)b%256))/255.;
 
           }
@@ -1704,14 +1704,14 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
             else
             {
               // Verify grayscale.
-              if(    (double)r != (double)g 
-                  || (double)g != (double)b 
+              if(    (double)r != (double)g
+                  || (double)g != (double)b
                   || (double)r != (double)b)
               {
                 //printf(
                 //  "%s %d >> latman.c: construct_lattice() -- "
                 //  "n=%d:  [ r g b] = [ %3u %3u %3u]\n",__FILE__,__LINE__,
-                //  n, (unsigned int)r%256, 
+                //  n, (unsigned int)r%256,
                 //  (unsigned int)g%256, (unsigned int)b%256);
               //printf(
               //  "%s %d >> latman.c: construct_lattice() -- "
@@ -1720,7 +1720,7 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
               //  __FILE__,__LINE__, ic_filename);
               }
 
-              *macro_var_ptr++ = 
+              *macro_var_ptr++ =
                 get_rho_sigma(lattice)*(1.-(((double)((unsigned int)b%256))/255.));
             }
 
@@ -1729,13 +1729,13 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
             // Use blue channel for subs 0 and red channel for subs 1.
             if(subs==0)
             {
-              *macro_var_ptr++ = 
+              *macro_var_ptr++ =
                 get_rho_A(lattice,subs)*((double)((unsigned int)b%256))/255.;
 //printf("%s %d >> subs 0, b=%d, rho = %f\n",__FILE__,__LINE__, (unsigned int)b%256, *(macro_var_ptr-1));
             }
             else if( subs==1)
             {
-              *macro_var_ptr++ = 
+              *macro_var_ptr++ =
                 get_rho_B(lattice,subs)*((double)((unsigned int)r%256))/255.;
 //printf("%s %d >> subs 1, r=%d, rho = %f\n",__FILE__,__LINE__, (unsigned int)r%256, *(macro_var_ptr-1));
             }
@@ -1758,7 +1758,7 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
         }
         default:
         {
-          printf( 
+          printf(
             "%s %d >> init_problem() -- Unhandled case  "
             "lattice->param.initial_condition = %d.  "
             "Exiting!\n", __FILE__, __LINE__,
@@ -1789,10 +1789,10 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
       if(    lattice->param.ic_poiseuille
           && !lattice->periodic_x[subs])
       {
-        // Poiseuille flow profile in the x- direction.  Assuming 
-        // one-lattice-unit walls on both sides.  
+        // Poiseuille flow profile in the x- direction.  Assuming
+        // one-lattice-unit walls on both sides.
 
-        // a = .5*(LY-2) .  
+        // a = .5*(LY-2) .
         a     = .5*(get_LY(lattice)-2);
 
         // u_max = (3/2)ux_in
@@ -1808,9 +1808,9 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
 #if 0
         ( 1.5*( lattice->param.ux_in)
              /( .25*(get_LY(lattice)-2)*(get_LY(lattice)-2)) )
-             *( 
-                .25*( get_LY(lattice)-2)*( get_LY(lattice)-2) 
-              - 
+             *(
+                .25*( get_LY(lattice)-2)*( get_LY(lattice)-2)
+              -
                 (j-.5*( get_LY(lattice)-2)-.5)
                *(j-.5*( get_LY(lattice)-2)-.5)
               )
@@ -1832,10 +1832,10 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
       if(    lattice->param.ic_poiseuille
           && !lattice->periodic_y[subs])
       {
-        // Poiseuille flow profile in the vertical/y- direction.  Assuming 
-        // one-lattice-unit walls on both sides.  
+        // Poiseuille flow profile in the vertical/y- direction.  Assuming
+        // one-lattice-unit walls on both sides.
 
-        // a = .5*(LX-2) .  
+        // a = .5*(LX-2) .
         a     = .5*(get_LX(lattice)-2);
 
         // u_max = (3/2)uy_in
@@ -1851,9 +1851,9 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
 #if 0
         ( 1.5*( lattice->param.uy_in)
              /( .25*(get_LX(lattice)-2)*(get_LX(lattice)-2)) )
-             *( 
-                .25*( get_LX(lattice)-2)*( get_LX(lattice)-2) 
-              - 
+             *(
+                .25*( get_LX(lattice)-2)*( get_LX(lattice)-2)
+              -
                 (i-.5*( get_LX(lattice)-2)-.5)
                *(i-.5*( get_LX(lattice)-2)-.5)
               )
@@ -1973,7 +1973,7 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
       f[6] = 0.;
       f[7] = 0.;
       f[8] = 0.;
-          
+
       // ftemp = 0.
       ftemp[0] = 0.;
       ftemp[1] = 0.;
@@ -1984,7 +1984,7 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
       ftemp[6] = 0.;
       ftemp[7] = 0.;
       ftemp[8] = 0.;
-   
+
     }
 
   } /* for( n=0; n<lattice->NumNodes; n++) */
@@ -2041,7 +2041,7 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
 // void destruct_lattice( struct lattice_struct *lattice)
 //##############################################################################
 //
-// D E S T R U C T   L A T T I C E 
+// D E S T R U C T   L A T T I C E
 //
 //  - Destruct lattice.
 //
@@ -2087,7 +2087,7 @@ void sigma_stuff( lattice_ptr lattice)
   int    width01,   width02,   width03,   width04;
 
   // Turn off concentration boundaries when time is up.
-  if(    lattice->param.sigma_stop >= 0 
+  if(    lattice->param.sigma_stop >= 0
       && lattice->time > lattice->param.sigma_stop)
   {
     lattice->param.rho_sigma_in  = 0.;
@@ -2099,17 +2099,17 @@ void sigma_stuff( lattice_ptr lattice)
   if( !( lattice->param.sigma_btc_rate <= 0 || lattice->FlowDir==0))
   {
     if(    lattice->param.sigma_start <= lattice->time
-       &&  ( 
+       &&  (
               lattice->param.sigma_stop  < 0
             ||
               lattice->param.sigma_stop  >= lattice->time
            )
        && !( lattice->time % lattice->param.sigma_btc_rate))
     {
-      btc_time = ( lattice->time 
+      btc_time = ( lattice->time
                  - ((lattice->param.sigma_start>0)
                    ?(lattice->param.sigma_start)
-                   :(0))                           ) 
+                   :(0))                           )
                  / lattice->param.sigma_btc_rate;
 
 //printf("%s (%d) >> btc_time = %d (%d)\n",
@@ -2297,10 +2297,10 @@ void sigma_stuff( lattice_ptr lattice)
            )
        && !( lattice->time % lattice->param.sigma_btc_rate))
     {
-      btc_time = ( lattice->time 
+      btc_time = ( lattice->time
                  - ((lattice->param.sigma_start>0)
                    ?(lattice->param.sigma_start)
-                   :(0))                           ) 
+                   :(0))                           )
                  / lattice->param.sigma_btc_rate;
 
 //printf("%s (%d) >> btc_time = %d (%d)\n",
@@ -2451,18 +2451,18 @@ int get_sizeof_lattice( lattice_ptr lattice)
     + sizeof(struct param_struct)
 
     + lattice->NumNodes
-    * ( 
+    * (
         NUM_FLUID_COMPONENTS*sizeof(struct pdf_struct)
       + NUM_FLUID_COMPONENTS*sizeof(struct macro_vars_struct)
-      + NUM_FLUID_COMPONENTS*sizeof(struct bc_struct) 
+      + NUM_FLUID_COMPONENTS*sizeof(struct bc_struct)
 #if NON_LOCAL_FORCES
-      + NUM_FLUID_COMPONENTS*sizeof(struct force_struct) 
+      + NUM_FLUID_COMPONENTS*sizeof(struct force_struct)
 #endif /* NON_LOCAL_FORCES */
 #if STORE_U_COMPOSITE
-      + sizeof(struct upr_struct) 
+      + sizeof(struct upr_struct)
 #endif /* STORE_U_COMPOSITE */
 #if POROUS_MEDIA || FREED_POROUS_MEDIA
-      + sizeof(struct ns_struct) 
+      + sizeof(struct ns_struct)
 #endif /* POROUS_MEDIA */
       )
     // Include lbmpi_ptr ?
@@ -2493,7 +2493,7 @@ int get_num_active_nodes( lattice_ptr lattice)
   }
 
   return k;
-  
+
 } /* int get_num_active_nodes( lattice_ptr lattice) */
 
 // void check_point_save( lattice_ptr lattice)

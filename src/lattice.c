@@ -19,8 +19,8 @@ int get_ej( lattice_ptr lattice) { return lattice->param.LY-1;}
 int get_NumFrames( lattice_ptr lattice) { return lattice->param.NumFrames;}
 int get_FrameRate( lattice_ptr lattice) { return lattice->param.FrameRate;}
 
-int get_NumNodes( lattice_ptr lattice) 
-{ 
+int get_NumNodes( lattice_ptr lattice)
+{
   if(lattice->NumNodes>0)
   {
     return lattice->NumNodes;
@@ -229,17 +229,17 @@ int make_octave_scripts( lattice_ptr lattice)
 }
 
 #if INAMURO_SIGMA_COMPONENT
-int bc_sigma_walls( lattice_ptr lattice) 
+int bc_sigma_walls( lattice_ptr lattice)
    { return lattice->param.bc_sigma_walls;}
 #endif /* (INAMURO_SIGMA_COMPONENT) */
 
-int get_buoyancy( lattice_ptr lattice) 
+int get_buoyancy( lattice_ptr lattice)
   { return lattice->param.buoyancy;}
 
-int get_buoyancy_flag( lattice_ptr lattice) 
+int get_buoyancy_flag( lattice_ptr lattice)
   { return ( lattice->param.buoyancy!=0)?(1):(0); }
 
-int get_buoyancy_sign( lattice_ptr lattice) 
+int get_buoyancy_sign( lattice_ptr lattice)
   { return ( lattice->param.buoyancy!=0)
           ?((lattice->param.buoyancy>0)?(1):(-1))
           :(0); }

@@ -100,7 +100,7 @@ struct rgb_quad
 
 main( int argc, int **argv)
 {
-  int **spy, 
+  int **spy,
 
       height, width,
 
@@ -190,7 +190,7 @@ main( int argc, int **argv)
 // read_bmp( char *filename)
 //##############################################################################
 //
-// R E A D   B M P 
+// R E A D   B M P
 //
 read_bmp( char *filename)
 {
@@ -315,7 +315,7 @@ read_bmp( char *filename)
         process_exit(1);
       }
 #if 0
-      printf("%4d: [ \"%c\" \"%c\" \"%c\"] (\"%c\")\n", 
+      printf("%4d: [ \"%c\" \"%c\" \"%c\"] (\"%c\")\n",
         i, rgb.Red, rgb.Green, rgb.Blue, rgb.Reserved );
 #else
       printf("%4d: #", i);
@@ -323,9 +323,9 @@ read_bmp( char *filename)
       printf("%1x%1x", (rgb.Green & 0xf0)>>4, (rgb.Green & 0x0f));
       printf("%1x%1x", (rgb.Blue & 0xf0)>>4, (rgb.Blue & 0x0f));
       printf(" ");
-      printf("( %3d, %3d, %3d)", 
-        (rgb.Red+256)%256, 
-        (rgb.Green+256)%256, 
+      printf("( %3d, %3d, %3d)",
+        (rgb.Red+256)%256,
+        (rgb.Green+256)%256,
         (rgb.Blue+256)%256   );
       printf("\n");
 #endif
@@ -342,7 +342,7 @@ read_bmp( char *filename)
   bitcount_ptr = (short int*)bmih.biBitCount;
 
   // Bytes per row of the bitmap.
-  bytes_per_row = 
+  bytes_per_row =
     ((int)ceil(( (((double)width)*((double)depth))/8.)));
 
   // Bitmaps pad rows to preserve 4-byte boundaries.
@@ -418,8 +418,8 @@ read_bmp( char *filename)
     printf(" |");
   }
 #endif
-    if( !(n%(bytes_per_row+pad))) 
-    { 
+    if( !(n%(bytes_per_row+pad)))
+    {
       if( width <= 5 && width <= 10) { printf("\n");}
       m++;
     }
@@ -435,7 +435,7 @@ read_bmp( char *filename)
   printf("%d rows.\n", m);
   printf("%d bytes containing data per row.\n", bytes_per_row);
   printf("%d bytes of padding per row.\n", pad);
-  printf("( %d + %d) * %d = %d\n", 
+  printf("( %d + %d) * %d = %d\n",
     bytes_per_row, pad, m, (bytes_per_row+pad)*m);
   printf("\n");
 
@@ -460,7 +460,7 @@ read_bmp( char *filename)
 // spy_bmp( char *filename, int ***spy)
 //##############################################################################
 //
-// S P Y   B M P 
+// S P Y   B M P
 //
 spy_bmp( char *filename, int ***spy, int *arg_height, int *arg_width)
 {
@@ -545,7 +545,7 @@ spy_bmp( char *filename, int ***spy, int *arg_height, int *arg_width)
 #endif
 
   // Bytes per row of the bitmap.
-  bytes_per_row = 
+  bytes_per_row =
     ((int)ceil(( (((double)(width))*((double)(depth)))/8.)));
 
   // Bitmaps pad rows to preserve 4-byte boundaries.
@@ -563,19 +563,19 @@ spy_bmp( char *filename, int ***spy, int *arg_height, int *arg_width)
     {
       case 1: // Monochrome.
         if( i < width) { (*spy)[j][i] = ( (b & 0x80) == 0); }
-        i++;    
+        i++;
         if( i < width) { (*spy)[j][i] = ( (b & 0x40) == 0); }
-        i++;    
+        i++;
         if( i < width) { (*spy)[j][i] = ( (b & 0x20) == 0); }
-        i++;    
+        i++;
         if( i < width) { (*spy)[j][i] = ( (b & 0x10) == 0); }
-        i++;    
+        i++;
         if( i < width) { (*spy)[j][i] = ( (b & 0x08) == 0); }
-        i++;    
+        i++;
         if( i < width) { (*spy)[j][i] = ( (b & 0x04) == 0); }
-        i++;    
+        i++;
         if( i < width) { (*spy)[j][i] = ( (b & 0x02) == 0); }
-        i++;    
+        i++;
         if( i < width) { (*spy)[j][i] = ( (b & 0x01) == 0); }
         i++;
         break;
@@ -593,8 +593,8 @@ spy_bmp( char *filename, int ***spy, int *arg_height, int *arg_width)
         break;
 
       case 24: // 24-bit colors.
-        if( i < 3*(width)) 
-        { 
+        if( i < 3*(width))
+        {
 //printf("(*spy)[%d][%d] = %d -> ", j, (int)floor((double)i/3.),
 //    (*spy)[j][(int)floor((double)i/3.)]);
           (*spy)[j][(int)floor((double)i/3.)]  |= ( (b&0xff) != 255);
