@@ -797,7 +797,21 @@ void read_params( lattice_ptr lattice, const char *infile)
       printf("%s %d >> ic_poiseuille = %d\n",__FILE__,__LINE__, 
         lattice->param.ic_poiseuille);
     }
+    // Including mispelling for backward compatibility.
+    else if( !strncmp(param_label,"ic_poisseuille",80))
+    {
+      fscanf( in, "%d\n", &(lattice->param.ic_poiseuille));
+      printf("%s %d >> ic_poiseuille = %d\n",__FILE__,__LINE__, 
+        lattice->param.ic_poiseuille);
+    }
     else if( !strncmp(param_label,"bc_poiseuille",80))
+    {
+      fscanf( in, "%d\n", &(lattice->param.bc_poiseuille));
+      printf("%s %d >> bc_poiseuille = %d\n",__FILE__,__LINE__, 
+        lattice->param.bc_poiseuille);
+    }
+    // Including mispelling for backward compatibility.
+    else if( !strncmp(param_label,"bc_poisseuille",80))
     {
       fscanf( in, "%d\n", &(lattice->param.bc_poiseuille));
       printf("%s %d >> bc_poiseuille = %d\n",__FILE__,__LINE__, 
@@ -2331,7 +2345,7 @@ void dump_params( struct lattice_struct *lattice)
   fprintf( o, "dump_force           %d\n", lattice->param.dump_force        );
   fprintf( o, "dump_vor             %d\n", lattice->param.dump_vor          );
   fprintf( o, "do_user_stuff        %d\n", lattice->param.do_user_stuff     );
-  fprintf( o, "out_path             %d\n", lattice->param.out_path          );
+  fprintf( o, "out_path             %s\n", lattice->param.out_path          );
   fprintf( o, "make_octave_scripts  %d\n", lattice->param.make_octave_scripts);
 
   fclose(o);

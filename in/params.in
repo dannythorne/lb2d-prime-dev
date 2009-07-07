@@ -44,8 +44,8 @@ Dl                    2.
 Dt                    0.50
 slice_x               -1 
 slice_y               -1 
-ic_poisseuille         0
-bc_poisseuille         0
+ic_poiseuille          0
+bc_poiseuille          0
 bc_slip_north          0
 bc_sigma_slip          0
 bc_sigma_walls         0
