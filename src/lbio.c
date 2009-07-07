@@ -5974,7 +5974,8 @@ void private_slice(
     fprintf( o, "i0 = %d;\n", i0);
     fprintf( o, "i1 = %d;\n", i1);
     fprintf( o, "disp(sprintf('  [ i0 i1]   = [ %%d %%d]',i0,i1));\n");
-    fprintf( o, "H = i1 - i0;%% + 1;\n");
+    fprintf( o, "%%XXX H = i1 - i0;%% + 1;\n");
+    fprintf( o, "H = i1 - i0 - 1; %% Assuming solids on both sides.\n");
     fprintf( o, "disp(sprintf('  H          = %%d', H));\n");
     fprintf( o, "R = H/2;\n");
     fprintf( o, "disp(sprintf('  R = H/2    = %%20.17f', R));\n");
@@ -5988,7 +5989,7 @@ void private_slice(
     //fprintf( o, "disp(sprintf('  mu         = %%20.17f', mu));\n");
     fprintf( o, "gvalval = %20.17f;\n",
       lattice->param.gval[subs][1]/lattice->param.tau[subs]);
-    fprintf( o, "disp(sprintf('  gvalval  = %%20.17f', gvalval));\n");
+    fprintf( o, "disp(sprintf('  gvalval    = %%20.17f', gvalval));\n");
     fprintf( o,
       "i = [i0:1:i1];\n"
       "ucalc = "
@@ -6002,8 +6003,11 @@ void private_slice(
     fprintf( o, "figure;\n");
     fprintf( o, "hold on;\n");
     fprintf( o, "plot( i, ucalc, 'k');\n");
-    fprintf( o, "plot( i, u_y_slice%02d, 'bo');", subs);
+    fprintf( o, "plot( i, u_y_slice%02d, 'bo');\n", subs);
     fprintf( o, "title(sprintf('LB results overlaying analytical Poiseuille profile, norm(diff)=%%20.17f',norm(u_y_slice%02d-ucalc)));\n", subs);
+    fprintf( o, "xlims = get(gca,'xlim'); dx = xlims(2)-xlims(1);");
+    fprintf( o, "ylims = get(gca,'ylim'); dy = ylims(2)-ylims(1);");
+    fprintf( o, "axis( [ xlims(1)-.05*dx xlims(2)+.05*dx ylims(1) ylims(2)]);");
     fprintf( o, "hold off;\n");
   } /* if( lattice->param.gval[subs][0] == 0 && lattice->param.gval... */
 
@@ -6016,7 +6020,7 @@ void private_slice(
     fprintf( o, "j0 = %d;\n", j0);
     fprintf( o, "j1 = %d;\n", j1);
     fprintf( o, "disp(sprintf('  [ j0 j1]   = [ %%d %%d]',j0,j1));\n");
-    fprintf( o, "H = j1 - j0 + 1;\n");
+    fprintf( o, "H = j1 - j0 - 1; %% Assuming solids on both sides.\n");
     fprintf( o, "disp(sprintf('  H          = %%d', H));\n");
     fprintf( o, "R = H/2;\n");
     fprintf( o, "disp(sprintf('  R = H/2    = %%20.17f', R));\n");
@@ -6029,7 +6033,7 @@ void private_slice(
     //fprintf( o, "disp(sprintf('  mu         = %%20.17f', mu));\n");
     fprintf( o, "gvalval = %20.17f;\n",
       lattice->param.gval[subs][0]/lattice->param.tau[subs]);
-    fprintf( o, "disp(sprintf('  gvalval  = %%20.17f', gvalval));\n");
+    fprintf( o, "disp(sprintf('  gvalval    = %%20.17f', gvalval));\n");
     fprintf( o,
       "j = [j0:1:j1];"
       "ucalc = "
@@ -6044,8 +6048,11 @@ void private_slice(
     fprintf( o, "figure;\n");
     fprintf( o, "hold on;\n");
     fprintf( o, "plot( j, ucalc, 'k');\n");
-    fprintf( o, "plot( u_x_slice%02d, 'bo');", subs);
+    fprintf( o, "plot( u_x_slice%02d, 'bo');\n", subs);
     fprintf( o, "title(sprintf('LB results overlaying analytical Poiseuille profile, norm(diff)=%%20.17f',norm(u_x_slice%02d-ucalc)));\n", subs);
+    fprintf( o, "xlims = get(gca,'xlim'); dx = xlims(2)-xlims(1);");
+    fprintf( o, "ylims = get(gca,'ylim'); dy = ylims(2)-ylims(1);");
+    fprintf( o, "axis( [ xlims(1) xlims(2) ylims(1)-.05*dy ylims(2)+.05*dy]);");
     fprintf( o, "hold off;\n");
     //printf( o, "figure;\n");
     //fprintf( o, "plot( ucalc(j0+1:10:10*j1+1) - u_x_slice%02d, 'r');", subs);
