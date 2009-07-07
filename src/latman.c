@@ -846,14 +846,14 @@ void init_problem( struct lattice_struct *lattice)
 #endif /* WRITE_CHEN_DAT_FILES */
 
 #if 0 // Want to allow mix of velocity and pressure boundaries.
- if( lattice->param.ic_poisseuille)
+ if( lattice->param.ic_poiseuille)
  {
    if( lattice->param.uy_in != lattice->param.uy_out)
    {
      printf("\n");
      printf("\n");
      printf("%s (%d) -- ERROR: "
-       "Need uy_in == uy_out to initialize with poisseuille profile.  "
+       "Need uy_in == uy_out to initialize with poiseuille profile.  "
        "Exiting.\n",
        __FILE__,__LINE__);
      printf("\n");
@@ -862,7 +862,7 @@ void init_problem( struct lattice_struct *lattice)
 
    } /* if( lattice->param.uy_in != lattice->param.uy_out) */
 
- } /* if( lattice->param.ic_poisseuille) */
+ } /* if( lattice->param.ic_poiseuille) */
 #endif
 
  for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
@@ -910,12 +910,12 @@ void init_problem( struct lattice_struct *lattice)
 #if INAMURO_SIGMA_COMPONENT
           if( subs==0)
           {
-      if( 1 && lattice->param.ic_poisseuille)
+      if( 1 && lattice->param.ic_poiseuille)
       {
         if( !lattice->periodic_x[subs])
         {
         // Density gradient corresponding to the desired velocity.
-        // Based on formula for poisseuille velocity profile
+        // Based on formula for poiseuille velocity profile
         //
         //   u(x) = K*( a^2 - x^2)
         //
@@ -972,7 +972,7 @@ void init_problem( struct lattice_struct *lattice)
         else if( !lattice->periodic_y[subs])
         {
         // Density gradient corresponding to the desired velocity.
-        // Based on formula for poisseuille velocity profile
+        // Based on formula for poiseuille velocity profile
         //
         //   u(x) = K*( a^2 - x^2)
         //
@@ -1031,9 +1031,9 @@ void init_problem( struct lattice_struct *lattice)
         {
         }
 
-      } /* if( lattice->param.ic_poisseuille) */
+      } /* if( lattice->param.ic_poiseuille) */
 
-      else // !lattice->param.ic_poisseuille
+      else // !lattice->param.ic_poiseuille
       {
         if( hydrostatic( lattice))
         {
@@ -1150,7 +1150,7 @@ void init_problem( struct lattice_struct *lattice)
         {
           *macro_var_ptr++ = lattice->param.rho_A[subs];
         }
-      } /* if( lattice->param.ic_poisseuille) else */
+      } /* if( lattice->param.ic_poiseuille) else */
 
           }
           else // subs==1
@@ -1215,12 +1215,12 @@ void init_problem( struct lattice_struct *lattice)
 #if INAMURO_SIGMA_COMPONENT
           if( subs==0)
           {
-      if( 1 && lattice->param.ic_poisseuille)
+      if( 1 && lattice->param.ic_poiseuille)
       {
         if( !lattice->periodic_x[subs])
         {
         // Density gradient corresponding to the desired velocity.
-        // Based on formula for poisseuille velocity profile
+        // Based on formula for poiseuille velocity profile
         //
         //   u(x) = K*( a^2 - x^2)
         //
@@ -1277,7 +1277,7 @@ void init_problem( struct lattice_struct *lattice)
         else if( !lattice->periodic_y[subs])
         {
         // Density gradient corresponding to the desired velocity.
-        // Based on formula for poisseuille velocity profile
+        // Based on formula for poiseuille velocity profile
         //
         //   u(x) = K*( a^2 - x^2)
         //
@@ -1345,9 +1345,9 @@ void init_problem( struct lattice_struct *lattice)
         {
         }
 
-      } /* if( lattice->param.ic_poisseuille) */
+      } /* if( lattice->param.ic_poiseuille) */
 
-      else // !lattice->param.ic_poisseuille
+      else // !lattice->param.ic_poiseuille
       {
 #if 0
         *macro_var_ptr++ = lattice->param.rho_B[subs];
@@ -1379,7 +1379,7 @@ void init_problem( struct lattice_struct *lattice)
        }
 #endif
 
-      } /* if( lattice->param.ic_poisseuille) else */
+      } /* if( lattice->param.ic_poiseuille) else */
 
           }
           else // subs==1
@@ -1786,10 +1786,10 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
     {
 #if 1
       // u_x
-      if(    lattice->param.ic_poisseuille
+      if(    lattice->param.ic_poiseuille
           && !lattice->periodic_x[subs])
       {
-        // Poisseuille flow profile in the x- direction.  Assuming 
+        // Poiseuille flow profile in the x- direction.  Assuming 
         // one-lattice-unit walls on both sides.  
 
         // a = .5*(LY-2) .  
@@ -1829,10 +1829,10 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
       }
 
       // u_y
-      if(    lattice->param.ic_poisseuille
+      if(    lattice->param.ic_poiseuille
           && !lattice->periodic_y[subs])
       {
-        // Poisseuille flow profile in the vertical/y- direction.  Assuming 
+        // Poiseuille flow profile in the vertical/y- direction.  Assuming 
         // one-lattice-unit walls on both sides.  
 
         // a = .5*(LX-2) .  
@@ -1861,9 +1861,9 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
 #endif
 //printf("%s (%d) -- %d %f\n", __FILE__, __LINE__, i, *(macro_var_ptr-1));
 
-      } /* if( lattice->param.ic_poisseuille) */
+      } /* if( lattice->param.ic_poiseuille) */
 
-      else // !lattice->param.ic_poisseuille
+      else // !lattice->param.ic_poiseuille
       {
 #if INITIALIZE_WITH_UY_IN
         *macro_var_ptr++ = lattice->param.uy_in;
@@ -1871,7 +1871,7 @@ printf("%s %d >> %d: rgb = (%d,%d,%d)\n",__FILE__,__LINE__, subs,
         *macro_var_ptr++ = 0.;
 #endif /* INITIALIZE_WITH_UY_IN */
 
-      } /* if( lattice->param.ic_poisseuille) else */
+      } /* if( lattice->param.ic_poiseuille) else */
 
 #else
       *macro_var_ptr++ = ( lattice->param.ux_in + lattice->param.ux_out)/2.;

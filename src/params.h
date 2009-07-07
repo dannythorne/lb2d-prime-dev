@@ -73,8 +73,8 @@ void assign_default_param_vals( lattice_ptr lattice)
   lattice->param.ns = 0.;
   lattice->param.slice_x = 0;
   lattice->param.slice_y = 0;
-  lattice->param.ic_poisseuille = 0;
-  lattice->param.bc_poisseuille = 0;
+  lattice->param.ic_poiseuille = 0;
+  lattice->param.bc_poiseuille = 0;
   lattice->param.bc_slip_north = 0;
 #if INAMURO_SIGMA_COMPONENT
   lattice->param.bc_sigma_slip = 0;
@@ -791,17 +791,17 @@ void read_params( lattice_ptr lattice, const char *infile)
       printf("%s %d >> slice_y = %d\n",__FILE__,__LINE__, 
         lattice->param.slice_y);
     }
-    else if( !strncmp(param_label,"ic_poisseuille",80))
+    else if( !strncmp(param_label,"ic_poiseuille",80))
     {
-      fscanf( in, "%d\n", &(lattice->param.ic_poisseuille));
-      printf("%s %d >> ic_poisseuille = %d\n",__FILE__,__LINE__, 
-        lattice->param.ic_poisseuille);
+      fscanf( in, "%d\n", &(lattice->param.ic_poiseuille));
+      printf("%s %d >> ic_poiseuille = %d\n",__FILE__,__LINE__, 
+        lattice->param.ic_poiseuille);
     }
-    else if( !strncmp(param_label,"bc_poisseuille",80))
+    else if( !strncmp(param_label,"bc_poiseuille",80))
     {
-      fscanf( in, "%d\n", &(lattice->param.bc_poisseuille));
-      printf("%s %d >> bc_poisseuille = %d\n",__FILE__,__LINE__, 
-        lattice->param.bc_poisseuille);
+      fscanf( in, "%d\n", &(lattice->param.bc_poiseuille));
+      printf("%s %d >> bc_poiseuille = %d\n",__FILE__,__LINE__, 
+        lattice->param.bc_poiseuille);
     }
     else if( !strncmp(param_label,"bc_slip_north",80))
     {
@@ -1658,8 +1658,8 @@ void read_params( lattice_ptr lattice, const char *infile)
     skip_label( in); fscanf( in, "%lf",&( lattice->param.ns)             );
     skip_label( in); fscanf( in, "%d", &( lattice->param.slice_x       ) );
     skip_label( in); fscanf( in, "%d", &( lattice->param.slice_y       ) );
-    skip_label( in); fscanf( in, "%d", &( lattice->param.ic_poisseuille) );
-    skip_label( in); fscanf( in, "%d", &( lattice->param.bc_poisseuille) );
+    skip_label( in); fscanf( in, "%d", &( lattice->param.ic_poiseuille) );
+    skip_label( in); fscanf( in, "%d", &( lattice->param.bc_poiseuille) );
     skip_label( in); fscanf( in, "%d", &( lattice->param.bc_slip_north ) );
 #if INAMURO_SIGMA_COMPONENT
     skip_label( in); fscanf( in, "%d", &( lattice->param.bc_sigma_slip ) );
@@ -2188,8 +2188,8 @@ void dump_params( struct lattice_struct *lattice)
   fprintf( o, "ns                   %f\n", lattice->param.ns             );
   fprintf( o, "slice_x              %d\n", lattice->param.slice_x        );
   fprintf( o, "slice_y              %d\n", lattice->param.slice_y        );
-  fprintf( o, "ic_poisseuille       %d\n", lattice->param.ic_poisseuille );
-  fprintf( o, "bc_poisseuille       %d\n", lattice->param.bc_poisseuille );
+  fprintf( o, "ic_poiseuille        %d\n", lattice->param.ic_poiseuille  );
+  fprintf( o, "bc_poiseuille        %d\n", lattice->param.bc_poiseuille  );
   fprintf( o, "bc_slip_north        %d\n", lattice->param.bc_slip_north  );
 #if INAMURO_SIGMA_COMPONENT
   fprintf( o, "bc_sigma_slip        %d\n", lattice->param.bc_sigma_slip  );

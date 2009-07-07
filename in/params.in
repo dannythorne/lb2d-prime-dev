@@ -1,11 +1,11 @@
-LX                     23
+LX                     17
 LY                     17
 characteristic_length  31
 NumFrames              10
-FrameRate              2000
+FrameRate              1000
 tau[0]                1.
 gval_x[0]             0.
-gval_y[0]            -.01
+gval_y[0]            -.0000001
 end_grav[0]           0
 tau[1]                1.
 gval_x[1]             0.00
@@ -59,8 +59,8 @@ velocity_n_out[0]      0
 velocity_s_out[0]      0
 pressure_e_in[0]       0
 pressure_w_in[0]       0
-pressure_e_out[0]      1
-pressure_w_out[0]      1
+pressure_e_out[0]      0
+pressure_w_out[0]      0
 velocity_e_in[0]       0
 velocity_w_in[0]       0
 velocity_e_out[0]      0
@@ -91,8 +91,8 @@ constflx_n_out         0
 constflx_s_out         0
 constcon_e_in          0
 constcon_w_in          0
-constcon_e_out         1
-constcon_w_out         1
+constcon_e_out         0
+constcon_w_out         0
 constflx_e_in          0
 constflx_w_in          0
 constflx_e_out         0

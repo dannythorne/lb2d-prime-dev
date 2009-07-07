@@ -808,7 +808,7 @@ void bcs( lattice_ptr lattice)
 //------------------------------------------------------------------[ TEST ]----
 #endif /* RHO0_TEST */
     //u = ((subs==1)?(-1):(1))*lattice->param.uy_in;
-    if( lattice->param.bc_poisseuille)
+    if( lattice->param.bc_poiseuille)
     {
       i = 0;
     }
@@ -823,7 +823,7 @@ void bcs( lattice_ptr lattice)
      {
       //u = u_in[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       //u = 0.;
-      if( lattice->param.bc_poisseuille)
+      if( lattice->param.bc_poiseuille)
       {
         u = ( 1.5*( lattice->param.uy_in)
                  /( .25*(lattice->param.LX-2)*(lattice->param.LX-2)) )
@@ -878,7 +878,7 @@ void bcs( lattice_ptr lattice)
      }
      else
      {
-        if( lattice->param.bc_poisseuille) { i++;}
+        if( lattice->param.bc_poiseuille) { i++;}
 #if RHO0_TEST
 //------------------------------------------------------------------[ TEST ]----
         rho0 += ( sizeof(struct macro_vars_struct)/8);
@@ -892,7 +892,7 @@ void bcs( lattice_ptr lattice)
     } /* while( ftemp < ftemp_end) */
 
 #if 0
-    if( lattice->param.bc_poisseuille)
+    if( lattice->param.bc_poiseuille)
     {
       // Fix corners
       ftemp = lattice->pdf[subs][lattice->NumNodes-lattice->param.LX].ftemp;
@@ -925,7 +925,7 @@ void bcs( lattice_ptr lattice)
 //------------------------------------------------------------------[ TEST ]----
 #endif /* RHO0_TEST */
     //u = ((subs==1)?(-1):(1))*lattice->param.uy_in;
-    if( lattice->param.bc_poisseuille)
+    if( lattice->param.bc_poiseuille)
     {
       i = 0;
     }
@@ -940,7 +940,7 @@ void bcs( lattice_ptr lattice)
      {
       //u = u_in[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       //u = 0.;
-      if( lattice->param.bc_poisseuille)
+      if( lattice->param.bc_poiseuille)
       {
         u = ( 1.5*( lattice->param.uy_in)
                  /( .25*(lattice->param.LX-2)*(lattice->param.LX-2)) )
@@ -993,7 +993,7 @@ void bcs( lattice_ptr lattice)
      }
      else
      {
-        if( lattice->param.bc_poisseuille) { i++;}
+        if( lattice->param.bc_poiseuille) { i++;}
 #if RHO0_TEST
 //------------------------------------------------------------------[ TEST ]----
         rho0 += ( sizeof(struct macro_vars_struct)/8);
@@ -1007,7 +1007,7 @@ void bcs( lattice_ptr lattice)
     } /* while( ftemp < ftemp_end) */
 
 #if 0
-    if( lattice->param.bc_poisseuille)
+    if( lattice->param.bc_poiseuille)
     {
       // Fix corners
       ftemp = lattice->pdf[subs][0].ftemp;
@@ -1041,7 +1041,7 @@ void bcs( lattice_ptr lattice)
 //------------------------------------------------------------------[ TEST ]----
 #endif /* RHO0_TEST */
     //u = ((subs==1)?(-1):(1))*lattice->param.uy_out;
-    if( lattice->param.bc_poisseuille)
+    if( lattice->param.bc_poiseuille)
     {
       i = 0;
     }
@@ -1056,7 +1056,7 @@ void bcs( lattice_ptr lattice)
      {
       //u = u_out[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       //u = 0.;
-      if( lattice->param.bc_poisseuille)
+      if( lattice->param.bc_poiseuille)
       {
         u = ( 1.5*( lattice->param.uy_out)
                  /( .25*(lattice->param.LX-2)*(lattice->param.LX-2)) )
@@ -1121,7 +1121,7 @@ void bcs( lattice_ptr lattice)
      }
      else
      {
-        if( lattice->param.bc_poisseuille) { i++;}
+        if( lattice->param.bc_poiseuille) { i++;}
 #if RHO0_TEST
 //------------------------------------------------------------------[ TEST ]----
         rho0 += ( sizeof(struct macro_vars_struct)/8);
@@ -1131,12 +1131,12 @@ void bcs( lattice_ptr lattice)
      }
 
      bc_type++;
-     if( !( lattice->param.bc_poisseuille)) { i++;}
+     if( !( lattice->param.bc_poiseuille)) { i++;}
 
     } /* while( ftemp < ftemp_end) */
 
 #if 0
-    if( lattice->param.bc_poisseuille)
+    if( lattice->param.bc_poiseuille)
     {
       // Fix corners
       ftemp = lattice->pdf[subs][lattice->NumNodes-lattice->param.LX].ftemp;
@@ -1169,7 +1169,7 @@ void bcs( lattice_ptr lattice)
 //------------------------------------------------------------------[ TEST ]----
 #endif /* RHO0_TEST */
     //u = ((subs==1)?(-1):(1))*lattice->param.uy_out;
-    if( lattice->param.bc_poisseuille)
+    if( lattice->param.bc_poiseuille)
     {
       i = 0;
     }
@@ -1184,7 +1184,7 @@ void bcs( lattice_ptr lattice)
      {
       //u = u_out[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       //u = 0.;
-      if( lattice->param.bc_poisseuille)
+      if( lattice->param.bc_poiseuille)
       {
         u = ( 1.5*( lattice->param.uy_out)
                  /( .25*(lattice->param.LX-2)*(lattice->param.LX-2)) )
@@ -1248,7 +1248,7 @@ void bcs( lattice_ptr lattice)
      }
      else
      {
-        if( lattice->param.bc_poisseuille) { i++;}
+        if( lattice->param.bc_poiseuille) { i++;}
 #if RHO0_TEST
 //------------------------------------------------------------------[ TEST ]----
         rho0 += ( sizeof(struct macro_vars_struct)/8);
@@ -1258,12 +1258,12 @@ void bcs( lattice_ptr lattice)
      }
 
      bc_type++;
-     if( !( lattice->param.bc_poisseuille)) { i++;}
+     if( !( lattice->param.bc_poiseuille)) { i++;}
 
     } /* while( ftemp < ftemp_end) */
 
 #if 0
-    if( lattice->param.bc_poisseuille)
+    if( lattice->param.bc_poiseuille)
     {
       // Fix corners
       ftemp = lattice->pdf[subs][0].ftemp;
@@ -1777,7 +1777,7 @@ void bcs( lattice_ptr lattice)
 //------------------------------------------------------------------[ TEST ]----
 #endif /* RHO0_TEST */
     //u = ((subs==1)?(-1):(1))*lattice->param.ux_in;
-    if( lattice->param.bc_poisseuille)
+    if( lattice->param.bc_poiseuille)
     {
       i = 0;
     }
@@ -1792,7 +1792,7 @@ void bcs( lattice_ptr lattice)
      {
       //u = u_in[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       //u = 0.;
-      if( lattice->param.bc_poisseuille)
+      if( lattice->param.bc_poiseuille)
       {
         u = ( 1.5*( lattice->param.ux_in)
                  /( .25*(lattice->param.LY-2)*(lattice->param.LY-2)) )
@@ -1847,7 +1847,7 @@ void bcs( lattice_ptr lattice)
      }
      else
      {
-        if( lattice->param.bc_poisseuille) { i++;}
+        if( lattice->param.bc_poiseuille) { i++;}
 #if RHO0_TEST
 //------------------------------------------------------------------[ TEST ]----
         rho0 += ( sizeof(struct macro_vars_struct)/8)*lattice->param.LX;
@@ -1861,7 +1861,7 @@ void bcs( lattice_ptr lattice)
     } /* while( ftemp < ftemp_end) */
 
 #if 0
-    if( lattice->param.bc_poisseuille)
+    if( lattice->param.bc_poiseuille)
     {
       // Fix corners
       ftemp = lattice->pdf[subs][lattice->NumNodes-lattice->param.LX].ftemp;
@@ -1896,7 +1896,7 @@ void bcs( lattice_ptr lattice)
 //------------------------------------------------------------------[ TEST ]----
 #endif /* RHO0_TEST */
     //u = ((subs==1)?(-1):(1))*lattice->param.ux_in;
-    if( lattice->param.bc_poisseuille)
+    if( lattice->param.bc_poiseuille)
     {
       i = 0;
     }
@@ -1911,7 +1911,7 @@ void bcs( lattice_ptr lattice)
      {
       //u = u_in[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       //u = 0.;
-      if( lattice->param.bc_poisseuille)
+      if( lattice->param.bc_poiseuille)
       {
         u = ( 1.5*( lattice->param.ux_in)
                  /( .25*( lattice->param.LY-2)*( lattice->param.LY-2)) )
@@ -1982,7 +1982,7 @@ void bcs( lattice_ptr lattice)
      }
      else
      {
-        if( lattice->param.bc_poisseuille) { i++;}
+        if( lattice->param.bc_poiseuille) { i++;}
 #if RHO0_TEST
 //------------------------------------------------------------------[ TEST ]----
         rho0 += ( sizeof(struct macro_vars_struct)/8)*lattice->param.LX;
@@ -1998,7 +1998,7 @@ void bcs( lattice_ptr lattice)
     } /* while( ftemp < ftemp_end) */
 
 #if 0
-    if( lattice->param.bc_poisseuille)
+    if( lattice->param.bc_poiseuille)
     {
       // Fix corners
       ftemp = lattice->pdf[subs][0].ftemp;
@@ -2031,7 +2031,7 @@ void bcs( lattice_ptr lattice)
 //------------------------------------------------------------------[ TEST ]----
 #endif /* RHO0_TEST */
     //u = ((subs==1)?(-1):(1))*lattice->param.ux_out;
-    if( lattice->param.bc_poisseuille)
+    if( lattice->param.bc_poiseuille)
     {
       i = 0;
     }
@@ -2046,7 +2046,7 @@ void bcs( lattice_ptr lattice)
      {
       //u = u_out[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       //u = 0.;
-      if( lattice->param.bc_poisseuille)
+      if( lattice->param.bc_poiseuille)
       {
         u = ( 1.5*( lattice->param.ux_out)
                  /( .25*(lattice->param.LY-2)*(lattice->param.LY-2)) )
@@ -2119,7 +2119,7 @@ void bcs( lattice_ptr lattice)
      }
      else
      {
-        if( lattice->param.bc_poisseuille) { i++;}
+        if( lattice->param.bc_poiseuille) { i++;}
 #if RHO0_TEST
 //------------------------------------------------------------------[ TEST ]----
         rho0 += ( sizeof(struct macro_vars_struct)/8)*lattice->param.LX;
@@ -2133,7 +2133,7 @@ void bcs( lattice_ptr lattice)
     } /* while( ftemp < ftemp_end) */
 
 #if 0
-    if( lattice->param.bc_poisseuille)
+    if( lattice->param.bc_poiseuille)
     {
       // Fix corners
       ftemp = lattice->pdf[subs][lattice->NumNodes-lattice->param.LX].ftemp;
@@ -2166,7 +2166,7 @@ void bcs( lattice_ptr lattice)
 //------------------------------------------------------------------[ TEST ]----
 #endif /* RHO0_TEST */
     //u = ((subs==1)?(-1):(1))*lattice->param.ux_out;
-    if( lattice->param.bc_poisseuille)
+    if( lattice->param.bc_poiseuille)
     {
       i = 0;
     }
@@ -2181,7 +2181,7 @@ void bcs( lattice_ptr lattice)
      {
       //u = u_out[((double)rand()/(double)RAND_MAX<.5)?(0):(1)][subs];
       //u = 0.;
-      if( lattice->param.bc_poisseuille)
+      if( lattice->param.bc_poiseuille)
       {
         u = ( 1.5*( lattice->param.ux_out)
                  /( .25*(lattice->param.LY-2)*(lattice->param.LY-2)) )
@@ -2234,7 +2234,7 @@ void bcs( lattice_ptr lattice)
      }
      else
      {
-        if( lattice->param.bc_poisseuille) { i++;}
+        if( lattice->param.bc_poiseuille) { i++;}
 #if RHO0_TEST
 //------------------------------------------------------------------[ TEST ]----
         rho0 += ( sizeof(struct macro_vars_struct)/8)*lattice->param.LX;
@@ -2248,7 +2248,7 @@ void bcs( lattice_ptr lattice)
     } /* while( ftemp < ftemp_end) */
 
 #if 0
-    if( lattice->param.bc_poisseuille)
+    if( lattice->param.bc_poiseuille)
     {
       // Fix corners
       ftemp = lattice->pdf[subs][0].ftemp;

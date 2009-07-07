@@ -5962,14 +5962,14 @@ void private_slice(
 #endif /* (STORE_U_COMPOSITE) */
 
 #if 1
-  // Compare with analytical poissuille flow profile.
+  // Compare with analytical poiseuille flow profile.
  for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
  {
   if(    lattice->param.gval[subs][0] == 0 
       && lattice->param.gval[subs][1] != 0 )
   {
-    // Poisseuille in y direction.
-    fprintf( o, "disp(sprintf('\\nPoisseuille in y direction:'));\n");
+    // Poiseuille in y direction.
+    fprintf( o, "disp(sprintf('\\nPoiseuille in y direction:'));\n");
     fprintf( o, "figure;\n");
     fprintf( o, "i0 = %d;\n", i0);
     fprintf( o, "i1 = %d;\n", i1);
@@ -6010,8 +6010,8 @@ void private_slice(
   else if(    lattice->param.gval[subs][1] == 0 
            && lattice->param.gval[subs][0] != 0 )
   {
-    // Poisseuille in x direction.
-    fprintf( o, "disp(sprintf('\\nPoisseuille in x direction:'));\n");
+    // Poiseuille in x direction.
+    fprintf( o, "disp(sprintf('\\nPoiseuille in x direction:'));\n");
     fprintf( o, "figure;\n");
     fprintf( o, "j0 = %d;\n", j0);
     fprintf( o, "j1 = %d;\n", j1);

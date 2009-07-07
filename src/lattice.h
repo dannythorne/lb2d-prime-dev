@@ -416,13 +416,13 @@ struct param_struct
   int    slice_x;
   int    slice_y;
 
-  // Param: ic_poisseuille;
-  // Param: bc_poisseuille;
-  // Type: int    ic_poisseuille;
-  // Comments: Flags for poisseuille flow initial condition (ic) and boundary condition (bc).
+  // Param: ic_poiseuille;
+  // Param: bc_poiseuille;
+  // Type: int    ic_poiseuille;
+  // Comments: Flags for poiseuille flow initial condition (ic) and boundary condition (bc).
   //
-  int    ic_poisseuille;
-  int    bc_poisseuille;
+  int    ic_poiseuille;
+  int    bc_poiseuille;
 
   // Param: bc_slip_north;
   // Type: int    bc_slip_north;
