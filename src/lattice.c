@@ -114,7 +114,7 @@ int hydrostatic( lattice_ptr lattice)
   // Pressure boundaries enforce a hydrostatic condition. This is
   // experimental and not automatic -- it requires manual fiddling
   // in the bcs.c file.
-  return 1;
+  return 0;
 }
 int hydrostatic_west( lattice_ptr lattice)
 {
@@ -127,7 +127,7 @@ int hydrostatic_compressible( lattice_ptr lattice)
 {
   // Use compressible version of density profile as opposed to linear
   // approximation.
-  return 1;
+  return 0;
 }
 
 int hydrostatic_compute_rho_ref( lattice_ptr lattice)
@@ -135,7 +135,7 @@ int hydrostatic_compute_rho_ref( lattice_ptr lattice)
   // Compute the reference density for the compressible density profile.
   // If this switch is off, the value of rho_out will be used as the
   // reference density.
-  return 1;
+  return 0;
 }
 
 double get_tau( lattice_ptr lattice, const int subs)
@@ -307,4 +307,24 @@ double get_rhon( lattice_ptr lattice, int n, int subs)
 const char* get_out_path( lattice_ptr lattice)
 {
   return lattice->param.out_path;
+}
+
+double* pressure_n_in0( lattice_ptr lattice, int subs)
+{
+  return lattice->bcs_in[subs].pressure_n_in0;
+}
+
+double** pressure_n_in0_ptr( lattice_ptr lattice, int subs)
+{
+  return &( lattice->bcs_in[subs].pressure_n_in0);
+}
+
+int num_pressure_n_in0( lattice_ptr lattice, int subs)
+{
+  return lattice->bcs_in[subs].num_pressure_n_in0;
+}
+
+int* num_pressure_n_in0_ptr( lattice_ptr lattice, int subs)
+{
+  return &( lattice->bcs_in[subs].num_pressure_n_in0);
 }

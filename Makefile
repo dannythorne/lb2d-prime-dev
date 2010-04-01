@@ -7,8 +7,11 @@
 
 EXE=lb2d_prime
 
-all:
-	gcc -g -DOSTYPE=default -o ${EXE} ./src/lb2d_prime.c -lm
+CFLAGS =
+#CFLAGS+=-g
+
+${EXE}: ./src/*.h ./src/*.c
+	gcc ${CFLAGS} -DOSTYPE=default -o ${EXE} ./src/lb2d_prime.c -lm
 
 ostype:
 	gcc -DOSTYPE=${OSTYPE} -o ${EXE} ./src/lb2d_prime.c -lm

@@ -621,6 +621,15 @@ void bcs( lattice_ptr lattice)
   if( lattice->param.pressure_n_in[subs] )
   {
 //printf("bcs() %s %d >> pressure_n_in[%d]\n", __FILE__, __LINE__, subs);
+    if( lattice->param.pressure_n_in[subs]==2)
+    {
+      rho = *( pressure_n_in0( lattice, subs)
+             + get_time(lattice)%num_pressure_n_in0(lattice,subs));
+    }
+    else
+    {
+      rho = lattice->param.rho_in;
+    }
     ftemp = lattice->pdf[subs][lattice->NumNodes-lattice->param.LX].ftemp;
     ftemp_end = lattice->pdf[subs][lattice->NumNodes].ftemp;
     while( ftemp < ftemp_end)
@@ -630,7 +639,7 @@ void bcs( lattice_ptr lattice)
         // North, Inflow
         if( lattice->param.incompressible)
         {
-          u_y = -lattice->param.rho_in
+          u_y = -rho
               + ( ftemp[0] + ftemp[1] + ftemp[3]
                 + 2.*( ftemp[2] + ftemp[5] + ftemp[6]));
           c = u_y;
@@ -640,8 +649,8 @@ void bcs( lattice_ptr lattice)
           u_y = -1.
               + ( ftemp[0] + ftemp[1] + ftemp[3]
                 + 2.*( ftemp[2] + ftemp[5] + ftemp[6]))
-              / lattice->param.rho_in;
-          c = u_y*lattice->param.rho_in;
+              / rho;
+          c = u_y*rho;
         }
 
         ftemp[4] = ftemp[2] - (2./3.)*c;
@@ -3994,6 +4003,11 @@ void process_bcs( lattice_ptr lattice, int subs)
     {
       lattice->periodic_x[subs] = 0;
     }
+  }
+
+  if( lattice->param.pressure_n_in[subs] == 2)
+  {
+    // Read from file.
   }
 
 #if SAY_HI

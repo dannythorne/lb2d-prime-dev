@@ -1,7 +1,7 @@
 LX                     17
 LY                     99
 characteristic_length  31
-NumFrames              10
+NumFrames              100
 FrameRate              100
 tau[0]                1.
 gval_x[0]             0.
