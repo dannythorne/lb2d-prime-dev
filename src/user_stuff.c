@@ -31,7 +31,7 @@ double theta_of_height_width( const double height, const double width)
   }
   else
   {
-    printf("%s %d >> Unhandled case: height=%d, width=%d\n",
+    printf("%s %d >> Unhandled case: height=%f, width=%f\n",
       __FILE__, __LINE__, height, width);
     theta = 999.; // Bogus value instead of process_exiting.
   }
@@ -235,7 +235,7 @@ void compute_drop(
   if(/*verbose*/0)
   {
     printf("\n");
-    printf("jbase = %f\n", jbase);
+    printf("jbase = %d\n", jbase);
     printf("width=%d, height=%d, ", width, height);
     printf("width/height=%f, ", (double)width/(double)height);
     printf("max_width=%d at j=%d, ", max_width, max_width_j);

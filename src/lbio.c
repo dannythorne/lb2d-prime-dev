@@ -1630,7 +1630,8 @@ void read_bcs( lattice_ptr lattice, int **bcs)
 
 
   sprintf( filename, "./in/%dx%dbc_subs%02d_proc%04d.bmp",
-      get_LX(lattice), get_LY(lattice), subs); if( !( in = fopen( filename, "r"), get_proc_id(lattice)))
+      get_LX(lattice), get_LY(lattice), subs, get_proc_id(lattice));
+  if( !( in = fopen( filename, "r"), get_proc_id(lattice)))
   {
     printf("%s %d >> read_bcs() -- Error opening file \"%s\".\n",
       __FILE__,__LINE__,filename);
@@ -7161,19 +7162,19 @@ void report_entry( report_ptr report, char *entry_left, char *entry_right)
       dots[n]='.';
     }
     dots[ n  ] = ' ';
-    dots[ n+1] = (char)NULL;
+    dots[ n+1] = '\x0';
   }
   else if( left_col_width > strlen(entry_left))
   {
     dots[ 0] = ' ';
     dots[ left_col_width-strlen(entry_left)-1] = ' ';
     dots[ left_col_width-strlen(entry_left)  ] = ' ';
-    dots[ left_col_width-strlen(entry_left)+1] = (char)NULL;
+    dots[ left_col_width-strlen(entry_left)+1] = '\x0';
   }
   else
   {
     dots[0] = ' ';
-    dots[1] = (char)NULL;
+    dots[1] = '\x0';
   }
 
 #if VERBOSITY_LEVEL >=1

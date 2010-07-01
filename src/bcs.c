@@ -607,6 +607,13 @@ void bcs( lattice_ptr lattice)
          u,
          rho;
   double c;
+  int    id;
+
+#if PARALLEL
+  id = get_proc_id(lattice);
+#else
+  id = get_num_procs(lattice)-1;
+#endif
 
   // NOTE: Should previously (in initialization stage) have checked to
   // insure no solid nodes on inflow/outflow boundaries. Do not do it here
@@ -618,7 +625,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // pressure north inflow
   //  -- Pressure boundary on north side using inflow pressure condition.
-  if( lattice->param.pressure_n_in[subs] )
+  if( (id==get_num_procs(lattice)-1) && lattice->param.pressure_n_in[subs] )
   {
 //printf("bcs() %s %d >> pressure_n_in[%d]\n", __FILE__, __LINE__, subs);
     if( lattice->param.pressure_n_in[subs]==2)
@@ -661,8 +668,10 @@ void bcs( lattice_ptr lattice)
         ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
                             - (1./6.)*c;
 
-        ftemp += ( sizeof(struct pdf_struct)/8);
       }
+
+      ftemp += ( sizeof(struct pdf_struct)/sizeof(double));
+
     } /* while( ftemp < ftemp_end) */
 
   } /* if( lattice->param.pressure_n_in[subs] ) */
@@ -671,7 +680,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // pressure south inflow
   //  -- Pressure boundary on south side using inflow pressure condition.
-  if( lattice->param.pressure_s_in[subs] )
+  if( (id==0) && lattice->param.pressure_s_in[subs] )
   {
 //printf("bcs() %s %d >> pressure_s_in[%d]\n", __FILE__, __LINE__, subs);
     ftemp = lattice->pdf[subs][0].ftemp;
@@ -704,9 +713,10 @@ void bcs( lattice_ptr lattice)
 
         ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
                             + (1./6.)*c;
-
-        ftemp += ( sizeof(struct pdf_struct)/8);
       }
+
+      ftemp += ( sizeof(struct pdf_struct)/8);
+
     } /* while( ftemp < ftemp_end) */
 
   } /* if( lattice->param.pressure_s_in[subs] ) */
@@ -715,7 +725,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // pressure north outflow
   //  -- Pressure boundary on north side using outflow pressure condition.
-  if( lattice->param.pressure_n_out[subs])
+  if( (id==get_num_procs(lattice)-1) && lattice->param.pressure_n_out[subs])
   {
 //printf("bcs() %s %d >> pressure_n_out[%d]\n", __FILE__, __LINE__, subs);
     ftemp = lattice->pdf[subs][lattice->NumNodes-lattice->param.LX].ftemp;
@@ -748,9 +758,10 @@ void bcs( lattice_ptr lattice)
 
         ftemp[8] = ftemp[6] + (1./2.)*( ftemp[3] - ftemp[1])
                             - (1./6.)*c;
-
-        ftemp += ( sizeof(struct pdf_struct)/8);
       }
+
+      ftemp += ( sizeof(struct pdf_struct)/8);
+
     } /* while( ftemp < ftemp_end) */
 
   } /* if( lattice->param.pressure_n_out[subs]) */
@@ -759,7 +770,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // pressure south outflow
   //  -- Pressure boundary on south side using outflow pressure condition.
-  if( lattice->param.pressure_s_out[subs])
+  if( (id==0) && lattice->param.pressure_s_out[subs])
   {
 //printf("bcs() %s %d >> pressure_s_out[%d]\n", __FILE__, __LINE__, subs);
     ftemp = lattice->pdf[subs][0].ftemp;
@@ -793,8 +804,10 @@ void bcs( lattice_ptr lattice)
         ftemp[6] = ftemp[8] + (1./2.)*( ftemp[1] - ftemp[3])
                             + (1./6.)*c;
 
-        ftemp += ( sizeof(struct pdf_struct)/8);
       }
+
+      ftemp += ( sizeof(struct pdf_struct)/sizeof(double));
+
     } /* while( ftemp < ftemp_end) */
 
   } /* if( pressure_s_out[subs]) */
@@ -804,7 +817,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // velocity north inflow
   //  -- Velocity boundary on north side using inflow velocity condition.
-  if( lattice->param.velocity_n_in[subs])
+  if( (id==get_num_procs(lattice)-1) && lattice->param.velocity_n_in[subs])
   {
 //printf("bcs() %s %d >> velocity_n_in[%d]\n", __FILE__, __LINE__, subs);
     ftemp = lattice->pdf[subs][lattice->NumNodes-lattice->param.LX].ftemp;
@@ -922,7 +935,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // velocity south inflow
   //  -- Velocity boundary on south side using inflow velocity condition.
-  if( lattice->param.velocity_s_in[subs] )
+  if( (id==0) && lattice->param.velocity_s_in[subs] )
   {
 //printf("bcs() %s %d >> velocity_s_in[%d]\n", __FILE__, __LINE__, subs);
     ftemp = lattice->pdf[subs][0].ftemp;
@@ -1036,7 +1049,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // velocity north outflow
   //  -- Velocity boundary on north side using outflow velocity condition.
-  if( lattice->param.velocity_n_out[subs])
+  if( (id==get_num_procs(lattice)-1) && lattice->param.velocity_n_out[subs])
   {
 //printf("bcs() %s %d >> velocity_n_in[%d]\n", __FILE__, __LINE__, subs);
     ftemp = lattice->pdf[subs][lattice->NumNodes-lattice->param.LX].ftemp;
@@ -1165,7 +1178,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // velocity south outflow
   //  -- Velocity boundary on south side using outflow velocity condition.
-  if( lattice->param.velocity_s_out[subs])
+  if( (id==0) && lattice->param.velocity_s_out[subs])
   {
 //printf("bcs() %s %d >> velocity_s_out[%d]\n", __FILE__, __LINE__, subs);
     ftemp = lattice->pdf[subs][0].ftemp;
@@ -1326,9 +1339,9 @@ void bcs( lattice_ptr lattice)
 
         ftemp[6] = ftemp[8] + (1./2.)*( ftemp[4] - ftemp[2])
                             - (1./6.)*c;
-
-        ftemp += ( sizeof(struct pdf_struct)/8)*lattice->param.LX;
       }
+
+      ftemp += ( sizeof(struct pdf_struct)/8)*lattice->param.LX;
 
     } /* while( ftemp < ftemp_end) */
 
@@ -1372,9 +1385,10 @@ void bcs( lattice_ptr lattice)
 
         ftemp[8] = ftemp[6] + (1./2.)*( ftemp[2] - ftemp[4])
                             + (1./6.)*c;
-
-        ftemp += ( sizeof(struct pdf_struct)/8)*lattice->param.LX;
       }
+
+      ftemp += ( sizeof(struct pdf_struct)/8)*lattice->param.LX;
+
     } /* while( ftemp < ftemp_end) */
 
   } /* if( lattice->param.pressure_w_in[subs] ) */
@@ -2282,23 +2296,26 @@ void bcs( lattice_ptr lattice)
   //  -- Average adjacent cells (east side and north side cells)
   //  -- This is only for when boundary conditions are applied on the
   //     adjecent sides, south and west, so that the corners overlap.
-  if(
-      1 ||
-    (
+  if( (id==0)
+     &&
       (
-        lattice->param.velocity_w_out[subs]
-      ||lattice->param.velocity_w_in[subs]
-      ||lattice->param.pressure_w_out[subs]
-      ||lattice->param.pressure_w_in[subs]
+          1 ||
+        (
+          (
+            lattice->param.velocity_w_out[subs]
+          ||lattice->param.velocity_w_in[subs]
+          ||lattice->param.pressure_w_out[subs]
+          ||lattice->param.pressure_w_in[subs]
+          )
+        &&
+          (
+            lattice->param.velocity_s_out[subs]
+          ||lattice->param.velocity_s_in[subs]
+          ||lattice->param.pressure_s_out[subs]
+          ||lattice->param.pressure_s_in[subs]
+          )
+        )
       )
-    &&
-      (
-        lattice->param.velocity_s_out[subs]
-      ||lattice->param.velocity_s_in[subs]
-      ||lattice->param.pressure_s_out[subs]
-      ||lattice->param.pressure_s_in[subs]
-      )
-    )
     )
   {
     ftemp = lattice->pdf[subs][0].ftemp;
@@ -2352,23 +2369,26 @@ void bcs( lattice_ptr lattice)
   //  -- Average adjacent cells (west side and north side cells)
   //  -- This is only for when boundary conditions are applied on the
   //     adjecent sides, south and east, so that the corners overlap.
-  if(
-      1 ||
-    (
+  if( (id==0)
+     &&
       (
-        lattice->param.velocity_e_out[subs]
-      ||lattice->param.velocity_e_in[subs]
-      ||lattice->param.pressure_e_out[subs]
-      ||lattice->param.pressure_e_in[subs]
+          1 ||
+        (
+          (
+            lattice->param.velocity_e_out[subs]
+          ||lattice->param.velocity_e_in[subs]
+          ||lattice->param.pressure_e_out[subs]
+          ||lattice->param.pressure_e_in[subs]
+          )
+        &&
+          (
+            lattice->param.velocity_s_out[subs]
+          ||lattice->param.velocity_s_in[subs]
+          ||lattice->param.pressure_s_out[subs]
+          ||lattice->param.pressure_s_in[subs]
+          )
+        )
       )
-    &&
-      (
-        lattice->param.velocity_s_out[subs]
-      ||lattice->param.velocity_s_in[subs]
-      ||lattice->param.pressure_s_out[subs]
-      ||lattice->param.pressure_s_in[subs]
-      )
-    )
     )
   {
     ftemp = lattice->pdf[subs][get_LX(lattice)-1].ftemp;
@@ -2423,23 +2443,26 @@ void bcs( lattice_ptr lattice)
   //  -- Average adjacent cells (east side and south side cells)
   //  -- This is only for when boundary conditions are applied on the
   //     adjecent sides, north and west, so that the corners overlap.
-  if(
-      1 ||
-    (
+  if( (id==get_num_procs(lattice)-1)
+     &&
       (
-        lattice->param.velocity_w_out[subs]
-      ||lattice->param.velocity_w_in[subs]
-      ||lattice->param.pressure_w_out[subs]
-      ||lattice->param.pressure_w_in[subs]
+          1 ||
+        (
+          (
+            lattice->param.velocity_w_out[subs]
+          ||lattice->param.velocity_w_in[subs]
+          ||lattice->param.pressure_w_out[subs]
+          ||lattice->param.pressure_w_in[subs]
+          )
+        &&
+          (
+            lattice->param.velocity_n_out[subs]
+          ||lattice->param.velocity_n_in[subs]
+          ||lattice->param.pressure_n_out[subs]
+          ||lattice->param.pressure_n_in[subs]
+          )
+        )
       )
-    &&
-      (
-        lattice->param.velocity_n_out[subs]
-      ||lattice->param.velocity_n_in[subs]
-      ||lattice->param.pressure_n_out[subs]
-      ||lattice->param.pressure_n_in[subs]
-      )
-    )
     )
   {
     ftemp = lattice->pdf[subs][get_NumNodes(lattice)-get_LX(lattice)].ftemp;
@@ -2494,23 +2517,26 @@ void bcs( lattice_ptr lattice)
   //  -- Average adjacent cells (west side and south side cells)
   //  -- This is only for when boundary conditions are applied on the
   //     adjecent sides, north and east, so that the corners overlap.
-  if(
-      1 ||
-    (
+  if( (id==get_num_procs(lattice)-1)
+     &&
       (
-        lattice->param.velocity_e_out[subs]
-      ||lattice->param.velocity_e_in[subs]
-      ||lattice->param.pressure_e_out[subs]
-      ||lattice->param.pressure_e_in[subs]
+          1 ||
+        (
+          (
+            lattice->param.velocity_e_out[subs]
+          ||lattice->param.velocity_e_in[subs]
+          ||lattice->param.pressure_e_out[subs]
+          ||lattice->param.pressure_e_in[subs]
+          )
+        &&
+          (
+            lattice->param.velocity_n_out[subs]
+          ||lattice->param.velocity_n_in[subs]
+          ||lattice->param.pressure_n_out[subs]
+          ||lattice->param.pressure_n_in[subs]
+          )
+        )
       )
-    &&
-      (
-        lattice->param.velocity_n_out[subs]
-      ||lattice->param.velocity_n_in[subs]
-      ||lattice->param.pressure_n_out[subs]
-      ||lattice->param.pressure_n_in[subs]
-      )
-    )
     )
   {
     ftemp = lattice->pdf[subs][get_NumNodes(lattice)-1].ftemp;
@@ -2566,7 +2592,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant conc north inflow
   //  -- Constant concentration boundary on north side using inflow value.
-  if( lattice->param.constcon_n_in )
+  if( (id==get_num_procs(lattice)-1) && lattice->param.constcon_n_in )
   {
     //printf("%s %d -- constcon_n_in\n", __FILE__, __LINE__);
     ftemp = lattice->pdf[subs][lattice->NumNodes-lattice->param.LX].ftemp;
@@ -2608,7 +2634,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant conc south inflow
   //  -- Constant concentration boundary on south side using inflow value.
-  if( lattice->param.constcon_s_in )
+  if( (id==0) && lattice->param.constcon_s_in )
   {
     //printf("bcs() %s %d >> constcon_s_in\n", __FILE__, __LINE__);
     ftemp = lattice->pdf[subs][0].ftemp;
@@ -2650,7 +2676,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant conc north outflow
   //  -- Constant concentration boundary on north side using outflow value.
-  if( lattice->param.constcon_n_out)
+  if( (id==get_num_procs(lattice)-1) && lattice->param.constcon_n_out)
   {
     //printf("%s %d -- constcon_n_out\n", __FILE__, __LINE__);
     ftemp = lattice->pdf[subs][lattice->NumNodes-lattice->param.LX].ftemp;
@@ -2697,7 +2723,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant conc south outflow
   //  -- Constant concentration boundary on south side with outflow value.
-  if( lattice->param.constcon_s_out)
+  if( (id==0) && lattice->param.constcon_s_out)
   {
     //printf("bcs() %s %d >> constcon_s_out\n", __FILE__, __LINE__);
     ftemp = lattice->pdf[subs][0].ftemp;
@@ -2745,7 +2771,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant flux north inflow
   //  -- Constant flux boundary on north side with inflow value.
-  if( lattice->param.constflx_n_in )
+  if( (id==get_num_procs(lattice)-1) && lattice->param.constflx_n_in )
   {
     //printf("%s %d -- constflx_n_in\n", __FILE__, __LINE__);
     ftemp = lattice->pdf[subs][lattice->NumNodes-lattice->param.LX].ftemp;
@@ -2787,7 +2813,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant flux south inflow
   //  -- Constant flux boundary on south side with inflow value.
-  if( lattice->param.constflx_s_in )
+  if( (id==0) && lattice->param.constflx_s_in )
   {
     //printf("bcs() %s %d >> constflx_s_in\n", __FILE__, __LINE__);
     ftemp = lattice->pdf[subs][0].ftemp;
@@ -2829,7 +2855,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant flux north outflow
   //  -- Constant flux boundary on north side with outflow value.
-  if( lattice->param.constflx_n_out)
+  if( (id==get_num_procs(lattice)-1) && lattice->param.constflx_n_out)
   {
     //printf("%s %d -- constflx_n_out\n", __FILE__, __LINE__);
     ftemp = lattice->pdf[subs][lattice->NumNodes-lattice->param.LX].ftemp;
@@ -2902,7 +2928,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant flux south outflow
   //  -- Constant flux boundary on south side with outflow value.
-  if( lattice->param.constflx_s_out)
+  if( (id==0) && lattice->param.constflx_s_out)
   {
     //printf("bcs() %s %d >> constflx_s_out\n", __FILE__, __LINE__);
     ftemp = lattice->pdf[subs][0].ftemp;
@@ -2976,7 +3002,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // zero conc gradient south
   //  -- Zero concentration gradient boundary on south side.
-  if( lattice->param.zeroconcgrad_s)
+  if( (id==0) && lattice->param.zeroconcgrad_s)
   {
     //printf("bcs() %s %d >> zeroconcgrad_s_out\n", __FILE__, __LINE__);
     ftemp = lattice->pdf[subs][0].ftemp;
@@ -3013,7 +3039,7 @@ void bcs( lattice_ptr lattice)
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // zero conc gradient north
   //  -- Zero concentration gradient boundary on north side.
-  if( lattice->param.zeroconcgrad_n)
+  if( (id==get_num_procs(lattice)-1) && lattice->param.zeroconcgrad_n)
   {
     //printf("bcs() %s %d >> zeroconcgrad_n\n", __FILE__, __LINE__);
     ftemp = lattice->pdf[subs][lattice->NumNodes-lattice->param.LX].ftemp;
@@ -3662,25 +3688,27 @@ void bcs( lattice_ptr lattice)
   //  -- Average adjacent cells (east side and north side cells)
   //  -- This is only for when boundary conditions are applied on the
   //     adjecent sides, south and west, so that the corners overlap.
-  if(
-      1 ||
-    (
-      (
-        lattice->param.constcon_w_out
-      ||lattice->param.constcon_w_in
-      ||lattice->param.constflx_w_out
-      ||lattice->param.constflx_w_in
-      ||lattice->param.zeroconcgrad_w
+  if( (id==0)
+     &&
+      ( 1 ||
+        (
+          (
+            lattice->param.constcon_w_out
+          ||lattice->param.constcon_w_in
+          ||lattice->param.constflx_w_out
+          ||lattice->param.constflx_w_in
+          ||lattice->param.zeroconcgrad_w
+          )
+        &&
+          (
+            lattice->param.constcon_s_out
+          ||lattice->param.constcon_s_in
+          ||lattice->param.constflx_s_out
+          ||lattice->param.constflx_s_in
+          ||lattice->param.zeroconcgrad_s
+          )
+        )
       )
-    &&
-      (
-        lattice->param.constcon_s_out
-      ||lattice->param.constcon_s_in
-      ||lattice->param.constflx_s_out
-      ||lattice->param.constflx_s_in
-      ||lattice->param.zeroconcgrad_s
-      )
-    )
     )
   {
     printf("BING! SW corner...");

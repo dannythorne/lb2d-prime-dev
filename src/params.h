@@ -281,7 +281,7 @@ int read_param_label( FILE *in, char *param_label, int max_length)
 
     // Terminate the string.
     i++;
-    param_label[i] = (char)NULL;
+    param_label[i] = '\x0';
 
     // Discard whitespace between label and its value. Calling routine
     // will read the value.
@@ -856,7 +856,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       printf("%s %d >> Dl = %f\n",__FILE__,__LINE__,
         lattice->param.Dl);
 #else
-      fscanf( in, "%f\n", &(dblank));
+      fscanf( in, "%lf\n", &(dblank));
       printf("%s %d >> Dl = %f "
         "// unused: not INAMURO_SIGMA_COMPONENT\n",
         __FILE__,__LINE__, dblank);
@@ -869,7 +869,7 @@ void read_params( lattice_ptr lattice, const char *infile)
       printf("%s %d >> Dt = %f\n",__FILE__,__LINE__,
         lattice->param.Dt);
 #else
-      fscanf( in, "%f\n", &(dblank));
+      fscanf( in, "%lf\n", &(dblank));
       printf("%s %d >> Dt = %f "
         "// unused: not INAMURO_SIGMA_COMPONENT\n",
         __FILE__,__LINE__, dblank);

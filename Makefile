@@ -13,25 +13,26 @@ CFLAGS =
 ${EXE}: ./src/*.h ./src/*.c
 	gcc ${CFLAGS} -DOSTYPE=default -o ${EXE} ./src/lb2d_prime.c -lm
 
-ostype:
+ostype: ./src/*.h ./src/*.c
 	gcc -DOSTYPE=${OSTYPE} -o ${EXE} ./src/lb2d_prime.c -lm
 
-par:
-	mpicc -DPARALLEL -DOSTYPE=${OSTYPE} -o ${EXE} ./src/lb2d_prime.c -L/sw/lib -I/sw/include/ -lmpich -lm
+par: ./src/*.h ./src/*.c
+	mpicc -DPARALLEL -o ${EXE} ./src/lb2d_prime.c -lm
+#mpicc -DPARALLEL -DOSTYPE=${OSTYPE} -o ${EXE} ./src/lb2d_prime.c -L/sw/lib -I/sw/include/ -lmpich -lm
 
-swap:
+swap: ./src/*.h ./src/*.c
 	gcc -DSWAP_BYTE_ORDER -o ${EXE} ./src/lb2d_prime.c -lm
 
-swap_byte_order:
+swap_byte_order: ./src/*.h ./src/*.c
 	gcc -DSWAP_BYTE_ORDER -o ${EXE} ./src/lb2d_prime.c -lm
 
-par_swap:
+par_swap: ./src/*.h ./src/*.c
 	gcc -DPARALLEL -DSWAP_BYTE_ORDER -DOSTYPE=${OSTYPE} -o ${EXE} ./src/lb2d_prime.c -L/sw/lib -I/sw/include/ -lmpi -llam -lm
 
-warn:
+warn: ./src/*.h ./src/*.c
 	gcc -pedantic -Wall -Wunused-variable -o ${EXE} ./src/lb2d_prime.c -lm
 
-nocygwin:
+nocygwin: ./src/*.h ./src/*.c
 	gcc -mno-cygwin -o ${EXE} ./src/lb2d_prime.c -lm
 
 slice: new_slice.c lbio.c

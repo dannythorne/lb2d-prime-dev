@@ -29,7 +29,7 @@
 
 // NUM_FLUID_COMPONENTS specifies the number of fluid components.
 // Flag: NUM_FLUID_COMPONENTS
-#define NUM_FLUID_COMPONENTS 2
+#define NUM_FLUID_COMPONENTS 1
 
 // If NUM_FLUID_COMPONENTS is 2, the second component can be the sigma
 // component for solute (or thermal) transport as in Inamuro & Yoshino
