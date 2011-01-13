@@ -1629,6 +1629,7 @@ void read_bcs( lattice_ptr lattice, int **bcs)
   }
 
 
+#if PARALLEL
   sprintf( filename, "./in/%dx%dbc_subs%02d_proc%04d.bmp",
       get_LX(lattice), get_LY(lattice), subs, get_proc_id(lattice));
   if( !( in = fopen( filename, "r"), get_proc_id(lattice)))
@@ -1637,6 +1638,16 @@ void read_bcs( lattice_ptr lattice, int **bcs)
       __FILE__,__LINE__,filename);
     process_exit(1);
   }
+#else
+  sprintf( filename, "./in/%dx%dbc_subs%02d.bmp",
+      get_LX(lattice), get_LY(lattice), subs);
+  if( !( in = fopen( filename, "r")))
+  {
+    printf("%s %d >> read_bcs() -- Error opening file \"%s\".\n",
+      __FILE__,__LINE__,filename);
+    process_exit(1);
+  }
+#endif
 
   // Read the headers.
   n = fread( &bmfh, sizeof(struct bitmap_file_header), 1, in );
@@ -2377,6 +2388,7 @@ void rho2bmp( lattice_ptr lattice, int time)
 
   frame = time/lattice->param.FrameRate;
 
+#if PARALLEL
   sprintf( filename, "./in/%dx%d_proc%04d.bmp",
     get_LX(lattice), get_LY(lattice), get_proc_id(lattice));
   if( !( in = fopen( filename, "r")))
@@ -2385,6 +2397,16 @@ void rho2bmp( lattice_ptr lattice, int time)
       __FILE__,__LINE__,filename);
     process_exit(1);
   }
+#else
+  sprintf( filename, "./in/%dx%d.bmp",
+    get_LX(lattice), get_LY(lattice));
+  if( !( in = fopen( filename, "r")))
+  {
+    printf("%s %d >> rho2bmp() -- Error opening file \"%s\".\n",
+      __FILE__,__LINE__,filename);
+    process_exit(1);
+  }
+#endif
 
   // n = fread( void *BUF, size_t SIZE, size_t COUNT, FILE *FP);
 
@@ -3055,6 +3077,7 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
 
   frame = time/lattice->param.FrameRate;
 
+#if PARALLEL
   sprintf( filename, "./in/%dx%d_proc%04d.bmp",
       get_LX(lattice), get_LY(lattice), get_proc_id(lattice));
   if( !( in = fopen( filename, "r")))
@@ -3063,6 +3086,16 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
       __FILE__,__LINE__,filename);
     process_exit(1);
   }
+#else
+  sprintf( filename, "./in/%dx%d.bmp",
+      get_LX(lattice), get_LY(lattice));
+  if( !( in = fopen( filename, "r")))
+  {
+    printf("%s %d >> u2bmp() -- Error opening file \"%s\".\n",
+      __FILE__,__LINE__,filename);
+    process_exit(1);
+  }
+#endif
 
   // n = fread( void *BUF, size_t SIZE, size_t COUNT, FILE *FP);
 
