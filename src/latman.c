@@ -633,51 +633,38 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
   // should only be used in the simple situation of flow through a channel
   // where geometry is trivial and the direction of flow is obvious.
   //
+
+  int north_bcs =
+     (*lattice)->param.pressure_n_in[0]
+  || (*lattice)->param.pressure_n_out[0]
+  || (*lattice)->param.velocity_n_in[0]
+  || (*lattice)->param.velocity_n_out[0];
+
+  int south_bcs =
+     (*lattice)->param.pressure_s_out[0]
+  || (*lattice)->param.pressure_s_in[0]
+  || (*lattice)->param.velocity_s_out[0]
+  || (*lattice)->param.velocity_s_in[0];
+
+  int east_bcs =
+     (*lattice)->param.pressure_e_in[0]
+  || (*lattice)->param.pressure_e_out[0]
+  || (*lattice)->param.velocity_e_in[0]
+  || (*lattice)->param.velocity_e_out[0];
+
+  int west_bcs =
+     (*lattice)->param.pressure_w_out[0]
+  || (*lattice)->param.pressure_w_in[0]
+  || (*lattice)->param.velocity_w_out[0]
+  || (*lattice)->param.velocity_w_in[0];
+
   if( // Pressure/Velocity boundaries moving the flow vertically.
- (
-    ( (*lattice)->param.pressure_n_in[0] && (*lattice)->param.pressure_s_out[0])
-  ||
-    ( (*lattice)->param.pressure_n_out[0] && (*lattice)->param.pressure_s_in[0])
-  ||
-    ( (*lattice)->param.velocity_n_in[0] && (*lattice)->param.velocity_s_out[0])
-  ||
-    ( (*lattice)->param.velocity_n_out[0] && (*lattice)->param.velocity_s_in[0])
- )
-&&
-!(
-    ( (*lattice)->param.pressure_e_in[0] && (*lattice)->param.pressure_w_out[0])
-  ||
-    ( (*lattice)->param.pressure_e_out[0] && (*lattice)->param.pressure_w_in[0])
-  ||
-    ( (*lattice)->param.velocity_e_in[0] && (*lattice)->param.velocity_w_out[0])
-  ||
-    ( (*lattice)->param.velocity_e_out[0] && (*lattice)->param.velocity_w_in[0])
- )
-    )
+  ( north_bcs || south_bcs ) && !( east_bcs || west_bcs))
   {
     (*lattice)->FlowDir = /*Vertical*/2;
   }
   else if( // Pressure/Velocity boundaries moving the flow horizontally.
-!(
-    ( (*lattice)->param.pressure_n_in[0] && (*lattice)->param.pressure_s_out[0])
-  ||
-    ( (*lattice)->param.pressure_n_out[0] && (*lattice)->param.pressure_s_in[0])
-  ||
-    ( (*lattice)->param.velocity_n_in[0] && (*lattice)->param.velocity_s_out[0])
-  ||
-    ( (*lattice)->param.velocity_n_out[0] && (*lattice)->param.velocity_s_in[0])
- )
-&&
- (
-    ( (*lattice)->param.pressure_e_in[0] && (*lattice)->param.pressure_w_out[0])
-  ||
-    ( (*lattice)->param.pressure_e_out[0] && (*lattice)->param.pressure_w_in[0])
-  ||
-    ( (*lattice)->param.velocity_e_in[0] && (*lattice)->param.velocity_w_out[0])
-  ||
-    ( (*lattice)->param.velocity_e_out[0] && (*lattice)->param.velocity_w_in[0])
- )
-      )
+  !( north_bcs || south_bcs ) && ( east_bcs || west_bcs))
   {
     (*lattice)->FlowDir = /*Horizontal*/1;
   }
@@ -702,6 +689,8 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
       (*lattice)->FlowDir = /*Indeterminate*/0;
     }
   }
+  // INITIALIZE_WITH_UX_IN or INITIALIZE_WITH_UY_IN can override
+  // the flow direction calculations.
 #if INITIALIZE_WITH_UX_IN
   (*lattice)->FlowDir = /*Horizontal*/1;
 #endif /* INITIALIZE_WITH_UX_IN */
