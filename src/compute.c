@@ -24,7 +24,6 @@
         + lattice->param.tau[subs]  \
           * lattice->param.gval[subs][0]
 
-
 #define BIG_U_Y( u_) \
         (u_) \
         + lattice->param.tau[subs]  \
