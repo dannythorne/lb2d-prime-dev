@@ -17,6 +17,7 @@
 // P R E P R O C E S S O R   M A C R O S
 #if NON_LOCAL_FORCES
 
+
 #if ZHANG_AND_CHEN_ENERGY_TRANSPORT
 
 #define BIG_U_X( u_) \
