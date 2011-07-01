@@ -39,22 +39,22 @@
         + lattice->param.tau[subs]  \
           * lattice->force[subs][n].force[0]/(rho_) \
         + lattice->param.tau[subs]  \
-          * lattice->force[subs][n].sforce[0]/(rho_) \
+          /** lattice->force[subs][n].sforce[0]/(rho_) */\
           /** lattice->force[subs][n].sforce[0]*(rho_) */\
-          /** lattice->force[subs][n].sforce[0] */\
+          * lattice->force[subs][n].sforce[0] \
         + lattice->param.tau[subs]  \
-          * lattice->param.gval[subs][0]
+          * lattice->param.gval[subs][0]/(rho_)
 
 #define BIG_U_Y( u_, rho_) \
         (u_) \
         + lattice->param.tau[subs]  \
           * lattice->force[subs][n].force[1]/(rho_) \
         + lattice->param.tau[subs]  \
-          * lattice->force[subs][n].sforce[1]/(rho_) \
+          /** lattice->force[subs][n].sforce[1]/(rho_) */\
           /** lattice->force[subs][n].sforce[1]*(rho_) */\
-          /** lattice->force[subs][n].sforce[1] */\
+          * lattice->force[subs][n].sforce[1] \
         + lattice->param.tau[subs]  \
-          * lattice->param.gval[subs][1]
+          * lattice->param.gval[subs][1]/(rho_)
 
 #endif /* ZHANG_AND_CHEN_ENERGY_TRANSPORT */
 
