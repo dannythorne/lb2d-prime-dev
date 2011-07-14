@@ -37,6 +37,13 @@
 // Flag: INAMURO_SIGMA_COMPONENT
 #define INAMURO_SIGMA_COMPONENT ( 1 && NUM_FLUID_COMPONENTS==2)
 
+// SOURCE_ON activates zero-order (constant) source term to fluid 0
+#define SOURCE_ON 0
+
+// SINK_ON activates first-order (proportional to f) sink term
+// to fluid 1 as a solute (i.e. INAMURO_SIGMA_COMPONENT on)
+#define SINK_ON (0 && (INAMURO_SIGMA_COMPONENT))
+
 // Toggle Zhang & Chen energy transport method, PRE 67, 0066711 (2003).
 // Supposed to give thermodynamic consistency unlike old Shan & Chen method.
 // And supports general equation of state P = P(rho,T).
@@ -57,7 +64,7 @@
 #define FREED_POROUS_MEDIA 0
 
 // Toggle Tau & Zhang anisotropic dispersion.
-#define TAU_ZHANG_ANISOTROPIC_DISPERSION ( 1 \
+#define TAU_ZHANG_ANISOTROPIC_DISPERSION ( 0 \
                                          && INAMURO_SIGMA_COMPONENT \
                                          && POROUS_MEDIA )
 

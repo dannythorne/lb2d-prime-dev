@@ -497,6 +497,32 @@ void read_params( lattice_ptr lattice, const char *infile)
       printf("%s %d >> rho_B = %f\n",__FILE__,__LINE__,
          lattice->param.rho_B[0]);
     }
+    else if( !strncmp(param_label,"source_strength",80))
+	{
+#if SOURCE_ON
+      fscanf( in, "%lf\n", &(lattice->param.source_strength));
+      printf("%s %d >> source_strength = %f\n",__FILE__,__LINE__,
+         lattice->param.source_strength);
+#else /* !(SOURCE_ON) */
+      fscanf( in, "%lf\n", &(dblank));
+      printf("%s %d >> source_strength = %f "
+        "// unused: not SOURCE_ON\n",
+        __FILE__,__LINE__, dblank);
+#endif /* (SOURCE_ON) */
+	}
+    else if( !strncmp(param_label,"sink_strength",80))
+	{
+#if SINK_ON
+      fscanf( in, "%lf\n", &(lattice->param.sink_strength));
+      printf("%s %d >> sink_strength = %f\n",__FILE__,__LINE__,
+         lattice->param.sink_strength);
+#else /* !(SINK_ON) */
+      fscanf( in, "%lf\n", &(dblank));
+      printf("%s %d >> sink_strength = %f "
+        "// unused: not SINK_ON\n",
+        __FILE__,__LINE__, dblank);
+#endif /* (SINK_ON) */
+	}
     else if( !strncmp(param_label,"rho_sigma",80))
     {
 #if INAMURO_SIGMA_COMPONENT
@@ -2115,6 +2141,19 @@ void dump_params( struct lattice_struct *lattice)
       NUM_FLUID_COMPONENTS);
     process_exit(1);
   }
+
+#if SOURCE_ON
+  fprintf( o, "source_strength            %f\n", lattice->param.source_strength      );
+#else /*if !(SOURCE_ON)*/
+  fprintf( o, "source_strength            %s\n", "--"                          );
+#endif /*SOURCE_ON*/
+
+#if SINK_ON
+  fprintf( o, "sink_strength            %f\n", lattice->param.sink_strength      );
+#else /*if !(SINK_ON)*/
+  fprintf( o, "sink_strength            %s\n", "--"                          );
+#endif /*SINK_ON*/
+
 #if INAMURO_SIGMA_COMPONENT
   fprintf( o, "rho_sigma            %f\n", lattice->param.rho_sigma      );
   fprintf( o, "beta                 %f\n", lattice->param.beta           );

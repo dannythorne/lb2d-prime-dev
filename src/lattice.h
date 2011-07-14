@@ -398,6 +398,14 @@ struct param_struct
   double rho_A[    NUM_FLUID_COMPONENTS];
   double rho_B[    NUM_FLUID_COMPONENTS];
 
+#if SOURCE_ON
+  double source_strength;
+#endif /*SOURCE_ON*/
+
+#if SINK_ON
+  double sink_strength;
+#endif /*SINK_ON*/
+
 #if INAMURO_SIGMA_COMPONENT
   // Initial/boundary condition values for solute component.
   double rho_sigma;

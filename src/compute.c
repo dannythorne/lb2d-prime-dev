@@ -104,10 +104,14 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
   int    subs;
 
   double c;
+
 #if TAU_ZHANG_ANISOTROPIC_DISPERSION
   double Dxx, Dyy, Dxy, Dl, Dt, ns;
-  double wt[9]={4./9.,WM,WM,WM,WM,WD,WD,WD,WD};
   double factor=0.0, lamdax, lamday;
+#endif
+
+#if (SINK_ON || SOURCE_ON || TAU_ZHANG_ANISOTROPIC_DISPERSION)
+  double wt[9]={4./9.,WM,WM,WM,WM,WD,WD,WD,WD};
 #endif
 
 #if GUO_ZHENG_SHI_BODY_FORCE
@@ -149,6 +153,24 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
 
     if( COMPUTE_ON_SOLIDS || is_not_solid_node( lattice, subs, n))
     {
+#if SOURCE_ON
+      for( a=0; a<9; a++)
+      {
+        (*rho[subs]) += (*ftemp) + wt[a] * lattice->param.source_strength;
+        (*u_x[subs]) += vx[a]*(*ftemp);
+        (*u_y[subs]) += vy[a]*(*ftemp);
+        ftemp++;
+
+        if( which_f == 2)
+        {
+          (*rho[subs]) += (*f) + wt[a] * lattice->param.source_strength;
+          (*u_x[subs]) += vx[a]*(*f);
+          (*u_y[subs]) += vy[a]*(*f);
+          f++;
+        }
+
+      } /* for( a=0; a<9; a++) */
+#else /*if !(SOURCE_ON)*/
       for( a=0; a<9; a++)
       {
         (*rho[subs]) += (*ftemp);
@@ -165,6 +187,8 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
         }
 
       } /* for( a=0; a<9; a++) */
+#endif /*if SOURCE_ON*/
+
 
       if( which_f == 2)
       {
@@ -399,6 +423,7 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
         (*rho[subs]) += (*ftemp)*((ns>1e-12)
                                  ?(factor/lattice->tau_zhang[a])
                                  :(1.));
+
         ftemp++;
 
       } /* for( a=0; a<9; a++) */
@@ -408,8 +433,11 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
       {
         (*rho[subs]) += (*ftemp);
         ftemp++;
-
       } /* for( a=0; a<9; a++) */
+#endif
+
+#if SINK_ON
+	(*rho[subs]) *= (1. - lattice->param.sink_strength * lattice->param.tau[1]);
 #endif
 
 #if PUKE_NEGATIVE_CONCENTRATIONS
@@ -522,10 +550,16 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
 
   double c;
 
- for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
- {
+#if SOURCE_ON
+  double wt[9]={4./9.,WM,WM,WM,WM,WD,WD,WD,WD};
+#endif
 
-  rho[subs]   = &( lattice->macro_vars[subs][0].rho);
+//
+// Compute for substance 0:
+//
+ subs = 0;
+
+ rho[subs]   = &( lattice->macro_vars[subs][0].rho);
   u_x[subs]   =    lattice->macro_vars[subs][0].u;
   u_y[subs]   =    lattice->macro_vars[subs][0].u + 1;
   bc          =    lattice->bc[subs];
@@ -568,7 +602,16 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
           f++;
         }
 
-      } /* for( a=0; a<9; a++) */
+      } /* for( a=0; a<9; a++) */	
+
+#if SOURCE_ON
+      (*rho[subs]) += lattice->param.source_strength * lattice->param.tau[0];
+      if( which_f == 2)
+      {
+      	(*rho[subs]) += lattice->param.source_strength * lattice->param.tau[0];
+      }
+#endif /*if SOURCE_ON*/
+
       if( which_f == 2)
       {
         (*rho[subs]) /= 2.;
@@ -626,7 +669,115 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
 
   } /* for( n=0; n<lattice->NumNodes; n++) */
 
- } /* for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++) */
+
+//
+// Compute for substance 1:
+//
+#if NUM_FLUID_COMPONENTS==2
+ subs = 1;
+
+  rho[subs]   = &( lattice->macro_vars[subs][0].rho);
+  u_x[subs]   =    lattice->macro_vars[subs][0].u;
+  u_y[subs]   =    lattice->macro_vars[subs][0].u + 1;
+  bc          =    lattice->bc[subs]; 
+  switch(which_f)
+  {
+    case 0: // Compute from post-collision f.
+      ftemp = lattice->pdf[subs][0].f;
+      break;
+    case 1: // Compute from pre-collision f.
+      ftemp = lattice->pdf[subs][0].ftemp;
+      break;
+    case 2: // Compute average from pre- and post-collision f.
+      f = lattice->pdf[subs][0].f;
+      ftemp = lattice->pdf[subs][0].ftemp;
+      break;
+    default:
+      break;
+  }
+
+  for( n=0; n<lattice->NumNodes; n++)
+  {
+    *rho[subs] = 0.;
+    *u_x[subs] = 0.;
+    *u_y[subs] = 0.;
+
+    if( COMPUTE_ON_SOLIDS || is_not_solid_node( lattice, subs, n))
+    {
+	  for( a=0; a<9; a++)
+      {
+        (*rho[subs]) += (*ftemp);
+        (*u_x[subs]) += vx[a]*(*ftemp);
+        (*u_y[subs]) += vy[a]*(*ftemp);
+        ftemp++;
+
+        if( which_f == 2)
+        {
+          (*rho[subs]) += (*f);
+          (*u_x[subs]) += vx[a]*(*f);
+          (*u_y[subs]) += vy[a]*(*f);
+          f++;
+        }
+
+      } /* for( a=0; a<9; a++) */
+
+      if( which_f == 2)
+      {
+        (*rho[subs]) /= 2.;
+        (*u_x[subs]) /= 2.;
+        (*u_y[subs]) /= 2.;
+      }
+      else
+      {
+#if GUO_ZHENG_SHI_BODY_FORCE
+      *u_x[subs] += .5*lattice->param.gval[subs][0]*(*rho[subs]);
+      *u_y[subs] += .5*lattice->param.gval[subs][1]*(*rho[subs]);
+#endif
+      }
+
+// PUKE_NEGATIVE_DENSITIES {{{
+#if PUKE_NEGATIVE_DENSITIES
+      if( *rho[subs] < 0.)
+      {
+        printf("\n");
+        printf(
+          "compute_macro_vars() -- "
+          "Node %d (%d,%d) has negative density %20.17f "
+          "at timestep %d. Exiting!\n",
+          n, n%lattice->param.LX,
+             n/lattice->param.LX, *rho[subs],
+             lattice->time             );
+        printf("\n");
+        process_exit(1);
+      }
+#endif
+// PUKE_NEGATIVE_DENSITIES }}}
+      //assert( *rho[subs] != 0);
+
+    } /* if( !( bc++->bc_type & BC_SOLID_NODE)) */
+
+    else // bc++->bc_type & BC_SOLID_NODE {{{
+    {
+//printf("RHO: n=%d, Solid node.\n", n);
+      ftemp+=9;
+      if( which_f)
+      {
+        f+=9;
+      }
+
+    } /* if( !( bc++->bc_type & BC_SOLID_NODE)) else }}} */
+
+    rho[subs]+=3;
+    u_x[subs]+=3;
+    u_y[subs]+=3;
+    ftemp+=18;
+    if( which_f==2)
+    {
+      f+=18;
+    }
+
+  } /* for( n=0; n<lattice->NumNodes; n++) */
+#endif /*NUM_FLUID_COMPONENTS==2*/
 
  for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
  {
