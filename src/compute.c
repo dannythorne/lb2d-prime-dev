@@ -108,9 +108,6 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
 #if TAU_ZHANG_ANISOTROPIC_DISPERSION
   double Dxx, Dyy, Dxy, Dl, Dt, ns;
   double factor=0.0, lamdax, lamday;
-#endif
-
-#if (SINK_ON || SOURCE_ON || TAU_ZHANG_ANISOTROPIC_DISPERSION)
   double wt[9]={4./9.,WM,WM,WM,WM,WD,WD,WD,WD};
 #endif
 
@@ -153,25 +150,7 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
 
     if( COMPUTE_ON_SOLIDS || is_not_solid_node( lattice, subs, n))
     {
-#if SOURCE_ON
-      for( a=0; a<9; a++)
-      {
-        (*rho[subs]) += (*ftemp) + wt[a] * lattice->param.source_strength;
-        (*u_x[subs]) += vx[a]*(*ftemp);
-        (*u_y[subs]) += vy[a]*(*ftemp);
-        ftemp++;
-
-        if( which_f == 2)
-        {
-          (*rho[subs]) += (*f) + wt[a] * lattice->param.source_strength;
-          (*u_x[subs]) += vx[a]*(*f);
-          (*u_y[subs]) += vy[a]*(*f);
-          f++;
-        }
-
-      } /* for( a=0; a<9; a++) */
-#else /*if !(SOURCE_ON)*/
-      for( a=0; a<9; a++)
+    for( a=0; a<9; a++)
       {
         (*rho[subs]) += (*ftemp);
         (*u_x[subs]) += vx[a]*(*ftemp);
@@ -187,6 +166,13 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
         }
 
       } /* for( a=0; a<9; a++) */
+
+#if SOURCE_ON
+  (*rho[subs]) += lattice->param.source_strength * lattice->param.tau[0];
+  if(which_f == 2)
+  {
+    (*rho[subs]) += lattice->param.source_strength * lattice->param.tau[0];
+  } 
 #endif /*if SOURCE_ON*/
 
 
@@ -550,9 +536,7 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
 
   double c;
 
-#if SOURCE_ON
-  double wt[9]={4./9.,WM,WM,WM,WM,WD,WD,WD,WD};
-#endif
+
 
 //
 // Compute for substance 0:
