@@ -12,7 +12,7 @@ void process_init( lattice_ptr lattice, int argc, char **argv)
   MPI_Comm_rank( MPI_COMM_WORLD, &(lattice->process.id));
 #else
   lattice->process.id = 0;
-  lattice->process.num_procs = 0;
+  lattice->process.num_procs = 1;
 #endif
 #if VERBOSITY_LEVEL > 0
   // Say hi.
