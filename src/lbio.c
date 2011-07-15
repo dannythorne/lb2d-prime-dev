@@ -3058,8 +3058,13 @@ printf("%s %d >> bitcount = %d\n",__FILE__,__LINE__, ENDIAN2(*bitcount_ptr));
 
   frame = time/lattice->param.FrameRate;
 
+#if !(PARALLEL)
+  sprintf( filename, "./in/%dx%d.bmp",
+      get_LX(lattice), get_LY(lattice));
+#else /*#if PARALLEL*/
   sprintf( filename, "./in/%dx%d_proc%04d.bmp",
       get_LX(lattice), get_LY(lattice), get_proc_id(lattice));
+#endif
   if( !( in = fopen( filename, "r")))
   {
     printf("%s %d >> u2bmp() -- Error opening file \"%s\".\n",
