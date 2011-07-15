@@ -328,3 +328,23 @@ int* num_pressure_n_in0_ptr( lattice_ptr lattice, int subs)
 {
   return &( lattice->bcs_in[subs].num_pressure_n_in0);
 }
+
+double* pressure_s_in0( lattice_ptr lattice, int subs)
+{
+  return lattice->bcs_in[subs].pressure_s_in0;
+}
+
+double** pressure_s_in0_ptr( lattice_ptr lattice, int subs)
+{
+  return &( lattice->bcs_in[subs].pressure_s_in0);
+}
+
+int num_pressure_s_in0( lattice_ptr lattice, int subs)
+{
+  return lattice->bcs_in[subs].num_pressure_s_in0;
+}
+
+int* num_pressure_s_in0_ptr( lattice_ptr lattice, int subs)
+{
+  return &( lattice->bcs_in[subs].num_pressure_s_in0);
+}

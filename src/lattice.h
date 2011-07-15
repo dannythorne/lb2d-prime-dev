@@ -79,6 +79,9 @@ struct bcs_in_struct
 {
   double*  pressure_n_in0;
   int      num_pressure_n_in0;
+
+  double*  pressure_s_in0;
+  int      num_pressure_s_in0;
 #if 0
   double*  pressure_s_in0;
   double* pressure_n_out0;

@@ -682,6 +682,15 @@ void bcs( lattice_ptr lattice)
   //  -- Pressure boundary on south side using inflow pressure condition.
   if( (id==0) && lattice->param.pressure_s_in[subs] )
   {
+    if( lattice->param.pressure_s_in[subs]==2)
+    {
+      rho = *( pressure_s_in0( lattice, subs)
+             + get_time(lattice)%num_pressure_s_in0(lattice,subs));
+    }
+    else
+    {
+      rho = lattice->param.rho_in;
+    }
 //printf("bcs() %s %d >> pressure_s_in[%d]\n", __FILE__, __LINE__, subs);
     ftemp = lattice->pdf[subs][0].ftemp;
     ftemp_end = lattice->pdf[subs][lattice->param.LX].ftemp;
@@ -692,7 +701,7 @@ void bcs( lattice_ptr lattice)
         // South, Inflow
         if( lattice->param.incompressible)
         {
-          u_y = lattice->param.rho_in
+          u_y = rho
               - ( ftemp[0] + ftemp[1] + ftemp[3]
                 + 2.*( ftemp[4] + ftemp[7] + ftemp[8]));
           c = u_y;
@@ -702,8 +711,8 @@ void bcs( lattice_ptr lattice)
           u_y = 1.
               - ( ftemp[0] + ftemp[1] + ftemp[3]
                 + 2.*( ftemp[4] + ftemp[7] + ftemp[8]))
-              / lattice->param.rho_in;
-          c = u_y*lattice->param.rho_in;
+              / rho;
+          c = u_y*rho;
         }
 
         ftemp[2] = ftemp[4] + (2./3.)*c;

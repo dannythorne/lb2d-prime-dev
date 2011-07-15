@@ -1,7 +1,7 @@
 LX                     16
 LY                     16
 characteristic_length  31
-NumFrames              8
+NumFrames              2
 FrameRate              100
 tau[0]                1.0
 gval_x[0]             0.
@@ -31,7 +31,7 @@ sigma_start           -1
 sigma_stop            -1
 sigma_btc_rate        -1
 sigma_btc_spot        -1
-rho_in                 1.000
+rho_in                 1.100
 rho_out                1.000
 ux_in                  0.0
 ux_out                 0.0

@@ -741,6 +741,9 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
   } /* if( sigma_btc_rate > 0) */
 #endif /* INAMURO_SIGMA_COMPONENT && STORE_BTC */
 
+
+	//for reading north boundary pressure from file ./in/pressure_n_in0.in
+	//and assigning it to the appropriate variable
   if( (*lattice)->param.pressure_n_in[0] == 2)
   {
     sprintf(filename,"./in/pressure_n_in0.in");
@@ -773,6 +776,50 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
     for( i=0; i<num_pressure_n_in0(*lattice,0); i++)
     {
       fscanf(in,"%lf", pressure_n_in0(*lattice,0) + i);
+    }
+    fclose(in);
+
+    //for( i=0; i<num_pressure_n_in0(*lattice,0); i++)
+    //{
+    //  printf("%f\n",*( pressure_n_in0(*lattice,0) + i));
+    //}
+
+  }
+
+	//for reading south boundary pressure from file ./in/pressure_s_in0.in
+	//and assigning it to the appropriate variable
+  if( (*lattice)->param.pressure_s_in[0] == 2)
+  {
+    sprintf(filename,"./in/pressure_s_in0.in");
+    printf("[%s,%d] construct_lattice() -- Reading %s\n", __FILE__, __LINE__
+          , filename);
+    FILE *in;
+    in = fopen(filename,"r");
+    if( !( in = fopen(filename,"r+")))
+    {
+      printf("%s %d >> WARNING: Can't load \"%s\".\n",
+        __FILE__,__LINE__,filename);
+      return;
+    }
+    *(num_pressure_s_in0_ptr(*lattice,0)) = 0;
+    double temp;
+    fscanf(in,"%lf",&temp);
+    while( !feof(in))
+    {
+      (*(num_pressure_s_in0_ptr(*lattice,0)))++;
+      fscanf(in,"%lf",&temp);
+    }
+
+    printf("num_pressure_s_in0_ptr = %d\n", num_pressure_s_in0(*lattice,0));
+
+    *pressure_s_in0_ptr(*lattice,0) =
+      (double*)malloc( num_pressure_s_in0(*lattice,0)*sizeof(double));
+
+    rewind(in);
+    int i;
+    for( i=0; i<num_pressure_s_in0(*lattice,0); i++)
+    {
+      fscanf(in,"%lf", pressure_s_in0(*lattice,0) + i);
     }
     fclose(in);
 
