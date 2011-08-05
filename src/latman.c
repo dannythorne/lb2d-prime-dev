@@ -474,9 +474,15 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
     }
 
     // Try to read ns<LX>x<LY>.bmp file.
+#if PARALLEL
+    sprintf( filename, "./in/ns%dx%d_proc%04d.bmp",
+           get_LX(*lattice),
+           get_LY(*lattice), get_proc_id(*lattice));
+#else
     sprintf( filename, "./in/ns%dx%d.bmp",
            get_LX(*lattice),
            get_LY(*lattice));
+#endif
     if( in = fopen( filename, "r+"))
     {
       printf("%s %d >> Reading file \"%s\".\n",__FILE__,__LINE__,filename);
@@ -542,9 +548,15 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
     }
 
     // Try to read ns<LX>x<LY>.bmp file.
+#if PARALLEL
+    sprintf( filename, "./in/ns%dx%d_proc%04d.bmp",
+           get_LX(*lattice),
+           get_LY(*lattice), get_proc_id(*lattice));
+#else
     sprintf( filename, "./in/ns%dx%d.bmp",
            get_LX(*lattice),
            get_LY(*lattice));
+#endif
     if( in = fopen( filename, "r+"))
     {
       printf("%s %d >> Reading file \"%s\".\n",__FILE__,__LINE__,filename);
@@ -1518,7 +1530,7 @@ void init_problem( struct lattice_struct *lattice)
           else
           {
             if( (i-lattice->param.x0)*(i-lattice->param.x0)
-              + (j-lattice->param.y0)*(j-lattice->param.y0)
+              + (get_g_SY(lattice) + j-lattice->param.y0)*(get_g_SY(lattice) + j-lattice->param.y0)
               < lattice->param.r0*lattice->param.r0)
             {
               *macro_var_ptr++ = lattice->param.rho_sigma;
@@ -1530,7 +1542,7 @@ void init_problem( struct lattice_struct *lattice)
           }
 #else /* !( INAMURO_SIGMA_COMPONENT) */
           if( (i-lattice->param.x0)*(i-lattice->param.x0)
-            + (j-lattice->param.y0)*(j-lattice->param.y0)
+            + (get_g_SY(lattice) + j-lattice->param.y0)*(get_g_SY(lattice) + j-lattice->param.y0)
             < lattice->param.r0*lattice->param.r0)
           {
             *macro_var_ptr++ = lattice->param.rho_A[subs];
@@ -1633,8 +1645,8 @@ void init_problem( struct lattice_struct *lattice)
 #if ZHANG_AND_CHEN_ENERGY_TRANSPORT
           if( subs==0)
           {
-            if( ( i >= lattice->param.x1) && ( j >= lattice->param.y1)
-             && ( i <= lattice->param.x2) && ( j <= lattice->param.y2))
+            if( ( i >= lattice->param.x1) && ( get_g_SY(lattice) + j >= lattice->param.y1)
+             && ( i <= lattice->param.x2) && ( get_g_SY(lattice) + j <= lattice->param.y2))
             {
               *macro_var_ptr++ = lattice->param.rho_A[subs];
             }
@@ -1645,8 +1657,8 @@ void init_problem( struct lattice_struct *lattice)
           }
           else // subs==1
           {
-            if( ( i >= lattice->param.x1) && ( j >= lattice->param.y1)
-             && ( i <= lattice->param.x2) && ( j <= lattice->param.y2))
+            if( ( i >= lattice->param.x1) && ( get_g_SY(lattice) + j >= lattice->param.y1)
+             && ( i <= lattice->param.x2) && ( get_g_SY(lattice) + j <= lattice->param.y2))
             {
               *macro_var_ptr++ = lattice->param.rho_sigma;
             }
@@ -1663,9 +1675,9 @@ void init_problem( struct lattice_struct *lattice)
           else
           {
             if( ( i >= g2lx( lattice, lattice->param.x1))
-             && ( j >= g2ly( lattice, lattice->param.y1))
+             && ( get_g_SY(lattice) + j >= g2ly( lattice, lattice->param.y1))
              && ( i <= g2lx( lattice, lattice->param.x2))
-             && ( j <= g2ly( lattice, lattice->param.y2)) )
+             && ( get_g_SY(lattice) + j <= g2ly( lattice, lattice->param.y2)) )
             {
               *macro_var_ptr++ = lattice->param.rho_sigma;
             }
@@ -1677,8 +1689,8 @@ void init_problem( struct lattice_struct *lattice)
           }
 #endif /* ZHANG_AND_CHEN_ENERGY_TRANSPORT */
 #else /* !( INAMURO_SIGMA_COMPONENT) */
-          if( ( i >= lattice->param.x1) && ( j >= lattice->param.y1)
-           && ( i <= lattice->param.x2) && ( j <= lattice->param.y2))
+            if( ( i >= lattice->param.x1) && ( get_g_SY(lattice) + j >= lattice->param.y1)
+             && ( i <= lattice->param.x2) && ( get_g_SY(lattice) + j <= lattice->param.y2))
           {
             *macro_var_ptr++ = lattice->param.rho_A[subs];
           }
@@ -1691,7 +1703,7 @@ void init_problem( struct lattice_struct *lattice)
         }
         case IC_DOT:
         {
-          if( i == lattice->param.x0 && j == lattice->param.y0)
+          if( i == lattice->param.x0 && get_g_SY(lattice) + j == lattice->param.y0)
           {
             *macro_var_ptr++ = lattice->param.rho_A[subs];
           }
@@ -2679,6 +2691,7 @@ void check_point_load( lattice_ptr lattice)
   printf(" #        #   #   #      #        #  #    #    # #     #    #     ##  #     #   \n");
   printf(" #        #   #   #  #   #        #  #    #    # #     #    #     ##  #     #   \n");
   printf(" #        #####   ####   #        # #     #####  #     #    #     # # #     #   \n");
+
   printf(" #        #   #   #  #   #        ###     #      #     #    #     #  ##     #   \n");
   printf(" #        #   #   #      #        #  #    #      #     #    #     #  ##     #   \n");
   printf("  #    #  #   #   #    #  #    #  #   #   #       #   #     #     #   #     #   \n");
