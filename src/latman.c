@@ -852,6 +852,165 @@ void construct_lattice( lattice_ptr *lattice, int argc, char **argv)
 
 } /* void construct_lattice( struct lattice_struct **lattice) */
 
+// void read_PEST_in_files( lattice_ptr *lattice, int argc, char **argv)
+//##############################################################################
+//
+// READ PEST IN FILES
+//
+//  - Read the files timestep_file.in, x_coord_file.in and y_coord_file.in
+//
+//  - The function write_PEST_out_data will then save fluid 1 rho values
+//		(concentration) to an output file.
+//
+void read_PEST_in_files( lattice_ptr *lattice, int argc, char **argv)
+{
+#if PEST_OUTPUT_ON
+	//for reading concentration data from files in ./in/
+	//for use with PEST
+
+  	char   filename[1024];
+    FILE *in;
+	int i;
+	//begin with timesteps
+    sprintf(filename,"./in/timestep_file.in");
+    printf("[%s,%d] construct_lattice() -- Reading %s\n", __FILE__, __LINE__
+          , filename);
+	
+    in = fopen(filename,"r");
+    if( !( in = fopen(filename,"r+")))
+    {
+      printf("%s %d >> WARNING: Can't load \"%s\".\n",
+        __FILE__,__LINE__,filename);
+      return;
+    }
+	
+
+    double temp;
+	
+	(*lattice)->conc_array_size = 0;
+	
+    fscanf(in,"%lf",&temp);
+    while( !feof(in))
+    {
+      (*lattice)->conc_array_size++;
+      fscanf(in,"%lf",&temp);
+    }
+	
+    printf("Number of PEST points = %d\n", (*lattice)->conc_array_size);
+	
+	
+    (*lattice)->concentration_data =
+    ( struct conc_data_struct*)malloc(
+        (*lattice)->conc_array_size*sizeof( struct conc_data_struct));
+
+    rewind(in);
+
+    for( i=0; i<(*lattice)->conc_array_size; i++)
+    {
+	  fscanf(in,"%d", &((*lattice)->concentration_data[i].timestep));
+    }
+    fclose(in);
+
+
+    //now do the space coordinates, starting with x
+    sprintf(filename,"./in/x_coord_file.in");
+    printf("[%s,%d] construct_lattice() -- Reading %s\n", __FILE__, __LINE__
+          , filename);
+    
+	in = fopen(filename,"r");
+    if( !( in = fopen(filename,"r+")))
+    {
+      printf("%s %d >> WARNING: Can't load \"%s\".\n",
+        __FILE__,__LINE__,filename);
+      return;
+    }
+
+    for( i=0; i<(*lattice)->conc_array_size; i++)
+    {
+      fscanf(in,"%d", &((*lattice)->concentration_data[i].x_coord));
+    }
+    fclose(in);
+
+    //now do y
+    sprintf(filename,"./in/y_coord_file.in");
+    printf("[%s,%d] construct_lattice() -- Reading %s\n", __FILE__, __LINE__
+          , filename);
+    
+	in = fopen(filename,"r");
+    if( !( in = fopen(filename,"r+")))
+    {
+      printf("%s %d >> WARNING: Can't load \"%s\".\n",
+        __FILE__,__LINE__,filename);
+      return;
+    }
+
+    for( i=0; i<(*lattice)->conc_array_size; i++)
+    {
+      fscanf(in,"%d", &((*lattice)->concentration_data[i].y_coord));
+    }
+    fclose(in);
+
+
+	(*lattice)->array_position = 0;#endif
+}	/* void read_PEST_in_files */
+
+
+// void write_PEST_out_data( lattice_ptr *lattice, int argc, char **argv)
+//##############################################################################
+//
+// WRITE_PEST_OUT_DATA
+//
+//  - Write pest data to (*lattice)->concentration_data[0].norm_conc
+//
+//  - The function write_PEST_out_data will then save fluid 1 rho values
+//		(concentration) to an output file.
+//
+void write_PEST_out_data( lattice_ptr *lattice, int argc, char **argv)
+{
+#if PEST_OUTPUT_ON //problem with not allocating space for time_array_position?
+	  while((*lattice)->concentration_data[(*lattice)->array_position].timestep == (*lattice)->time - 1)
+	  {
+		(*lattice)->concentration_data[(*lattice)->array_position].norm_conc = *(&((*lattice)->macro_vars[1][0].rho) 
+									+ 3 * (*lattice)->concentration_data[(*lattice)->array_position].y_coord * get_LX(*lattice)
+									+ 3 * (*lattice)->concentration_data[(*lattice)->array_position].x_coord);
+		(*lattice)->array_position++;
+	  }
+#endif
+}
+
+// void write_PEST_out_file( lattice_ptr *lattice, int argc, char **argv)
+//##############################################################################
+//
+// WRITE_PEST_OUT_FILE
+//
+//  - Write pest data to (*lattice)->concentration_data[0].norm_conc
+//
+//  - The function write_PEST_out_file will then save fluid 1 rho values
+//		(concentration) to an output file.
+//
+void write_PEST_out_file( lattice_ptr *lattice, int argc, char **argv)
+{
+#if PEST_OUTPUT_ON
+		FILE *fp;
+  		char   filename[1024];
+		int aa;
+		sprintf( filename, "./out/conc_data_proc%04d.dat", (*lattice)->process.id);
+		fp=fopen(filename, "w+");
+		if( !( fp = fopen(filename,"w+")))
+		{
+		  printf("%s %d >> WARNING: Can't load \"%s\".\n",
+		    __FILE__,__LINE__,filename);
+		  return;
+		}
+		for( aa = 0; aa < (*lattice)->conc_array_size; aa++)
+		{
+			fprintf(fp,"%lf\n", (*lattice)->concentration_data[aa].norm_conc);
+		}
+		fclose(fp);
+#endif
+}
+
+
 // void init_problem( struct lattice_struct *lattice)
 //##############################################################################
 //

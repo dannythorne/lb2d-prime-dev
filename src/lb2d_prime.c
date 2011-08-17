@@ -74,6 +74,9 @@ int main( int argc, char **argv)
 
   if( do_user_stuff(lattice)) { user_stuff_pre_frames(lattice);}
 
+
+  read_PEST_in_files( &lattice, argc, argv);
+
   for( frame = start_frame+1; frame<=get_NumFrames( lattice); frame++)
   {
     lattice->frame = frame;
@@ -84,6 +87,8 @@ int main( int argc, char **argv)
          time<= frame*get_FrameRate(lattice); time++)
     {
       lattice->time = time;                                run_man( lattice);
+
+      write_PEST_out_data( &lattice, argc, argv);
 
       stream( lattice); /* ftemp <- f */                   dump( lattice, 1);
 //LBMPI #if PARALLEL
@@ -127,6 +132,8 @@ int main( int argc, char **argv)
     printf("Time for frame: %f\n", tf);
 
   } /* for( frame = 0; frame<get_NumFrames( lattice); time++) */
+
+  write_PEST_out_file( &lattice, argc, argv);
 
   if( do_user_stuff(lattice)) { user_stuff_post_frames(lattice);}
 

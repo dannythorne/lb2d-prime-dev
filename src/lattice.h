@@ -35,6 +35,20 @@ struct macro_vars_struct
 
 };
 
+#if PEST_OUTPUT_ON
+// struct conc_data_struct
+//
+//  - Structure to hold concentration data from an experiment.
+//
+struct conc_data_struct
+{
+  int timestep;
+  int x_coord;
+  int y_coord;
+  double norm_conc;
+};
+#endif
+
 #if STORE_U_COMPOSITE
 // struct upr_struct
 //
@@ -424,6 +438,12 @@ struct param_struct
   double u_sigma_in;
   double u_sigma_out;
 
+  //int sigma_bulk_on
+  //timestep at which solute in the bulk will begin evolution.
+#if SIGMA_BULK_FLAG
+  int    sigma_bulk_on;
+#endif /*SIGMA_BULK_FLAG*/
+
   // Param: sigma_start;
   // Type: int    sigma_start;
   // Comments: Timestep at which solute is activated. If sigma_start == 0, solute will be activated from the beginning. The reason for this option is to make it easy to allow the fluid to equilibrate before introducing solute into the flow.
@@ -713,6 +733,11 @@ struct lattice_struct
 #endif /* DO_NOT_STORE_SOLIDS */
   struct pdf_struct        *pdf[        NUM_FLUID_COMPONENTS];
   struct macro_vars_struct *macro_vars[ NUM_FLUID_COMPONENTS];
+#if PEST_OUTPUT_ON
+  int array_position;
+  int conc_array_size;
+  struct conc_data_struct  *concentration_data;
+#endif
   struct bc_struct         *bc[         NUM_FLUID_COMPONENTS];
   struct bcs_in_struct      bcs_in[     NUM_FLUID_COMPONENTS];
 #if NON_LOCAL_FORCES

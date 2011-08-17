@@ -2597,6 +2597,11 @@ void bcs( lattice_ptr lattice)
 
 #if INAMURO_SIGMA_COMPONENT
   subs=1;
+#if SIGMA_BULK_FLAG
+	if(lattice->time > lattice->param.sigma_bulk_on)
+	{
+#endif
+
   // C O N S T   C O N C   N O R T H   I N   B C  {{{
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // constant conc north inflow
@@ -3729,6 +3734,10 @@ void bcs( lattice_ptr lattice)
 
   }
                                                                           // }}}
+#endif
+
+#if SIGMA_BULK_FLAG
+	}
 #endif
 
 #endif /* INAMURO_SIGMA_COMPONENT */

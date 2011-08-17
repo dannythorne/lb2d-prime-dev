@@ -436,6 +436,11 @@ void collide( lattice_ptr lattice)
 
  for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
  {
+#if SIGMA_BULK_FLAG
+	if(subs == 0 || lattice->time > lattice->param.sigma_bulk_on)
+	{
+#endif
+
 #if INAMURO_SIGMA_COMPONENT
    if( subs==1)
    {
@@ -1138,6 +1143,10 @@ void collide( lattice_ptr lattice)
     free( nsterm);
 
   } /* if( INAMURO_SIGMA_COMPONENT!=0 || subs==0) */
+#endif
+
+#if SIGMA_BULK_FLAG
+	}
 #endif
 
  } /* for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++) */

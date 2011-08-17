@@ -278,6 +278,11 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
   //
   subs=1;
 
+//#if SIGMA_BULK_FLAG
+//	if(lattice->time > lattice->param.sigma_bulk_on)
+//	{
+//#endif
+
   rho[subs]   = &( lattice->macro_vars[subs][0].rho);
   switch(which_f)
   {
@@ -504,6 +509,10 @@ void compute_macro_vars( struct lattice_struct *lattice, int which_f)
     u_y[1]+=3;
 
   } /* for( n=0; n<lattice->NumNodes; n++) */
+
+//#if SIGMA_BULK_FLAG
+//	}
+//#endif
 
 } /* void compute_macro_vars( struct lattice_struct *lattice) */
                                                                           // }}}

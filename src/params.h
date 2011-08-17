@@ -40,6 +40,12 @@ void assign_default_param_vals( lattice_ptr lattice)
   lattice->param.simple_diffusion = 0;
   lattice->param.rho_A[0] = 0.;
   lattice->param.rho_B[0] = 0.;
+#if SOURCE_ON
+  lattice->param.source_strength = 0.;
+#endif /*SOURCE_ON*/
+#if SINK_ON
+  lattice->param.sink_strength = 0.;
+#endif /*SINK_ON*/
 #if INAMURO_SIGMA_COMPONENT
   lattice->param.rho_sigma = 0.;
   lattice->param.beta = 0.;
@@ -53,6 +59,9 @@ void assign_default_param_vals( lattice_ptr lattice)
   lattice->param.u_sigma = 0.;
   lattice->param.u_sigma_in = 0.;
   lattice->param.u_sigma_out = 0.;
+#if SIGMA_BULK_FLAG
+  lattice->param.sigma_bulk_on = 0;
+#endif /*SIGMA_BULK_FLAG*/
   lattice->param.sigma_start = 0;
   lattice->param.sigma_stop = 0;
   lattice->param.sigma_btc_rate = 0;
@@ -678,6 +687,19 @@ void read_params( lattice_ptr lattice, const char *infile)
         "// unused: not INAMURO_SIGMA_COMPONENT\n",
         __FILE__,__LINE__, dblank);
 #endif /* (INAMURO_SIGMA_COMPONENT) */
+    }
+    else if( !strncmp(param_label,"sigma_bulk_on",80))
+    {
+#if SIGMA_BULK_FLAG
+      fscanf( in, "%d\n", &(lattice->param.sigma_bulk_on));
+      printf("%s %d >> sigma_bulk_on = %d\n",__FILE__,__LINE__,
+         lattice->param.sigma_bulk_on);
+#else /* !(SIGMA_BULK_FLAG) */
+      fscanf( in, "%d\n", &(blank));
+      printf("%s %d >> sigma_bulk_on = %d "
+        "// unused: not SIGMA_BULK_FLAG\n",
+        __FILE__,__LINE__, blank);
+#endif /* (SIGMA_BULK_FLAG) */
     }
     else if( !strncmp(param_label,"sigma_start",80))
     {
@@ -1637,6 +1659,12 @@ void read_params( lattice_ptr lattice, const char *infile)
     skip_label( in); fscanf( in, "%d ", &(lattice->param.simple_diffusion) );
     skip_label( in); fscanf( in, "%lf",   lattice->param.rho_A           );
     skip_label( in); fscanf( in, "%lf",   lattice->param.rho_B           );
+#if SOURCE_ON
+    skip_label( in); fscanf( in, "%lf",   lattice->param.source_strength );
+#endif /*SOURCE_ON*/
+#if SINK_ON
+    skip_label( in); fscanf( in, "%lf",   lattice->param.sink_strength   );
+#endif /*SINK_ON*/
 #if INAMURO_SIGMA_COMPONENT
     skip_label( in); fscanf( in, "%lf",&( lattice->param.rho_sigma)      );
     skip_label( in); fscanf( in, "%lf",&( lattice->param.beta     )      );
@@ -1650,6 +1678,11 @@ void read_params( lattice_ptr lattice, const char *infile)
     skip_label( in); fscanf( in, "%lf",&( lattice->param.u_sigma)        );
     skip_label( in); fscanf( in, "%lf",&( lattice->param.u_sigma_in)     );
     skip_label( in); fscanf( in, "%lf",&( lattice->param.u_sigma_out)    );
+#if SIGMA_BULK_FLAG
+    skip_label( in); fscanf( in, "%d ",&( lattice->param.sigma_bulk_on)    );
+#else/*!(SIGMA_BULK_FLAG)*/
+    skip_label( in); fscanf( in, "%d ",   &blank                         );
+#endif /*SIGMA_BULK_FLAG*/
     skip_label( in); fscanf( in, "%d ",&( lattice->param.sigma_start)    );
     skip_label( in); fscanf( in, "%d ",&( lattice->param.sigma_stop )    );
     skip_label( in); fscanf( in, "%d ",&( lattice->param.sigma_btc_rate ));
@@ -1661,6 +1694,7 @@ void read_params( lattice_ptr lattice, const char *infile)
     skip_label( in); fscanf( in, "%lf",   &dblank                        );
     skip_label( in); fscanf( in, "%lf",   &dblank                        );
     skip_label( in); fscanf( in, "%lf",   &dblank                        );
+    skip_label( in); fscanf( in, "%d ",   &blank                         );
     skip_label( in); fscanf( in, "%d ",   &blank                         );
     skip_label( in); fscanf( in, "%d ",   &blank                         );
     skip_label( in); fscanf( in, "%d ",   &blank                         );
@@ -2167,6 +2201,11 @@ void dump_params( struct lattice_struct *lattice)
   fprintf( o, "u_sigma              %f\n", lattice->param.u_sigma        );
   fprintf( o, "u_sigma_in           %f\n", lattice->param.u_sigma_in     );
   fprintf( o, "u_sigma_out          %f\n", lattice->param.u_sigma_out    );
+#if SIGMA_BULK_FLAG
+  fprintf( o, "sigma_bulk_on          %d\n", lattice->param.sigma_bulk_on);
+#else /*!(SIGMA_BULK_FLAG)*/
+  fprintf( o, "sigma_bulk_on          %s\n", "--"                        );
+#endif /*SIGMA_BULK_FLAG*/
   fprintf( o, "sigma_start          %d\n", lattice->param.sigma_start    );
   fprintf( o, "sigma_stop           %d\n", lattice->param.sigma_stop     );
   fprintf( o, "sigma_btc_rate       %d\n", lattice->param.sigma_btc_rate );
@@ -2184,6 +2223,7 @@ void dump_params( struct lattice_struct *lattice)
   fprintf( o, "u_sigma              %s\n", "--"                          );
   fprintf( o, "u_sigma_in           %s\n", "--"                          );
   fprintf( o, "u_sigma_out          %s\n", "--"                          );
+  fprintf( o, "sigma_bulk_on          %s\n", "--"                          );
   fprintf( o, "sigma_start          %s\n", "--"                          );
   fprintf( o, "sigma_stop           %s\n", "--"                          );
   fprintf( o, "sigma_btc_rate       %s\n", "--"                          );
