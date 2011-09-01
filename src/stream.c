@@ -141,7 +141,7 @@ void stream( lattice_ptr lattice)
 
 
 // substance 1
-
+#if NUM_FLUID_COMPONENTS == 2
 	subs = 1;
 
 #if 0
@@ -265,6 +265,7 @@ void stream( lattice_ptr lattice)
 
 #endif
 
+#endif
 
 #if SAY_HI
   printf("stream() -- Bye!\n");
