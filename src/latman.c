@@ -1834,9 +1834,9 @@ void init_problem( struct lattice_struct *lattice)
           else
           {
             if( ( i >= g2lx( lattice, lattice->param.x1))
-             && ( get_g_SY(lattice) + j >= g2ly( lattice, lattice->param.y1))
+             && ( j >= g2ly( lattice, lattice->param.y1))
              && ( i <= g2lx( lattice, lattice->param.x2))
-             && ( get_g_SY(lattice) + j <= g2ly( lattice, lattice->param.y2)) )
+             && ( j <= g2ly( lattice, lattice->param.y2)) )
             {
               *macro_var_ptr++ = lattice->param.rho_sigma;
             }
