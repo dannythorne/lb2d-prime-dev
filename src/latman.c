@@ -907,10 +907,19 @@ void read_PEST_in_files( lattice_ptr *lattice, int argc, char **argv)
 
     for( i=0; i<(*lattice)->conc_array_size; i++)
     {
+      (*lattice)->concentration_data[i].countervar = i;
 	  fscanf(in,"%d", &((*lattice)->concentration_data[i].timestep));
     }
     fclose(in);
 
+	for( i=1; i<(*lattice)->conc_array_size; i++)
+    {
+      if((*lattice)->concentration_data[i].timestep < (*lattice)->concentration_data[i-1].timestep)
+      {
+		printf("[%s,%d] PEST Failure - Concentration data not in time order\n", __FILE__, __LINE__);
+        exit (1);
+      }
+    }
 
     //now do the space coordinates, starting with x
     sprintf(filename,"./in/x_coord_file.in");
@@ -950,8 +959,41 @@ void read_PEST_in_files( lattice_ptr *lattice, int argc, char **argv)
     }
     fclose(in);
 
+//Now we must reduce our arrays so that they only contain concs valid for the local domain
 
-	(*lattice)->array_position = 0;#endif
+    for( i=0; i<(*lattice)->conc_array_size; i++)
+    {
+      if((*lattice)->concentration_data[i].y_coord < get_g_SY(*lattice)
+			|| (*lattice)->concentration_data[i].y_coord > get_g_EY(*lattice)) 
+      {
+        (*lattice)->concentration_data[i].y_coord = -1;
+      }
+	  else
+	  {
+		(*lattice)->concentration_data[i].y_coord = g2ly(*lattice, (*lattice)->concentration_data[i].y_coord);
+	  }
+    }
+
+	int newcount = 0;
+    for( i=0; i<(*lattice)->conc_array_size; i++)
+    {
+      if((*lattice)->concentration_data[i].y_coord >= 0) 
+      {
+        (*lattice)->concentration_data[newcount].countervar = (*lattice)->concentration_data[i].countervar;
+        (*lattice)->concentration_data[newcount].timestep = (*lattice)->concentration_data[i].timestep;
+        (*lattice)->concentration_data[newcount].x_coord = (*lattice)->concentration_data[i].x_coord;
+        (*lattice)->concentration_data[newcount].y_coord = (*lattice)->concentration_data[i].y_coord;
+		newcount++;
+      }
+    }
+
+	(*lattice)->conc_array_size = newcount;
+
+
+	(*lattice)->array_position = 0;
+
+
+#endif
 }	/* void read_PEST_in_files */
 
 
@@ -970,10 +1012,13 @@ void write_PEST_out_data( lattice_ptr *lattice, int argc, char **argv)
 #if PEST_OUTPUT_ON //problem with not allocating space for time_array_position?
 	  while((*lattice)->concentration_data[(*lattice)->array_position].timestep == (*lattice)->time - 1)
 	  {
-		(*lattice)->concentration_data[(*lattice)->array_position].norm_conc = *(&((*lattice)->macro_vars[1][0].rho) 
-									+ 3 * (*lattice)->concentration_data[(*lattice)->array_position].y_coord * get_LX(*lattice)
-									+ 3 * (*lattice)->concentration_data[(*lattice)->array_position].x_coord);
-		(*lattice)->array_position++;
+		if((*lattice)->array_position < (*lattice)->conc_array_size)
+		{
+			(*lattice)->concentration_data[(*lattice)->array_position].norm_conc = *(&((*lattice)->macro_vars[1][0].rho) 
+										+ 3 * (*lattice)->concentration_data[(*lattice)->array_position].y_coord * get_LX(*lattice)
+										+ 3 * (*lattice)->concentration_data[(*lattice)->array_position].x_coord);
+			(*lattice)->array_position++;
+		}
 	  }
 #endif
 }
@@ -1004,7 +1049,20 @@ void write_PEST_out_file( lattice_ptr *lattice, int argc, char **argv)
 		}
 		for( aa = 0; aa < (*lattice)->conc_array_size; aa++)
 		{
-			fprintf(fp,"%lf\n", (*lattice)->concentration_data[aa].norm_conc);
+			fprintf(fp,"%20.17f\n", (*lattice)->concentration_data[aa].norm_conc);
+		}
+		fclose(fp);
+		sprintf( filename, "./out/conc_order_proc%04d.dat", (*lattice)->process.id);
+		fp=fopen(filename, "w+");
+		if( !( fp = fopen(filename,"w+")))
+		{
+		  printf("%s %d >> WARNING: Can't load \"%s\".\n",
+		    __FILE__,__LINE__,filename);
+		  return;
+		}
+		for( aa = 0; aa < (*lattice)->conc_array_size; aa++)
+		{
+			fprintf(fp,"%d\n", (*lattice)->concentration_data[aa].countervar);
 		}
 		fclose(fp);
 #endif

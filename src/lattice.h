@@ -42,6 +42,7 @@ struct macro_vars_struct
 //
 struct conc_data_struct
 {
+  int countervar;
   int timestep;
   int x_coord;
   int y_coord;

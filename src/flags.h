@@ -29,7 +29,7 @@
 
 // NUM_FLUID_COMPONENTS specifies the number of fluid components.
 // Flag: NUM_FLUID_COMPONENTS
-#define NUM_FLUID_COMPONENTS 1
+#define NUM_FLUID_COMPONENTS 2
 
 // If NUM_FLUID_COMPONENTS is 2, the second component can be the sigma
 // component for solute (or thermal) transport as in Inamuro & Yoshino
@@ -46,11 +46,11 @@
 
 // SIGMA_BULK_FLAG enables introduction of a solute into the bulk
 // at a timestep given by sigma_bulk_on
-#define SIGMA_BULK_FLAG (0 && (INAMURO_SIGMA_COMPONENT))
+#define SIGMA_BULK_FLAG (1 && (INAMURO_SIGMA_COMPONENT))
 
 // PEST_OUTPUT_ON enables the output of a concentration list at various
 // timesteps and coordinates for use with PEST
-#define PEST_OUTPUT_ON 0
+#define PEST_OUTPUT_ON 1
 
 // Toggle Zhang & Chen energy transport method, PRE 67, 0066711 (2003).
 // Supposed to give thermodynamic consistency unlike old Shan & Chen method.
