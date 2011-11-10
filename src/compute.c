@@ -1339,6 +1339,9 @@ void compute_feq( struct lattice_struct *lattice, int skip_sigma)
 // C O M P U T E _ F L U I D _ F L U I D _ F O R C E  {{{1
 void compute_fluid_fluid_force( lattice_ptr lattice)
 {
+
+  printf("BING: compute_fluid_fluid_force()\n");
+
   double ***psi; //psi[ NUM_FLUID_COMPONENTS][LX][LY];
   double psi_temp;
 
@@ -2155,10 +2158,10 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
   int LX = lattice->param.LX;
   int LY = lattice->param.LY;
 
-  printf("BING: compute_double_fluid_solid_force()\n");
-  printf("SFORCE: %f %f \n",
-              lattice->param.Gads[0],
-              lattice->param.Gads[1] );
+  //printf("BING: compute_double_fluid_solid_force()\n");
+  //printf("SFORCE: %f %f \n",
+  //            lattice->param.Gads[0],
+  //            lattice->param.Gads[1] );
 
   for( y = 0; y < LY; y++)
   {
@@ -2182,7 +2185,8 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
         if( is_solid_node( lattice, /*subs*/0, IJ2N( xp, y)))
         {
           sum_x = sum_x + WM*vx[1] ;
-          sum_y = sum_x + WM*vy[1] ;
+          sum_y = sum_y + WM*vy[1] ;
+          //printf("SFORCE 1: sum_x sum_y %f %f\n", sum_x, sum_y);
         }
         // neighbor 2
         //if( b[yp][x])
@@ -2191,6 +2195,7 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
         {
           sum_x = sum_x + WM*vx[2] ;
           sum_y = sum_y + WM*vy[2] ;
+          //printf("SFORCE 2: sum_x sum_y %f %f\n", sum_x, sum_y);
         }
         // neighbor 3
         //if( b[y][xn])
@@ -2199,6 +2204,7 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
         {
           sum_x = sum_x + WM*vx[3] ;
           sum_y = sum_y + WM*vy[3] ;
+          //printf("SFORCE 3: sum_x sum_y %f %f\n", sum_x, sum_y);
         }
         // neighbor 4
         //if( b[yn][x])
@@ -2207,7 +2213,7 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
         {
           sum_x = sum_x + WM*vx[4] ;
           sum_y = sum_y + WM*vy[4] ;
-          printf("SFORCE: BING %f %f\n", sum_x, sum_y);
+          //printf("SFORCE 4: sum_x sum_y %f %f\n", sum_x, sum_y);
         }
         // neighbor 5
         //if( b[yp][xp])
@@ -2216,6 +2222,7 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
         {
           sum_x = sum_x + WD*vx[5] ;
           sum_y = sum_y + WD*vy[5] ;
+          //printf("SFORCE 5: sum_x sum_y %f %f\n", sum_x, sum_y);
         }
         // neighbor 6
         //if( b[yp][xn])
@@ -2224,6 +2231,7 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
         {
           sum_x = sum_x + WD*vx[6] ;
           sum_y = sum_y + WD*vy[6] ;
+          //printf("SFORCE 6: sum_x sum_y %f %f\n", sum_x, sum_y);
         }
         // neighbor 7
         //if( b[yn][xn])
@@ -2232,7 +2240,7 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
         {
           sum_x = sum_x + WD*vx[7] ;
           sum_y = sum_y + WD*vy[7] ;
-          printf("SFORCE: BING %f %f\n", sum_x, sum_y);
+          //printf("SFORCE 7: sum_x sum_y %f %f\n", sum_x, sum_y);
         }
         // neighbor 8
         //if( b[yn][xp])
@@ -2241,7 +2249,7 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
         {
           sum_x = sum_x + WD*vx[8] ;
           sum_y = sum_y + WD*vy[8] ;
-          printf("SFORCE: BING %f %f\n", sum_x, sum_y);
+          //printf("SFORCE 8: sum_x sum_y %f %f\n", sum_x, sum_y);
         }
 
         for( subs=0; subs<NUM_FLUID_COMPONENTS; subs++)
@@ -2253,8 +2261,9 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
             lattice->force[ subs][ IJ2N(x,y)].sforce[1]
               = -lattice->param.Gads[subs]*sum_y;
 
-            if( lattice->force[subs][ IJ2N(x,y)].sforce[0]!=0.
-              ||lattice->force[subs][ IJ2N(x,y)].sforce[1]!=0. )
+            if( 0
+              &&( lattice->force[subs][ IJ2N(x,y)].sforce[0]!=0.
+                ||lattice->force[subs][ IJ2N(x,y)].sforce[1]!=0. ) )
             {
               printf("SFORCE: %f %f\n",
                 lattice->force[subs][ IJ2N(x,y)].sforce[0],
@@ -2269,12 +2278,14 @@ void compute_double_fluid_solid_force( lattice_ptr lattice)
         }
 
       } /* if( !obst[y][x]) */
-      if( lattice->force[ 0][ IJ2N(x,y)].sforce[0]!=0.
-        ||lattice->force[ 0][ IJ2N(x,y)].sforce[1]!=0.
-        ||lattice->force[ 1][ IJ2N(x,y)].sforce[0]!=0.
-        ||lattice->force[ 1][ IJ2N(x,y)].sforce[1]!=0. )
+
+      if( 0
+        &&( lattice->force[ 0][ IJ2N(x,y)].sforce[0]!=0.
+          ||lattice->force[ 0][ IJ2N(x,y)].sforce[1]!=0.
+          ||lattice->force[ 1][ IJ2N(x,y)].sforce[0]!=0.
+          ||lattice->force[ 1][ IJ2N(x,y)].sforce[1]!=0. ) )
       {
-        printf("SFORCE: %f %f %f %f\n",
+        printf("SFORCE (%d,%d): %f %f %f %f\n", x,y,
           lattice->force[ 0][ IJ2N(x,y)].sforce[0],
           lattice->force[ 0][ IJ2N(x,y)].sforce[1],
           lattice->force[ 1][ IJ2N(x,y)].sforce[0],
