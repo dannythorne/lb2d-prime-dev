@@ -993,7 +993,7 @@ void read_PEST_in_files( lattice_ptr *lattice, int argc, char **argv)
 	(*lattice)->array_position = 0;
 
 
-#endif
+#endif
 }	/* void read_PEST_in_files */
 
 
@@ -2583,7 +2583,7 @@ void sigma_stuff( lattice_ptr lattice)
   int    i, j, n, nm, np;
   double btc_val01, btc_val02, btc_val03, btc_val04;
   int    width;
-
+#if 0
   // Turn off concentration boundaries when time is up.
   if(    lattice->param.sigma_stop >= 0
       && lattice->time > lattice->param.sigma_stop)
@@ -2592,16 +2592,16 @@ void sigma_stuff( lattice_ptr lattice)
     lattice->param.rho_sigma_out = 0.;
 
   } /* if( lattice->param.sigma_stop >= 0 && ... */
-
+#endif
   // Accumulate break through curve.
   if( !( lattice->param.sigma_btc_rate <= 0 || lattice->FlowDir==0))
   {
     if(    lattice->param.sigma_start <= lattice->time
-       &&  (
-              lattice->param.sigma_stop  < 0
-            ||
-              lattice->param.sigma_stop  >= lattice->time
-           )
+//       &&  (
+//              lattice->param.sigma_stop  < 0
+//            ||
+//              lattice->param.sigma_stop  >= lattice->time
+//           )
        && !( lattice->time % lattice->param.sigma_btc_rate))
     {
       btc_time = ( lattice->time

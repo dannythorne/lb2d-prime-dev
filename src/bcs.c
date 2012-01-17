@@ -2615,7 +2615,8 @@ void bcs( lattice_ptr lattice)
     {
       // North, Inflow
 
-      if( lattice->time >= lattice->param.sigma_start)
+      if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
       {
         c = lattice->param.C_in;
       }
@@ -2657,7 +2658,8 @@ void bcs( lattice_ptr lattice)
     {
       // South, Inflow
 
-      if( lattice->time >= lattice->param.sigma_start)
+      if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
       {
         c = lattice->param.C_in;
       }
@@ -2701,7 +2703,8 @@ void bcs( lattice_ptr lattice)
      //if( i>0 && i<get_LX(lattice)-1)
      //{
       // North, Outflow
-      if( lattice->time >= lattice->param.sigma_start)
+      if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
       {
         c = lattice->param.C_out;
       }
@@ -2749,7 +2752,8 @@ void bcs( lattice_ptr lattice)
 
      //if( i>0 && i<get_LX(lattice)-1)
      //{
-      if( lattice->time >= lattice->param.sigma_start)
+      if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
       {
         c = lattice->param.C_out;
       }
@@ -2794,7 +2798,8 @@ void bcs( lattice_ptr lattice)
     {
       // North, Inflow
 
-      if( lattice->time >= lattice->param.sigma_start)
+      if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
       {
         u = lattice->param.u_sigma_in;
       }
@@ -2836,7 +2841,8 @@ void bcs( lattice_ptr lattice)
     {
       // South, Inflow
 
-      if( lattice->time >= lattice->param.sigma_start)
+      if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
       {
         u = lattice->param.u_sigma_in;
       }
@@ -2882,7 +2888,8 @@ void bcs( lattice_ptr lattice)
 
      if( (i>0 && i<get_LX(lattice)-1) && is_not_solid_node(lattice,subs,n))
      {
-      if( lattice->time >= lattice->param.sigma_start)
+      if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
       {
         u = lattice->param.u_sigma_out;
       }
@@ -2955,7 +2962,8 @@ void bcs( lattice_ptr lattice)
 
      if( ( i>0 && i<get_LX(lattice)-1) && is_not_solid_node(lattice,subs,n))
      {
-      if( lattice->time >= lattice->param.sigma_start)
+      if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
       {
         u = lattice->param.u_sigma_out;
       }
@@ -3104,7 +3112,8 @@ void bcs( lattice_ptr lattice)
 
      if( ( j>0 && j<get_LY(lattice)-1) && is_not_solid_node( lattice, subs, n))
      {
-      if( lattice->time >= lattice->param.sigma_start)
+      if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
       {
         c = lattice->param.C_in;
       }
@@ -3157,7 +3166,8 @@ void bcs( lattice_ptr lattice)
 
       if( 1)//( j>0 && j<get_LY(lattice)-1) || is_not_solid_node(lattice,subs,n))
       {
-        if( lattice->time >= lattice->param.sigma_start)
+        if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
         {
           if(lattice->param.constcon_w_in==1)
           {
@@ -3261,7 +3271,8 @@ void bcs( lattice_ptr lattice)
 
      if( 1)//( j>0 && j<get_LX(lattice)-1) && is_not_solid_node(lattice, subs, n))
      {
-      if( lattice->time >= lattice->param.sigma_start)
+      if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
       {
           if(lattice->param.constcon_e_out==1)
           {
@@ -3333,7 +3344,8 @@ void bcs( lattice_ptr lattice)
     {
       // West, Outflow
 
-      if( lattice->time >= lattice->param.sigma_start)
+      if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
       {
         c = lattice->param.C_out;
       }
@@ -3377,7 +3389,8 @@ void bcs( lattice_ptr lattice)
     {
       // East, Inflow
 
-      if( lattice->time >= lattice->param.sigma_start)
+      if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
       {
         u = lattice->param.u_sigma_in;
       }
@@ -3423,7 +3436,8 @@ void bcs( lattice_ptr lattice)
 
      if( lattice->param.constflx_w_in==1)
      {
-      if( lattice->time >= lattice->param.sigma_start)
+      if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
       {
         u = lattice->param.u_sigma_in;
       }
@@ -3451,7 +3465,8 @@ void bcs( lattice_ptr lattice)
      {
       v = lattice->macro_vars[0][n].u[0];
 
-      if( lattice->time >= lattice->param.sigma_start)
+      if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
       {
         c0 = lattice->param.C_in;
       }
@@ -3497,7 +3512,8 @@ void bcs( lattice_ptr lattice)
     {
       // East, Outflow
 
-      if( lattice->time >= lattice->param.sigma_start)
+      if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
       {
         u = lattice->param.u_sigma_out;
       }
@@ -3540,7 +3556,8 @@ void bcs( lattice_ptr lattice)
     {
       // West, Outflow
 
-      if( lattice->time >= lattice->param.sigma_start)
+      if( lattice->time >= lattice->param.sigma_start
+           && lattice->time <= lattice->param.sigma_stop)
       {
         u = lattice->param.u_sigma_out;
       }
