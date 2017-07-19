@@ -337,13 +337,13 @@ void dump_macro_vars( struct lattice_struct *lattice, int time)
     if( is_solid_node( lattice, subs, n))
     {
       fprintf( o_rho, "%20.17f\n", 0.);
-      *macro_vars_ptr++;
+      (*macro_vars_ptr)++;
 
       fprintf( o_u, "%20.17f ", 0.);
-      *macro_vars_ptr++;
+      (*macro_vars_ptr)++;
 
       fprintf( o_u, "%20.17f\n", 0.);
-      *macro_vars_ptr++;
+      (*macro_vars_ptr)++;
 
 #if STORE_U_COMPOSITE
       fprintf( o_upr, "%20.17f ", 0.);
@@ -6897,9 +6897,9 @@ void bmp_write_header(
   *(int*)(bmp_hdr->zeros+20) = (int)0;
 
   printf("size = %d\n", ENDIAN4((int)bmp_hdr->size));
-  printf("sizeof(short int) = %d\n",sizeof(short int));
-  printf("sizeof(bmp_hdr) = %d\n",sizeof(struct bmp_hdr_struct));
-  printf("sizeof(test_struct) = %d\n",sizeof(struct test_struct));
+  printf("sizeof(short int) = %lu\n",sizeof(short int));
+  printf("sizeof(bmp_hdr) = %lu\n",sizeof(struct bmp_hdr_struct));
+  printf("sizeof(test_struct) = %lu\n",sizeof(struct test_struct));
 
   n = fwrite( bmp_hdr, sizeof(struct bmp_hdr_struct), 1, out);
 
@@ -7116,8 +7116,8 @@ void report_open( report_ptr report, char *name)
 
   if( !( report->file = fopen( report->name, "w+")))
   {
-    printf("%s %d: ERROR: fopen( %s, \"w+\") = %x\n",
-      __FILE__, __LINE__, report->name, (report->file));
+    printf("%s %d: ERROR: fopen( %s, \"w+\")\n",
+      __FILE__, __LINE__, report->name);
   }
   else
   {

@@ -82,7 +82,7 @@ double vy[9] = { 0., 0., 1., 0.,-1., 1., 1.,-1.,-1.};
 #define HRULE2 "========================================" \
                "========================================"
 
-#if DO_NOT_STORE_SOLIDS
+#if 0 // DO_NOT_STORE_SOLIDS
 // TODO: Incorporate version that omits storage of interior solids (which
 // are not involved in flow).
 //#include "min_nodes/compute.c"

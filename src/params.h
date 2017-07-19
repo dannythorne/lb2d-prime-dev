@@ -306,6 +306,8 @@ int read_param_label( FILE *in, char *param_label, int max_length)
 
   } /* if( ( c >= '0' && c <='9') || c == '-' || c == '.') else */
 
+  return 0;
+
 } /* void read_param_label( FILE *in, char *param_label, int ... ) */
 
 // void read_params( struct lattice_struct *lattice)

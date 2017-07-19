@@ -1198,7 +1198,7 @@ void init_problem( struct lattice_struct *lattice)
   {
     // Try to read <LX>x<LY>ic.bmp file.
     sprintf( ic_filename, "./in/%dx%dic.bmp", get_LX(lattice), get_LY(lattice));
-    if( ic_in = fopen( ic_filename, "r+"))
+    if( (ic_in = fopen( ic_filename, "r+")))
     {
       printf("%s %d >> Reading file \"%s\".\n",__FILE__,__LINE__,ic_filename);
       bmp_read_header( ic_in, &bmih);

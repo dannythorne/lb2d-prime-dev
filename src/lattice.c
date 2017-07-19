@@ -9,8 +9,8 @@
 
 int get_LX( lattice_ptr lattice) { return lattice->param.LX;}
 int get_LY( lattice_ptr lattice) { return lattice->param.LY;}
-int set_LX( lattice_ptr lattice, int arg_LX) { lattice->param.LX = arg_LX;}
-int set_LY( lattice_ptr lattice, int arg_LY) { lattice->param.LY = arg_LY;}
+void set_LX( lattice_ptr lattice, int arg_LX) { lattice->param.LX = arg_LX;}
+void set_LY( lattice_ptr lattice, int arg_LY) { lattice->param.LY = arg_LY;}
 int get_si( lattice_ptr lattice) { return 0;}
 int get_sj( lattice_ptr lattice) { return 0;}
 int get_ei( lattice_ptr lattice) { return lattice->param.LX-1;}
@@ -278,7 +278,7 @@ int do_check_point_load( lattice_ptr lattice)
   char filename[1024];
 
   sprintf(filename, "./out/checkpoint.dat");
-  if( o=fopen(filename,"r"))
+  if( (o=fopen(filename,"r")))
   {
     fclose(o);
     // Later, have a toggle switch input from params.in.
