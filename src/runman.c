@@ -15,7 +15,7 @@
 //  - Reduce gravity to avoid run-away velocities and numerical
 //    instability, if lattice->param.end_grav is specified.
 //
-inline void manage_body_force( lattice_ptr lattice)
+/*inline*/ void manage_body_force( lattice_ptr lattice)
 {
 #if MANAGE_BODY_FORCE
   int subs;
@@ -70,7 +70,7 @@ printf("subs %02d: gval_y = %f\n", subs, lattice->param.gval[subs][1]);
 #endif /* MANAGE_BODY_FORCE */
 } /* void manage_body_force( lattice_ptr lattice) */
 
-inline void run_man( lattice_ptr lattice)
+/*inline*/ void run_man( lattice_ptr lattice)
 {
     manage_body_force( lattice);
 #if INAMURO_SIGMA_COMPONENT && STORE_BTC
@@ -78,7 +78,7 @@ inline void run_man( lattice_ptr lattice)
 #endif /* INAMURO_SIGMA_COMPONENT && STORE_BTC */
 }
 
-inline void dump( lattice_ptr lattice, int dump_num)
+/*inline*/ void dump( lattice_ptr lattice, int dump_num)
 {
 #if WRITE_PDF_DAT_FILES
   int time=get_time(lattice);

@@ -50,7 +50,7 @@
 
 // PEST_OUTPUT_ON enables the output of a concentration list at various
 // timesteps and coordinates for use with PEST
-#define PEST_OUTPUT_ON 1
+#define PEST_OUTPUT_ON 0
 
 // Toggle Zhang & Chen energy transport method, PRE 67, 0066711 (2003).
 // Supposed to give thermodynamic consistency unlike old Shan & Chen method.
