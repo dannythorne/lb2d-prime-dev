@@ -6896,7 +6896,7 @@ void bmp_write_header(
   *(int*)(bmp_hdr->zeros+16) = (int)0;
   *(int*)(bmp_hdr->zeros+20) = (int)0;
 
-  printf("size = %d\n", ENDIAN4((int)bmp_hdr->size));
+  printf("size = %d\n", ENDIAN4((int)*(bmp_hdr->size)));
   printf("sizeof(short int) = %lu\n",sizeof(short int));
   printf("sizeof(bmp_hdr) = %lu\n",sizeof(struct bmp_hdr_struct));
   printf("sizeof(test_struct) = %lu\n",sizeof(struct test_struct));
